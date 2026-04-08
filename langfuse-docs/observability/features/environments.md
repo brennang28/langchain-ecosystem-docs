@@ -36,8 +36,8 @@ This means:
 
 ## Usage
 
-<LangTabs items={["Python SDK", "JS/TS SDK", "OpenTelemetry", "OpenAI (Python)", "OpenAI (JS/TS)", "Langchain (Python)", "Langchain (JS/TS)", "Vercel AI SDK (JS/TS)"]}>
-<Tab title="Python SDK">
+
+**Python SDK:**
 
 ```python
 from langfuse import get_client, observe
@@ -62,8 +62,6 @@ def main():
 main()
 ```
 
-</Tab>
-<Tab>
 
 Set the Langfuse Environment via environment variable:
 
@@ -71,8 +69,6 @@ Set the Langfuse Environment via environment variable:
 export LANGFUSE_TRACING_ENVIRONMENT=production
 ```
 
-</Tab>
-<Tab>
 
 When using [OpenTelemetry](/docs/opentelemetry/get-started), you can set the environment using any of these attributes:
 
@@ -98,16 +94,11 @@ with tracer.start_as_current_observation("my-operation") as span:
     span.set_attribute("deployment.environment.name", "staging")
 ```
 
-</Tab>
-<Tab>
 
-<Callout type="info">
+> ℹ️ **Note:** When using the **Python SDK**, the environment provided on client initialization will apply to all event inputs and outputs regardless of the Langfuse-maintained integration you are using.
+> 
+> See the Python SDK tab for more details.
 
-When using the **Python SDK**, the environment provided on client initialization will apply to all event inputs and outputs regardless of the Langfuse-maintained integration you are using.
-
-See the Python SDK tab for more details.
-
-</Callout>
 
 When using the [OpenAI SDK Integration](/integrations/model-providers/openai-py)
 
@@ -129,33 +120,22 @@ completion = openai.chat.completions.create(
 )
 ```
 
-</Tab>
-<Tab>
 
-```bash filename=".env"
+```bash
 LANGFUSE_TRACING_ENVIRONMENT=production
 ```
 
 ```ts
-import OpenAI from "openai";
-import { observeOpenAI } from "@langfuse/openai";
-
 const openai = observeOpenAI(new OpenAI());
 ```
 
 See [OpenAI Integration (JS/TS)](/integrations/model-providers/openai-js) for more details.
 
-</Tab>
 
-<Tab>
+> ℹ️ **Note:** When using the **Python SDK**, the environment provided on client initialization will apply to all event inputs and outputs regardless of the Langfuse-maintained integration you are using.
+> 
+> See the Python SDK tab for more details.
 
-<Callout type="info">
-
-When using the **Python SDK**, the environment provided on client initialization will apply to all event inputs and outputs regardless of the Langfuse-maintained integration you are using.
-
-See the Python SDK tab for more details.
-
-</Callout>
 
 ```python
 from langfuse.callback import CallbackHandler
@@ -165,13 +145,8 @@ os.environ["LANGFUSE_TRACING_ENVIRONMENT"] = "production"
 handler = CallbackHandler()
 ```
 
-</Tab>
-
-<Tab>
 
 ```ts
-import { CallbackHandler } from "langfuse-langchain";
-
 const handler = new CallbackHandler({
   environment: "production",
 });
@@ -179,16 +154,10 @@ const handler = new CallbackHandler({
 
 See [Langchain Integration (JS/TS)](/integrations/frameworks/langchain) for more details.
 
-</Tab>
-
-<Tab>
 
 When using the [Vercel AI SDK Integration](/integrations/frameworks/vercel-ai-sdk)
 
-```ts filename="instrumentation.ts" {/environment: "production"/}
-import { registerOTel } from "@vercel/otel";
-import { LangfuseExporter } from "langfuse-vercel";
-
+```ts {/environment: "production"/}
 export function register() {
   registerOTel({
     serviceName: "langfuse-vercel-ai-nextjs-example",
@@ -197,9 +166,6 @@ export function register() {
 }
 ```
 
-</Tab>
-
-</LangTabs>
 
 ## Filtering
 
@@ -221,6 +187,3 @@ For guidance on how to structure, separate, and work with multiple environments 
 
 ## GitHub Discussions
 
-import { GhDiscussionsPreview } from "@/components/gh-discussions/GhDiscussionsPreview";
-
-<GhDiscussionsPreview labels={["feat-tracing-environments"]} />

@@ -47,31 +47,24 @@ Sandboxes are especially useful for:
 * Coding agents: Agents that run autonomously can use shell, git, clone repositories (many providers offer native git APIs, e.g., [Daytona's git operations](https://www.daytona.io/docs/en/git-operations/)), and run Docker-in-Docker for build and test pipelines
 * Data analysis agents—Load files, install data analysis libraries (pandas, numpy, etc.), run statistical calculations, and create outputs like PowerPoint presentations in a safe, isolated environment
 
-<Tip>
-  **Using the Deep Agents CLI?** The CLI has built-in sandbox support via the `--sandbox` flag. See [Use remote sandboxes](/oss/python/deepagents/cli/overview#use-remote-sandboxes) for CLI-specific setup, flags (`--sandbox-id`, `--sandbox-setup`), and examples.
-</Tip>
+
+> 💡 **Tip**
+>
+> **Using the Deep Agents CLI?** The CLI has built-in sandbox support via the `--sandbox` flag. See [Use remote sandboxes](/oss/python/deepagents/cli/overview#use-remote-sandboxes) for CLI-specific setup, flags (`--sandbox-id`, `--sandbox-setup`), and examples.
+
 
 ## Available providers
 
 For provider-specific setup, authentication, and lifecycle details, see the provider integration pages:
 
-<CardGroup cols={2}>
-  <Card title="AgentCore" icon="https://mintcdn.com/langchain-5e9cc07a/CgeS38l6oQSuVQxz/images/providers/agentcore-icon.svg?fit=max&auto=format&n=CgeS38l6oQSuVQxz&q=85&s=3167301d786abe445a499df4d9dd05ee" href="/oss/python/integrations/providers/aws#sandboxes" width="80" height="80" data-path="images/providers/agentcore-icon.svg">
-    AWS MicroVM isolation, Code Interpreter, Python.
-  </Card>
-
-  <Card title="Modal" icon="https://mintcdn.com/langchain-5e9cc07a/z7oQGiHwXv52HwOy/images/providers/modal-icon.svg?fit=max&auto=format&n=z7oQGiHwXv52HwOy&q=85&s=ad5e0a8abe949e2f5a6588b1de54d7ee" href="/oss/python/integrations/providers/modal" width="24" height="24" data-path="images/providers/modal-icon.svg">
-    ML/AI workloads, GPU access.
-  </Card>
-
-  <Card title="Daytona" icon="https://mintcdn.com/langchain-5e9cc07a/ZPKed1feKJ8F6LVo/images/providers/daytona-icon.svg?fit=max&auto=format&n=ZPKed1feKJ8F6LVo&q=85&s=f5207cf24ebd421cff00a66a611b3992" href="/oss/python/integrations/providers/daytona" width="66" height="60" data-path="images/providers/daytona-icon.svg">
-    TypeScript/Python development, fast cold starts.
-  </Card>
-
-  <Card title="Runloop" href="/oss/python/integrations/providers/runloop">
-    Disposable devboxes for isolated code execution.
-  </Card>
-</CardGroup>
+AWS MicroVM isolation, Code Interpreter, Python.
+  
+ML/AI workloads, GPU access.
+  
+TypeScript/Python development, fast cold starts.
+  
+Disposable devboxes for isolated code execution.
+  
 
 If you provide a sandbox platform and want to contribute an integration, see [Contributing a sandbox integration](/oss/python/contributing/integrations-langchain).
 
@@ -79,19 +72,18 @@ If you provide a sandbox platform and want to contribute an integration, see [Co
 
 These examples assume you have already created a sandbox/devbox using the provider's SDK and have credentials set up. For signup, authentication, and provider-specific lifecycle details, see [Available providers](#available-providers).
 
-<Tabs>
-  <Tab title="Modal">
-    <CodeGroup>
-      ```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**Modal:**
+
+
+```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       pip install langchain-modal
       ```
 
       ```bash uv theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       uv add langchain-modal
       ```
-    </CodeGroup>
-
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     import modal
     from deepagents import create_deep_agent
     from langchain_anthropic import ChatAnthropic
@@ -120,20 +112,19 @@ These examples assume you have already created a sandbox/devbox using the provid
     finally:
         modal_sandbox.terminate()
     ```
-  </Tab>
+  
+**Runloop:**
 
-  <Tab title="Runloop">
-    <CodeGroup>
-      ```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       pip install langchain-runloop
       ```
 
       ```bash uv theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       uv add langchain-runloop
       ```
-    </CodeGroup>
-
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     import os
 
     from deepagents import create_deep_agent
@@ -166,20 +157,19 @@ These examples assume you have already created a sandbox/devbox using the provid
     finally:
         devbox.shutdown()
     ```
-  </Tab>
+  
+**Daytona:**
 
-  <Tab title="Daytona">
-    <CodeGroup>
-      ```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       pip install langchain-daytona
       ```
 
       ```bash uv theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       uv add langchain-daytona
       ```
-    </CodeGroup>
-
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from daytona import Daytona
     from deepagents import create_deep_agent
     from langchain_anthropic import ChatAnthropic
@@ -208,9 +198,7 @@ These examples assume you have already created a sandbox/devbox using the provid
     finally:
         sandbox.stop()
     ```
-  </Tab>
-</Tabs>
-
+  
 ## Lifecycle and scoping
 
 Sandboxes consume resources and cost money until they're shut down. How you manage their lifecycle depends on your application.
@@ -229,15 +217,17 @@ All threads for a given [assistant](/langsmith/assistants) share one sandbox. Th
 
 Example: a coding assistant that maintains a cloned repo and installed dependencies across conversations.
 
-<Warning>
-  Assistant-scoped sandboxes accumulate files, installed packages, and other in-sandbox state over time. Configure a TTL with your sandbox provider, use snapshots to reset periodically, or implement cleanup logic to prevent the sandbox's disk and memory from growing unbounded. Thread-scoped sandboxes avoid this by starting fresh each conversation.
-</Warning>
+
+> ⚠️ **Warning**
+>
+> Assistant-scoped sandboxes accumulate files, installed packages, and other in-sandbox state over time. Configure a TTL with your sandbox provider, use snapshots to reset periodically, or implement cleanup logic to prevent the sandbox's disk and memory from growing unbounded. Thread-scoped sandboxes avoid this by starting fresh each conversation.
+
 
 ### Basic lifecycle
 
-<Tabs>
-  <Tab title="AgentCore">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**AgentCore:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from bedrock_agentcore.tools.code_interpreter_client import CodeInterpreter
 
     from langchain_agentcore_codeinterpreter import AgentCoreSandbox
@@ -251,10 +241,10 @@ Example: a coding assistant that maintains a cloned repo and installed dependenc
     # ... use sandbox
     interpreter.stop()
     ```
-  </Tab>
+  
+**Modal:**
 
-  <Tab title="Modal">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     import modal
 
     from langchain_modal import ModalSandbox
@@ -267,10 +257,10 @@ Example: a coding assistant that maintains a cloned repo and installed dependenc
     # ... use sandbox
     modal_sandbox.terminate()
     ```
-  </Tab>
+  
+**Runloop:**
 
-  <Tab title="Runloop">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from runloop_api_client import RunloopSDK
 
     from langchain_runloop import RunloopSandbox
@@ -283,10 +273,10 @@ Example: a coding assistant that maintains a cloned repo and installed dependenc
     # ... use sandbox
     devbox.shutdown()
     ```
-  </Tab>
+  
+**Daytona:**
 
-  <Tab title="Daytona">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from daytona import Daytona
 
     from langchain_daytona import DaytonaSandbox
@@ -298,9 +288,7 @@ Example: a coding assistant that maintains a cloned repo and installed dependenc
     # ... use sandbox
     sandbox.stop()
     ```
-  </Tab>
-</Tabs>
-
+  
 ### Per-conversation lifecycle
 
 In chat applications, a conversation is typically represented by a `thread_id`.
@@ -308,9 +296,11 @@ Generally, each `thread_id` should use its own unique sandbox.
 
 Store the mapping between sandbox ID and `thread_id` in your application or with the sandbox if the sandbox provider allows attaching metadata to the sandbox.
 
-<Tip>
-  **TTL for chat applications.** When users can re-engage after idle time, you often don't know if or when they'll return. Configure a time-to-live (TTL) on the sandbox—for example, TTL to archive or TTL to delete—so the provider automatically cleans up idle sandboxes. Many sandbox providers support this.
-</Tip>
+
+> 💡 **Tip**
+>
+> **TTL for chat applications.** When users can re-engage after idle time, you often don't know if or when they'll return. Configure a time-to-live (TTL) on the sandbox—for example, TTL to archive or TTL to delete—so the provider automatically cleans up idle sandboxes. Many sandbox providers support this.
+
 
 The following example shows a get-or-create pattern using Daytona.
 For other providers, consult the sandbox provider API for the equivalent labels, metadata, and TTL options:
@@ -457,23 +447,14 @@ Choose the sandbox as tool pattern when you need to iterate quickly on agent log
 
 For provider-specific setup, authentication, and lifecycle details, see the provider integration pages:
 
-<CardGroup cols={2}>
-  <Card title="AgentCore" icon="https://mintcdn.com/langchain-5e9cc07a/CgeS38l6oQSuVQxz/images/providers/agentcore-icon.svg?fit=max&auto=format&n=CgeS38l6oQSuVQxz&q=85&s=3167301d786abe445a499df4d9dd05ee" href="/oss/python/integrations/sandboxes/aws" width="80" height="80" data-path="images/providers/agentcore-icon.svg">
-    AWS MicroVM isolation, Code Interpreter, Python.
-  </Card>
-
-  <Card title="Modal" icon="https://mintcdn.com/langchain-5e9cc07a/z7oQGiHwXv52HwOy/images/providers/modal-icon.svg?fit=max&auto=format&n=z7oQGiHwXv52HwOy&q=85&s=ad5e0a8abe949e2f5a6588b1de54d7ee" href="/oss/python/integrations/sandboxes/modal" width="24" height="24" data-path="images/providers/modal-icon.svg">
-    ML/AI workloads, GPU access.
-  </Card>
-
-  <Card title="Daytona" icon="https://mintcdn.com/langchain-5e9cc07a/ZPKed1feKJ8F6LVo/images/providers/daytona-icon.svg?fit=max&auto=format&n=ZPKed1feKJ8F6LVo&q=85&s=f5207cf24ebd421cff00a66a611b3992" href="/oss/python/integrations/sandboxes/daytona" width="66" height="60" data-path="images/providers/daytona-icon.svg">
-    TypeScript/Python development, fast cold starts.
-  </Card>
-
-  <Card title="Runloop" href="/oss/python/integrations/sandboxes/runloop">
-    Disposable devboxes for isolated code execution.
-  </Card>
-</CardGroup>
+AWS MicroVM isolation, Code Interpreter, Python.
+  
+ML/AI workloads, GPU access.
+  
+TypeScript/Python development, fast cold starts.
+  
+Disposable devboxes for isolated code execution.
+  
 
 If you provide a sandbox platform and want to contribute an integration, see [Contributing a sandbox integration](/oss/python/contributing/integrations-langchain).
 
@@ -521,19 +502,18 @@ When the agent calls the `execute` tool, it provides a `command` string and gets
 
 You can also call the backend `execute()` method directly in your application code.
 
-<Tabs>
-  <Tab title="AgentCore">
-    <CodeGroup>
-      ```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**AgentCore:**
+
+
+```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       pip install langchain-agentcore-codeinterpreter
       ```
 
       ```bash uv theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       uv add langchain-agentcore-codeinterpreter
       ```
-    </CodeGroup>
-
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from bedrock_agentcore.tools.code_interpreter_client import CodeInterpreter
 
     from langchain_agentcore_codeinterpreter import AgentCoreSandbox
@@ -549,10 +529,10 @@ You can also call the backend `execute()` method directly in your application co
     finally:
         interpreter.stop()
     ```
-  </Tab>
+  
+**Modal:**
 
-  <Tab title="Modal">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     import modal
 
     from langchain_modal import ModalSandbox
@@ -564,20 +544,19 @@ You can also call the backend `execute()` method directly in your application co
     result = backend.execute("python --version")
     print(result.output)
     ```
-  </Tab>
+  
+**Runloop:**
 
-  <Tab title="Runloop">
-    <CodeGroup>
-      ```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       pip install langchain-runloop
       ```
 
       ```bash uv theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       uv add langchain-runloop
       ```
-    </CodeGroup>
-
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from runloop_api_client import RunloopSDK
 
     from langchain_runloop import RunloopSandbox
@@ -594,20 +573,19 @@ You can also call the backend `execute()` method directly in your application co
     finally:
         devbox.shutdown()
     ```
-  </Tab>
+  
+**Daytona:**
 
-  <Tab title="Daytona">
-    <CodeGroup>
-      ```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       pip install langchain-daytona
       ```
 
       ```bash uv theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       uv add langchain-daytona
       ```
-    </CodeGroup>
-
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from daytona import Daytona
 
     from langchain_daytona import DaytonaSandbox
@@ -618,9 +596,7 @@ You can also call the backend `execute()` method directly in your application co
     result = backend.execute("python --version")
     print(result.output)
     ```
-  </Tab>
-</Tabs>
-
+  
 For example:
 
 ```
@@ -682,19 +658,18 @@ The deepagents sandbox backends support file transfer APIs for moving files betw
 
 Use `upload_files()` to populate the sandbox before the agent runs. Paths must be absolute and contents are `bytes`:
 
-<Tabs>
-  <Tab title="AgentCore">
-    <CodeGroup>
-      ```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**AgentCore:**
+
+
+```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       pip install langchain-agentcore-codeinterpreter
       ```
 
       ```bash uv theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       uv add langchain-agentcore-codeinterpreter
       ```
-    </CodeGroup>
-
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from bedrock_agentcore.tools.code_interpreter_client import CodeInterpreter
 
     from langchain_agentcore_codeinterpreter import AgentCoreSandbox
@@ -711,10 +686,10 @@ Use `upload_files()` to populate the sandbox before the agent runs. Paths must b
         ]
     )
     ```
-  </Tab>
+  
+**Modal:**
 
-  <Tab title="Modal">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     import modal
 
     from langchain_modal import ModalSandbox
@@ -730,20 +705,19 @@ Use `upload_files()` to populate the sandbox before the agent runs. Paths must b
         ]
     )
     ```
-  </Tab>
+  
+**Runloop:**
 
-  <Tab title="Runloop">
-    <CodeGroup>
-      ```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       pip install langchain-runloop
       ```
 
       ```bash uv theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       uv add langchain-runloop
       ```
-    </CodeGroup>
-
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from runloop_api_client import RunloopSDK
 
     from langchain_runloop import RunloopSandbox
@@ -761,20 +735,19 @@ Use `upload_files()` to populate the sandbox before the agent runs. Paths must b
         ]
     )
     ```
-  </Tab>
+  
+**Daytona:**
 
-  <Tab title="Daytona">
-    <CodeGroup>
-      ```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       pip install langchain-daytona
       ```
 
       ```bash uv theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       uv add langchain-daytona
       ```
-    </CodeGroup>
-
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from daytona import Daytona
 
     from langchain_daytona import DaytonaSandbox
@@ -789,26 +762,23 @@ Use `upload_files()` to populate the sandbox before the agent runs. Paths must b
         ]
     )
     ```
-  </Tab>
-</Tabs>
-
+  
 ### Retrieving artifacts
 
 Use `download_files()` to retrieve files from the sandbox after the agent finishes:
 
-<Tabs>
-  <Tab title="AgentCore">
-    <CodeGroup>
-      ```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**AgentCore:**
+
+
+```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       pip install langchain-agentcore-codeinterpreter
       ```
 
       ```bash uv theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       uv add langchain-agentcore-codeinterpreter
       ```
-    </CodeGroup>
-
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from bedrock_agentcore.tools.code_interpreter_client import CodeInterpreter
 
     from langchain_agentcore_codeinterpreter import AgentCoreSandbox
@@ -827,10 +797,10 @@ Use `download_files()` to retrieve files from the sandbox after the agent finish
 
     interpreter.stop()
     ```
-  </Tab>
+  
+**Modal:**
 
-  <Tab title="Modal">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     import modal
 
     from langchain_modal import ModalSandbox
@@ -846,20 +816,19 @@ Use `download_files()` to retrieve files from the sandbox after the agent finish
         else:
             print(f"Failed to download {result.path}: {result.error}")
     ```
-  </Tab>
+  
+**Runloop:**
 
-  <Tab title="Runloop">
-    <CodeGroup>
-      ```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       pip install langchain-runloop
       ```
 
       ```bash uv theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       uv add langchain-runloop
       ```
-    </CodeGroup>
-
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from runloop_api_client import RunloopSDK
 
     from langchain_runloop import RunloopSandbox
@@ -877,20 +846,19 @@ Use `download_files()` to retrieve files from the sandbox after the agent finish
         else:
             print(f"Failed to download {result.path}: {result.error}")
     ```
-  </Tab>
+  
+**Daytona:**
 
-  <Tab title="Daytona">
-    <CodeGroup>
-      ```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       pip install langchain-daytona
       ```
 
       ```bash uv theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       uv add langchain-daytona
       ```
-    </CodeGroup>
-
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from daytona import Daytona
 
     from langchain_daytona import DaytonaSandbox
@@ -905,20 +873,22 @@ Use `download_files()` to retrieve files from the sandbox after the agent finish
         else:
             print(f"Failed to download {result.path}: {result.error}")
     ```
-  </Tab>
-</Tabs>
+  
 
-<Note>
-  Inside the sandbox, the agent uses filesystem tools (`read_file`, `write_file`). The `upload_files` and `download_files` methods are for your application code to move files across the boundary between your host and the sandbox.
-</Note>
+> ℹ️ **Note**
+>
+> Inside the sandbox, the agent uses filesystem tools (`read_file`, `write_file`). The `upload_files` and `download_files` methods are for your application code to move files across the boundary between your host and the sandbox.
+
 
 ## Security considerations
 
 Sandboxes isolate code execution from your host system, but they don't protect against **context injection**. An attacker who controls part of the agent's input can instruct it to read files, run commands, or exfiltrate data from within the sandbox. This makes credentials inside the sandbox especially dangerous.
 
-<Warning>
-  **Never put secrets inside a sandbox.** API keys, tokens, database credentials, and other secrets injected into a sandbox (via environment variables, mounted files, or the `secrets` option) can be read and exfiltrated by a context-injected agent. This applies even to short-lived or scoped credentials—if an agent can access them, so can an attacker.
-</Warning>
+
+> ⚠️ **Warning**
+>
+> **Never put secrets inside a sandbox.** API keys, tokens, database credentials, and other secrets injected into a sandbox (via environment variables, mounted files, or the `secrets` option) can be read and exfiltrated by a context-injected agent. This applies even to short-lived or scoped credentials—if an agent can access them, so can an attacker.
+
 
 ### Handling secrets safely
 
@@ -928,16 +898,18 @@ If your agent needs to call authenticated APIs or access protected resources, yo
 
 2. **Use a network proxy that injects credentials.** Some sandbox providers support proxies that intercept outgoing HTTP requests from the sandbox and attach credentials (e.g., `Authorization` headers) before forwarding them. The agent never sees the secret—it just makes plain requests to a URL. This approach is not yet widely available across providers.
 
-<Warning>
-  If you must inject secrets into a sandbox (not recommended), take these precautions:
 
-  * Enable [human-in-the-loop](/oss/python/deepagents/human-in-the-loop) approval for **all** tool calls, not just sensitive ones
-  * Block or restrict network access from the sandbox to limit exfiltration paths
-  * Use the narrowest possible credential scope and shortest possible lifetime
-  * Monitor sandbox network traffic for unexpected outbound requests
+> ⚠️ **Warning**
+>
+> If you must inject secrets into a sandbox (not recommended), take these precautions:
+> 
+>   * Enable [human-in-the-loop](/oss/python/deepagents/human-in-the-loop) approval for **all** tool calls, not just sensitive ones
+>   * Block or restrict network access from the sandbox to limit exfiltration paths
+>   * Use the narrowest possible credential scope and shortest possible lifetime
+>   * Monitor sandbox network traffic for unexpected outbound requests
+> 
+>   Even with these safeguards, this remains an unsafe workaround. A sufficiently creative enough context injection attack can bypass output filtering and HITL review.
 
-  Even with these safeguards, this remains an unsafe workaround. A sufficiently creative enough context injection attack can bypass output filtering and HITL review.
-</Warning>
 
 ### General best practices
 
@@ -948,12 +920,15 @@ If your agent needs to call authenticated APIs or access protected resources, yo
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/sandboxes.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/sandboxes.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

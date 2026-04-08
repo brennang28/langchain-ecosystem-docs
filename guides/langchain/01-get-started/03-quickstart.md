@@ -6,12 +6,14 @@
 
 This quickstart takes you from a simple setup to a fully functional AI agent in just a few minutes.
 
-<Tip>
-  **Using an AI coding assistant?**
 
-  * Install the [LangChain Docs MCP server](/use-these-docs) to give your agent access to up-to-date LangChain documentation and examples.
-  * Install [LangChain Skills](https://github.com/langchain-ai/langchain-skills) to improve your agent's performance on LangChain ecosystem tasks.
-</Tip>
+> 💡 **Tip**
+>
+> **Using an AI coding assistant?**
+> 
+>   * Install the [LangChain Docs MCP server](/use-these-docs) to give your agent access to up-to-date LangChain documentation and examples.
+>   * Install [LangChain Skills](https://github.com/langchain-ai/langchain-skills) to improve your agent's performance on LangChain ecosystem tasks.
+
 
 ## Requirements
 
@@ -46,9 +48,11 @@ agent.invoke(
 )
 ```
 
-<Tip>
-  To learn how to trace your agent with LangSmith, see the [LangSmith documentation](/langsmith/trace-with-langchain).
-</Tip>
+
+> 💡 **Tip**
+>
+> To learn how to trace your agent with LangSmith, see the [LangSmith documentation](/langsmith/trace-with-langchain).
+
 
 ## Build a real-world agent
 
@@ -63,9 +67,8 @@ Next, build a practical weather forecasting agent that demonstrates key producti
 
 Let's walk through each step:
 
-<Steps>
-  <Step title="Define the system prompt">
-    The system prompt defines your agent’s role and behavior. Keep it specific and actionable:
+
+The system prompt defines your agent’s role and behavior. Keep it specific and actionable:
 
     ```python wrap theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     SYSTEM_PROMPT = """You are an expert weather forecaster, who speaks in puns.
@@ -77,10 +80,9 @@ Let's walk through each step:
 
     If a user asks you for the weather, make sure you know the location. If you can tell from the question that they mean wherever they are, use the get_user_location tool to find their location."""
     ```
-  </Step>
+  
 
-  <Step title="Create tools">
-    [Tools](/oss/python/langchain/tools) let a model interact with external systems by calling functions you define.
+[Tools](/oss/python/langchain/tools) let a model interact with external systems by calling functions you define.
     Tools can depend on [runtime context](/oss/python/langchain/runtime) and also interact with [agent memory](/oss/python/langchain/short-term-memory).
 
     Notice below how the `get_user_location` tool uses runtime context:
@@ -106,15 +108,16 @@ Let's walk through each step:
         return "Florida" if user_id == "1" else "SF"
     ```
 
-    <Tip>
-      Tools should be well-documented: their name, description, and argument names become part of the model's prompt.
-      LangChain's [`@tool` decorator](https://reference.langchain.com/python/langchain-core/tools/convert/tool) adds metadata and enables runtime injection with the `ToolRuntime` parameter.
-      Learn more in the [tools guide](/oss/python/langchain/tools).
-    </Tip>
-  </Step>
+    
+> 💡 **Tip**
+>
+> Tools should be well-documented: their name, description, and argument names become part of the model's prompt.
+>       LangChain's [`@tool` decorator](https://reference.langchain.com/python/langchain-core/tools/convert/tool) adds metadata and enables runtime injection with the `ToolRuntime` parameter.
+>       Learn more in the [tools guide](/oss/python/langchain/tools).
 
-  <Step title="Configure your model">
-    Set up your [language model](/oss/python/langchain/models) with the right parameters for your use case:
+  
+
+Set up your [language model](/oss/python/langchain/models) with the right parameters for your use case:
 
     ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langchain.chat_models import init_chat_model
@@ -128,10 +131,9 @@ Let's walk through each step:
     ```
 
     Depending on the model and provider chosen, initialization parameters may vary; refer to their reference pages for details.
-  </Step>
+  
 
-  <Step title="Define response format">
-    Optionally, define a [structured response format](/oss/python/langchain/structured-output) if you need the agent responses to match
+Optionally, define a [structured response format](/oss/python/langchain/structured-output) if you need the agent responses to match
     a specific schema.
 
     ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
@@ -146,10 +148,9 @@ Let's walk through each step:
         # Any interesting information about the weather if available
         weather_conditions: str | None = None
     ```
-  </Step>
+  
 
-  <Step title="Add memory">
-    Add [memory](/oss/python/langchain/short-term-memory) to your agent to maintain state across interactions. This allows
+Add [memory](/oss/python/langchain/short-term-memory) to your agent to maintain state across interactions. This allows
     the agent to remember previous conversations and context.
 
     ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
@@ -158,14 +159,15 @@ Let's walk through each step:
     checkpointer = InMemorySaver()
     ```
 
-    <Info>
-      In production, use a persistent checkpointer that saves message history to a database.
-      See [Add and manage memory](/oss/python/langgraph/add-memory#manage-short-term-memory) for more details.
-    </Info>
-  </Step>
+    
+> ℹ️ **Info**
+>
+> In production, use a persistent checkpointer that saves message history to a database.
+>       See [Add and manage memory](/oss/python/langgraph/add-memory#manage-short-term-memory) for more details.
 
-  <Step title="Create and run the agent">
-    Now assemble your agent with all the components and run it!
+  
+
+Now assemble your agent with all the components and run it!
 
     ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langchain.agents.structured_output import ToolStrategy
@@ -208,11 +210,12 @@ Let's walk through each step:
     #     weather_conditions=None
     # )
     ```
-  </Step>
-</Steps>
+  
 
-<Expandable title="Full example code">
-  ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+<details>
+<summary>Full example code</summary>
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   from dataclasses import dataclass
 
   from langchain.agents import create_agent
@@ -308,11 +311,14 @@ Let's walk through each step:
   #     weather_conditions=None
   # )
   ```
-</Expandable>
 
-<Tip>
-  To learn how to trace your agent with LangSmith, see the [LangSmith documentation](/langsmith/trace-with-langchain).
-</Tip>
+</details>
+
+
+> 💡 **Tip**
+>
+> To learn how to trace your agent with LangSmith, see the [LangSmith documentation](/langsmith/trace-with-langchain).
+
 
 Congratulations! You now have an AI agent that can:
 
@@ -324,12 +330,15 @@ Congratulations! You now have an AI agent that can:
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/quickstart.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/quickstart.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

@@ -6,9 +6,11 @@
 
 The [**Functional API**](/oss/python/langgraph/functional-api) allows you to add LangGraph's key features ([persistence](/oss/python/langgraph/persistence), [memory](/oss/python/langgraph/add-memory), [human-in-the-loop](/oss/python/langgraph/interrupts), and [streaming](/oss/python/langgraph/streaming)) to your applications with minimal changes to your existing code.
 
-<Tip>
-  For conceptual information on the functional API, see [Functional API](/oss/python/langgraph/functional-api).
-</Tip>
+
+> 💡 **Tip**
+>
+> For conceptual information on the functional API, see [Functional API](/oss/python/langgraph/functional-api).
+
 
 ## Creating a simple workflow
 
@@ -24,8 +26,11 @@ def my_workflow(inputs: dict) -> int:
 my_workflow.invoke({"value": 1, "another_value": 2})
 ```
 
-<Accordion title="Extended example: simple workflow">
-  ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+<details>
+<summary>Extended example: simple workflow</summary>
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   from langchain_core.utils.uuid import uuid7
   from langgraph.func import entrypoint, task
   from langgraph.checkpoint.memory import InMemorySaver
@@ -54,10 +59,14 @@ my_workflow.invoke({"value": 1, "another_value": 2})
   result = workflow.invoke({"number": 7}, config=config)
   print(result)
   ```
-</Accordion>
 
-<Accordion title="Extended example: Compose an essay with an LLM">
-  This example demonstrates how to use the `@task` and `@entrypoint` decorators
+</details>
+
+
+<details>
+<summary>Extended example: Compose an essay with an LLM</summary>
+
+This example demonstrates how to use the `@task` and `@entrypoint` decorators
   syntactically. Given that a checkpointer is provided, the workflow results will
   be persisted in the checkpointer.
 
@@ -91,7 +100,9 @@ my_workflow.invoke({"value": 1, "another_value": 2})
   result = workflow.invoke("the history of flight", config=config)
   print(result)
   ```
-</Accordion>
+
+</details>
+
 
 ## Parallel execution
 
@@ -108,8 +119,11 @@ def graph(numbers: list[int]) -> list[str]:
     return [f.result() for f in futures]
 ```
 
-<Accordion title="Extended example: parallel LLM calls">
-  This example demonstrates how to run multiple LLM calls in parallel using `@task`. Each call generates a paragraph on a different topic, and results are joined into a single text output.
+
+<details>
+<summary>Extended example: parallel LLM calls</summary>
+
+This example demonstrates how to run multiple LLM calls in parallel using `@task`. Each call generates a paragraph on a different topic, and results are joined into a single text output.
 
   ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   import uuid
@@ -146,7 +160,9 @@ def graph(numbers: list[int]) -> list[str]:
   ```
 
   This example uses LangGraph's concurrency model to improve execution time, especially when tasks involve I/O like LLM completions.
-</Accordion>
+
+</details>
+
 
 ## Calling graphs
 
@@ -172,8 +188,11 @@ def some_workflow(some_input: dict) -> int:
     }
 ```
 
-<Accordion title="Extended example: calling a simple graph from the functional API">
-  ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+<details>
+<summary>Extended example: calling a simple graph from the functional API</summary>
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   import uuid
   from typing import TypedDict
   from langgraph.func import entrypoint
@@ -206,7 +225,9 @@ def some_workflow(some_input: dict) -> int:
   config = {"configurable": {"thread_id": str(uuid7())}}
   print(workflow.invoke(5, config=config))  # Output: {'bar': 10}
   ```
-</Accordion>
+
+</details>
+
 
 ## Call other entrypoints
 
@@ -223,8 +244,11 @@ def my_workflow(inputs: dict) -> int:
     return value
 ```
 
-<Accordion title="Extended example: calling another entrypoint">
-  ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+<details>
+<summary>Extended example: calling another entrypoint</summary>
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   import uuid
   from langgraph.func import entrypoint
   from langgraph.checkpoint.memory import InMemorySaver
@@ -247,7 +271,9 @@ def my_workflow(inputs: dict) -> int:
   config = {"configurable": {"thread_id": str(uuid7())}}
   print(main.invoke({"x": 6, "y": 7}, config=config))  # Output: {'product': 42}
   ```
-</Accordion>
+
+</details>
+
 
 ## Streaming
 
@@ -296,19 +322,21 @@ for mode, chunk in main.stream(   # [!code highlight]
 ('updates', {'main': 5})
 ```
 
-<Warning>
-  **Async with Python \< 3.11**
-  If using Python \< 3.11 and writing async code, using [`get_stream_writer`](https://reference.langchain.com/python/langgraph/config/get_stream_writer) will not work. Instead please
-  use the `StreamWriter` class directly. See [Async with Python \< 3.11](/oss/python/langgraph/streaming#async) for more details.
 
-  ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-  from langgraph.types import StreamWriter
+> ⚠️ **Warning**
+>
+> **Async with Python \< 3.11**
+>   If using Python \< 3.11 and writing async code, using [`get_stream_writer`](https://reference.langchain.com/python/langgraph/config/get_stream_writer) will not work. Instead please
+>   use the `StreamWriter` class directly. See [Async with Python \< 3.11](/oss/python/langgraph/streaming#async) for more details.
+> 
+>   ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+>   from langgraph.types import StreamWriter
+> 
+>   @entrypoint(checkpointer=checkpointer)
+>   async def main(inputs: dict, writer: StreamWriter) -> int:  # [!code highlight]
+>   ...
+>   ```
 
-  @entrypoint(checkpointer=checkpointer)
-  async def main(inputs: dict, writer: StreamWriter) -> int:  # [!code highlight]
-  ...
-  ```
-</Warning>
 
 ## Retry policy
 
@@ -825,12 +853,15 @@ for chunk in workflow.stream([input_message], config, stream_mode="values"):
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/use-functional-api.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/use-functional-api.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

@@ -6,10 +6,9 @@ sidebarTitle: Token & Cost Tracking
 
 # Model Usage & Cost Tracking
 
-<Frame>
-  ![Model cost breakdown in Langfuse
+
+![Model cost breakdown in Langfuse
   UI](/images/docs/costs-and-usage-example.png)
-</Frame>
 
 Langfuse tracks the usage and costs of your LLM generations and provides breakdowns by usage types. Usage and cost can be tracked on observations of [type](/docs/observability/features/observation-types) `generation` and `embedding`.
 
@@ -48,9 +47,6 @@ Via the [Metrics API](/docs/metrics/features/metrics-api), you can retrieve aggr
 If available in the LLM response, ingesting usage and/or cost is the most accurate and robust way to track usage in Langfuse.
 
 Many of the Langfuse integrations automatically capture usage details and cost details data from the LLM response. If this does not work as expected, please create an [issue](/issue) on GitHub.
-
-<LangTabs items={["Python SDK", "JS/TS SDK"]}>
-<Tab>
 
 When using the `@observe()` decorator:
 
@@ -148,18 +144,12 @@ with langfuse.start_as_current_observation(
     )
 ```
 
-</Tab>
-<Tab title="JS/TS SDK">
+
+**JS/TS SDK:**
 
 When using the context manager:
 
 ```ts /usageDetails/, /costDetails/
-import {
-  startActiveObservation,
-  startObservation,
-  updateActiveObservation,
-} from "@langfuse/tracing";
-
 await startActiveObservation("context-manager", async (span) => {
   span.update({
     input: { query: "What is the capital of France?" },
@@ -203,8 +193,6 @@ await startActiveObservation("context-manager", async (span) => {
 When using the `observe` wrapper:
 
 ```ts /usageDetails/, /costDetails/
-import { observe, updateActiveObservation } from "@langfuse/tracing";
-
 // An existing function
 async function fetchData(source: string) {
   updateActiveObservation(
@@ -287,15 +275,10 @@ span.update({ output: "Successfully answered user request." }).end();
 
 You can also update the usage and cost via `generation.update()`.
 
-</Tab>
-</LangTabs>
 
 ### Compatibility with OpenAI
 
 For increased compatibility with OpenAI, you can also use the OpenAI Usage schema. `prompt_tokens` will be mapped to `input`, `completion_tokens` will be mapped to `output`, and `total_tokens` will be mapped to `total`. The keys nested in `prompt_tokens_details` will be flattened with an `input_` prefix and `completion_tokens_details` will be flattened with an `output_` prefix.
-
-<LangTabs items={["Python SDK", "JS/TS SDK"]}>
-<Tab>
 
 ```python
 from langfuse import get_client
@@ -327,8 +310,6 @@ with langfuse.start_as_current_observation(
     )
 ```
 
-</Tab>
-<Tab>
 
 ```ts
 const generation = langfuse.generation({
@@ -350,8 +331,6 @@ const generation = langfuse.generation({
 });
 ```
 
-</Tab>
-</LangTabs>
 
 You can also ingest OpenAI-style usage via `generation.update()` and `generation.end()`.
 
@@ -410,23 +389,11 @@ For example, the "Large Context" tier for Claude Sonnet 4.5 has a condition: `in
 
 You can flexibly add your own model definitions (incl. [pricing tiers](#pricing-tiers)) to Langfuse. This is especially useful for self-hosted or fine-tuned models which are not included in the list of Langfuse maintained models.
 
-<LangTabs items={["Langfuse UI", "API"]}>
-
-<Tab>
-
 To add a custom model definition in the Langfuse UI, you can either click on the "+" sign next to the model name or navigate to the **Project Settings > Models** to add a new model definition.
 
 Then you can add the prices per token type and save the model definition. Now all **new traces** with this model will have the correct token usage and cost inferred.
 
-  <Video
-  src="https://static.langfuse.com/docs-videos/2025-10-20-custom-model-definition-169.mp4"
-  aspectRatio={16 / 9}
-/>
-</Tab>
-
-<Tab>
-
-Model definitions can also be managed programmatically via the Models [API](/docs/api):
+  Model definitions can also be managed programmatically via the Models [API](/docs/api):
 
 ```bash
 GET    /api/public/models
@@ -435,9 +402,6 @@ GET    /api/public/models/{id}
 DELETE /api/public/models/{id}
 ```
 
-</Tab>
-
-</LangTabs>
 
 Models are matched to generations based on:
 
@@ -478,6 +442,3 @@ For more details, see [the OpenAI guide](https://platform.openai.com/docs/guides
 
 ## GitHub Discussions
 
-import { GhDiscussionsPreview } from "@/components/gh-discussions/GhDiscussionsPreview";
-
-<GhDiscussionsPreview labels={["feat-cost-tracking"]} />

@@ -6,16 +6,6 @@ sidebarTitle: Audit Logs
 
 # Audit Logs
 
-<AvailabilityBanner
-  availability={{
-    hobby: "not-available",
-    core: "not-available",
-    pro: "not-available",
-    enterprise: "full",
-    selfHosted: "ee",
-  }}
-/>
-
 Langfuse's audit logging system provides comprehensive tracking of all system activities, capturing detailed information about who performed what actions, when they occurred, and what changes were made.
 This feature is essential for enterprise security, compliance requirements, and incident investigation.
 
@@ -36,9 +26,8 @@ These logs provide a complete audit trail for security monitoring, compliance re
 
 The audit log viewer is available in the Enterprise Edition and provides:
 
-<Frame className="my-6">
-  ![Audit Logs Interface](/images/changelog/2025-01-21-audit-logs.png)
-</Frame>
+
+![Audit Logs Interface](/images/changelog/2025-01-21-audit-logs.png)
 
 ### Access Control
 
@@ -128,6 +117,3 @@ Each entry includes:
 
 ## GitHub Discussions
 
-import { GhDiscussionsPreview } from "@/components/gh-discussions/GhDiscussionsPreview";
-
-<GhDiscussionsPreview labels={["feat-audit-logs"]} />

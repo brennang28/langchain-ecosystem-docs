@@ -8,37 +8,25 @@ description: All Langfuse data and features are available via the API. Follow th
 
 Langfuse is open and meant to be extended via custom workflows and integrations. All Langfuse data and features are available via the API.
 
-<Tabs items={["Path", "Cloud US", "Cloud EU", "HIPAA US"]}>
-
-<Tab>
-
 ```
 /api/public
 ```
 
-</Tab>
-<Tab>
 
 ```
 https://us.cloud.langfuse.com/api/public
 ```
 
-</Tab>
-<Tab>
 
 ```
 https://cloud.langfuse.com/api/public
 ```
 
-</Tab>
-<Tab>
 
 ```
 https://hipaa.cloud.langfuse.com/api/public
 ```
 
-</Tab>
-</Tabs>
 
 References:
 
@@ -46,15 +34,13 @@ References:
 - OpenAPI spec: https://cloud.langfuse.com/generated/api/openapi.yml
 - Postman collection: https://cloud.langfuse.com/generated/postman/collection.json
 
-<Callout type="info">
 
-There are 3 different groups of APIs:
+> ℹ️ **Note:** There are 3 different groups of APIs:
+> 
+> - This page -> Project-level APIs: CRUD traces/evals/prompts/configuration within a project
+> - [Organization-level APIs](/docs/administration/scim-and-org-api): provision projects, users (SCIM), and permissions
+> - [Instance Management API](/self-hosting/administration/instance-management-api): administer organizations on self-hosted installations
 
-- This page -> Project-level APIs: CRUD traces/evals/prompts/configuration within a project
-- [Organization-level APIs](/docs/administration/scim-and-org-api): provision projects, users (SCIM), and permissions
-- [Instance Management API](/self-hosting/administration/instance-management-api): administer organizations on self-hosted installations
-
-</Callout>
 
 ## Authentication
 
@@ -76,22 +62,14 @@ Both the Langfuse [Python SDK](/docs/sdk/python/decorators) and the [JS/TS SDK](
 
 You can use your editor's Intellisense to explore the API methods and their parameters.
 
-<Callout type="info">
 
-In Python SDK v4 and JS/TS SDK v5, the high-performance resources are the
-defaults: `api.observations`, `api.scores`, and `api.metrics`. Legacy v1
-resources moved under `api.legacy.*` (Python: `*_v1`, JS/TS: `*V1`).
+> ℹ️ **Note:** In Python SDK v4 and JS/TS SDK v5, the high-performance resources are the
+> defaults: `api.observations`, `api.scores`, and `api.metrics`. Legacy v1
+> resources moved under `api.legacy.*` (Python: `*_v1`, JS/TS: `*V1`).
 
-</Callout>
 
-<Callout type="info">
+> ℹ️ **Note:** When fetching [prompts](/docs/prompts/get-started#use-prompt), please use the `get_prompt` (Python) / `getPrompt` (JS/TS) methods on the Langfuse client to benefit from client-side caching, automatic retries, and fallbacks.
 
-When fetching [prompts](/docs/prompts/get-started#use-prompt), please use the `get_prompt` (Python) / `getPrompt` (JS/TS) methods on the Langfuse client to benefit from client-side caching, automatic retries, and fallbacks.
-
-</Callout>
-
-<LangTabs items={["Python SDK", "JS/TS SDK", "Java SDK"]}>
-<Tab>
 
 When using the [Python SDK](/docs/sdk/python/sdk-v3):
 
@@ -111,13 +89,8 @@ langfuse.api.*
 await langfuse.async_api.*
 ```
 
-</Tab>
-
-<Tab>
 
 ```ts
-import { LangfuseClient } from '@langfuse/client';
-
 const langfuse = new LangfuseClient();
 ...
 // fetch a trace
@@ -127,9 +100,6 @@ await langfuse.api.trace.get(traceId);
 langfuse.api.*
 ```
 
-</Tab>
-
-<Tab>
 
 Install Langfuse by adding the following to your `pom.xml`:
 
@@ -154,10 +124,6 @@ Install Langfuse by adding the following to your `pom.xml`:
 Instantiate and use the Java SDK via:
 
 ```java
-import com.langfuse.client.LangfuseClient;
-import com.langfuse.client.resources.prompts.types.PromptMetaListResponse;
-import com.langfuse.client.core.LangfuseClientApiException;
-
 LangfuseClient client = LangfuseClient.builder()
   .url("https://cloud.langfuse.com") // 🇪🇺 EU data region
   // .url("https://us.cloud.langfuse.com") // 🇺🇸 US data region
@@ -173,14 +139,12 @@ try {
 }
 ```
 
-</Tab>
-</LangTabs>
 
 ## Ingest Traces via the API
 
-<Callout type="info">
-  The OpenTelemetry Endpoint will replace the Ingestion API in the future. Therefore, it is strongly recommended to switch to the OpenTelemetry Endpoint for trace ingestion. Please refer to the [OpenTelemetry docs](/integrations/native/opentelemetry) for more information.
-</Callout>
+
+> ℹ️ **Note:** The OpenTelemetry Endpoint will replace the Ingestion API in the future. Therefore, it is strongly recommended to switch to the OpenTelemetry Endpoint for trace ingestion. Please refer to the [OpenTelemetry docs](/integrations/native/opentelemetry) for more information.
+
 
 - [OpenTelemetry Traces Ingestion Endpoint](https://api.reference.langfuse.com/#tag/opentelemetry/POST/api/public/otel/v1/traces) implements the OTLP/HTTP specification for trace ingestion, providing native OpenTelemetry integration for Langfuse Observability.
 - (Legacy) [Ingestion API](https://api.reference.langfuse.com/#tag/ingestion/POST/api/public/ingestion) allows trace ingestion using an API.
@@ -199,12 +163,5 @@ You can also export data via:
 
 ## FAQ
 
-import { FaqPreview } from "@/components/faq/FaqPreview";
-
-<FaqPreview tags={["platform"]} />
-
 ## GitHub Discussions
 
-import { GhDiscussionsPreview } from "@/components/gh-discussions/GhDiscussionsPreview";
-
-<GhDiscussionsPreview labels={["feat-api"]} />

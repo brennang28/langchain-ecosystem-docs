@@ -165,13 +165,9 @@ export const ExampleEmbed = ({example, theme, minHeight = 500, maxHeight = 700})
     position: "relative",
     fontFamily: "inherit"
   }}>
-      <div className="lc-border lc-bg-surface" style={{
-    border: "1px solid",
-    borderRadius: "16px",
-    overflow: "hidden"
-  }}>
+      
         {}
-        <div ref={slotRef} className="lc-bg-wash" style={{
+        <div ref={slotRef} style={{
     height: iframeHeight,
     position: "relative"
   }}>
@@ -182,33 +178,25 @@ export const ExampleEmbed = ({example, theme, minHeight = 500, maxHeight = 700})
     alignItems: "center",
     justifyContent: "center"
   }}>
-              <div className="lc-spinner" style={{
-    width: 24,
-    height: 24,
-    border: "3px solid",
-    borderRadius: "50%",
-    animation: "spin 0.8s linear infinite"
-  }} />
+              
               <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
-            </div>}
-        </div>
-      </div>
-    </div>;
+            }
+        ;
 };
 
 [AI Elements](https://elements.ai-sdk.dev/) is a composable, shadcn/ui-based component library purpose-built for AI chat interfaces. Components like `Conversation`, `Message`, `Tool`, `Reasoning`, and `PromptInput` are designed to drop directly into any React project and wire to `stream.messages` with minimal glue code.
 
-<ExampleEmbed example="ai-elements" minHeight={700} />
 
-<Tip>
-  Clone and run the [full AI Elements example](https://github.com/langchain-ai/langgraphjs/tree/main/examples/ai-elements) to see tool call rendering, reasoning display, streaming messages, and more in a working project.
-</Tip>
+> 💡 **Tip**
+>
+> Clone and run the [full AI Elements example](https://github.com/langchain-ai/langgraphjs/tree/main/examples/ai-elements) to see tool call rendering, reasoning display, streaming messages, and more in a working project.
+
 
 ## How it works
 
 1. **Install components as source files:** AI Elements ships via a CLI that adds components directly to your project (shadcn/ui registry style)
 2. **Map messages to components:** iterate `stream.messages`, render `HumanMessage` instances as user bubbles and `AIMessage` instances as assistant responses
-3. **Compose richer UIs:** wrap tool calls in `<Tool>`, reasoning in `<Reasoning>`, and everything in `<Conversation>` for scroll management
+3. **Compose richer UIs:** wrap tool calls in ``, reasoning in ``, and everything in `` for scroll management
 
 ## Installation
 
@@ -224,39 +212,6 @@ npx ai-elements@latest add conversation message prompt-input tool reasoning sugg
 Render AI Elements components directly from `stream.messages`. Each LangChain `BaseMessage` maps to a component:
 
 ```tsx  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-import { useStream } from "@langchain/react";
-import { HumanMessage, AIMessage } from "@langchain/core/messages";
-
-import {
-  Conversation,
-  ConversationContent,
-  ConversationScrollButton,
-} from "@/components/ai-elements/conversation";
-import {
-  Message,
-  MessageContent,
-  MessageResponse,
-} from "@/components/ai-elements/message";
-import {
-  Tool,
-  ToolHeader,
-  ToolContent,
-  ToolInput,
-  ToolOutput,
-} from "@/components/ai-elements/tool";
-import {
-  Reasoning,
-  ReasoningTrigger,
-  ReasoningContent,
-} from "@/components/ai-elements/reasoning";
-import {
-  PromptInput,
-  PromptInputBody,
-  PromptInputTextarea,
-  PromptInputFooter,
-  PromptInputSubmit,
-} from "@/components/ai-elements/prompt-input";
-
 export function Chat() {
   const stream = useStream({
     apiUrl: "http://localhost:2024",
@@ -264,9 +219,9 @@ export function Chat() {
   });
 
   return (
-    <div className="flex flex-col h-dvh">
-      <Conversation className="flex-1">
-        <ConversationContent>
+    
+      
+        
           {stream.messages.map((msg, i) => {
             if (HumanMessage.isInstance(msg)) {
               return (
@@ -278,38 +233,29 @@ export function Chat() {
             if (AIMessage.isInstance(msg)) {
               return (
                 <div key={i}>
-                  {/* Reasoning block (shows when model emits thinking tokens) */}
-                  <Reasoning>
-                    <ReasoningTrigger />
-                    <ReasoningContent>{getReasoningText(msg)}</ReasoningContent>
+                  
+                    {getReasoningText(msg)}</ReasoningContent>
                   </Reasoning>
 
-                  {/* Inline tool calls with input/output display */}
                   {getToolCalls(msg).map((tc) => (
-                    <Tool key={tc.id} defaultOpen>
-                      <ToolHeader type={`tool-${tc.name}`} state={tc.state} />
-                      <ToolContent>
-                        <ToolInput input={tc.args} />
+                    
+                      
                         {tc.output && (
-                          <ToolOutput output={tc.output} errorText={undefined} />
-                        )}
+                          )}
                       </ToolContent>
                     </Tool>
                   ))}
 
-                  {/* Streamed text response */}
                   <Message from="assistant">
                     <MessageContent>
                       <MessageResponse>{getTextContent(msg)}</MessageResponse>
                     </MessageContent>
                   </Message>
-                </div>
-              );
+                );
             }
           })}
         </ConversationContent>
-        <ConversationScrollButton />
-      </Conversation>
+        </Conversation>
 
       <PromptInput
         onSubmit={({ text }) =>
@@ -317,16 +263,11 @@ export function Chat() {
         }
       >
         <PromptInputBody>
-          <PromptInputTextarea placeholder="Ask me something..." />
-        </PromptInputBody>
+          </PromptInputBody>
         <PromptInputFooter>
-          <PromptInputSubmit
-            status={stream.isLoading ? "streaming" : "ready"}
-          />
-        </PromptInputFooter>
+          </PromptInputFooter>
       </PromptInput>
-    </div>
-  );
+    );
 }
 ```
 
@@ -339,12 +280,15 @@ export function Chat() {
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/frontend/integrations/ai-elements.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/frontend/integrations/ai-elements.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

@@ -21,24 +21,18 @@ Your application's code must reside in a GitHub repository to be deployed on Lan
 
 ### 2. Deploy to LangSmith
 
-<Steps>
-  <Step title="Navigate to LangSmith Deployment">
-    Log in to [LangSmith](https://smith.langchain.com/). In the left sidebar, select **Deployments**.
-  </Step>
 
-  <Step title="Create new deployment">
-    Click the **+ New Deployment** button. A pane will open where you can fill in the required fields.
-  </Step>
+Log in to [LangSmith](https://smith.langchain.com/). In the left sidebar, select **Deployments**.
+  
 
-  <Step title="Link repository">
-    If you are a first time user or adding a private repository that has not been previously connected, click the **Add new account** button and follow the instructions to connect your GitHub account.
-  </Step>
+Click the **+ New Deployment** button. A pane will open where you can fill in the required fields.
+  
 
-  <Step title="Deploy repository">
-    Select your application's repository. Click **Submit** to deploy. This may take about 15 minutes to complete. You can check the status in the **Deployment details** view.
-  </Step>
-</Steps>
+If you are a first time user or adding a private repository that has not been previously connected, click the **Add new account** button and follow the instructions to connect your GitHub account.
+  
 
+Select your application's repository. Click **Submit** to deploy. This may take about 15 minutes to complete. You can check the status in the **Deployment details** view.
+  
 ### 3. Test your application in Studio
 
 Once your application is deployed:
@@ -55,9 +49,9 @@ Once your application is deployed:
 
 You can now test the API:
 
-<Tabs>
-  <Tab title="Python">
-    1. Install LangGraph Python:
+**Python:**
+
+1. Install LangGraph Python:
 
     ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install langgraph-sdk
@@ -85,10 +79,10 @@ You can now test the API:
         print(chunk.data)
         print("\n\n")
     ```
-  </Tab>
+  
+**Rest API:**
 
-  <Tab title="Rest API">
-    ```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     curl -s --request POST \
         --url <DEPLOYMENT_URL>/runs/stream \
         --header 'Content-Type: application/json' \
@@ -106,21 +100,24 @@ You can now test the API:
             \"stream_mode\": \"updates\"
         }"
     ```
-  </Tab>
-</Tabs>
+  
 
-<Tip>
-  LangSmith offers additional hosting options, including self-hosted and hybrid. For more information, please see the [Platform setup overview](/langsmith/platform-setup).
-</Tip>
+> 💡 **Tip**
+>
+> LangSmith offers additional hosting options, including self-hosted and hybrid. For more information, please see the [Platform setup overview](/langsmith/platform-setup).
+
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/deploy.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/deploy.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

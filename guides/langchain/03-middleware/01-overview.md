@@ -33,44 +33,36 @@ agent = create_agent(
 
 The core agent loop involves calling a model, letting it choose tools to execute, and then finishing when it calls no more tools:
 
-<img src="https://mintcdn.com/langchain-5e9cc07a/Tazq8zGc0yYUYrDl/oss/images/core_agent_loop.png?fit=max&auto=format&n=Tazq8zGc0yYUYrDl&q=85&s=ac72e48317a9ced68fd1be64e89ec063" alt="Core agent loop diagram" style={{height: "200px", width: "auto", justifyContent: "center"}} className="rounded-lg block mx-auto" width="300" height="268" data-path="oss/images/core_agent_loop.png" />
+<img src="https://mintcdn.com/langchain-5e9cc07a/Tazq8zGc0yYUYrDl/oss/images/core_agent_loop.png?fit=max&auto=format&n=Tazq8zGc0yYUYrDl&q=85&s=ac72e48317a9ced68fd1be64e89ec063" alt="Core agent loop diagram" style={{height: "200px", width: "auto", justifyContent: "center"}} width="300" height="268" data-path="oss/images/core_agent_loop.png" />
 
 Middleware exposes hooks before and after each of those steps:
 
-<img src="https://mintcdn.com/langchain-5e9cc07a/RAP6mjwE5G00xYsA/oss/images/middleware_final.png?fit=max&auto=format&n=RAP6mjwE5G00xYsA&q=85&s=eb4404b137edec6f6f0c8ccb8323eaf1" alt="Middleware flow diagram" style={{height: "300px", width: "auto", justifyContent: "center"}} className="rounded-lg mx-auto" width="500" height="560" data-path="oss/images/middleware_final.png" />
+<img src="https://mintcdn.com/langchain-5e9cc07a/RAP6mjwE5G00xYsA/oss/images/middleware_final.png?fit=max&auto=format&n=RAP6mjwE5G00xYsA&q=85&s=eb4404b137edec6f6f0c8ccb8323eaf1" alt="Middleware flow diagram" style={{height: "300px", width: "auto", justifyContent: "center"}} width="500" height="560" data-path="oss/images/middleware_final.png" />
 
 ## Additional resources
 
-<CardGroup cols={2}>
-  <Card title="Built-in middleware" icon="box" href="/oss/python/langchain/middleware/built-in">
-    Explore built-in middleware for common use cases.
-  </Card>
-
-  <Card title="Custom middleware" icon="code" href="/oss/python/langchain/middleware/custom">
-    Build your own middleware with hooks and decorators.
-  </Card>
-
-  <Card title="Middleware API reference" icon="book" href="https://reference.langchain.com/python/langchain/middleware/">
-    Complete API reference for middleware.
-  </Card>
-
-  <Card title="Middleware integrations" icon="plug" href="/oss/python/integrations/middleware/">
-    Provider-specific middleware for Anthropic, AWS, OpenAI, and more.
-  </Card>
-
-  <Card title="Testing agents" icon="scale" href="/oss/python/langchain/test/">
-    Test your agents with LangSmith.
-  </Card>
-</CardGroup>
+Explore built-in middleware for common use cases.
+  
+Build your own middleware with hooks and decorators.
+  
+Complete API reference for middleware.
+  
+Provider-specific middleware for Anthropic, AWS, OpenAI, and more.
+  
+Test your agents with LangSmith.
+  
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/middleware/overview.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/middleware/overview.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

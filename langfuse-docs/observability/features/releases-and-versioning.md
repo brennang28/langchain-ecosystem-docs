@@ -4,8 +4,6 @@ description: Langfuse allows for rapid iteration on LLM applications by providin
 sidebarTitle: Releases & Versioning
 ---
 
-import { PropagationRestrictionsCallout } from "@/components/PropagationRestrictionsCallout";
-
 # Releases & Versioning
 
 You can track the effect of changes to your LLM app on metrics in Langfuse. This allows you to:
@@ -37,9 +35,8 @@ The SDKs look for a `release` in the following order:
 
 ### Initialization
 
-<LangTabs items={["Python SDK", "JS/TS SDK", "Environment variable"]}>
 
-<Tab title="Python SDK">
+**Python SDK:**
 
 The Python SDK allows you to set the release when initializing the client:
 
@@ -50,8 +47,6 @@ from langfuse import Langfuse
 langfuse = Langfuse(release="v2.1.24")
 ```
 
-</Tab>
-<Tab>
 
 The JS/TS SDK will look for a `LANGFUSE_RELEASE` environment variable. Use it to configure the release e.g. in your CI/CD pipeline.
 
@@ -59,8 +54,8 @@ The JS/TS SDK will look for a `LANGFUSE_RELEASE` environment variable. Use it to
 LANGFUSE_RELEASE = "<release_tag>" # <- github sha or other identifier
 ```
 
-</Tab>
-<Tab title="Environment variable">
+
+**Environment variable:**
 
 The SDKs will look for a `LANGFUSE_RELEASE` environment variable. Use it to configure the release e.g. in your CI/CD pipeline.
 
@@ -68,9 +63,6 @@ The SDKs will look for a `LANGFUSE_RELEASE` environment variable. Use it to conf
 LANGFUSE_RELEASE = "<release_tag>" # <- github sha or other identifier
 ```
 
-</Tab>
-
-</LangTabs>
 
 **Automatically on popular platforms**
 
@@ -92,8 +84,6 @@ flowchart LR
 
 The `version` parameter can be added to all observation types (e.g., `span`, `generation`, `event`, and [other observation types](/docs/observability/features/observation-types)). Thereby, you can track the effect of a new `version` on the metrics of an object with a specific `name` using [Langfuse analytics](/docs/analytics).
 
-<LangTabs items={["Python SDK", "JS/TS SDK", "Langchain (Python)","Langchain (JS)"]}>
-<Tab>
 **Set Version on all observations within a context:**
 
 ```python /propagate_attributes(version="1.0")/
@@ -141,14 +131,10 @@ with langfuse.start_as_current_observation(as_type="span", name="process-data", 
     pass
 ```
 
-</Tab>
-<Tab>
 
 **Propagating version to all observations within a context:**
 
 ```ts /propagateAttributes/
-import { startActiveObservation, propagateAttributes } from "@langfuse/tracing";
-
 await startActiveObservation("process-data", async (span) => {
   // Propagate version to all child observations
   await propagateAttributes(
@@ -172,8 +158,6 @@ await startActiveObservation("process-data", async (span) => {
 **Version on a specific observation:**
 
 ```ts
-import { startObservation } from "@langfuse/tracing";
-
 const generation = startObservation(
   "guess-countries",
   { model: "gpt-4" },
@@ -183,8 +167,6 @@ generation.update({ version: "1.0" });
 generation.end();
 ```
 
-</Tab>
-<Tab>
 
 ```python /version="1.0"/
 from langfuse.callback import CallbackHandler
@@ -192,24 +174,16 @@ from langfuse.callback import CallbackHandler
 handler = CallbackHandler(version="1.0")
 ```
 
-</Tab>
-<Tab>
 
 ```ts /version: "1.0"/
-import { CallbackHandler } from "langfuse-langchain";
-
 const handler = new CallbackHandler({
   version: "1.0",
 });
 ```
 
-</Tab>
-</LangTabs>
-
-<PropagationRestrictionsCallout attributes={["version"]} />
 
 _Version parameter in Langfuse interface_
 
-<Frame>
-  ![Version on single generation](/images/blog/update-august-2023/version.jpg)
-</Frame>
+
+![Version on single generation](/images/blog/update-august-2023/version.jpg)
+

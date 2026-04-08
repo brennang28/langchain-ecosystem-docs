@@ -29,13 +29,6 @@ graph LR
 
 You can easily switch between organizations and projects using the dropdowns in the top navigation bar.
 
-<Video
-  src="https://static.langfuse.com/docs-videos/project_menu.mp4"
-  gifStyle
-  aspectRatio={768 / 452}
-  className="max-w-sm"
-/>
-
 ## Roles and Scopes
 
 - `Owner`: has all permissions
@@ -44,235 +37,36 @@ You can easily switch between organizations and projects using the dropdowns in 
 - `Viewer`: view-only access to the project and organization, most of the configuration is hidden
 - `None`: no default access to the organization, to be used when user should have access to a single project only
 
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-
 export function RolePermissionTable({ roleScopes }) {
   return (
-    <div className="grid grid-cols-5 gap-1">
-      {Object.entries(roleScopes).map(([role, scopes]) => (
-        <div key={role} className="flex flex-col">
-          <div className="border-b pb-2 mb-2 border-gray-600">{role}</div>
-          {scopes
+    
+{Object.entries(roleScopes).map(([role, scopes]) => (
+        <div key={role} >
+          
+{role}
+{scopes
             .sort((a, b) => a.localeCompare(b))
             .map((scope) => (
-              <div key={scope} className="text-xs mt-1 break-words">
+              <div key={scope} >
                 {scope}
-              </div>
-            ))}
-        </div>
-      ))}
-    </div>
-  );
+              
+))}
+        
+))}
+    
+);
 }
 
 <Accordion type="single" collapsible>
   <AccordionItem value="organization-scopes">
     <AccordionTrigger>Organization-level scopes</AccordionTrigger>
-    <AccordionContent className="overflow-x-auto">
-      <RolePermissionTable
-        roleScopes={{
-          OWNER: [
-            "projects:create",
-            "projects:transfer_org",
-            "organization:CRUD_apiKeys",
-            "organization:update",
-            "organization:delete",
-            "organizationMembers:CUD",
-            "organizationMembers:read",
-            "langfuseCloudBilling:CRUD",
-          ],
-          ADMIN: [
-            "projects:create",
-            "projects:transfer_org",
-            "organization:CRUD_apiKeys",
-            "organization:update",
-            "organizationMembers:CUD",
-            "organizationMembers:read",
-          ],
-          MEMBER: ["organizationMembers:read"],
-          VIEWER: [],
-          NONE: [],
-        }}
-      />
-    </AccordionContent>
+    <AccordionContent >
+      </AccordionContent>
   </AccordionItem>
   <AccordionItem value="project-scopes">
     <AccordionTrigger>Project-level scopes</AccordionTrigger>
-    <AccordionContent className="overflow-x-auto">
-      <RolePermissionTable
-        roleScopes={{
-          OWNER: [
-            "project:read",
-            "project:update",
-            "project:delete",
-            "projectMembers:read",
-            "projectMembers:CUD",
-            "apiKeys:read",
-            "apiKeys:CUD",
-            "integrations:CRUD",
-            "objects:publish",
-            "objects:bookmark",
-            "objects:tag",
-            "traces:delete",
-            "scores:CUD",
-            "scoreConfigs:CUD",
-            "scoreConfigs:read",
-            "datasets:CUD",
-            "prompts:CUD",
-            "prompts:read",
-            "promptProtectedLabels:CUD",
-            "models:CUD",
-            "evalTemplate:CUD",
-            "evalTemplate:read",
-            "evalJob:CUD",
-            "evalJob:read",
-            "evalJobExecution:read",
-            "evalDefaultModel:CUD",
-            "evalDefaultModel:read",
-            "llmApiKeys:read",
-            "llmApiKeys:create",
-            "llmApiKeys:update",
-            "llmApiKeys:delete",
-            "llmSchemas:CUD",
-            "llmSchemas:read",
-            "llmTools:CUD",
-            "llmTools:read",
-            "batchExports:create",
-            "batchExports:read",
-            "comments:CUD",
-            "comments:read",
-            "annotationQueues:read",
-            "annotationQueues:CUD",
-            "annotationQueueAssignments:read",
-            "annotationQueueAssignments:CUD",
-            "promptExperiments:CUD",
-            "promptExperiments:read",
-            "auditLogs:read",
-            "dashboards:read",
-            "dashboards:CUD",
-            "TableViewPresets:CUD",
-            "TableViewPresets:read",
-            "automations:CUD",
-            "automations:read",
-          ],
-          ADMIN: [
-            "project:read",
-            "project:update",
-            "projectMembers:read",
-            "projectMembers:CUD",
-            "apiKeys:read",
-            "apiKeys:CUD",
-            "integrations:CRUD",
-            "objects:publish",
-            "objects:bookmark",
-            "objects:tag",
-            "traces:delete",
-            "scores:CUD",
-            "scoreConfigs:CUD",
-            "scoreConfigs:read",
-            "datasets:CUD",
-            "prompts:CUD",
-            "prompts:read",
-            "promptProtectedLabels:CUD",
-            "models:CUD",
-            "evalTemplate:CUD",
-            "evalTemplate:read",
-            "evalJob:CUD",
-            "evalJob:read",
-            "evalJobExecution:read",
-            "evalDefaultModel:CUD",
-            "evalDefaultModel:read",
-            "llmApiKeys:read",
-            "llmApiKeys:create",
-            "llmApiKeys:update",
-            "llmApiKeys:delete",
-            "llmSchemas:CUD",
-            "llmSchemas:read",
-            "llmTools:CUD",
-            "llmTools:read",
-            "batchExports:create",
-            "batchExports:read",
-            "comments:CUD",
-            "comments:read",
-            "annotationQueues:read",
-            "annotationQueues:CUD",
-            "annotationQueueAssignments:read",
-            "annotationQueueAssignments:CUD",
-            "promptExperiments:CUD",
-            "promptExperiments:read",
-            "auditLogs:read",
-            "dashboards:read",
-            "dashboards:CUD",
-            "TableViewPresets:CUD",
-            "TableViewPresets:read",
-            "automations:CUD",
-            "automations:read",
-          ],
-          MEMBER: [
-            "project:read",
-            "projectMembers:read",
-            "apiKeys:read",
-            "objects:publish",
-            "objects:bookmark",
-            "objects:tag",
-            "scores:CUD",
-            "scoreConfigs:CUD",
-            "scoreConfigs:read",
-            "datasets:CUD",
-            "prompts:CUD",
-            "prompts:read",
-            "evalTemplate:CUD",
-            "evalTemplate:read",
-            "evalJob:read",
-            "evalJob:CUD",
-            "evalJobExecution:read",
-            "evalDefaultModel:read",
-            "evalDefaultModel:CUD",
-            "llmApiKeys:read",
-            "llmSchemas:read",
-            "llmTools:read",
-            "batchExports:create",
-            "batchExports:read",
-            "comments:CUD",
-            "comments:read",
-            "annotationQueues:read",
-            "annotationQueues:CUD",
-            "annotationQueueAssignments:read",
-            "promptExperiments:CUD",
-            "promptExperiments:read",
-            "dashboards:read",
-            "dashboards:CUD",
-            "TableViewPresets:CUD",
-            "TableViewPresets:read",
-            "automations:read",
-          ],
-          VIEWER: [
-            "project:read",
-            "prompts:read",
-            "evalTemplate:read",
-            "scoreConfigs:read",
-            "evalJob:read",
-            "evalJobExecution:read",
-            "evalDefaultModel:read",
-            "llmApiKeys:read",
-            "llmSchemas:read",
-            "llmTools:read",
-            "comments:read",
-            "annotationQueues:read",
-            "promptExperiments:read",
-            "dashboards:read",
-            "TableViewPresets:read",
-            "automations:read",
-          ],
-          NONE: [],
-        }}
-      />
-    </AccordionContent>
+    <AccordionContent >
+      </AccordionContent>
   </AccordionItem>
 </Accordion>
 
@@ -300,16 +94,6 @@ During this process, no data will be lost, all project settings, data, and confi
 
 ## Project-level roles
 
-<AvailabilityBanner
-  availability={{
-    hobby: "not-available",
-    core: "not-available",
-    pro: "team-add-on",
-    enterprise: "full",
-    selfHosted: "ee",
-  }}
-/>
-
 Users by default inherit the role of the organization they are part of. For more fine-grained control, you can assign a user a role on the project level. This is useful when you want to differentiate permissions for different projects within the same organization.
 
 If a project-level role is assigned, it will override the organization-level role for that project.
@@ -323,6 +107,3 @@ If you want to give a user access to only certain projects within an organizatio
 
 ## GitHub Discussions
 
-import { GhDiscussionsPreview } from "@/components/gh-discussions/GhDiscussionsPreview";
-
-<GhDiscussionsPreview labels={["feat-rbac"]} />

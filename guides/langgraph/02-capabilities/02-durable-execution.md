@@ -8,10 +8,12 @@
 
 LangGraph's built-in [persistence](/oss/python/langgraph/persistence) layer provides durable execution for workflows, ensuring that the state of each execution step is saved to a durable store. This capability guarantees that if a workflow is interrupted -- whether by a system failure or for [human-in-the-loop](/oss/python/langgraph/interrupts) interactions -- it can be resumed from its last recorded state.
 
-<Tip>
-  If you are using LangGraph with a checkpointer, you already have durable execution enabled. You can pause and resume workflows at any point, even after interruptions or failures.
-  To make the most of durable execution, ensure that your workflow is designed to be [deterministic](#determinism-and-consistent-replay) and [idempotent](#determinism-and-consistent-replay) and wrap any side effects or non-deterministic operations inside [tasks](/oss/python/langgraph/functional-api#task). You can use [tasks](/oss/python/langgraph/functional-api#task) from both the [StateGraph (Graph API)](/oss/python/langgraph/graph-api) and the [Functional API](/oss/python/langgraph/functional-api).
-</Tip>
+
+> 💡 **Tip**
+>
+> If you are using LangGraph with a checkpointer, you already have durable execution enabled. You can pause and resume workflows at any point, even after interruptions or failures.
+>   To make the most of durable execution, ensure that your workflow is designed to be [deterministic](#determinism-and-consistent-replay) and [idempotent](#determinism-and-consistent-replay) and wrap any side effects or non-deterministic operations inside [tasks](/oss/python/langgraph/functional-api#task). You can use [tasks](/oss/python/langgraph/functional-api#task) from both the [StateGraph (Graph API)](/oss/python/langgraph/graph-api) and the [Functional API](/oss/python/langgraph/functional-api).
+
 
 ## Requirements
 
@@ -59,9 +61,9 @@ The durability modes, from least to most durable, are as follows:
 
 If a [node](/oss/python/langgraph/graph-api#nodes) contains multiple operations, you may find it easier to convert each operation into a **task** rather than refactor the operations into individual nodes.
 
-<Tabs>
-  <Tab title="Original">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**Original:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from typing import NotRequired
     from typing_extensions import TypedDict
     from langchain_core.utils.uuid import uuid7
@@ -103,10 +105,10 @@ If a [node](/oss/python/langgraph/graph-api#nodes) contains multiple operations,
     # Invoke the graph
     graph.invoke({"url": "https://www.example.com"}, config)
     ```
-  </Tab>
+  
+**With task:**
 
-  <Tab title="With task">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from typing import NotRequired
     from typing_extensions import TypedDict
     from langchain_core.utils.uuid import uuid7
@@ -156,9 +158,7 @@ If a [node](/oss/python/langgraph/graph-api#nodes) contains multiple operations,
     # Invoke the graph
     graph.invoke({"urls": ["https://www.example.com"]}, config)
     ```
-  </Tab>
-</Tabs>
-
+  
 ## Resuming workflows
 
 Once you have enabled durable execution in your workflow, you can resume execution for the following scenarios:
@@ -175,12 +175,15 @@ Once you have enabled durable execution in your workflow, you can resume executi
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/durable-execution.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/durable-execution.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

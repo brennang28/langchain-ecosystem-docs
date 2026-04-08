@@ -46,9 +46,11 @@ def _set_env(key: str):
 _set_env("OPENAI_API_KEY")
 ```
 
-<Tip>
-  Sign up for LangSmith to quickly spot issues and improve the performance of your LangGraph projects. [LangSmith](https://docs.smith.langchain.com) lets you use trace data to debug, test, and monitor your LLM apps built with LangGraph.
-</Tip>
+
+> 💡 **Tip**
+>
+> Sign up for LangSmith to quickly spot issues and improve the performance of your LangGraph projects. [LangSmith](https://docs.smith.langchain.com) lets you use trace data to debug, test, and monitor your LLM apps built with LangGraph.
+
 
 ## 1. Preprocess documents
 
@@ -523,7 +525,6 @@ Tool Calls:
     query: types of reward hacking
 
 
-
 Update from node retrieve
 ================================= Tool Message ==================================
 Name: retrieve_blog_posts
@@ -539,7 +540,6 @@ Let's Define Reward Hacking#
 Reward shaping in RL is challenging. Reward hacking occurs when an RL agent exploits flaws or ambiguities in the reward function to obtain high rewards without genuinely learning the intended behaviors or completing the task as designed. In recent years, several related concepts have been proposed, all referring to some form of reward hacking:
 
 
-
 Update from node generate_answer
 ================================== Ai Message ==================================
 
@@ -548,12 +548,15 @@ Lilian Weng categorizes reward hacking into two types: environment or goal missp
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/agentic-rag.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/agentic-rag.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

@@ -13,15 +13,11 @@ The core of this is **application tracing** — structured logs of every request
 
 Langfuse captures all of this for you as you build. Here's an example of a trace in the Langfuse UI:
 
-<Frame fullWidth>
-  <img src="/images/docs/tracing-overview.png" alt="Example of a trace showing nested observations: an initial model call, multiple tool executions, and a final summarization step. Each observation includes timing, inputs, outputs, and cost information." />
-</Frame>
 
-<Callout type="info" emoji="🎥">
+<img src="/images/docs/tracing-overview.png" alt="Example of a trace showing nested observations: an initial model call, multiple tool executions, and a final summarization step. Each observation includes timing, inputs, outputs, and cost information." />
 
-[**Watch this walkthrough**](/watch-demo?tab=observability) of Langfuse Observability and how to integrate it with your application.
+> ℹ️ **Note:** [**Watch this walkthrough**](/watch-demo?tab=observability) of Langfuse Observability and how to integrate it with your application.
 
-</Callout>
 
 ## Getting Started
 

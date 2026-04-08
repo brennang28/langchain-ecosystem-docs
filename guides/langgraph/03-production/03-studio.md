@@ -58,9 +58,11 @@ agent = create_agent(
 
 Studio requires a LangSmith API key to connect your local agent. Create a `.env` file in the root of your project and add your API key from [LangSmith](https://smith.langchain.com/settings).
 
-<Warning>
-  Ensure your `.env` file is not committed to version control, such as Git.
-</Warning>
+
+> ⚠️ **Warning**
+>
+> Ensure your `.env` file is not committed to version control, such as Git.
+
 
 ```bash .env theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 LANGSMITH_API_KEY=lsv2...
@@ -82,9 +84,11 @@ The LangGraph CLI uses a configuration file to locate your agent and manage depe
 
 The [`create_agent`](https://reference.langchain.com/python/langchain/agents/factory/create_agent) function automatically returns a compiled LangGraph graph, which is what the `graphs` key expects in the configuration file.
 
-<Info>
-  For detailed explanations of each key in the JSON object of the configuration file, refer to the [LangGraph configuration file reference](/langsmith/cli#configuration-file).
-</Info>
+
+> ℹ️ **Info**
+>
+> For detailed explanations of each key in the JSON object of the configuration file, refer to the [LangGraph configuration file reference](/langsmith/cli#configuration-file).
+
 
 At this point, the project structure will look like this:
 
@@ -100,15 +104,14 @@ my-app/
 
 Install your project dependencies from the root directory:
 
-<CodeGroup>
-  ```shell pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```shell pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   pip install langchain langchain-openai
   ```
 
   ```shell uv theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   uv add langchain langchain-openai
   ```
-</CodeGroup>
 
 ### 6. View your agent in Studio
 
@@ -118,15 +121,16 @@ Start the development server to connect your agent to Studio:
 langgraph dev
 ```
 
-<Warning>
-  Safari blocks `localhost` connections to Studio. To work around this, run the above command with `--tunnel` to access Studio via a secure tunnel. You'll need to manually add the tunnel URL to allowed origins by clicking **Connect to a local server** in the Studio UI. See the [troubleshooting guide](/langsmith/troubleshooting-studio#safari-connection-issues) for steps.
-</Warning>
+
+> ⚠️ **Warning**
+>
+> Safari blocks `localhost` connections to Studio. To work around this, run the above command with `--tunnel` to access Studio via a secure tunnel. You'll need to manually add the tunnel URL to allowed origins by clicking **Connect to a local server** in the Studio UI. See the [troubleshooting guide](/langsmith/troubleshooting-studio#safari-connection-issues) for steps.
+
 
 Once the server is running, your agent is accessible both via API at `http://127.0.0.1:2024` and through the Studio UI at `https://smith.langchain.com/studio/?baseUrl=http://127.0.0.1:2024`:
 
-<Frame>
-    <img src="https://mintcdn.com/langchain-5e9cc07a/TCDks4pdsHdxWmuJ/oss/images/studio_create-agent.png?fit=max&auto=format&n=TCDks4pdsHdxWmuJ&q=85&s=ebd259e9fa24af7d011dfcc568f74be2" alt="Agent view in the Studio UI" width="2836" height="1752" data-path="oss/images/studio_create-agent.png" />
-</Frame>
+
+<img src="https://mintcdn.com/langchain-5e9cc07a/TCDks4pdsHdxWmuJ/oss/images/studio_create-agent.png?fit=max&auto=format&n=TCDks4pdsHdxWmuJ&q=85&s=ebd259e9fa24af7d011dfcc568f74be2" alt="Agent view in the Studio UI" width="2836" height="1752" data-path="oss/images/studio_create-agent.png" />
 
 With Studio connected to your local agent, you can iterate quickly on your agent's behavior. Run a test input, inspect the full execution trace including prompts, tool arguments, return values, and token/latency metrics in [LangSmith](/langsmith/observability-studio). When something goes wrong, Studio captures exceptions with the surrounding state to help you understand what happened.
 
@@ -143,18 +147,20 @@ For more information on how to run Studio, refer to the following guides in the 
 
 ## Video guide
 
-<Frame>
-  <iframe className="w-full aspect-video rounded-xl" src="https://www.youtube.com/embed/Mi1gSlHwZLM?si=zA47TNuTC5aH0ahd" title="Studio" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
-</Frame>
+
+<iframe src="https://www.youtube.com/embed/Mi1gSlHwZLM?si=zA47TNuTC5aH0ahd" title="Studio" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen />
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/studio.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/studio.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

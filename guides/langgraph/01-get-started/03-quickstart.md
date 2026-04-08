@@ -6,25 +6,29 @@
 
 This quickstart demonstrates how to build a calculator agent using the LangGraph Graph API or the Functional API.
 
-<Tip>
-  **Using an AI coding assistant?**
 
-  * Install the [LangChain Docs MCP server](/use-these-docs) to give your agent access to up-to-date LangChain documentation and examples.
-  * Install [LangChain Skills](https://github.com/langchain-ai/langchain-skills) to improve your agent's performance on LangChain ecosystem tasks.
-</Tip>
+> 💡 **Tip**
+>
+> **Using an AI coding assistant?**
+> 
+>   * Install the [LangChain Docs MCP server](/use-these-docs) to give your agent access to up-to-date LangChain documentation and examples.
+>   * Install [LangChain Skills](https://github.com/langchain-ai/langchain-skills) to improve your agent's performance on LangChain ecosystem tasks.
+
 
 * [Use the Graph API](#use-the-graph-api) if you prefer to define your agent as a graph of nodes and edges.
 * [Use the Functional API](#use-the-functional-api) if you prefer to define your agent as a single function.
 
 For conceptual information, see [Graph API overview](/oss/python/langgraph/graph-api) and [Functional API overview](/oss/python/langgraph/functional-api).
 
-<Info>
-  For this example, you will need to set up a [Claude (Anthropic)](https://www.anthropic.com/) account and get an API key. Then, set the `ANTHROPIC_API_KEY` environment variable in your terminal.
-</Info>
 
-<Tabs>
-  <Tab title="Use the Graph API">
-    ## 1. Define tools and model
+> ℹ️ **Info**
+>
+> For this example, you will need to set up a [Claude (Anthropic)](https://www.anthropic.com/) account and get an API key. Then, set the `ANTHROPIC_API_KEY` environment variable in your terminal.
+
+
+**Use the Graph API:**
+
+## 1. Define tools and model
 
     In this example, we'll use the Claude Sonnet 4.5 model and define tools for addition, multiplication, and division.
 
@@ -83,11 +87,13 @@ For conceptual information, see [Graph API overview](/oss/python/langgraph/graph
 
     The graph's state is used to store the messages and the number of LLM calls.
 
-    <Tip>
-      State in LangGraph persists throughout the agent's execution.
+    
+> 💡 **Tip**
+>
+> State in LangGraph persists throughout the agent's execution.
+> 
+>       The `Annotated` type with `operator.add` ensures that new messages are appended to the existing list rather than replacing it.
 
-      The `Annotated` type with `operator.add` ensures that new messages are appended to the existing list rather than replacing it.
-    </Tip>
 
     ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langchain.messages import AnyMessage
@@ -204,14 +210,19 @@ For conceptual information, see [Graph API overview](/oss/python/langgraph/graph
         m.pretty_print()
     ```
 
-    <Tip>
-      To learn how to trace your agent with LangSmith, see the [LangSmith documentation](/langsmith/trace-with-langgraph).
-    </Tip>
+    
+> 💡 **Tip**
+>
+> To learn how to trace your agent with LangSmith, see the [LangSmith documentation](/langsmith/trace-with-langgraph).
+
 
     Congratulations! You've built your first agent using the LangGraph Graph API.
 
-    <Accordion title="Full code example">
-      ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+<details>
+<summary>Full code example</summary>
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       # Step 1: Define tools and model
 
       from langchain.tools import tool
@@ -365,11 +376,13 @@ For conceptual information, see [Graph API overview](/oss/python/langgraph/graph
           m.pretty_print()
 
       ```
-    </Accordion>
-  </Tab>
 
-  <Tab title="Use the Functional API">
-    ## 1. Define tools and model
+</details>
+
+  
+**Use the Functional API:**
+
+## 1. Define tools and model
 
     In this example, we'll use the Claude Sonnet 4.5 model and define tools for addition, multiplication, and division.
 
@@ -437,9 +450,11 @@ For conceptual information, see [Graph API overview](/oss/python/langgraph/graph
 
     The model node is used to call the LLM and decide whether to call a tool or not.
 
-    <Tip>
-      The [`@task`](https://reference.langchain.com/python/langgraph/func/task) decorator marks a function as a task that can be executed as part of the agent. Tasks can be called synchronously or asynchronously within your entrypoint function.
-    </Tip>
+    
+> 💡 **Tip**
+>
+> The [`@task`](https://reference.langchain.com/python/langgraph/func/task) decorator marks a function as a task that can be executed as part of the agent. Tasks can be called synchronously or asynchronously within your entrypoint function.
+
 
     ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     @task
@@ -472,9 +487,11 @@ For conceptual information, see [Graph API overview](/oss/python/langgraph/graph
 
     The agent is built using the [`@entrypoint`](https://reference.langchain.com/python/langgraph/func/entrypoint) function.
 
-    <Note>
-      In the Functional API, instead of defining nodes and edges explicitly, you write standard control flow logic (loops, conditionals) within a single function.
-    </Note>
+    
+> ℹ️ **Note**
+>
+> In the Functional API, instead of defining nodes and edges explicitly, you write standard control flow logic (loops, conditionals) within a single function.
+
 
     ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     @entrypoint()
@@ -503,14 +520,19 @@ For conceptual information, see [Graph API overview](/oss/python/langgraph/graph
         print("\n")
     ```
 
-    <Tip>
-      To learn how to trace your agent with LangSmith, see the [LangSmith documentation](/langsmith/trace-with-langgraph).
-    </Tip>
+    
+> 💡 **Tip**
+>
+> To learn how to trace your agent with LangSmith, see the [LangSmith documentation](/langsmith/trace-with-langgraph).
+
 
     Congratulations! You've built your first agent using the LangGraph Functional API.
 
-    <Accordion title="Full code example" icon="code">
-      ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+<details>
+<summary>Full code example</summary>
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       # Step 1: Define tools and model
 
       from langchain.tools import tool
@@ -623,18 +645,21 @@ For conceptual information, see [Graph API overview](/oss/python/langgraph/graph
           print(chunk)
           print("\n")
       ```
-    </Accordion>
-  </Tab>
-</Tabs>
 
+</details>
+
+  
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/quickstart.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/quickstart.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

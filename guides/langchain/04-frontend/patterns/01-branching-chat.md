@@ -687,7 +687,7 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
         backgroundColor: isSelected ? isDark ? "#1A2740" : "#E5F4FF" : "transparent",
         color: isSelected ? isDark ? "#C8DDF0" : "#030710" : "#6B8299"
       });
-      btn.innerHTML = `<span>${SDK_LOGOS[value]}</span>${label}`;
+      btn.innerHTML = `<span>${SDK_LOGOS[value]}${label}`;
       btn.addEventListener("mouseenter", () => {
         if (!isSelected) {
           btn.style.backgroundColor = isDark ? "#1A2740" : "#F2FAFF";
@@ -743,22 +743,18 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
   const tabInactiveClass = `${tabBase} lc-tab-inactive`;
   const tabTraceActiveClass = `${tabBase} lc-tab-trace`;
   const tabTraceLoadingClass = `${tabBase} lc-tab-trace-loading`;
-  const toolbar = showCodeTab && <div className="lc-toolbar flex items-stretch justify-between px-3 py-2 border-b lc-border lc-bg-wash">
-      <div className="inline-flex items-stretch gap-0.5 rounded-lg border lc-border lc-bg-surface" style={{
-    padding: 3
-  }}>
+  const toolbar = showCodeTab && 
+      
         <button type="button" aria-label="Preview" onClick={() => switchView("preview")} className={activeView === "preview" ? tabActiveClass : tabInactiveClass}>
           <span dangerouslySetInnerHTML={{
     __html: VIEW_EYE_SVG
   }} />
-          <span className="lc-tab-label">Preview</span>
-        </button>
+          Preview</button>
         <button type="button" aria-label="Code" onClick={() => switchView("code")} className={activeView === "code" ? tabActiveClass : tabInactiveClass}>
           <span dangerouslySetInnerHTML={{
     __html: VIEW_CODE_SVG
   }} />
-          <span className="lc-tab-label">Code</span>
-        </button>
+          Code</button>
         {(traceUrl || traceLoading) && !useLocalPreview && <a href={traceUrl ?? "#"} target="_blank" rel="noopener noreferrer" aria-label="Trace" onClick={e => {
     if (!traceUrl) e.preventDefault(); else cachedRef.current?.host.trackEvent("trace_tab_clicked", {
       pattern
@@ -767,16 +763,9 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
             <span dangerouslySetInnerHTML={{
     __html: traceUrl ? TRACE_ICON_SVG : TRACE_SPINNER_SVG
   }} />
-            <span className="lc-tab-label">Trace</span>
-            {traceUrl && <span className="ml-0.5" dangerouslySetInnerHTML={{
-    __html: EXTERNAL_LINK_SVG
-  }} />}
+            Trace{traceUrl && }
           </a>}
-      </div>
-
-      {activeView === "code" && <div className="lc-lang-switcher inline-flex items-stretch gap-0.5 rounded-lg border lc-border lc-bg-surface" style={{
-    padding: 3
-  }}>
+      {activeView === "code" && 
           <button type="button" aria-label="TypeScript" onClick={() => setAgentLang("js")} className={agentLang === "js" ? tabActiveClass : tabInactiveClass} title="TypeScript / JavaScript">
             <span dangerouslySetInnerHTML={{
     __html: LANG_TS_SVG
@@ -787,10 +776,10 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
     __html: LANG_PYTHON_SVG
   }} />
           </button>
-        </div>}
+        }
 
-      <div className="inline-flex items-center gap-1.5">
-        <button type="button" aria-label={expanded ? "Collapse" : "Expand"} onClick={() => setExpanded(v => !v)} className="lc-expand-btn" title={expanded ? "Collapse" : "Expand"}>
+      
+        <button type="button" aria-label={expanded ? "Collapse" : "Expand"} onClick={() => setExpanded(v => !v)} title={expanded ? "Collapse" : "Expand"}>
           <span dangerouslySetInnerHTML={{
     __html: expanded ? CLOSE_SVG : EXPAND_SVG
   }} />
@@ -815,14 +804,14 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
       sdk,
       lang: agentLang
     });
-  }} className="lc-expand-btn">
+  }}>
           <span dangerouslySetInnerHTML={{
     __html: DOWNLOAD_SVG
   }} />
         </button>
 
         {}
-        <button ref={sdkButtonRef} type="button" onClick={() => setSdkDropdownOpen(o => !o)} className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border lc-sdk-btn font-medium cursor-pointer transition-colors">
+        <button ref={sdkButtonRef} type="button" onClick={() => setSdkDropdownOpen(o => !o)}>
           <span dangerouslySetInnerHTML={{
     __html: SDK_LOGOS[sdk]
   }} />
@@ -831,36 +820,34 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
     __html: CHEVRON_DOWN_SVG
   }} />
         </button>
-      </div>
-    </div>;
-  const slot = <div ref={slotRef} className="relative w-full" style={expanded ? {
+      ;
+  const slot = <div ref={slotRef} style={expanded ? {
     flex: 1,
     minHeight: 0
   } : {
     height: heightStyle
   }}>
-      {!ready && !error && <div className="absolute inset-0 flex items-center justify-center z-10 lc-bg-wash">
-          <div className="size-6 border-2 lc-spinner rounded-full animate-spin" />
-        </div>}
+      {!ready && !error && 
+          
+        }
 
-      {error && <div className="absolute top-3 inset-x-3 z-10 px-4 py-3 rounded-2xl border lc-error text-sm">
+      {error && 
           <strong>Preview Error</strong>
-          <p className="mt-1 opacity-80" style={{
+          <p style={{
     fontSize: 13
   }}>
             {error}
           </p>
-          <button type="button" onClick={handleReset} className="mt-2 px-3 py-1 text-xs rounded-lg border lc-error-btn cursor-pointer">
+          <button type="button" onClick={handleReset}>
             Retry
           </button>
-        </div>}
-    </div>;
+        }
+    ;
   return <div data-lc-pe ref={placeholderRef} className={`${effectiveTheme === "dark" ? "dark" : ""} ${className ?? ""}`}>
-      <div ref={cardRef} className="rounded-2xl border lc-border overflow-hidden lc-bg-surface">
+      <div ref={cardRef}>
         {toolbar}
         {slot}
-      </div>
-    </div>;
+      ;
 };
 
 Conversations with AI agents are rarely linear. You may want to rephrase a
@@ -869,11 +856,11 @@ different conversational path without losing your previous work. Branching chat
 brings version-control semantics to your chat UI. Every edit creates a new
 branch, and you can freely navigate between them.
 
-<PatternEmbed pattern="branching-chat" />
 
-<Note>
-  This feature requires the [LangGraph Agent Server](/langsmith/local-server). Run your agent locally with `langgraph dev` or [deploy it to LangSmith](/langsmith/deployment) to use this pattern.
-</Note>
+> ℹ️ **Note**
+>
+> This feature requires the [LangGraph Agent Server](/langsmith/local-server). Run your agent locally with `langgraph dev` or [deploy it to LangSmith](/langsmith/deployment) to use this pattern.
+
 
 ## What is branching chat?
 
@@ -899,15 +886,13 @@ retrieves checkpoint metadata needed for branch operations.
 Define a TypeScript interface matching your agent's state schema and pass it as a type parameter to `useStream` for type-safe access to state values. In the examples below, replace `typeof myAgent` with your interface name:
 
 ```ts  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-import type { BaseMessage } from "@langchain/core/messages";
-
 interface AgentState {
   messages: BaseMessage[];
 }
 ```
 
-<CodeGroup>
-  ```tsx React theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```tsx React theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   import { useStream } from "@langchain/react";
 
   const AGENT_URL = "http://localhost:2024";
@@ -920,8 +905,7 @@ interface AgentState {
     });
 
     return (
-      <div>
-        {stream.messages.map((msg) => {
+      {stream.messages.map((msg) => {
           const metadata = stream.getMessagesMetadata(msg);
           return (
             <Message
@@ -934,8 +918,7 @@ interface AgentState {
             />
           );
         })}
-      </div>
-    );
+      );
   }
   ```
 
@@ -970,8 +953,7 @@ interface AgentState {
   </script>
 
   <template>
-    <div>
-      <Message
+    <Message
         v-for="msg in stream.messages.value"
         :key="msg.id"
         :message="msg"
@@ -980,8 +962,7 @@ interface AgentState {
         @regenerate="handleRegenerate(stream.getMessagesMetadata(msg))"
         @branch-switch="(id) => stream.setBranch(id)"
       />
-    </div>
-  </template>
+    </template>
   ```
 
   ```svelte Svelte theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
@@ -1014,8 +995,7 @@ interface AgentState {
     }
   </script>
 
-  <div>
-    {#each $messages as msg (msg.id)}
+  {#each $messages as msg (msg.id)}
       {@const metadata = getMessagesMetadata(msg)}
       <Message
         message={msg}
@@ -1025,7 +1005,6 @@ interface AgentState {
         onBranchSwitch={(id) => setBranch(id)}
       />
     {/each}
-  </div>
   ```
 
   ```ts Angular theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
@@ -1073,7 +1052,6 @@ interface AgentState {
     }
   }
   ```
-</CodeGroup>
 
 ## Understand message metadata
 
@@ -1157,11 +1135,13 @@ function handleRegenerate(
 Each regeneration creates a new branch for the AI message at that position.
 Users can then use the branch switcher to compare different responses.
 
-<Tip>
-  Regeneration is useful for non-deterministic agents. Since LLM outputs vary
-  with temperature, regenerating the same prompt often produces meaningfully
-  different responses.
-</Tip>
+
+> 💡 **Tip**
+>
+> Regeneration is useful for non-deterministic agents. Since LLM outputs vary
+>   with temperature, regenerating the same prompt often produces meaningfully
+>   different responses.
+
 
 ## Build a branch switcher
 
@@ -1185,28 +1165,24 @@ function BranchSwitcher({
   const hasNext = currentIndex < branchOptions.length - 1;
 
   return (
-    <div className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-600">
+    
       <button
         disabled={!hasPrev}
         onClick={() => onSwitch(branchOptions[currentIndex - 1])}
-        className="hover:text-gray-900 disabled:opacity-30"
         aria-label="Previous version"
       >
         ◀
       </button>
-      <span className="min-w-[3ch] text-center">
+      
         {currentIndex + 1}/{branchOptions.length}
-      </span>
       <button
         disabled={!hasNext}
         onClick={() => onSwitch(branchOptions[currentIndex + 1])}
-        className="hover:text-gray-900 disabled:opacity-30"
         aria-label="Next version"
       >
         ▶
       </button>
-    </div>
-  );
+    );
 }
 ```
 
@@ -1214,11 +1190,13 @@ When the user clicks a branch arrow, call `stream.setBranch(branchId)` to
 switch the conversation view to that branch. This is instant since all branch
 data is already loaded via `fetchStateHistory: true`.
 
-<Note>
-  Switching branches affects not only the target message but also all subsequent
-  messages. If you switch to a different version of message 3, messages 4, 5, 6,
-  etc. will also update to reflect the conversation that followed that version.
-</Note>
+
+> ℹ️ **Note**
+>
+> Switching branches affects not only the target message but also all subsequent
+>   messages. If you switch to a different version of message 3, messages 4, 5, 6,
+>   etc. will also update to reflect the conversation that followed that version.
+
 
 ## How branching works under the hood
 
@@ -1265,7 +1243,7 @@ function MessageWithBranching({
   const hasBranches = metadata.branchOptions.length > 1;
 
   return (
-    <div className="group relative py-2">
+    
       {isEditing ? (
         <EditForm
           text={editText}
@@ -1290,13 +1268,8 @@ function MessageWithBranching({
               }
             >
               {message.content as string}
-            </div>
-          </div>
-
-          <div className="mt-1 flex items-center gap-2 opacity-0 transition-opacity group-hover:opacity-100">
             {isHuman && (
               <button
-                className="text-xs text-gray-400 hover:text-gray-700"
                 onClick={() => setIsEditing(true)}
               >
                 Edit
@@ -1305,7 +1278,6 @@ function MessageWithBranching({
 
             {isAI && (
               <button
-                className="text-xs text-gray-400 hover:text-gray-700"
                 onClick={() =>
                   handleRegenerate(stream, metadata)
                 }
@@ -1320,11 +1292,9 @@ function MessageWithBranching({
                 onSwitch={(id) => stream.setBranch(id)}
               />
             )}
-          </div>
-        </>
+          </>
       )}
-    </div>
-  );
+    );
 }
 
 function EditForm({
@@ -1339,29 +1309,24 @@ function EditForm({
   onCancel: () => void;
 }) {
   return (
-    <div className="space-y-2">
+    
       <textarea
-        className="w-full rounded-lg border p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
         value={text}
         onChange={(e) => onChange(e.target.value)}
         rows={3}
       />
-      <div className="flex gap-2">
+      
         <button
-          className="rounded bg-blue-600 px-4 py-1.5 text-sm text-white hover:bg-blue-700"
           onClick={onSave}
         >
           Save & Rerun
         </button>
         <button
-          className="rounded border px-4 py-1.5 text-sm hover:bg-gray-50"
           onClick={onCancel}
         >
           Cancel
         </button>
-      </div>
-    </div>
-  );
+      );
 }
 ```
 
@@ -1426,10 +1391,12 @@ useEffect(() => {
 }, [focusedMessageMetadata, stream]);
 ```
 
-<Tip>
-  `Alt + ←` / `Alt + →` is a natural mapping for branch navigation since it
-  mirrors browser back/forward navigation.
-</Tip>
+
+> 💡 **Tip**
+>
+> `Alt + ←` / `Alt + →` is a natural mapping for branch navigation since it
+>   mirrors browser back/forward navigation.
+
 
 ## Best practices
 
@@ -1456,12 +1423,15 @@ useEffect(() => {
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/frontend/branching-chat.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/frontend/branching-chat.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

@@ -687,7 +687,7 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
         backgroundColor: isSelected ? isDark ? "#1A2740" : "#E5F4FF" : "transparent",
         color: isSelected ? isDark ? "#C8DDF0" : "#030710" : "#6B8299"
       });
-      btn.innerHTML = `<span>${SDK_LOGOS[value]}</span>${label}`;
+      btn.innerHTML = `<span>${SDK_LOGOS[value]}${label}`;
       btn.addEventListener("mouseenter", () => {
         if (!isSelected) {
           btn.style.backgroundColor = isDark ? "#1A2740" : "#F2FAFF";
@@ -743,22 +743,18 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
   const tabInactiveClass = `${tabBase} lc-tab-inactive`;
   const tabTraceActiveClass = `${tabBase} lc-tab-trace`;
   const tabTraceLoadingClass = `${tabBase} lc-tab-trace-loading`;
-  const toolbar = showCodeTab && <div className="lc-toolbar flex items-stretch justify-between px-3 py-2 border-b lc-border lc-bg-wash">
-      <div className="inline-flex items-stretch gap-0.5 rounded-lg border lc-border lc-bg-surface" style={{
-    padding: 3
-  }}>
+  const toolbar = showCodeTab && 
+      
         <button type="button" aria-label="Preview" onClick={() => switchView("preview")} className={activeView === "preview" ? tabActiveClass : tabInactiveClass}>
           <span dangerouslySetInnerHTML={{
     __html: VIEW_EYE_SVG
   }} />
-          <span className="lc-tab-label">Preview</span>
-        </button>
+          Preview</button>
         <button type="button" aria-label="Code" onClick={() => switchView("code")} className={activeView === "code" ? tabActiveClass : tabInactiveClass}>
           <span dangerouslySetInnerHTML={{
     __html: VIEW_CODE_SVG
   }} />
-          <span className="lc-tab-label">Code</span>
-        </button>
+          Code</button>
         {(traceUrl || traceLoading) && !useLocalPreview && <a href={traceUrl ?? "#"} target="_blank" rel="noopener noreferrer" aria-label="Trace" onClick={e => {
     if (!traceUrl) e.preventDefault(); else cachedRef.current?.host.trackEvent("trace_tab_clicked", {
       pattern
@@ -767,16 +763,9 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
             <span dangerouslySetInnerHTML={{
     __html: traceUrl ? TRACE_ICON_SVG : TRACE_SPINNER_SVG
   }} />
-            <span className="lc-tab-label">Trace</span>
-            {traceUrl && <span className="ml-0.5" dangerouslySetInnerHTML={{
-    __html: EXTERNAL_LINK_SVG
-  }} />}
+            Trace{traceUrl && }
           </a>}
-      </div>
-
-      {activeView === "code" && <div className="lc-lang-switcher inline-flex items-stretch gap-0.5 rounded-lg border lc-border lc-bg-surface" style={{
-    padding: 3
-  }}>
+      {activeView === "code" && 
           <button type="button" aria-label="TypeScript" onClick={() => setAgentLang("js")} className={agentLang === "js" ? tabActiveClass : tabInactiveClass} title="TypeScript / JavaScript">
             <span dangerouslySetInnerHTML={{
     __html: LANG_TS_SVG
@@ -787,10 +776,10 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
     __html: LANG_PYTHON_SVG
   }} />
           </button>
-        </div>}
+        }
 
-      <div className="inline-flex items-center gap-1.5">
-        <button type="button" aria-label={expanded ? "Collapse" : "Expand"} onClick={() => setExpanded(v => !v)} className="lc-expand-btn" title={expanded ? "Collapse" : "Expand"}>
+      
+        <button type="button" aria-label={expanded ? "Collapse" : "Expand"} onClick={() => setExpanded(v => !v)} title={expanded ? "Collapse" : "Expand"}>
           <span dangerouslySetInnerHTML={{
     __html: expanded ? CLOSE_SVG : EXPAND_SVG
   }} />
@@ -815,14 +804,14 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
       sdk,
       lang: agentLang
     });
-  }} className="lc-expand-btn">
+  }}>
           <span dangerouslySetInnerHTML={{
     __html: DOWNLOAD_SVG
   }} />
         </button>
 
         {}
-        <button ref={sdkButtonRef} type="button" onClick={() => setSdkDropdownOpen(o => !o)} className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border lc-sdk-btn font-medium cursor-pointer transition-colors">
+        <button ref={sdkButtonRef} type="button" onClick={() => setSdkDropdownOpen(o => !o)}>
           <span dangerouslySetInnerHTML={{
     __html: SDK_LOGOS[sdk]
   }} />
@@ -831,36 +820,34 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
     __html: CHEVRON_DOWN_SVG
   }} />
         </button>
-      </div>
-    </div>;
-  const slot = <div ref={slotRef} className="relative w-full" style={expanded ? {
+      ;
+  const slot = <div ref={slotRef} style={expanded ? {
     flex: 1,
     minHeight: 0
   } : {
     height: heightStyle
   }}>
-      {!ready && !error && <div className="absolute inset-0 flex items-center justify-center z-10 lc-bg-wash">
-          <div className="size-6 border-2 lc-spinner rounded-full animate-spin" />
-        </div>}
+      {!ready && !error && 
+          
+        }
 
-      {error && <div className="absolute top-3 inset-x-3 z-10 px-4 py-3 rounded-2xl border lc-error text-sm">
+      {error && 
           <strong>Preview Error</strong>
-          <p className="mt-1 opacity-80" style={{
+          <p style={{
     fontSize: 13
   }}>
             {error}
           </p>
-          <button type="button" onClick={handleReset} className="mt-2 px-3 py-1 text-xs rounded-lg border lc-error-btn cursor-pointer">
+          <button type="button" onClick={handleReset}>
             Retry
           </button>
-        </div>}
-    </div>;
+        }
+    ;
   return <div data-lc-pe ref={placeholderRef} className={`${effectiveTheme === "dark" ? "dark" : ""} ${className ?? ""}`}>
-      <div ref={cardRef} className="rounded-2xl border lc-border overflow-hidden lc-bg-surface">
+      <div ref={cardRef}>
         {toolbar}
         {slot}
-      </div>
-    </div>;
+      ;
 };
 
 LLMs naturally produce markdown-formatted text, including headings, lists, code blocks,
@@ -868,8 +855,6 @@ tables, and inline formatting. Rendering this content as plain text wastes the
 structure the model is providing. This pattern shows you how to parse and render
 markdown in real time as it streams from the agent, across all major frontend
 frameworks.
-
-<PatternEmbed pattern="markdown-messages" />
 
 ## How markdown rendering works
 
@@ -891,15 +876,13 @@ Wire up `useStream` with your agent URL and assistant ID.
 Define a TypeScript interface matching your agent's state schema and pass it as a type parameter to `useStream` for type-safe access to state values. In the examples below, replace `typeof myAgent` with your interface name:
 
 ```ts  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-import type { BaseMessage } from "@langchain/core/messages";
-
 interface AgentState {
   messages: BaseMessage[];
 }
 ```
 
-<CodeGroup>
-  ```tsx React theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```tsx React theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   import { useStream } from "@langchain/react";
   import { AIMessage, HumanMessage } from "@langchain/core/messages";
 
@@ -912,8 +895,7 @@ interface AgentState {
     });
 
     return (
-      <div>
-        {stream.messages.map((msg) => {
+      {stream.messages.map((msg) => {
           if (AIMessage.isInstance(msg)) {
             return <Markdown key={msg.id}>{msg.text}</Markdown>;
           }
@@ -921,8 +903,7 @@ interface AgentState {
             return <p key={msg.id}>{msg.text}</p>;
           }
         })}
-      </div>
-    );
+      );
   }
   ```
 
@@ -940,13 +921,11 @@ interface AgentState {
   </script>
 
   <template>
-    <div>
-      <template v-for="msg in stream.messages.value" :key="msg.id">
+    <template v-for="msg in stream.messages.value" :key="msg.id">
         <Markdown v-if="AIMessage.isInstance(msg)">{{ msg.text }}</Markdown>
         <p v-else-if="HumanMessage.isInstance(msg)">{{ msg.text }}</p>
       </template>
-    </div>
-  </template>
+    </template>
   ```
 
   ```svelte Svelte theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
@@ -962,15 +941,12 @@ interface AgentState {
     });
   </script>
 
-  <div>
-    {#each $messages as msg (msg.id)}
+  {#each $messages as msg (msg.id)}
       {#if AIMessage.isInstance(msg)}
-        <Markdown content={msg.text} />
-      {:else if HumanMessage.isInstance(msg)}
+        {:else if HumanMessage.isInstance(msg)}
         <p>{msg.text}</p>
       {/if}
     {/each}
-  </div>
   ```
 
   ```ts Angular theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
@@ -994,7 +970,6 @@ interface AgentState {
     });
   }
   ```
-</CodeGroup>
 
 ## Choosing a markdown library
 
@@ -1007,28 +982,29 @@ Each framework has a natural choice for markdown rendering:
 | Svelte    | `marked` + `dompurify`          | Sanitized HTML via `{@html}`     | Same as Vue, consistent API                                        |
 | Angular   | `marked` + `dompurify`          | Sanitized HTML via `[innerHTML]` | Same as Vue/Svelte                                                 |
 
-<Tip>
-  React's `react-markdown` converts markdown directly to React elements, so it
-  doesn't need HTML sanitization. There's no `dangerouslySetInnerHTML` involved.
-  For Vue, Svelte, and Angular, always sanitize the parsed HTML with `dompurify`
-  before rendering.
-</Tip>
+
+> 💡 **Tip**
+>
+> React's `react-markdown` converts markdown directly to React elements, so it
+>   doesn't need HTML sanitization. There's no `dangerouslySetInnerHTML` involved.
+>   For Vue, Svelte, and Angular, always sanitize the parsed HTML with `dompurify`
+>   before rendering.
+
 
 ## Building the Markdown component
 
-<CodeGroup>
-  ```tsx React theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```tsx React theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   import ReactMarkdown from "react-markdown";
   import remarkGfm from "remark-gfm";
 
   export function Markdown({ children }: { children: string }) {
     return (
-      <div className="markdown-content">
+      
         <ReactMarkdown remarkPlugins={[remarkGfm]}>
           {children}
         </ReactMarkdown>
-      </div>
-    );
+      );
   }
   ```
 
@@ -1076,7 +1052,6 @@ Each framework has a natural choice for markdown rendering:
 
   <div class="markdown-content">
     {@html html}
-  </div>
   ```
 
   ```ts Angular theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
@@ -1088,7 +1063,7 @@ Each framework has a natural choice for markdown rendering:
 
   @Component({
     selector: "app-markdown",
-    template: `<div class="markdown-content" [innerHTML]="html()"></div>`,
+    template: `<div class="markdown-content" [innerHTML]="html()">`,
   })
   export class MarkdownComponent {
     @Input() set content(value: string) {
@@ -1104,7 +1079,6 @@ Each framework has a natural choice for markdown rendering:
     });
   }
   ```
-</CodeGroup>
 
 ## Sanitizing HTML output
 
@@ -1116,8 +1090,6 @@ could turn into executable HTML.
 Use `dompurify` to strip dangerous elements:
 
 ```ts  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-import DOMPurify from "dompurify";
-
 const safeHtml = DOMPurify.sanitize(rawHtml);
 ```
 
@@ -1125,10 +1097,12 @@ DOMPurify removes `<script>` tags, `onclick` attributes, `javascript:` URLs,
 and other XSS vectors while preserving safe markdown output like headings,
 lists, code blocks, tables, and links.
 
-<Note>
-  React's `react-markdown` does not need `dompurify` because it produces React
-  elements directly, no raw HTML injection is involved.
-</Note>
+
+> ℹ️ **Note**
+>
+> React's `react-markdown` does not need `dompurify` because it produces React
+>   elements directly, no raw HTML injection is involved.
+
 
 ## Streaming considerations
 
@@ -1147,11 +1121,13 @@ For very long responses (> 50 KB), consider these optimizations:
 * **Incremental parsing:** parse only new content and append to a rendered
   buffer (advanced, typically not needed for chat UIs)
 
-<Info>
-  For most chat applications, the simple approach of re-parsing the full message
-  on each token is sufficient. Only optimize if you observe janky scrolling or
-  dropped frames with very long messages.
-</Info>
+
+> ℹ️ **Info**
+>
+> For most chat applications, the simple approach of re-parsing the full message
+>   on each token is sufficient. Only optimize if you observe janky scrolling or
+>   dropped frames with very long messages.
+
 
 ## Styling markdown content
 
@@ -1203,11 +1179,13 @@ rendered markdown. These are the essential styles:
 }
 ```
 
-<Tip>
-  Keep markdown styles compact for chat bubbles. Chat messages are smaller than
-  blog posts, so use tighter margins and smaller font sizes than a typical prose
-  stylesheet.
-</Tip>
+
+> 💡 **Tip**
+>
+> Keep markdown styles compact for chat bubbles. Chat messages are smaller than
+>   blog posts, so use tighter margins and smaller font sizes than a typical prose
+>   stylesheet.
+
 
 ## Best practices
 
@@ -1229,12 +1207,15 @@ rendered markdown. These are the essential styles:
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/frontend/markdown-messages.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/frontend/markdown-messages.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

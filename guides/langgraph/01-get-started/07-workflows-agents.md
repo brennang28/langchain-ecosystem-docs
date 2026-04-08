@@ -88,8 +88,8 @@ Prompt chaining is when each LLM call processes the output of the previous call.
 
 <img src="https://mintcdn.com/langchain-5e9cc07a/dL5Sn6Cmy9pwtY0V/oss/images/prompt_chain.png?fit=max&auto=format&n=dL5Sn6Cmy9pwtY0V&q=85&s=762dec147c31b8dc6ebb0857e236fc1f" alt="Prompt chaining" width="1412" height="444" data-path="oss/images/prompt_chain.png" />
 
-<CodeGroup>
-  ```python Graph API theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```python Graph API theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   from typing_extensions import TypedDict
   from langgraph.graph import StateGraph, START, END
   from IPython.display import Image, display
@@ -221,7 +221,6 @@ Prompt chaining is when each LLM call processes the output of the previous call.
       print(step)
       print("\n")
   ```
-</CodeGroup>
 
 ## Parallelization
 
@@ -237,8 +236,8 @@ Some examples include:
 
 <img src="https://mintcdn.com/langchain-5e9cc07a/dL5Sn6Cmy9pwtY0V/oss/images/parallelization.png?fit=max&auto=format&n=dL5Sn6Cmy9pwtY0V&q=85&s=8afe3c427d8cede6fed1e4b2a5107b71" alt="parallelization.png" width="1020" height="684" data-path="oss/images/parallelization.png" />
 
-<CodeGroup>
-  ```python Graph API theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```python Graph API theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   # Graph state
   class State(TypedDict):
       topic: str
@@ -355,7 +354,6 @@ Some examples include:
       print(step)
       print("\n")
   ```
-</CodeGroup>
 
 ## Routing
 
@@ -363,8 +361,8 @@ Routing workflows process inputs and then directs them to context-specific tasks
 
 <img src="https://mintcdn.com/langchain-5e9cc07a/dL5Sn6Cmy9pwtY0V/oss/images/routing.png?fit=max&auto=format&n=dL5Sn6Cmy9pwtY0V&q=85&s=272e0e9b681b89cd7d35d5c812c50ee6" alt="routing.png" width="1214" height="678" data-path="oss/images/routing.png" />
 
-<CodeGroup>
-  ```python Graph API theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```python Graph API theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   from typing_extensions import Literal
   from langchain.messages import HumanMessage, SystemMessage
 
@@ -541,7 +539,6 @@ Routing workflows process inputs and then directs them to context-specific tasks
       print(step)
       print("\n")
   ```
-</CodeGroup>
 
 ## Orchestrator-worker
 
@@ -555,8 +552,8 @@ In an orchestrator-worker configuration, the orchestrator:
 
 Orchestrator-worker workflows provide more flexibility and are often used when subtasks cannot be predefined the way they can with [parallelization](#parallelization). This is common with workflows that write code or need to update content across multiple files. For example, a workflow that needs to update installation instructions for multiple Python libraries across an unknown number of documents might use this pattern.
 
-<CodeGroup>
-  ```python Graph API theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```python Graph API theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   from typing import Annotated, List
   import operator
 
@@ -658,7 +655,6 @@ Orchestrator-worker workflows provide more flexibility and are often used when s
   from IPython.display import Markdown
   Markdown(report)
   ```
-</CodeGroup>
 
 ### Creating workers in LangGraph
 
@@ -775,8 +771,8 @@ Evaluator-optimizer workflows are commonly used when there's particular success 
 
 <img src="https://mintcdn.com/langchain-5e9cc07a/-_xGPoyjhyiDWTPJ/oss/images/evaluator_optimizer.png?fit=max&auto=format&n=-_xGPoyjhyiDWTPJ&q=85&s=9bd0474f42b6040b14ed6968a9ab4e3c" alt="evaluator_optimizer.png" width="1004" height="340" data-path="oss/images/evaluator_optimizer.png" />
 
-<CodeGroup>
-  ```python Graph API theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```python Graph API theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   # Graph state
   class State(TypedDict):
       joke: str
@@ -910,7 +906,6 @@ Evaluator-optimizer workflows are commonly used when there's particular success 
       print(step)
       print("\n")
   ```
-</CodeGroup>
 
 ## Agents
 
@@ -918,9 +913,11 @@ Agents are typically implemented as an LLM performing actions using [tools](/oss
 
 <img src="https://mintcdn.com/langchain-5e9cc07a/-_xGPoyjhyiDWTPJ/oss/images/agent.png?fit=max&auto=format&n=-_xGPoyjhyiDWTPJ&q=85&s=bd8da41dbf8b5e6fc9ea6bb10cb63e38" alt="agent.png" width="1732" height="712" data-path="oss/images/agent.png" />
 
-<Note>
-  To get started with agents, see the [quickstart](/oss/python/langchain/quickstart) or read more about [how they work](/oss/python/langchain/agents) in LangChain.
-</Note>
+
+> ℹ️ **Note**
+>
+> To get started with agents, see the [quickstart](/oss/python/langchain/quickstart) or read more about [how they work](/oss/python/langchain/agents) in LangChain.
+
 
 ```python Using tools theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 from langchain.tools import tool
@@ -966,8 +963,8 @@ tools_by_name = {tool.name: tool for tool in tools}
 llm_with_tools = llm.bind_tools(tools)
 ```
 
-<CodeGroup>
-  ```python Graph API theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```python Graph API theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   from langgraph.graph import MessagesState
   from langchain.messages import SystemMessage, HumanMessage, ToolMessage
 
@@ -1100,16 +1097,18 @@ llm_with_tools = llm.bind_tools(tools)
       print(chunk)
       print("\n")
   ```
-</CodeGroup>
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/workflows-agents.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/workflows-agents.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

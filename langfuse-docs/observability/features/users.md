@@ -4,14 +4,10 @@ description: User-level LLM observability to track token usage, usage volume and
 sidebarTitle: User Tracking
 ---
 
-import { PropagationRestrictionsCallout } from "@/components/PropagationRestrictionsCallout";
-
 # User Tracking
 
 The Users view provides an overview of all users. It also offers an in-depth look into individual users. It's easy to map data in Langfuse to individual users. Just propagate the `userId` attribute across observations. This can be a username, email, or any other unique identifier. The `userId` is optional, but using it helps you get more from Langfuse aggregating metrics such as LLM usage cost by `userId`. See the integration docs to learn more.
 
-<LangTabs items={["Python SDK", "JS/TS SDK", "OpenAI (Python)", "Langchain (Python)", "Langchain (JS/TS)"]}>
-<Tab>
 When using the `@observe()` decorator:
 
 ```python /propagate_attributes(user_id="user_12345")/
@@ -49,14 +45,12 @@ with langfuse.start_as_current_observation(
             pass
 ```
 
-</Tab>
-<Tab title="JS/TS SDK">
+
+**JS/TS SDK:**
 
 When using the context manager:
 
 ```ts /propagateAttributes/
-import { startActiveObservation, propagateAttributes } from "@langfuse/tracing";
-
 await startActiveObservation("context-manager", async (span) => {
   span.update({
     input: { query: "What is the capital of France?" },
@@ -78,8 +72,6 @@ await startActiveObservation("context-manager", async (span) => {
 When using the `observe` wrapper:
 
 ```ts /propagateAttributes/
-import { observe, propagateAttributes } from "@langfuse/tracing";
-
 // An existing function
 const processUserRequest = observe(
   async (userQuery: string) => {
@@ -98,8 +90,6 @@ const result = await processUserRequest("some query");
 
 See [JS/TS SDK docs](/docs/sdk/typescript/guide) for more details.
 
-</Tab>
-<Tab>
 
 ```python /propagate_attributes(user_id="user_12345")/
 from langfuse import get_client, propagate_attributes
@@ -121,8 +111,8 @@ with langfuse.start_as_current_observation(as_type="span", name="openai-call"):
         )
 ```
 
-</Tab>
-<Tab title="Langchain (Python)">
+
+**Langchain (Python):**
 
 Use `propagate_attributes()` with the CallbackHandler:
 
@@ -143,15 +133,12 @@ with langfuse.start_as_current_observation(as_type="span", name="langchain-call"
         )
 ```
 
-</Tab>
-<Tab title="Langchain (JS/TS)">
+
+**Langchain (JS/TS):**
 
 Use `propagateAttributes()` with the CallbackHandler:
 
 ```ts /propagateAttributes/
-import { startActiveObservation, propagateAttributes } from "@langfuse/tracing";
-import { CallbackHandler } from "langfuse-langchain";
-
 const langfuseHandler = new CallbackHandler();
 
 await startActiveObservation("langchain-call", async () => {
@@ -171,27 +158,20 @@ await startActiveObservation("langchain-call", async () => {
 });
 ```
 
-</Tab>
-
-</LangTabs>
-
-<PropagationRestrictionsCallout attributes={["userId"]} />
 
 ## View all users
 
 The user list provides an overview of all users that have been tracked by Langfuse. It makes it simple to segment by overall token usage, number of traces, and user feedback.
 
-<Frame>
+
 ![User List](/images/docs/users-list.png)
-</Frame>
 
 ## Individual user view
 
 The individual user view provides an in-depth look into a single user. Explore aggregated metrics or view all traces and feedback for a user.
 
-<Frame>
+
 ![User Detail View](/images/docs/user-detail-view.png)
-</Frame>
 
 You can deep link to this view via the following URL format: `https://<hostname>/project/{projectId}/users/{userId}`
 
@@ -202,6 +182,3 @@ You can deep link to this view via the following URL format: `https://<hostname>
 
 ## GitHub Discussions
 
-import { GhDiscussionsPreview } from "@/components/gh-discussions/GhDiscussionsPreview";
-
-<GhDiscussionsPreview labels={["feat-users"]} />

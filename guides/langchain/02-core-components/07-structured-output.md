@@ -6,9 +6,11 @@
 
 Structured output allows agents to return data in a specific, predictable format. Instead of parsing natural language responses, you get structured data in the form of JSON objects, [Pydantic models](https://docs.pydantic.dev/latest/concepts/models/#basic-model-usage), or dataclasses that your application can use directly.
 
-<Tip>
-  This page covers structured output with agents using `create_agent`. To use structured output directly on a model (outside of agents), see [Models - Structured output](/oss/python/langchain/models#structured-output).
-</Tip>
+
+> 💡 **Tip**
+>
+> This page covers structured output with agents using `create_agent`. To use structured output directly on a model (outside of agents), see [Models - Structured output](/oss/python/langchain/models#structured-output).
+
 
 LangChain's [`create_agent`](https://reference.langchain.com/python/langchain/agents/factory/create_agent) handles structured output automatically. The user sets their desired structured output schema, and when the model generates the structured data, it's captured, validated, and returned in the `'structured_response'` key of the agent's state.
 
@@ -37,19 +39,21 @@ When a schema type is provided directly, LangChain automatically chooses:
 * `ProviderStrategy` if the model and provider chosen supports native structured output (e.g. [OpenAI](/oss/python/integrations/providers/openai), [Anthropic (Claude)](/oss/python/integrations/providers/anthropic), or [xAI (Grok)](/oss/python/integrations/providers/xai)).
 * `ToolStrategy` for all other models.
 
-<Note>
-  Support for native structured output features is read dynamically from the model's [profile data](/oss/python/langchain/models#model-profiles) if using `langchain>=1.1`. If data are not available, use another condition or specify manually:
 
-  ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-  custom_profile = {
-      "structured_output": True,
-      # ...
-  }
-  model = init_chat_model("...", profile=custom_profile)
-  ```
+> ℹ️ **Note**
+>
+> Support for native structured output features is read dynamically from the model's [profile data](/oss/python/langchain/models#model-profiles) if using `langchain>=1.1`. If data are not available, use another condition or specify manually:
+> 
+>   ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+>   custom_profile = {
+>       "structured_output": True,
+>       # ...
+>   }
+>   model = init_chat_model("...", profile=custom_profile)
+>   ```
+> 
+>   If tools are specified, the model must support simultaneous use of tools and structured output.
 
-  If tools are specified, the model must support simultaneous use of tools and structured output.
-</Note>
 
 The structured response is returned in the `structured_response` key of the agent's final state.
 
@@ -65,27 +69,27 @@ class ProviderStrategy(Generic[SchemaT]):
     strict: bool | None = None
 ```
 
-<Info>
-  The `strict` param requires `langchain>=1.2`.
-</Info>
 
-<ParamField path="schema" required>
-  The schema defining the structured output format. Supports:
+> ℹ️ **Info**
+>
+> The `strict` param requires `langchain>=1.2`.
+
+
+- **`schema`**: The schema defining the structured output format. Supports:
 
   * **Pydantic models**: `BaseModel` subclasses with field validation. Returns validated Pydantic instance.
   * **Dataclasses**: Python dataclasses with type annotations. Returns dict.
   * **TypedDict**: Typed dictionary classes. Returns dict.
   * **JSON Schema**: Dictionary with JSON schema specification. Returns dict.
-</ParamField>
 
-<ParamField path="strict">
-  Optional boolean parameter to enable strict schema adherence. Supported by some providers (e.g., [OpenAI](/oss/python/integrations/chat/openai) and [xAI](/oss/python/integrations/chat/xai)). Defaults to `None` (disabled).
-</ParamField>
+
+- **`strict`**: Optional boolean parameter to enable strict schema adherence. Supported by some providers (e.g., [OpenAI](/oss/python/integrations/chat/openai) and [xAI](/oss/python/integrations/chat/xai)). Defaults to `None` (disabled).
+
 
 LangChain automatically uses `ProviderStrategy` when you pass a schema type directly to [`create_agent.response_format`](https://reference.langchain.com/python/langchain/agents/factory/create_agent) and the model supports native structured output:
 
-<CodeGroup>
-  ```python Pydantic Model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```python Pydantic Model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   from pydantic import BaseModel, Field
   from langchain.agents import create_agent
 
@@ -188,15 +192,16 @@ LangChain automatically uses `ProviderStrategy` when you pass a schema type dire
   result["structured_response"]
   # {'name': 'John Doe', 'email': 'john@example.com', 'phone': '(555) 123-4567'}
   ```
-</CodeGroup>
 
 Provider-native structured output provides high reliability and strict validation because the model provider enforces the schema. Use it when available.
 
-<Note>
-  If the provider natively supports structured output for your model choice, it is functionally equivalent to write `response_format=ProductReview` instead of `response_format=ProviderStrategy(ProductReview)`.
 
-  In either case, if structured output is not supported, the agent will fall back to a tool calling strategy.
-</Note>
+> ℹ️ **Note**
+>
+> If the provider natively supports structured output for your model choice, it is functionally equivalent to write `response_format=ProductReview` instead of `response_format=ProviderStrategy(ProductReview)`.
+> 
+>   In either case, if structured output is not supported, the agent will fall back to a tool calling strategy.
+
 
 ## Tool calling strategy
 
@@ -217,23 +222,21 @@ class ToolStrategy(Generic[SchemaT]):
     ]
 ```
 
-<ParamField path="schema" required>
-  The schema defining the structured output format. Supports:
+
+- **`schema`**: The schema defining the structured output format. Supports:
 
   * **Pydantic models**: `BaseModel` subclasses with field validation. Returns validated Pydantic instance.
   * **Dataclasses**: Python dataclasses with type annotations. Returns dict.
   * **TypedDict**: Typed dictionary classes. Returns dict.
   * **JSON Schema**: Dictionary with JSON schema specification. Returns dict.
   * **Union types**: Multiple schema options. The model will choose the most appropriate schema based on the context.
-</ParamField>
 
-<ParamField path="tool_message_content">
-  Custom content for the tool message returned when structured output is generated.
+
+- **`tool_message_content`**: Custom content for the tool message returned when structured output is generated.
   If not provided, defaults to a message showing the structured response data.
-</ParamField>
 
-<ParamField path="handle_errors">
-  Error handling strategy for structured output validation failures. Defaults to `True`.
+
+- **`handle_errors`**: Error handling strategy for structured output validation failures. Defaults to `True`.
 
   * **`True`**: Catch all errors with default error template
   * **`str`**: Catch all errors with this custom message
@@ -241,10 +244,9 @@ class ToolStrategy(Generic[SchemaT]):
   * **`tuple[type[Exception], ...]`**: Only catch these exception types with default message
   * **`Callable[[Exception], str]`**: Custom function that returns error message
   * **`False`**: No retry, let exceptions propagate
-</ParamField>
 
-<CodeGroup>
-  ```python Pydantic Model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```python Pydantic Model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   from pydantic import BaseModel, Field
   from typing import Literal
   from langchain.agents import create_agent
@@ -396,7 +398,6 @@ class ToolStrategy(Generic[SchemaT]):
   result["structured_response"]
   # ProductReview(rating=5, sentiment='positive', key_points=['fast shipping', 'expensive'])
   ```
-</CodeGroup>
 
 ### Custom tool message content
 
@@ -707,12 +708,15 @@ response_format = ToolStrategy(
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/structured-output.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/structured-output.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

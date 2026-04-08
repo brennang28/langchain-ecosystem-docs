@@ -14,9 +14,11 @@ Deep agents include built-in mechanisms for managing context across long-running
 
 This page provides an overview of the different kinds of context your deep agent has access to and manages.
 
-<Tip>
-  New to context engineering? See the [conceptual overview](/oss/python/concepts/context) for the different types of context and when to use them.
-</Tip>
+
+> 💡 **Tip**
+>
+> New to context engineering? See the [conceptual overview](/oss/python/concepts/context) for the different types of context and when to use them.
+
 
 ## Types of context
 
@@ -32,23 +34,14 @@ This page provides an overview of the different kinds of context your deep agent
 
 Input context is information provided to your deep agent at startup that becomes part of its system prompt. The final prompt consists of several sources:
 
-<CardGroup cols={2}>
-  <Card title="System prompt" icon="message-2" href="#system-prompt">
-    Custom instructions you provide plus built-in agent guidance.
-  </Card>
-
-  <Card title="Memory" icon="database" href="#memory">
-    Persistent `AGENTS.md` files always loaded when configured.
-  </Card>
-
-  <Card title="Skills" icon="tool" href="#skills">
-    On-demand capabilities loaded when relevant (progressive disclosure).
-  </Card>
-
-  <Card title="Tool prompts" icon="list" href="#tool-prompts">
-    Instructions for using built-in tools or custom tools.
-  </Card>
-</CardGroup>
+Custom instructions you provide plus built-in agent guidance.
+  
+Persistent `AGENTS.md` files always loaded when configured.
+  
+On-demand capabilities loaded when relevant (progressive disclosure).
+  
+Instructions for using built-in tools or custom tools.
+  
 
 ### System prompt
 
@@ -197,15 +190,10 @@ Long-running tasks produce large tool outputs and long conversation history.
 Context compression reduces the size of information in an agent's working memory while preserving details relevant to the task.
 The following techniques are the built-in mechanisms to ensure the context passed to LLMs stays within its context window limit:
 
-<CardGroup cols={2}>
-  <Card title="Offloading" icon="file-export" href="#offloading">
-    Large tool inputs and results are stored in the filesystem and replaced with references.
-  </Card>
-
-  <Card title="Summarization" icon="article" href="#summarization">
-    Old messages are compressed into an LLM-generated summary when limits are approached.
-  </Card>
-</CardGroup>
+Large tool inputs and results are stored in the filesystem and replaced with references.
+  
+Old messages are compressed into an LLM-generated summary when limits are approached.
+  
 
 ### Offloading
 
@@ -361,12 +349,15 @@ See [Long-term memory](/oss/python/deepagents/memory) for setup and use cases.
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/context-engineering.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/context-engineering.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

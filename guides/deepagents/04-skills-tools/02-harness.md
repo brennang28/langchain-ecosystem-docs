@@ -41,14 +41,19 @@ The backends support the following file system operations:
 | `grep`       | Search file contents with multiple output modes (files only, content with context, or counts)                                                                                                                            |
 | `execute`    | Run shell commands in the environment (available with [sandbox backends](/oss/python/deepagents/sandboxes) only)                                                                                                         |
 
-<Accordion title="Supported multimodal file extensions">
-  | Type                                                                 | Extensions                                                                |
+
+<details>
+<summary>Supported multimodal file extensions</summary>
+
+| Type                                                                 | Extensions                                                                |
   | -------------------------------------------------------------------- | ------------------------------------------------------------------------- |
   | [Image](/oss/python/langchain/messages#multimodal:imagecontentblock) | `.png`, `.jpg`, `.jpeg`, `.gif`, `.webp`, `.heic`, `.heif`                |
   | [Video](/oss/python/langchain/messages#multimodal:videocontentblock) | `.mp4`, `.mpeg`, `.mov`, `.avi`, `.flv`, `.mpg`, `.webm`, `.wmv`, `.3gpp` |
   | [Audio](/oss/python/langchain/messages#multimodal:audiocontentblock) | `.wav`, `.mp3`, `.aiff`, `.aac`, `.ogg`, `.flac`                          |
   | [File](/oss/python/langchain/messages#multimodal:filecontentblock)   | `.pdf`, `.ppt`, `.pptx`                                                   |
-</Accordion>
+
+</details>
+
 
 The virtual filesystem is used by several other harness capabilities such as skills, memory, code execution, and context management.
 You can also use the file system when building custom tools and middleware for Deep Agents.
@@ -183,12 +188,15 @@ For configuration details and examples, see [Memory](/oss/python/deepagents/cust
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/harness.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/harness.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

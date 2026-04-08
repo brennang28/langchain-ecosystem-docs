@@ -74,97 +74,117 @@ Now that we've identified the components in our workflow, let's understand what 
 * `Human Review`: Escalate to human agent for approval or handling
 * `Send Reply`: Dispatch the email response
 
-<Tip>
-  Notice that some nodes make decisions about where to go next (`Classify Intent`, `Draft Reply`, `Human Review`), while others always proceed to the same next step (`Read Email` always goes to `Classify Intent`, `Doc Search` always goes to `Draft Reply`).
-</Tip>
+
+> 💡 **Tip**
+>
+> Notice that some nodes make decisions about where to go next (`Classify Intent`, `Draft Reply`, `Human Review`), while others always proceed to the same next step (`Read Email` always goes to `Classify Intent`, `Doc Search` always goes to `Draft Reply`).
+
 
 ## Step 2: Identify what each step needs to do
 
 For each node in your graph, determine what type of operation it represents and what context it needs to work properly.
 
-<CardGroup cols={2}>
-  <Card title="LLM steps" icon="brain" href="#llm-steps">
-    Use when you need to understand, analyze, generate text, or make reasoning decisions
-  </Card>
-
-  <Card title="Data steps" icon="database" href="#data-steps">
-    Use when you need to retrieve information from external sources
-  </Card>
-
-  <Card title="Action steps" icon="bolt" href="#action-steps">
-    Use when you need to perform external actions
-  </Card>
-
-  <Card title="User input steps" icon="user" href="#user-input-steps">
-    Use when you need human intervention
-  </Card>
-</CardGroup>
+Use when you need to understand, analyze, generate text, or make reasoning decisions
+  
+Use when you need to retrieve information from external sources
+  
+Use when you need to perform external actions
+  
+Use when you need human intervention
+  
 
 ### LLM steps
 
 When a step needs to understand, analyze, generate text, or make reasoning decisions:
 
-<AccordionGroup>
-  <Accordion title="Classify intent">
-    * Static context (prompt): Classification categories, urgency definitions, response format
+
+<details>
+<summary>Classify intent</summary>
+
+* Static context (prompt): Classification categories, urgency definitions, response format
     * Dynamic context (from state): Email content, sender information
     * Desired outcome: Structured classification that determines routing
-  </Accordion>
 
-  <Accordion title="Draft reply">
-    * Static context (prompt): Tone guidelines, company policies, response templates
+</details>
+
+
+  
+<details>
+<summary>Draft reply</summary>
+
+* Static context (prompt): Tone guidelines, company policies, response templates
     * Dynamic context (from state): Classification results, search results, customer history
     * Desired outcome: Professional email response ready for review
-  </Accordion>
-</AccordionGroup>
+
+</details>
+
 
 ### Data steps
 
 When a step needs to retrieve information from external sources:
 
-<AccordionGroup>
-  <Accordion title="Document search">
-    * Parameters: Query built from intent and topic
+
+<details>
+<summary>Document search</summary>
+
+* Parameters: Query built from intent and topic
     * Retry strategy: Yes, with exponential backoff for transient failures
     * Caching: Could cache common queries to reduce API calls
-  </Accordion>
 
-  <Accordion title="Customer history lookup">
-    * Parameters: Customer email or ID from state
+</details>
+
+
+  
+<details>
+<summary>Customer history lookup</summary>
+
+* Parameters: Customer email or ID from state
     * Retry strategy: Yes, but with fallback to basic info if unavailable
     * Caching: Yes, with time-to-live to balance freshness and performance
-  </Accordion>
-</AccordionGroup>
+
+</details>
+
 
 ### Action steps
 
 When a step needs to perform an external action:
 
-<AccordionGroup>
-  <Accordion title="Send reply">
-    * When to execute node: After approval (human or automated)
+
+<details>
+<summary>Send reply</summary>
+
+* When to execute node: After approval (human or automated)
     * Retry strategy: Yes, with exponential backoff for network issues
     * Should not cache: Each send is a unique action
-  </Accordion>
 
-  <Accordion title="Bug track">
-    * When to execute node: Always when intent is "bug"
+</details>
+
+
+  
+<details>
+<summary>Bug track</summary>
+
+* When to execute node: Always when intent is "bug"
     * Retry strategy: Yes, critical to not lose bug reports
     * Returns: Ticket ID to include in response
-  </Accordion>
-</AccordionGroup>
+
+</details>
+
 
 ### User input steps
 
 When a step needs human intervention:
 
-<AccordionGroup>
-  <Accordion title="Human review node">
-    * Context for decision: Original email, draft response, urgency, classification
+
+<details>
+<summary>Human review node</summary>
+
+* Context for decision: Original email, draft response, urgency, classification
     * Expected input format: Approval boolean plus optional edited response
     * When triggered: High urgency, complex issues, or quality concerns
-  </Accordion>
-</AccordionGroup>
+
+</details>
+
 
 ## Step 3: Design your state
 
@@ -174,15 +194,10 @@ State is the shared [memory](/oss/python/concepts/memory) accessible to all node
 
 Ask yourself these questions about each piece of data:
 
-<CardGroup cols={2}>
-  <Card title="Include in state" icon="check">
-    Does it need to persist across steps? If yes, it goes in state.
-  </Card>
-
-  <Card title="Don't store" icon="code">
-    Can you derive it from other data? If yes, compute it when needed instead of storing it in state.
-  </Card>
-</CardGroup>
+Does it need to persist across steps? If yes, it goes in state.
+  
+Can you derive it from other data? If yes, compute it when needed instead of storing it in state.
+  
 
 For our email agent, we need to track:
 
@@ -194,9 +209,11 @@ For our email agent, we need to track:
 
 ### Keep state raw, format prompts on-demand
 
-<Tip>
-  A key principle: your state should store raw data, not formatted text. Format prompts inside nodes when you need them.
-</Tip>
+
+> 💡 **Tip**
+>
+> A key principle: your state should store raw data, not formatted text. Format prompts inside nodes when you need them.
+
 
 This separation means:
 
@@ -252,9 +269,10 @@ Different errors need different handling strategies:
 | User-fixable errors (missing information, unclear instructions) | Human              | Pause with `interrupt()`           | Need user input to proceed                       |
 | Unexpected errors                                               | Developer          | Let them bubble up                 | Unknown issues that need debugging               |
 
-<Tabs>
-  <Tab title="Transient errors" icon="rotate">
-    Add a retry policy to automatically retry network issues and rate limits:
+
+**Transient errors:**
+
+Add a retry policy to automatically retry network issues and rate limits:
 
     ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langgraph.types import RetryPolicy
@@ -265,10 +283,11 @@ Different errors need different handling strategies:
         retry_policy=RetryPolicy(max_attempts=3, initial_interval=1.0)
     )
     ```
-  </Tab>
+  
 
-  <Tab title="LLM-recoverable" icon="brain">
-    Store the error in state and loop back so the LLM can see what went wrong and try again:
+**LLM-recoverable:**
+
+Store the error in state and loop back so the LLM can see what went wrong and try again:
 
     ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langgraph.types import Command
@@ -285,10 +304,11 @@ Different errors need different handling strategies:
                 goto="agent"
             )
     ```
-  </Tab>
+  
 
-  <Tab title="User-fixable" icon="user">
-    Pause and collect information from the user when needed (like account IDs, order numbers, or clarifications):
+**User-fixable:**
+
+Pause and collect information from the user when needed (like account IDs, order numbers, or clarifications):
 
     ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langgraph.types import Command
@@ -308,10 +328,11 @@ Different errors need different handling strategies:
         customer_data = fetch_customer_history(state['customer_id'])
         return Command(update={"customer_history": customer_data}, goto="draft_response")
     ```
-  </Tab>
+  
 
-  <Tab title="Unexpected" icon="alert-triangle">
-    Let them bubble up for debugging. Don't catch what you can't handle:
+**Unexpected:**
+
+Let them bubble up for debugging. Don't catch what you can't handle:
 
     ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     def send_reply(state: EmailAgentState):
@@ -320,16 +341,16 @@ Different errors need different handling strategies:
         except Exception:
             raise  # Surface unexpected errors
     ```
-  </Tab>
-</Tabs>
-
+  
 ### Implementing our email agent nodes
 
 We'll implement each node as a simple function. Remember: nodes take state, do work, and return updates.
 
-<AccordionGroup>
-  <Accordion title="Read and classify nodes" icon="brain">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+<details>
+<summary>Read and classify nodes</summary>
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from typing import Literal
     from langgraph.graph import StateGraph, START, END
     from langgraph.types import interrupt, Command, RetryPolicy
@@ -380,10 +401,15 @@ We'll implement each node as a simple function. Remember: nodes take state, do w
             goto=goto
         )
     ```
-  </Accordion>
 
-  <Accordion title="Search and tracking nodes" icon="database">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+</details>
+
+
+  
+<details>
+<summary>Search and tracking nodes</summary>
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     def search_documentation(state: EmailAgentState) -> Command[Literal["draft_response"]]:
         """Search knowledge base for relevant information"""
 
@@ -422,10 +448,15 @@ We'll implement each node as a simple function. Remember: nodes take state, do w
             goto="draft_response"
         )
     ```
-  </Accordion>
 
-  <Accordion title="Response nodes" icon="edit">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+</details>
+
+
+  
+<details>
+<summary>Response nodes</summary>
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     def draft_response(state: EmailAgentState) -> Command[Literal["human_review", "send_reply"]]:
         """Generate response using context and route based on quality"""
 
@@ -506,8 +537,9 @@ We'll implement each node as a simple function. Remember: nodes take state, do w
         print(f"Sending reply: {state['draft_response'][:100]}...")
         return {}
     ```
-  </Accordion>
-</AccordionGroup>
+
+</details>
+
 
 ## Step 5: Wire it together
 
@@ -515,8 +547,11 @@ Now we connect our nodes into a working graph. Since our nodes handle their own 
 
 To enable [human-in-the-loop](/oss/python/langgraph/interrupts) with `interrupt()`, we need to compile with a [checkpointer](/oss/python/langgraph/persistence) to save state between runs:
 
-<Accordion title="Graph compilation code" icon="sitemap" defaultOpen={true}>
-  ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+<details>
+<summary>Graph compilation code</summary>
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   from langgraph.checkpoint.memory import MemorySaver
   from langgraph.types import RetryPolicy
 
@@ -547,7 +582,9 @@ To enable [human-in-the-loop](/oss/python/langgraph/interrupts) with `interrupt(
   memory = MemorySaver()
   app = workflow.compile(checkpointer=memory)
   ```
-</Accordion>
+
+</details>
+
 
 The graph structure is minimal because routing happens inside nodes through [`Command`](https://reference.langchain.com/python/langgraph/types/Command) objects. Each node declares where it can go using type hints like `Command[Literal["node1", "node2"]]`, making the flow explicit and traceable.
 
@@ -555,8 +592,11 @@ The graph structure is minimal because routing happens inside nodes through [`Co
 
 Let's run our agent with an urgent billing issue that needs human review:
 
-<Accordion title="Testing the agent" icon="flask">
-  ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+<details>
+<summary>Testing the agent</summary>
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   # Test with an urgent billing issue
   initial_state = {
       "email_content": "I was charged twice for my subscription! This is urgent!",
@@ -585,7 +625,9 @@ Let's run our agent with an urgent billing issue that needs human review:
   final_result = app.invoke(human_response, config)
   print(f"Email sent successfully!")
   ```
-</Accordion>
+
+</details>
+
 
 The graph pauses when it hits `interrupt()`, saves everything to the checkpointer, and waits. It can resume days later, picking up exactly where it left off. The `thread_id` ensures all state for this conversation is preserved together.
 
@@ -595,38 +637,29 @@ The graph pauses when it hits `interrupt()`, saves everything to the checkpointe
 
 Building this email agent has shown us the LangGraph way of thinking:
 
-<CardGroup cols={2}>
-  <Card title="Break into discrete steps" icon="sitemap" href="#step-1-map-out-your-workflow-as-discrete-steps">
-    Each node does one thing well. This decomposition enables streaming progress updates, durable execution that can pause and resume, and clear debugging since you can inspect state between steps.
-  </Card>
-
-  <Card title="State is shared memory" icon="database" href="#step-3-design-your-state">
-    Store raw data, not formatted text. This lets different nodes use the same information in different ways.
-  </Card>
-
-  <Card title="Nodes are functions" icon="code" href="#step-4-build-your-nodes">
-    They take state, do work, and return updates. When they need to make routing decisions, they specify both the state updates and the next destination.
-  </Card>
-
-  <Card title="Errors are part of the flow" icon="alert-triangle" href="#handle-errors-appropriately">
-    Transient failures get retries, LLM-recoverable errors loop back with context, user-fixable problems pause for input, and unexpected errors bubble up for debugging.
-  </Card>
-
-  <Card title="Human input is first-class" icon="user" href="/oss/python/langgraph/interrupts">
-    The `interrupt()` function pauses execution indefinitely, saves all state, and resumes exactly where it left off when you provide input. When combined with other operations in a node, it must come first.
-  </Card>
-
-  <Card title="Graph structure emerges naturally" icon="sitemap" href="#step-5-wire-it-together">
-    You define the essential connections, and your nodes handle their own routing logic. This keeps control flow explicit and traceable - you can always understand what your agent will do next by looking at the current node.
-  </Card>
-</CardGroup>
+Each node does one thing well. This decomposition enables streaming progress updates, durable execution that can pause and resume, and clear debugging since you can inspect state between steps.
+  
+Store raw data, not formatted text. This lets different nodes use the same information in different ways.
+  
+They take state, do work, and return updates. When they need to make routing decisions, they specify both the state updates and the next destination.
+  
+Transient failures get retries, LLM-recoverable errors loop back with context, user-fixable problems pause for input, and unexpected errors bubble up for debugging.
+  
+The `interrupt()` function pauses execution indefinitely, saves all state, and resumes exactly where it left off when you provide input. When combined with other operations in a node, it must come first.
+  
+You define the essential connections, and your nodes handle their own routing logic. This keeps control flow explicit and traceable - you can always understand what your agent will do next by looking at the current node.
+  
 
 ### Advanced considerations
 
-<Accordion title="Node granularity trade-offs" icon="adjustments">
-  <Info>
-    This section explores the trade-offs in node granularity design. Most applications can skip this and use the patterns shown above.
-  </Info>
+
+<details>
+<summary>Node granularity trade-offs</summary>
+
+> ℹ️ **Info**
+>
+> This section explores the trade-offs in node granularity design. Most applications can skip this and use the patterns shown above.
+
 
   You might wonder: why not combine `Read Email` and `Classify Intent` into one node?
 
@@ -651,46 +684,38 @@ Building this email agent has shown us the LangGraph way of thinking:
   Application-level concerns: The caching discussion in Step 2 (whether to cache search results) is an application-level decision, not a LangGraph framework feature. You implement caching within your node functions based on your specific requirements—LangGraph doesn't prescribe this.
 
   Performance considerations: More nodes doesn't mean slower execution. LangGraph writes checkpoints in the background by default ([async durability mode](/oss/python/langgraph/durable-execution#durability-modes)), so your graph continues running without waiting for checkpoints to complete. This means you get frequent checkpoints with minimal performance impact. You can adjust this behavior if needed—use `"exit"` mode to checkpoint only at completion, or `"sync"` mode to block execution until each checkpoint is written.
-</Accordion>
+
+</details>
+
 
 ### Where to go from here
 
 This was an introduction to thinking about building agents with LangGraph. You can extend this foundation with:
 
-<CardGroup cols={2}>
-  <Card title="Human-in-the-loop patterns" icon="user-check" href="/oss/python/langgraph/interrupts">
-    Learn how to add tool approval before execution, batch approval, and other patterns
-  </Card>
-
-  <Card title="Subgraphs" icon="hierarchy" href="/oss/python/langgraph/use-subgraphs">
-    Create subgraphs for complex multi-step operations
-  </Card>
-
-  <Card title="Streaming" icon="broadcast" href="/oss/python/langgraph/streaming">
-    Add streaming to show real-time progress to users
-  </Card>
-
-  <Card title="Observability" icon="chart-line" href="/oss/python/langgraph/observability">
-    Add observability with LangSmith for debugging and monitoring
-  </Card>
-
-  <Card title="Tool Integration" icon="tool" href="/oss/python/langchain/tools">
-    Integrate more tools for web search, database queries, and API calls
-  </Card>
-
-  <Card title="Retry Logic" icon="rotate" href="/oss/python/langgraph/use-graph-api#add-retry-policies">
-    Implement retry logic with exponential backoff for failed operations
-  </Card>
-</CardGroup>
+Learn how to add tool approval before execution, batch approval, and other patterns
+  
+Create subgraphs for complex multi-step operations
+  
+Add streaming to show real-time progress to users
+  
+Add observability with LangSmith for debugging and monitoring
+  
+Integrate more tools for web search, database queries, and API calls
+  
+Implement retry logic with exponential backoff for failed operations
+  
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/thinking-in-langgraph.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/thinking-in-langgraph.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

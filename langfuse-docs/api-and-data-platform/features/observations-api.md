@@ -14,13 +14,11 @@ For general information about API authentication, base URLs, and SDK access, see
 
 ## Observations API v2 [#v2]
 
-<Callout type="warning">
 
-**Cloud-only:** The v2 Observations API is only available on Langfuse Cloud. We are working on a robust migration path for self-hosted deployments.
+> ⚠️ **Note:** **Cloud-only:** The v2 Observations API is only available on Langfuse Cloud. We are working on a robust migration path for self-hosted deployments.
+> 
+> **Data availability note:** When using current SDK versions, data may take approximately 5 minutes to appear on v2 endpoints. We will be releasing updated SDK versions soon that will make data available immediately.
 
-**Data availability note:** When using current SDK versions, data may take approximately 5 minutes to appear on v2 endpoints. We will be releasing updated SDK versions soon that will make data available immediately.
-
-</Callout>
 
 ```
 GET /api/public/v2/observations
@@ -214,11 +212,9 @@ With all fields included
 }
 ```
 
-<Callout type="info">
 
-**API Reference:** See the full [v2 Observations API Reference](https://api.reference.langfuse.com/#tag/observationsv2/GET/api/public/v2/observations) for all available parameters, response schemas, and interactive examples.
+> ℹ️ **Note:** **API Reference:** See the full [v2 Observations API Reference](https://api.reference.langfuse.com/#tag/observationsv2/GET/api/public/v2/observations) for all available parameters, response schemas, and interactive examples.
 
-</Callout>
 
 ## Observations API v1 [#v1]
 

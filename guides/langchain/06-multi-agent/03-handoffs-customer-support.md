@@ -58,8 +58,8 @@ flowchart TD
 
 This tutorial requires the `langchain` package:
 
-<CodeGroup>
-  ```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   pip install langchain
   ```
 
@@ -70,7 +70,6 @@ This tutorial requires the `langchain` package:
   ```bash conda theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   conda install langchain -c conda-forge
   ```
-</CodeGroup>
 
 For more details, see our [Installation guide](/oss/python/langchain/install).
 
@@ -78,8 +77,8 @@ For more details, see our [Installation guide](/oss/python/langchain/install).
 
 Set up [LangSmith](https://smith.langchain.com) to inspect what is happening inside your agent. Then set the following environment variables:
 
-<CodeGroup>
-  ```bash bash theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```bash bash theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   export LANGSMITH_TRACING="true"
   export LANGSMITH_API_KEY="..."
   ```
@@ -91,22 +90,21 @@ Set up [LangSmith](https://smith.langchain.com) to inspect what is happening ins
   os.environ["LANGSMITH_TRACING"] = "true"
   os.environ["LANGSMITH_API_KEY"] = getpass.getpass()
   ```
-</CodeGroup>
 
 ### Select an LLM
 
 Select a chat model from LangChain's suite of integrations:
 
-<Tabs>
-  <Tab title="OpenAI">
-    👉 Read the [OpenAI chat model integration docs](/oss/python/integrations/chat/openai/)
+**OpenAI:**
+
+👉 Read the [OpenAI chat model integration docs](/oss/python/integrations/chat/openai/)
 
     ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain[openai]"
     ```
 
-    <CodeGroup>
-      ```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       import os
       from langchain.chat_models import init_chat_model
 
@@ -123,18 +121,17 @@ Select a chat model from LangChain's suite of integrations:
 
       model = ChatOpenAI(model="gpt-5.2")
       ```
-    </CodeGroup>
-  </Tab>
+    
+**Anthropic:**
 
-  <Tab title="Anthropic">
-    👉 Read the [Anthropic chat model integration docs](/oss/python/integrations/chat/anthropic/)
+👉 Read the [Anthropic chat model integration docs](/oss/python/integrations/chat/anthropic/)
 
     ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain[anthropic]"
     ```
 
-    <CodeGroup>
-      ```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       import os
       from langchain.chat_models import init_chat_model
 
@@ -151,18 +148,17 @@ Select a chat model from LangChain's suite of integrations:
 
       model = ChatAnthropic(model="claude-sonnet-4-6")
       ```
-    </CodeGroup>
-  </Tab>
+    
+**Azure:**
 
-  <Tab title="Azure">
-    👉 Read the [Azure chat model integration docs](/oss/python/integrations/chat/azure_chat_openai/)
+👉 Read the [Azure chat model integration docs](/oss/python/integrations/chat/azure_chat_openai/)
 
     ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain[openai]"
     ```
 
-    <CodeGroup>
-      ```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       import os
       from langchain.chat_models import init_chat_model
 
@@ -189,18 +185,17 @@ Select a chat model from LangChain's suite of integrations:
           azure_deployment=os.environ["AZURE_OPENAI_DEPLOYMENT_NAME"]
       )
       ```
-    </CodeGroup>
-  </Tab>
+    
+**Google Gemini:**
 
-  <Tab title="Google Gemini">
-    👉 Read the [Google GenAI chat model integration docs](/oss/python/integrations/chat/google_generative_ai/)
+👉 Read the [Google GenAI chat model integration docs](/oss/python/integrations/chat/google_generative_ai/)
 
     ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain[google-genai]"
     ```
 
-    <CodeGroup>
-      ```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       import os
       from langchain.chat_models import init_chat_model
 
@@ -217,18 +212,17 @@ Select a chat model from LangChain's suite of integrations:
 
       model = ChatGoogleGenerativeAI(model="gemini-2.5-flash-lite")
       ```
-    </CodeGroup>
-  </Tab>
+    
+**AWS Bedrock:**
 
-  <Tab title="AWS Bedrock">
-    👉 Read the [AWS Bedrock chat model integration docs](/oss/python/integrations/chat/bedrock/)
+👉 Read the [AWS Bedrock chat model integration docs](/oss/python/integrations/chat/bedrock/)
 
     ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain[aws]"
     ```
 
-    <CodeGroup>
-      ```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       from langchain.chat_models import init_chat_model
 
       # Follow the steps here to configure your credentials:
@@ -245,18 +239,17 @@ Select a chat model from LangChain's suite of integrations:
 
       model = ChatBedrock(model="anthropic.claude-3-5-sonnet-20240620-v1:0")
       ```
-    </CodeGroup>
-  </Tab>
+    
+**HuggingFace:**
 
-  <Tab title="HuggingFace">
-    👉 Read the [HuggingFace chat model integration docs](/oss/python/integrations/chat/huggingface/)
+👉 Read the [HuggingFace chat model integration docs](/oss/python/integrations/chat/huggingface/)
 
     ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain[huggingface]"
     ```
 
-    <CodeGroup>
-      ```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       import os
       from langchain.chat_models import init_chat_model
 
@@ -283,18 +276,17 @@ Select a chat model from LangChain's suite of integrations:
       )
       model = ChatHuggingFace(llm=llm)
       ```
-    </CodeGroup>
-  </Tab>
+    
+**OpenRouter:**
 
-  <Tab title="OpenRouter">
-    👉 Read the [OpenRouter chat model integration docs](/oss/python/integrations/chat/openrouter/)
+👉 Read the [OpenRouter chat model integration docs](/oss/python/integrations/chat/openrouter/)
 
     ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain-openrouter"
     ```
 
-    <CodeGroup>
-      ```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       import os
       from langchain.chat_models import init_chat_model
 
@@ -314,10 +306,7 @@ Select a chat model from LangChain's suite of integrations:
 
       model = ChatOpenRouter(model="auto")
       ```
-    </CodeGroup>
-  </Tab>
-</Tabs>
-
+    
 ## 1. Define custom state
 
 First, define a custom state schema that tracks which step is currently active:
@@ -409,8 +398,11 @@ Notice how `record_warranty_status` and `record_issue_type` return `Command` obj
 
 Define prompts and tools for each step. First, define the prompts for each step:
 
-<Accordion title="View complete prompt definitions">
-  ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+<details>
+<summary>View complete prompt definitions</summary>
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   # Define prompts as constants for easy reference
   WARRANTY_COLLECTOR_PROMPT = """You are a customer support agent helping with device issues.
 
@@ -448,7 +440,9 @@ Define prompts and tools for each step. First, define the prompts for each step:
 
   Be specific and helpful in your solutions."""
   ```
-</Accordion>
+
+</details>
+
 
 Then map step names to their configurations using a dictionary:
 
@@ -554,9 +548,11 @@ agent = create_agent(
 )
 ```
 
-<Note>
-  **Why a checkpointer?** The checkpointer maintains state across conversation turns. Without it, the `current_step` state would be lost between user messages, breaking the workflow.
-</Note>
+
+> ℹ️ **Note**
+>
+> **Why a checkpointer?** The checkpointer maintains state across conversation turns. Without it, the `current_step` state would be lost between user messages, breaking the workflow.
+
 
 ## 6. Test the workflow
 
@@ -698,9 +694,11 @@ See the [short-term memory guide](/oss/python/langchain/short-term-memory) for o
 
 Some workflows need to allow users to return to previous steps to correct information (e.g., changing warranty status or issue classification). However, not all transitions make sense—for example, you typically can't go back once a refund has been processed. For this support workflow, we'll add tools to return to the warranty verification and issue classification steps.
 
-<Tip>
-  If your workflow requires arbitrary transitions between most steps, consider whether you need a structured workflow at all. This pattern works best when steps follow a clear sequential progression with occasional backwards transitions for corrections.
-</Tip>
+
+> 💡 **Tip**
+>
+> If your workflow requires arbitrary transitions between most steps, consider whether you need a structured workflow at all. This pattern works best when steps follow a clear sequential progression with occasional backwards transitions for corrections.
+
 
 Add "go back" tools to the resolution step:
 
@@ -759,8 +757,11 @@ result = agent.invoke(
 
 Here's everything together in a runnable script:
 
-<Expandable title="Complete code" defaultOpen={false}>
-  ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+<details>
+<summary>Complete code</summary>
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   """
   Customer Support State Machine Example
 
@@ -992,7 +993,9 @@ Here's everything together in a runnable script:
       for msg in result['messages']:
           msg.pretty_print()
   ```
-</Expandable>
+
+</details>
+
 
 ## Next steps
 
@@ -1003,12 +1006,15 @@ Here's everything together in a runnable script:
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/multi-agent/handoffs-customer-support.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/multi-agent/handoffs-customer-support.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

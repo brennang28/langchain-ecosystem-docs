@@ -16,24 +16,19 @@ Common use cases:
 
 If you are new to Langfuse, we recommend familiarizing yourself with the [Langfuse data model](/docs/tracing-data-model).
 
-<Callout type="info">
 
-New data is typically available for querying within 15-30 seconds of ingestion, though processing times may vary at times. Please visit [status.langfuse.com](https://status.langfuse.com) if you encounter any issues.
+> ℹ️ **Note:** New data is typically available for querying within 15-30 seconds of ingestion, though processing times may vary at times. Please visit [status.langfuse.com](https://status.langfuse.com) if you encounter any issues.
 
-</Callout>
 
 ## SDKs [#sdks]
 
 Via the [SDKs](/docs/sdk/overview) for Python and JS/TS you can easily query the API without having to write the HTTP requests yourself.
 
-<Callout type="info">
 
-If you need aggregated metrics (e.g., counts, costs, usage) rather than individual entities, consider the [Metrics API](/docs/metrics/features/metrics-api). It is optimized for aggregate queries and higher rate limits.
+> ℹ️ **Note:** If you need aggregated metrics (e.g., counts, costs, usage) rather than individual entities, consider the [Metrics API](/docs/metrics/features/metrics-api). It is optimized for aggregate queries and higher rate limits.
 
-</Callout>
 
-<LangTabs items={["Python SDK", "JS/TS SDK"]}>
-<Tab title="Python SDK">
+**Python SDK:**
 
 ```bash
 pip install langfuse
@@ -46,19 +41,17 @@ langfuse = get_client()  # uses environment variables to authenticate
 
 The `api` namespace is auto-generated from the Public API (OpenAPI). Method names mirror REST resources and support filters and pagination.
 
-<Callout type="warning">
 
-From Python SDK v4 and JS/TS SDK v5 onward, the high-performance endpoints are
-the defaults:
+> ⚠️ **Note:** From Python SDK v4 and JS/TS SDK v5 onward, the high-performance endpoints are
+> the defaults:
+> 
+> - `api.observations` (formerly `api.observations_v_2` / `api.observationsV2`)
+> - `api.scores` (formerly `api.score_v_2` / `api.scoreV2`)
+> - `api.metrics` (formerly `api.metrics_v_2` / `api.metricsV2`)
+> 
+> The old v2 aliases were removed in these major releases. Legacy v1 endpoints
+> are now available under `api.legacy.*` (Python: `*_v1`, JS/TS: `*V1`).
 
-- `api.observations` (formerly `api.observations_v_2` / `api.observationsV2`)
-- `api.scores` (formerly `api.score_v_2` / `api.scoreV2`)
-- `api.metrics` (formerly `api.metrics_v_2` / `api.metricsV2`)
-
-The old v2 aliases were removed in these major releases. Legacy v1 endpoints
-are now available under `api.legacy.*` (Python: `*_v1`, JS/TS: `*V1`).
-
-</Callout>
 
 ### Traces
 
@@ -164,22 +157,17 @@ traces = await langfuse.async_api.trace.list(limit=100)
 
 See the Public API for the exact parameters per resource.
 
-</Tab>
-<Tab title="JS/TS SDK">
 
-<Callout type="info">
+**JS/TS SDK:**
 
-The methods on the `langfuse.api` are auto-generated from the API reference and cover all entities. You can explore more entities via Intellisense
+> ℹ️ **Note:** The methods on the `langfuse.api` are auto-generated from the API reference and cover all entities. You can explore more entities via Intellisense
 
-</Callout>
 
 ```bash
 npm install @langfuse/client
 ```
 
 ```ts
-import { LangfuseClient } from "@langfuse/client";
-
 const langfuse = new LangfuseClient();
 
 // Fetch list of traces, supports filters and pagination
@@ -237,8 +225,6 @@ const metrics = await langfuse.api.metrics.get({
 
 The above examples show the current JavaScript SDK API methods. All methods support filters and pagination as shown in the code examples.
 
-</Tab>
-</LangTabs>
 
 ## Related Resources
 

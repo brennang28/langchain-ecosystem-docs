@@ -18,7 +18,6 @@ Whether you're monitoring production performance, analyzing user feedback trends
   title="Custom Dashboard Demo"
   frameBorder="0"
   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-  className="aspect-video rounded border mt-3"
   allowFullScreen
 ></iframe>
 
@@ -36,7 +35,6 @@ Whether you're monitoring production performance, analyzing user feedback trends
 
 Get started with custom dashboards in two simple steps or use Langfuse's curated dashboards right away.
 
-<Steps>
 
 ### Create Your First Widget
 
@@ -53,12 +51,6 @@ Widgets are individual visualization components that display specific metrics fr
    - **Chart Type**: Pick the best visualization for your data
 5. Click **Save** to store your widget
 
-<Video
-  src="https://static.langfuse.com/docs-videos/create-widget.mov.mp4"
-  gifStyle
-  aspectRatio={16 / 9}
-/>
-
 ### Build Your Dashboard
 
 Combine multiple widgets into comprehensive dashboards that tell the story of your LLM application performance.
@@ -69,14 +61,6 @@ Combine multiple widgets into comprehensive dashboards that tell the story of yo
 4. Add widgets by selecting from your existing widgets or creating new ones
 5. Arrange widgets using the drag-and-drop interface
 6. Resize widgets to emphasize important metrics
-
-<Video
-  src="https://static.langfuse.com/docs-videos/create-dashboard.mov.mp4"
-  gifStyle
-  aspectRatio={16 / 9}
-/>
-
-</Steps>
 
 ### Leverage Curated Dashboards
 
@@ -119,12 +103,6 @@ Choose the right visualization for your data:
 
 ### Data Export and Integration
 
-<Video
-  src="https://static.langfuse.com/docs-videos/download%20chart%20data%20as%20csv.mp4"
-  gifStyle
-  aspectRatio={16 / 9}
-/>
-
 Export your dashboard data for further analysis or integration with external tools. See the [Export Data](/docs/api-and-data-platform/overview) guide for comprehensive export options including:
 
 - CSV export of dashboard data
@@ -163,6 +141,3 @@ Monitor the quality and user satisfaction of your LLM application:
 
 ## GitHub Discussions
 
-import { GhDiscussionsPreview } from "@/components/gh-discussions/GhDiscussionsPreview";
-
-<GhDiscussionsPreview labels={["feat-dashboard"]} />

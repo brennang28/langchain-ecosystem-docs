@@ -8,9 +8,11 @@ Tools extend what [agents](/oss/python/langchain/agents) can do—letting them f
 
 Under the hood, tools are callable functions with well-defined inputs and outputs that get passed to a [chat model](/oss/python/langchain/models). The model decides when to invoke a tool based on the conversation context, and what input arguments to provide.
 
-<Tip>
-  For details on how models handle tool calls, see [Tool calling](/oss/python/langchain/models#tool-calling).
-</Tip>
+
+> 💡 **Tip**
+>
+> For details on how models handle tool calls, see [Tool calling](/oss/python/langchain/models#tool-calling).
+
 
 ## Create tools
 
@@ -34,13 +36,16 @@ def search_database(query: str, limit: int = 10) -> str:
 
 Type hints are **required** as they define the tool's input schema. The docstring should be informative and concise to help the model understand the tool's purpose.
 
-<Note>
-  **Server-side tool use:** Some chat models feature built-in tools (web search, code interpreters) that are executed server-side. See [Server-side tool use](#server-side-tool-use) for details.
-</Note>
 
-<Warning>
-  Prefer `snake_case` for tool names (e.g., `web_search` instead of `Web Search`). Some model providers have issues with or reject names containing spaces or special characters with errors. Sticking to alphanumeric characters, underscores, and hyphens helps to improve compatibility across providers.
-</Warning>
+> ℹ️ **Note**
+>
+> **Server-side tool use:** Some chat models feature built-in tools (web search, code interpreters) that are executed server-side. See [Server-side tool use](#server-side-tool-use) for details.
+
+
+> ⚠️ **Warning**
+>
+> Prefer `snake_case` for tool names (e.g., `web_search` instead of `Web Search`). Some model providers have issues with or reject names containing spaces or special characters with errors. Sticking to alphanumeric characters, underscores, and hyphens helps to improve compatibility across providers.
+
 
 ### Customize tool properties
 
@@ -72,8 +77,8 @@ def calc(expression: str) -> str:
 
 Define complex inputs with Pydantic models or JSON schemas:
 
-<CodeGroup>
-  ```python Pydantic model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```python Pydantic model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   from pydantic import BaseModel, Field
   from typing import Literal
 
@@ -119,7 +124,6 @@ Define complex inputs with Pydantic models or JSON schemas:
           result += "\nNext 5 days: Sunny"
       return result
   ```
-</CodeGroup>
 
 ### Reserved argument names
 
@@ -202,9 +206,11 @@ graph LR
 
 State represents short-term memory that exists for the duration of a conversation. It includes the message history and any custom fields you define in your [graph state](/oss/python/langgraph/graph-api#state).
 
-<Info>
-  Add `runtime: ToolRuntime` to your tool signature to access state. This parameter is automatically injected and hidden from the LLM - it won't appear in the tool's schema.
-</Info>
+
+> ℹ️ **Info**
+>
+> Add `runtime: ToolRuntime` to your tool signature to access state. This parameter is automatically injected and hidden from the LLM - it won't appear in the tool's schema.
+
 
 #### Access state
 
@@ -237,9 +243,11 @@ def get_user_preference(
     return preferences.get(pref_name, "Not set")
 ```
 
-<Warning>
-  The `runtime` parameter is hidden from the model. For the example above, the model only sees `pref_name` in the tool schema.
-</Warning>
+
+> ⚠️ **Warning**
+>
+> The `runtime` parameter is hidden from the model. For the example above, the model only sees `pref_name` in the tool schema.
+
 
 #### Update state
 
@@ -255,9 +263,11 @@ def set_user_name(new_name: str) -> Command:
     return Command(update={"user_name": new_name})
 ```
 
-<Tip>
-  When tools update state variables, consider defining a [reducer](/oss/python/langgraph/graph-api#reducers) for those fields. Since LLMs can call multiple tools in parallel, a reducer determines how to resolve conflicts when the same state field is updated by concurrent tool calls.
-</Tip>
+
+> 💡 **Tip**
+>
+> When tools update state variables, consider defining a [reducer](/oss/python/langgraph/graph-api#reducers) for those fields. Since LLMs can call multiple tools in parallel, a reducer determines how to resolve conflicts when the same state field is updated by concurrent tool calls.
+
 
 ### Context
 
@@ -321,9 +331,11 @@ The [`BaseStore`](https://reference.langchain.com/python/langchain-core/stores/B
 
 Access the store through `runtime.store`. The store uses a namespace/key pattern to organize data:
 
-<Tip>
-  For production deployments, use a persistent store implementation like [`PostgresStore`](https://reference.langchain.com/python/langgraph/store/#langgraph.store.postgres.PostgresStore) instead of `InMemoryStore`. See the [memory documentation](/oss/python/langgraph/memory) for setup details.
-</Tip>
+
+> 💡 **Tip**
+>
+> For production deployments, use a persistent store implementation like [`PostgresStore`](https://reference.langchain.com/python/langgraph/store/#langgraph.store.postgres.PostgresStore) instead of `InMemoryStore`. See the [memory documentation](/oss/python/langgraph/memory) for setup details.
+
 
 ```python expandable theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 from typing import Any
@@ -393,9 +405,11 @@ def get_weather(city: str, runtime: ToolRuntime) -> str:
     return f"It's always sunny in {city}!"
 ```
 
-<Note>
-  If you use `runtime.stream_writer` inside your tool, the tool must be invoked within a LangGraph execution context. See [Streaming](/oss/python/langchain/streaming) for more details.
-</Note>
+
+> ℹ️ **Note**
+>
+> If you use `runtime.stream_writer` inside your tool, the tool must be invoked within a LangGraph execution context. See [Streaming](/oss/python/langchain/streaming) for more details.
+
 
 ### Execution info
 
@@ -413,9 +427,11 @@ def log_execution_context(runtime: ToolRuntime) -> str:
     return "done"
 ```
 
-<Note>
-  Requires `deepagents>=0.5.0` (or `langgraph>=1.1.5`).
-</Note>
+
+> ℹ️ **Note**
+>
+> Requires `deepagents>=0.5.0` (or `langgraph>=1.1.5`).
+
 
 ### Server info
 
@@ -437,17 +453,21 @@ def get_assistant_scoped_data(runtime: ToolRuntime) -> str:
 
 `server_info` is `None` when the tool is not running on LangGraph Server (e.g., during local development or testing).
 
-<Note>
-  Requires `deepagents>=0.5.0` (or `langgraph>=1.1.5`).
-</Note>
+
+> ℹ️ **Note**
+>
+> Requires `deepagents>=0.5.0` (or `langgraph>=1.1.5`).
+
 
 ## ToolNode
 
 [`ToolNode`](https://reference.langchain.com/python/langgraph/agents/#langgraph.prebuilt.tool_node.ToolNode) is a prebuilt node that executes tools in LangGraph workflows. It handles parallel tool execution, error handling, and state injection automatically.
 
-<Info>
-  For custom workflows where you need fine-grained control over tool execution patterns, use [`ToolNode`](https://reference.langchain.com/python/langgraph/agents/#langgraph.prebuilt.tool_node.ToolNode) instead of [`create_agent`](https://reference.langchain.com/python/langchain/agents/factory/create_agent). It's the building block that powers agent tool execution.
-</Info>
+
+> ℹ️ **Info**
+>
+> For custom workflows where you need fine-grained control over tool execution patterns, use [`ToolNode`](https://reference.langchain.com/python/langgraph/agents/#langgraph.prebuilt.tool_node.ToolNode) instead of [`create_agent`](https://reference.langchain.com/python/langchain/agents/factory/create_agent). It's the building block that powers agent tool execution.
+
 
 ### Basic usage
 
@@ -645,12 +665,15 @@ Refer to the individual [chat model integration pages](/oss/python/integrations/
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/tools.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/tools.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

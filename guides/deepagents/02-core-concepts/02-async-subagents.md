@@ -10,9 +10,11 @@ Async subagents let a supervisor agent launch background tasks that return immed
 
 This builds on [subagents](/oss/python/deepagents/subagents), which run synchronously and block the supervisor until completion. Use async subagents when tasks are long-running, parallelizable, or need mid-flight steering.
 
-<Note>
-  Async subagents are a preview feature available in `deepagents` 0.5.0. Preview features are under active development and APIs may change.
-</Note>
+
+> ℹ️ **Note**
+>
+> Async subagents are a preview feature available in `deepagents` 0.5.0. Preview features are under active development and APIs may change.
+
 
 ```mermaid  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 graph TB
@@ -25,9 +27,11 @@ graph TB
     Coder --> |check| Supervisor
 ```
 
-<Note>
-  Async subagents communicate with any server that implements the [Agent Protocol](https://github.com/langchain-ai/agent-protocol). You can use [LangSmith Deployments](/langsmith/deployment), or self-host any Agent Protocol-compatible server. Each subagent runs independently of the supervisor, which controls them through the SDK to launch, check, update, and cancel.
-</Note>
+
+> ℹ️ **Note**
+>
+> Async subagents communicate with any server that implements the [Agent Protocol](https://github.com/langchain-ai/agent-protocol). You can use [LangSmith Deployments](/langsmith/deployment), or self-host any Agent Protocol-compatible server. Each subagent runs independently of the supervisor, which controls them through the SDK to launch, check, update, and cancel.
+
 
 ## When to use async subagents
 
@@ -278,12 +282,15 @@ The [async-deep-agents](https://github.com/langchain-ai/async-deep-agents) repos
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/async-subagents.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/async-subagents.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

@@ -687,7 +687,7 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
         backgroundColor: isSelected ? isDark ? "#1A2740" : "#E5F4FF" : "transparent",
         color: isSelected ? isDark ? "#C8DDF0" : "#030710" : "#6B8299"
       });
-      btn.innerHTML = `<span>${SDK_LOGOS[value]}</span>${label}`;
+      btn.innerHTML = `<span>${SDK_LOGOS[value]}${label}`;
       btn.addEventListener("mouseenter", () => {
         if (!isSelected) {
           btn.style.backgroundColor = isDark ? "#1A2740" : "#F2FAFF";
@@ -743,22 +743,18 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
   const tabInactiveClass = `${tabBase} lc-tab-inactive`;
   const tabTraceActiveClass = `${tabBase} lc-tab-trace`;
   const tabTraceLoadingClass = `${tabBase} lc-tab-trace-loading`;
-  const toolbar = showCodeTab && <div className="lc-toolbar flex items-stretch justify-between px-3 py-2 border-b lc-border lc-bg-wash">
-      <div className="inline-flex items-stretch gap-0.5 rounded-lg border lc-border lc-bg-surface" style={{
-    padding: 3
-  }}>
+  const toolbar = showCodeTab && 
+      
         <button type="button" aria-label="Preview" onClick={() => switchView("preview")} className={activeView === "preview" ? tabActiveClass : tabInactiveClass}>
           <span dangerouslySetInnerHTML={{
     __html: VIEW_EYE_SVG
   }} />
-          <span className="lc-tab-label">Preview</span>
-        </button>
+          Preview</button>
         <button type="button" aria-label="Code" onClick={() => switchView("code")} className={activeView === "code" ? tabActiveClass : tabInactiveClass}>
           <span dangerouslySetInnerHTML={{
     __html: VIEW_CODE_SVG
   }} />
-          <span className="lc-tab-label">Code</span>
-        </button>
+          Code</button>
         {(traceUrl || traceLoading) && !useLocalPreview && <a href={traceUrl ?? "#"} target="_blank" rel="noopener noreferrer" aria-label="Trace" onClick={e => {
     if (!traceUrl) e.preventDefault(); else cachedRef.current?.host.trackEvent("trace_tab_clicked", {
       pattern
@@ -767,16 +763,9 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
             <span dangerouslySetInnerHTML={{
     __html: traceUrl ? TRACE_ICON_SVG : TRACE_SPINNER_SVG
   }} />
-            <span className="lc-tab-label">Trace</span>
-            {traceUrl && <span className="ml-0.5" dangerouslySetInnerHTML={{
-    __html: EXTERNAL_LINK_SVG
-  }} />}
+            Trace{traceUrl && }
           </a>}
-      </div>
-
-      {activeView === "code" && <div className="lc-lang-switcher inline-flex items-stretch gap-0.5 rounded-lg border lc-border lc-bg-surface" style={{
-    padding: 3
-  }}>
+      {activeView === "code" && 
           <button type="button" aria-label="TypeScript" onClick={() => setAgentLang("js")} className={agentLang === "js" ? tabActiveClass : tabInactiveClass} title="TypeScript / JavaScript">
             <span dangerouslySetInnerHTML={{
     __html: LANG_TS_SVG
@@ -787,10 +776,10 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
     __html: LANG_PYTHON_SVG
   }} />
           </button>
-        </div>}
+        }
 
-      <div className="inline-flex items-center gap-1.5">
-        <button type="button" aria-label={expanded ? "Collapse" : "Expand"} onClick={() => setExpanded(v => !v)} className="lc-expand-btn" title={expanded ? "Collapse" : "Expand"}>
+      
+        <button type="button" aria-label={expanded ? "Collapse" : "Expand"} onClick={() => setExpanded(v => !v)} title={expanded ? "Collapse" : "Expand"}>
           <span dangerouslySetInnerHTML={{
     __html: expanded ? CLOSE_SVG : EXPAND_SVG
   }} />
@@ -815,14 +804,14 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
       sdk,
       lang: agentLang
     });
-  }} className="lc-expand-btn">
+  }}>
           <span dangerouslySetInnerHTML={{
     __html: DOWNLOAD_SVG
   }} />
         </button>
 
         {}
-        <button ref={sdkButtonRef} type="button" onClick={() => setSdkDropdownOpen(o => !o)} className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border lc-sdk-btn font-medium cursor-pointer transition-colors">
+        <button ref={sdkButtonRef} type="button" onClick={() => setSdkDropdownOpen(o => !o)}>
           <span dangerouslySetInnerHTML={{
     __html: SDK_LOGOS[sdk]
   }} />
@@ -831,36 +820,34 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
     __html: CHEVRON_DOWN_SVG
   }} />
         </button>
-      </div>
-    </div>;
-  const slot = <div ref={slotRef} className="relative w-full" style={expanded ? {
+      ;
+  const slot = <div ref={slotRef} style={expanded ? {
     flex: 1,
     minHeight: 0
   } : {
     height: heightStyle
   }}>
-      {!ready && !error && <div className="absolute inset-0 flex items-center justify-center z-10 lc-bg-wash">
-          <div className="size-6 border-2 lc-spinner rounded-full animate-spin" />
-        </div>}
+      {!ready && !error && 
+          
+        }
 
-      {error && <div className="absolute top-3 inset-x-3 z-10 px-4 py-3 rounded-2xl border lc-error text-sm">
+      {error && 
           <strong>Preview Error</strong>
-          <p className="mt-1 opacity-80" style={{
+          <p style={{
     fontSize: 13
   }}>
             {error}
           </p>
-          <button type="button" onClick={handleReset} className="mt-2 px-3 py-1 text-xs rounded-lg border lc-error-btn cursor-pointer">
+          <button type="button" onClick={handleReset}>
             Retry
           </button>
-        </div>}
-    </div>;
+        }
+    ;
   return <div data-lc-pe ref={placeholderRef} className={`${effectiveTheme === "dark" ? "dark" : ""} ${className ?? ""}`}>
-      <div ref={cardRef} className="rounded-2xl border lc-border overflow-hidden lc-bg-surface">
+      <div ref={cardRef}>
         {toolbar}
         {slot}
-      </div>
-    </div>;
+      ;
 };
 
 LangGraph agents aren't black boxes. Every graph is composed of **named nodes**
@@ -869,8 +856,6 @@ synthesize. Graph execution cards make this pipeline visible by rendering a card
 for each node, showing its status, streaming its content in real time, and
 tracking completion across the entire workflow. Users see exactly what the agent
 is doing, which step it's on, and what each step produced.
-
-<PatternEmbed pattern="graph-execution-cards" />
 
 ## How graph nodes map to UI cards
 
@@ -906,8 +891,6 @@ Wire up `useStream` as usual. The key properties you'll use are `messages`
 Define a TypeScript interface matching your agent's state schema and pass it as a type parameter to `useStream` for type-safe access to state values, including custom state keys for each pipeline node. In the examples below, replace `typeof myAgent` with your interface name:
 
 ```ts  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-import type { BaseMessage } from "@langchain/core/messages";
-
 interface AgentState {
   messages: BaseMessage[];
   classification: string;
@@ -917,8 +900,8 @@ interface AgentState {
 }
 ```
 
-<CodeGroup>
-  ```tsx React theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```tsx React theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   import { useStream } from "@langchain/react";
 
   const AGENT_URL = "http://localhost:2024";
@@ -930,16 +913,7 @@ interface AgentState {
     });
 
     return (
-      <div>
-        <PipelineProgress nodes={PIPELINE_NODES} values={stream.values} />
-        <NodeCardList
-          nodes={PIPELINE_NODES}
-          messages={stream.messages}
-          values={stream.values}
-          getMetadata={stream.getMessagesMetadata}
-        />
-      </div>
-    );
+      );
   }
   ```
 
@@ -956,16 +930,7 @@ interface AgentState {
   </script>
 
   <template>
-    <div>
-      <PipelineProgress :nodes="PIPELINE_NODES" :values="stream.values.value" />
-      <NodeCardList
-        :nodes="PIPELINE_NODES"
-        :messages="stream.messages.value"
-        :values="stream.values.value"
-        :get-metadata="stream.getMessagesMetadata"
-      />
-    </div>
-  </template>
+    </template>
   ```
 
   ```svelte Svelte theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
@@ -980,15 +945,6 @@ interface AgentState {
     });
   </script>
 
-  <div>
-    <PipelineProgress nodes={PIPELINE_NODES} values={$values} />
-    <NodeCardList
-      nodes={PIPELINE_NODES}
-      messages={$messages}
-      values={$values}
-      getMetadata={getMessagesMetadata}
-    />
-  </div>
   ```
 
   ```ts Angular theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
@@ -1000,8 +956,7 @@ interface AgentState {
   @Component({
     selector: "app-pipeline-chat",
     template: `
-      <div>
-        <app-pipeline-progress
+      <app-pipeline-progress
           [nodes]="PIPELINE_NODES"
           [values]="stream.values()"
         />
@@ -1011,8 +966,7 @@ interface AgentState {
           [values]="stream.values()"
           [getMetadata]="stream.getMessagesMetadata"
         />
-      </div>
-    `,
+      `,
   })
   export class PipelineChatComponent {
     PIPELINE_NODES = PIPELINE_NODES;
@@ -1023,7 +977,6 @@ interface AgentState {
     });
   }
   ```
-</CodeGroup>
 
 ## Routing streaming tokens to nodes
 
@@ -1058,11 +1011,13 @@ function getStreamingContent(
 This gives you a map from node name to its current streaming content. As tokens
 arrive, the corresponding card updates in real time.
 
-<Note>
-  The `streamMetadata.langgraph_node` field is set automatically by LangGraph.
-  You don't need any special configuration on the backend. Just stream messages
-  as usual, and the metadata is included.
-</Note>
+
+> ℹ️ **Note**
+>
+> The `streamMetadata.langgraph_node` field is set automatically by LangGraph.
+>   You don't need any special configuration on the backend. Just stream messages
+>   as usual, and the metadata is included.
+
 
 ## Determining node status
 
@@ -1100,7 +1055,7 @@ function PipelineProgress({
   streamingContent: Record<string, string>;
 }) {
   return (
-    <div className="flex items-center gap-1">
+    
       {nodes.map((node, i) => {
         const status = getNodeStatus(node, streamingContent, values);
         const colors = {
@@ -1110,12 +1065,11 @@ function PipelineProgress({
         };
 
         return (
-          <div key={node.name} className="flex items-center">
+          <div key={node.name}>
             <div
               className={`rounded-full px-3 py-1 text-xs font-medium ${colors[status]}`}
             >
               {node.label}
-            </div>
             {i < nodes.length - 1 && (
               <div
                 className={`mx-1 h-0.5 w-6 ${
@@ -1123,11 +1077,9 @@ function PipelineProgress({
                 }`}
               />
             )}
-          </div>
-        );
+          );
       })}
-    </div>
-  );
+    );
 }
 ```
 
@@ -1167,34 +1119,27 @@ function NodeCard({
   const badge = statusBadge[status];
 
   return (
-    <div className="rounded-lg border bg-white shadow-sm">
+    
       <button
         onClick={() => setCollapsed(!collapsed)}
-        className="flex w-full items-center justify-between p-4"
       >
-        <div className="flex items-center gap-3">
-          <h3 className="font-semibold">{node.label}</h3>
+        
+          <h3>{node.label}</h3>
           <span
             className={`rounded-full px-2 py-0.5 text-xs font-medium ${badge.className}`}
           >
             {badge.text}
-          </span>
-        </div>
-        <ChevronIcon direction={collapsed ? "down" : "up"} />
-      </button>
+          </button>
 
       {!collapsed && displayContent && (
-        <div className="border-t px-4 py-3">
-          <div className="prose prose-sm max-w-none">
+        
+          
             {displayContent}
             {status === "streaming" && (
-              <span className="inline-block h-4 w-1 animate-pulse bg-blue-500" />
+              
             )}
-          </div>
-        </div>
-      )}
-    </div>
-  );
+          )}
+    );
 }
 
 function formatContent(value: unknown): string {
@@ -1228,11 +1173,13 @@ for (const node of PIPELINE_NODES) {
 }
 ```
 
-<Tip>
-  Streaming content may include partial tokens or markdown that hasn't been
-  fully formed yet. If you render markdown, make sure your renderer handles
-  incomplete syntax gracefully (e.g., an unclosed bold marker `**`).
-</Tip>
+
+> 💡 **Tip**
+>
+> Streaming content may include partial tokens or markdown that hasn't been
+>   fully formed yet. If you render markdown, make sure your renderer handles
+>   incomplete syntax gracefully (e.g., an unclosed bold marker `**`).
+
 
 ## Putting it all together
 
@@ -1254,21 +1201,13 @@ function NodeCardList({
   const streamingContent = getStreamingContent(messages, getMetadata);
 
   return (
-    <div className="space-y-3">
+    
       {nodes.map((node) => {
         const status = getNodeStatus(node, streamingContent, values);
         return (
-          <NodeCard
-            key={node.name}
-            node={node}
-            status={status}
-            streamingContent={streamingContent[node.name]}
-            completedContent={values?.[node.stateKey]}
-          />
-        );
+          );
       })}
-    </div>
-  );
+    );
 }
 ```
 
@@ -1304,12 +1243,14 @@ const activeNodes = PIPELINE_NODES.filter(
 This ensures your UI only shows cards for nodes that are relevant to the
 current execution, avoiding empty placeholder cards.
 
-<Info>
-  If your graph has conditional branching (e.g., skip "Research" for simple
-  factual queries), the skipped nodes will never appear in the streaming content
-  or state values. Your pipeline progress bar should reflect this by dimming or
-  hiding skipped steps.
-</Info>
+
+> ℹ️ **Info**
+>
+> If your graph has conditional branching (e.g., skip "Research" for simple
+>   factual queries), the skipped nodes will never appear in the streaming content
+>   or state values. Your pipeline progress bar should reflect this by dimming or
+>   hiding skipped steps.
+
 
 ## Best practices
 
@@ -1329,12 +1270,15 @@ current execution, avoiding empty placeholder cards.
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/frontend/graph-execution.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/frontend/graph-execution.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

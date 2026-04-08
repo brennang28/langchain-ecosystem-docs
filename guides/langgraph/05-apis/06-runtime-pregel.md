@@ -42,9 +42,9 @@ While most users will interact with Pregel through the [StateGraph](https://refe
 
 Below are a few different examples to give you a sense of the Pregel API.
 
-<Tabs>
-  <Tab title="Single node">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**Single node:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langgraph.channels import EphemeralValue
     from langgraph.pregel import Pregel, NodeBuilder
 
@@ -70,10 +70,10 @@ Below are a few different examples to give you a sense of the Pregel API.
     ```con  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     {'b': 'foofoo'}
     ```
-  </Tab>
+  
+**Multiple nodes:**
 
-  <Tab title="Multiple nodes">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langgraph.channels import LastValue, EphemeralValue
     from langgraph.pregel import Pregel, NodeBuilder
 
@@ -107,10 +107,10 @@ Below are a few different examples to give you a sense of the Pregel API.
     ```con  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     {'b': 'foofoo', 'c': 'foofoofoofoo'}
     ```
-  </Tab>
+  
+**Topic:**
 
-  <Tab title="Topic">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langgraph.channels import EphemeralValue, Topic
     from langgraph.pregel import Pregel, NodeBuilder
 
@@ -143,10 +143,10 @@ Below are a few different examples to give you a sense of the Pregel API.
     ```pycon  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     {'c': ['foofoo', 'foofoofoofoo']}
     ```
-  </Tab>
+  
+**BinaryOperatorAggregate:**
 
-  <Tab title="BinaryOperatorAggregate">
-    This example demonstrates how to use the [`BinaryOperatorAggregate`](https://reference.langchain.com/python/langgraph/channels/binop/BinaryOperatorAggregate) channel to implement a reducer.
+This example demonstrates how to use the [`BinaryOperatorAggregate`](https://reference.langchain.com/python/langgraph/channels/binop/BinaryOperatorAggregate) channel to implement a reducer.
 
     ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langgraph.channels import EphemeralValue, BinaryOperatorAggregate
@@ -184,10 +184,10 @@ Below are a few different examples to give you a sense of the Pregel API.
 
     app.invoke({"a": "foo"})
     ```
-  </Tab>
+  
+**Cycle:**
 
-  <Tab title="Cycle">
-    This example demonstrates how to introduce a cycle in the graph, by having
+This example demonstrates how to introduce a cycle in the graph, by having
     a chain write to a channel it subscribes to. Execution will continue
     until a `None` value is written to the channel.
 
@@ -216,16 +216,14 @@ Below are a few different examples to give you a sense of the Pregel API.
     ```pycon  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     {'value': 'aaaaaaaaaaaaaaaa'}
     ```
-  </Tab>
-</Tabs>
-
+  
 ## High-level API
 
 LangGraph provides two high-level APIs for creating a Pregel application: the [StateGraph (Graph API)](/oss/python/langgraph/graph-api) and the [Functional API](/oss/python/langgraph/functional-api).
 
-<Tabs>
-  <Tab title="StateGraph (Graph API)">
-    The [StateGraph (Graph API)](https://reference.langchain.com/python/langgraph/graph/state/StateGraph) is a higher-level abstraction that simplifies the creation of Pregel applications. It allows you to define a graph of nodes and edges. When you compile the graph, the StateGraph API automatically creates the Pregel application for you.
+**StateGraph (Graph API):**
+
+The [StateGraph (Graph API)](https://reference.langchain.com/python/langgraph/graph/state/StateGraph) is a higher-level abstraction that simplifies the creation of Pregel applications. It allows you to define a graph of nodes and edges. When you compile the graph, the StateGraph API automatically creates the Pregel application for you.
 
     ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from typing import TypedDict
@@ -294,10 +292,10 @@ LangGraph provides two high-level APIs for creating a Pregel application: the [S
      'branch:score_essay:__self__:score_essay': <langgraph.channels.ephemeral_value.EphemeralValue at 0x7d05e2d8b400>,
      'start:write_essay': <langgraph.channels.ephemeral_value.EphemeralValue at 0x7d05e2d8b280>}
     ```
-  </Tab>
+  
+**Functional API:**
 
-  <Tab title="Functional API">
-    In the [Functional API](/oss/python/langgraph/functional-api), you can use an [`@entrypoint`](https://reference.langchain.com/python/langgraph/func/entrypoint) to create a Pregel application. The `entrypoint` decorator allows you to define a function that takes input and returns output.
+In the [Functional API](/oss/python/langgraph/functional-api), you can use an [`@entrypoint`](https://reference.langchain.com/python/langgraph/func/entrypoint) to create a Pregel application. The `entrypoint` decorator allows you to define a function that takes input and returns output.
 
     ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from typing import TypedDict
@@ -331,17 +329,18 @@ LangGraph provides two high-level APIs for creating a Pregel application: the [S
     Channels:
     {'__start__': <langgraph.channels.ephemeral_value.EphemeralValue object at 0x7d05e2c906c0>, '__end__': <langgraph.channels.last_value.LastValue object at 0x7d05e2c90c40>, '__previous__': <langgraph.channels.last_value.LastValue object at 0x7d05e1007280>}
     ```
-  </Tab>
-</Tabs>
-
+  
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/pregel.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/pregel.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

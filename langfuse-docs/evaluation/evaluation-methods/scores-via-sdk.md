@@ -39,11 +39,6 @@ Here are examples by `Score` data types.
 
 For trace and observation scores, `trace_id`/`traceId` is required and `observation_id`/`observationId` is optional. If you attach a score to an observation, always provide both the observation ID and the corresponding trace ID.
 
-<LangTabs items={["Python SDK", "JS/TS SDK", "API"]}>
-<Tab>
-
-<Tabs items={["Numeric", "Categorical", "Boolean"]}>
-<Tab>
 Numeric score values must be provided as float.
 
 ```python
@@ -96,8 +91,7 @@ with langfuse.start_as_current_observation(as_type="span", name="my-operation"):
     )
 ```
 
-</Tab>
-<Tab>
+
 Categorical score values must be provided as strings.
 
 ```python
@@ -149,8 +143,7 @@ with langfuse.start_as_current_observation(as_type="span", name="my-operation"):
     )
 ```
 
-</Tab>
-<Tab>
+
 Boolean scores must be provided as a float. The value's string equivalent will be automatically populated and is accessible on read. See [API reference](/docs/api) for more details on POST/GET scores endpoints.
 
 ```python
@@ -201,19 +194,10 @@ with langfuse.start_as_current_observation(as_type="span", name="my-operation"):
     )
 ```
 
-</Tab>
-</Tabs>
 
-</Tab>
-<Tab>
-
-<Tabs items={["Numeric", "Categorical", "Boolean"]}>
-<Tab>
 Numeric score values must be provided as float.
 
 ```ts
-import { LangfuseClient } from "@langfuse/client";
-
 const langfuse = new LangfuseClient();
 
 langfuse.score.create({
@@ -230,13 +214,10 @@ langfuse.score.create({
 await langfuse.flush();
 ```
 
-</Tab>
-<Tab>
+
 Categorical score values must be provided as strings.
 
 ```ts
-import { LangfuseClient } from "@langfuse/client";
-
 const langfuse = new LangfuseClient();
 
 langfuse.score.create({
@@ -253,13 +234,10 @@ langfuse.score.create({
 await langfuse.flush();
 ```
 
-</Tab>
-<Tab>
+
 Boolean scores must be provided as a float. The value's string equivalent will be automatically populated and is accessible on read. See [API reference](/docs/api) for more details on POST/GET scores endpoints.
 
 ```ts
-import { LangfuseClient } from "@langfuse/client";
-
 const langfuse = new LangfuseClient();
 
 langfuse.score.create({
@@ -276,16 +254,9 @@ langfuse.score.create({
 await langfuse.flush();
 ```
 
-</Tab>
-</Tabs>
-
-</Tab>
-<Tab>
 
 You can also create scores directly via the [REST API](https://api.reference.langfuse.com/#tag/score/POST/api/public/scores). Authenticate using HTTP Basic Auth with your Langfuse Public Key as username and Secret Key as password.
 
-<Tabs items={["Numeric", "Categorical", "Boolean"]}>
-<Tab>
 Numeric score values must be provided as float.
 
 ```bash
@@ -302,8 +273,7 @@ curl -X POST https://cloud.langfuse.com/api/public/scores \
   }'
 ```
 
-</Tab>
-<Tab>
+
 Categorical score values must be provided as strings.
 
 ```bash
@@ -320,8 +290,7 @@ curl -X POST https://cloud.langfuse.com/api/public/scores \
   }'
 ```
 
-</Tab>
-<Tab>
+
 Boolean scores must be provided as a float (`0` or `1`). The value's string equivalent will be automatically populated and is accessible on read.
 
 ```bash
@@ -338,18 +307,10 @@ curl -X POST https://cloud.langfuse.com/api/public/scores \
   }'
 ```
 
-</Tab>
-</Tabs>
-
-</Tab>
-</LangTabs>
 
 ### Session-level Scores
 
 To score an entire session (without attaching the score to a trace or observation), provide only `session_id` (Python SDK) or `sessionId` (JS/TS SDK and API).
-
-<LangTabs items={["Python SDK", "JS/TS SDK", "API"]}>
-<Tab>
 
 ```python
 from langfuse import get_client
@@ -364,12 +325,8 @@ langfuse.create_score(
 )
 ```
 
-</Tab>
-<Tab>
 
 ```ts
-import { LangfuseClient } from "@langfuse/client";
-
 const langfuse = new LangfuseClient();
 
 langfuse.score.create({
@@ -383,8 +340,6 @@ langfuse.score.create({
 await langfuse.flush();
 ```
 
-</Tab>
-<Tab>
 
 ```bash
 curl -X POST https://cloud.langfuse.com/api/public/scores \
@@ -399,8 +354,6 @@ curl -X POST https://cloud.langfuse.com/api/public/scores \
   }'
 ```
 
-</Tab>
-</LangTabs>
 
 ## Advanced
 
@@ -426,12 +379,6 @@ Whenever you provide a `ScoreConfig`, the score data will be validated against t
 - **Score Value when Type is categorical**: Value must map to one of the categories defined in the config
 - **Score Value when Type is boolean**: Value must equal `0` or `1`
 
-<LangTabs items={["Python SDK", "JS/TS SDK", "API"]}>
-
-<Tab>
-
-<Tabs items={["Numeric Scores", "Categorical Scores", "Boolean Scores"]}>
-<Tab>
 When ingesting numeric scores, you can provide the value as a float. If you provide a configId, the score value will be validated against the config's numeric range, which might be defined by a minimum and/or maximum value.
 
 ```python
@@ -462,8 +409,7 @@ with langfuse.start_as_current_observation(as_type="span", name="my-operation") 
     )
 ```
 
-</Tab>
-<Tab>
+
 Categorical scores are used to evaluate data that falls into specific categories. When ingesting categorical scores, you can provide the value as a string. If you provide a configId, the score value will be validated against the config's categories.
 
 ```python
@@ -493,8 +439,7 @@ with langfuse.start_as_current_observation(as_type="span", name="my-operation") 
     )
 ```
 
-</Tab>
-<Tab>
+
 When ingesting boolean scores, you can provide the value as a float. If you provide a configId, the score's name and config's name must match as well as their data types.
 
 ```python
@@ -524,19 +469,10 @@ with langfuse.start_as_current_observation(as_type="span", name="my-operation") 
     )
 ```
 
-</Tab>
-</Tabs>
 
-</Tab>
-<Tab>
-
-<Tabs items={["Numeric Scores", "Categorical Scores", "Boolean Scores"]}>
-<Tab>
 When ingesting numeric scores, you can provide the value as a float. If you provide a configId, the score value will be validated against the config's numeric range, which might be defined by a minimum and/or maximum value.
 
 ```ts
-import { LangfuseClient } from "@langfuse/client";
-
 const langfuse = new LangfuseClient();
 
 langfuse.score.create({
@@ -554,13 +490,10 @@ langfuse.score.create({
 await langfuse.flush();
 ```
 
-</Tab>
-<Tab>
+
 Categorical scores are used to evaluate data that falls into specific categories. When ingesting categorical scores, you can provide the value as a string. If you provide a configId, the score value will be validated against the config's categories.
 
 ```ts
-import { LangfuseClient } from "@langfuse/client";
-
 const langfuse = new LangfuseClient();
 
 langfuse.score.create({
@@ -578,13 +511,10 @@ langfuse.score.create({
 await langfuse.flush();
 ```
 
-</Tab>
-<Tab>
+
 When ingesting boolean scores, you can provide the value as a float. If you provide a configId, the score's name and config's name must match as well as their data types.
 
 ```ts
-import { LangfuseClient } from "@langfuse/client";
-
 const langfuse = new LangfuseClient();
 
 langfuse.score.create({
@@ -602,16 +532,9 @@ langfuse.score.create({
 await langfuse.flush();
 ```
 
-</Tab>
-</Tabs>
-
-</Tab>
-<Tab>
 
 You can also enforce score configs via the [REST API](https://api.reference.langfuse.com/#tag/score/POST/api/public/scores) by providing a `configId`.
 
-<Tabs items={["Numeric Scores", "Categorical Scores", "Boolean Scores"]}>
-<Tab>
 When ingesting numeric scores, you can provide the value as a float. If you provide a configId, the score value will be validated against the config's numeric range.
 
 ```bash
@@ -630,8 +553,7 @@ curl -X POST https://cloud.langfuse.com/api/public/scores \
   }'
 ```
 
-</Tab>
-<Tab>
+
 Categorical scores are used to evaluate data that falls into specific categories. If you provide a configId, the score value will be validated against the config's categories.
 
 ```bash
@@ -650,8 +572,7 @@ curl -X POST https://cloud.langfuse.com/api/public/scores \
   }'
 ```
 
-</Tab>
-<Tab>
+
 When ingesting boolean scores, you can provide the value as a float. If you provide a configId, the score's name and config's name must match as well as their data types.
 
 ```bash
@@ -670,14 +591,8 @@ curl -X POST https://cloud.langfuse.com/api/public/scores \
   }'
 ```
 
-</Tab>
-</Tabs>
-
-</Tab>
 
 See [API reference](/docs/api) for more details on POST/GET score configs endpoints.
-
-</LangTabs>
 
 ### Inferred Score Properties
 
@@ -690,8 +605,6 @@ Certain score properties might be inferred based on your input:
 
 Detailed Examples:
 
-<Tabs items={["Numeric Scores", "Categorical Scores", "Boolean Scores"]}>
-<Tab>
 For example, let's assume you'd like to ingest a numeric score to measure **accuracy**. We have included a table of possible score ingestion scenarios below.
 
 | Value   | Data Type | Config Id | Description                                                 | Inferred Data Type | Valid                            |
@@ -703,8 +616,7 @@ For example, let's assume you'd like to ingest a numeric score to measure **accu
 | `0.9`   | `Null`    | `78545`   | Data type inferred                                          | `NUMERIC`          | Conditional on config validation |
 | `depth` | `NUMERIC` | `78545`   | Error: data type of value does not match provided data type |                    | No                               |
 
-</Tab>
-<Tab>
+
 For example, let's assume you'd like to ingest a categorical score to measure **correctness**. We have included a table of possible score ingestion scenarios below.
 
 | Value     | Data Type     | Config Id | Description                                                 | Inferred Data Type | Inferred Value representation       | Valid                            |
@@ -716,8 +628,7 @@ For example, let's assume you'd like to ingest a categorical score to measure **
 | `correct` | `NULL`        | `12345`   | Data type inferred                                          | `CATEGORICAL`      |                                     | Conditional on config validation |
 | `1`       | `CATEGORICAL` | `12345`   | Error: data type of value does not match provided data type |                    |                                     | No                               |
 
-</Tab>
-<Tab>
+
 For example, let's assume you'd like to ingest a boolean score to measure **helpfulness**. We have included a table of possible score ingestion scenarios below.
 
 | Value   | Data Type | Config Id | Description                                                 | Inferred Data Type | Inferred Value representation | Valid                            |
@@ -728,8 +639,6 @@ For example, let's assume you'd like to ingest a boolean score to measure **help
 | `0.9`   | `Null`    | `93547`   | Data type and value's string equivalent inferred            | `BOOLEAN`          | `True`                        | Conditional on config validation |
 | `depth` | `BOOLEAN` | `93547`   | Error: data type of value does not match provided data type |                    |                               | No                               |
 
-</Tab>
-</Tabs>
 
 ## Update Existing Scores via API/SDKs [#update]
 

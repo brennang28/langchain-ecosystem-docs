@@ -165,13 +165,9 @@ export const ExampleEmbed = ({example, theme, minHeight = 500, maxHeight = 700})
     position: "relative",
     fontFamily: "inherit"
   }}>
-      <div className="lc-border lc-bg-surface" style={{
-    border: "1px solid",
-    borderRadius: "16px",
-    overflow: "hidden"
-  }}>
+      
         {}
-        <div ref={slotRef} className="lc-bg-wash" style={{
+        <div ref={slotRef} style={{
     height: iframeHeight,
     position: "relative"
   }}>
@@ -182,18 +178,10 @@ export const ExampleEmbed = ({example, theme, minHeight = 500, maxHeight = 700})
     alignItems: "center",
     justifyContent: "center"
   }}>
-              <div className="lc-spinner" style={{
-    width: 24,
-    height: 24,
-    border: "3px solid",
-    borderRadius: "50%",
-    animation: "spin 0.8s linear infinite"
-  }} />
+              
               <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
-            </div>}
-        </div>
-      </div>
-    </div>;
+            }
+        ;
 };
 
 [CopilotKit](https://www.copilotkit.ai/) provides a full React chat runtime and pairs especially well with LangGraph when you want the agent to return **structured UI payloads** instead of only plain text. In this pattern, your LangGraph deployment serves both the graph API and a custom CopilotKit endpoint, while the frontend parses assistant messages into dynamic React components.
@@ -204,12 +192,12 @@ This approach is useful when you want:
 * a custom server endpoint that can add provider-specific behavior next to your deployed graph
 * structured generative UI rendered from a constrained component registry
 
-<Info>
-  For CopilotKit-specific APIs, UI patterns, and runtime configuration, see the
-  [CopilotKit docs](https://docs.copilotkit.ai/langgraph).
-</Info>
 
-<ExampleEmbed example="copilotkit" minHeight={700} />
+> ℹ️ **Info**
+>
+> For CopilotKit-specific APIs, UI patterns, and runtime configuration, see the
+>   [CopilotKit docs](https://docs.copilotkit.ai/langgraph).
+
 
 ## How it works
 
@@ -394,18 +382,10 @@ The result is a clean separation of concerns:
 On the frontend, wrap your app in `CopilotKit` and point it at the custom runtime URL:
 
 ```tsx  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-import { CopilotKit } from "@copilotkit/react-core";
-import { CopilotChat, useAgentContext } from "@copilotkit/react-core/v2";
-import { s } from "@hashbrownai/core";
-
-import { useChatKit } from "@/components/chat/chat-kit";
-import { chatTheme } from "@/lib/chat-theme";
-
 export function App() {
   return (
     <CopilotKit runtimeUrl={import.meta.env.VITE_RUNTIME_URL ?? "/api/copilotkit"}>
-      <Page />
-    </CopilotKit>
+      </CopilotKit>
   );
 }
 
@@ -417,7 +397,7 @@ function Page() {
     value: s.toJsonSchema(chatKit.schema),
   });
 
-  return <CopilotChat {...chatTheme} />;
+  return ;
 }
 ```
 
@@ -431,15 +411,6 @@ There are two important pieces here:
 The component registry lives in `useChatKit()`. This is where you define the set of components the agent is allowed to emit, such as cards, rows, columns, charts, code blocks, and buttons.
 
 ```tsx  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-import { s } from "@hashbrownai/core";
-import { exposeComponent, exposeMarkdown, useUiKit } from "@hashbrownai/react";
-
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { CodeBlock } from "@/components/ui/code-block";
-import { Row, Column } from "@/components/ui/layout";
-import { SimpleChart } from "@/components/ui/simple-chart";
-
 export function useChatKit() {
   return useUiKit({
     components: [
@@ -496,14 +467,6 @@ Once the assistant response arrives, the custom message renderer decides how to 
 * user messages are rendered as ordinary chat bubbles
 
 ```tsx  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-import type { AssistantMessage } from "@ag-ui/core";
-import type { RenderMessageProps } from "@copilotkit/react-ui";
-import { useJsonParser } from "@hashbrownai/react";
-import { memo } from "react";
-
-import { useChatKit } from "@/components/chat/chat-kit";
-import { Squircle } from "@/components/squircle";
-
 const AssistantMessageRenderer = memo(function AssistantMessageRenderer({
   message,
 }: {
@@ -515,24 +478,21 @@ const AssistantMessageRenderer = memo(function AssistantMessageRenderer({
   if (!value) return null;
 
   return (
-    <div className="group/msg mt-2 flex w-full justify-start">
-      <div className="magic-text-output w-full px-1 py-1">{kit.render(value)}</div>
-    </div>
-  );
+    
+      {kit.render(value)});
 });
 
 export function CustomMessageRenderer({ message }: RenderMessageProps) {
   if (message.role === "assistant") {
-    return <AssistantMessageRenderer message={message} />;
+    return ;
   }
 
   return (
-    <div className="flex w-full justify-end">
-      <Squircle className="w-full max-w-[64ch] px-4 py-3">
+    
+      <Squircle>
         <pre>{typeof message.content === "string" ? message.content : JSON.stringify(message.content, null, 2)}</pre>
       </Squircle>
-    </div>
-  );
+    );
 }
 ```
 
@@ -552,12 +512,15 @@ This renderer pattern is what makes the integration feel native:
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/frontend/integrations/copilotkit.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/frontend/integrations/copilotkit.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

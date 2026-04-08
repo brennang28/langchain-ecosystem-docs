@@ -10,15 +10,10 @@ Build custom middleware by implementing hooks that run at specific points in the
 
 Middleware provides two styles of hooks to intercept agent execution:
 
-<CardGroup cols={2}>
-  <Card title="Node-style hooks" icon="share" href="#node-style-hooks">
-    Run sequentially at specific execution points.
-  </Card>
-
-  <Card title="Wrap-style hooks" icon="container" href="#wrap-style-hooks">
-    Run around each model or tool call.
-  </Card>
-</CardGroup>
+Run sequentially at specific execution points.
+  
+Run around each model or tool call.
+  
 
 ### Node-style hooks
 
@@ -44,9 +39,9 @@ Choose the hooks your middleware needs. You can choose between node-style hooks 
 
 **Example:**
 
-<Tabs>
-  <Tab title="Decorator">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**Decorator:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langchain.agents.middleware import before_model, after_model, AgentState
     from langchain.messages import AIMessage
     from langgraph.runtime import Runtime
@@ -67,10 +62,10 @@ Choose the hooks your middleware needs. You can choose between node-style hooks 
         print(f"Model returned: {state['messages'][-1].content}")
         return None
     ```
-  </Tab>
+  
+**Class:**
 
-  <Tab title="Class">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langchain.agents.middleware import AgentMiddleware, AgentState, hook_config
     from langchain.messages import AIMessage
     from langgraph.runtime import Runtime
@@ -94,9 +89,7 @@ Choose the hooks your middleware needs. You can choose between node-style hooks 
             print(f"Model returned: {state['messages'][-1].content}")
             return None
     ```
-  </Tab>
-</Tabs>
-
+  
 ### Wrap-style hooks
 
 Intercept execution and control when the handler is called. Use for retries, caching, and transformation.
@@ -110,9 +103,9 @@ You decide if the handler is called zero times (short-circuit), once (normal flo
 
 **Example:**
 
-<Tabs>
-  <Tab title="Decorator">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**Decorator:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langchain.agents.middleware import wrap_model_call, ModelRequest, ModelResponse
     from typing import Callable
 
@@ -130,10 +123,10 @@ You decide if the handler is called zero times (short-circuit), once (normal flo
                     raise
                 print(f"Retry {attempt + 1}/3 after error: {e}")
     ```
-  </Tab>
+  
+**Class:**
 
-  <Tab title="Class">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langchain.agents.middleware import AgentMiddleware, ModelRequest, ModelResponse
     from typing import Callable
 
@@ -155,9 +148,7 @@ You decide if the handler is called zero times (short-circuit), once (normal flo
                         raise
                     print(f"Retry {attempt + 1}/{self.max_retries} after error: {e}")
     ```
-  </Tab>
-</Tabs>
-
+  
 ## State updates
 
 Both node-style and wrap-style hooks can update agent state. The mechanism differs:
@@ -294,15 +285,10 @@ class InnerMiddleware(AgentMiddleware):
 
 You can create middleware in two ways:
 
-<CardGroup cols={2}>
-  <Card title="Decorator-based middleware" icon="at" href="#decorator-based-middleware">
-    Quick and simple for single-hook middleware. Use decorators to wrap individual functions.
-  </Card>
-
-  <Card title="Class-based middleware" icon="braces" href="#class-based-middleware">
-    More powerful for complex middleware with multiple hooks or configuration.
-  </Card>
-</CardGroup>
+Quick and simple for single-hook middleware. Use decorators to wrap individual functions.
+  
+More powerful for complex middleware with multiple hooks or configuration.
+  
 
 ### Decorator-based middleware
 
@@ -437,9 +423,9 @@ If your middleware needs to track state across hooks, middleware can extend the 
 
 * **Make conditional decisions**: Use accumulated state to determine whether to continue execution, jump to different nodes, or modify behavior dynamically
 
-<Tabs>
-  <Tab title="Decorator">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**Decorator:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langchain.agents import create_agent
     from langchain.messages import HumanMessage
     from langchain.agents.middleware import AgentState, before_model, after_model
@@ -479,10 +465,10 @@ If your middleware needs to track state across hooks, middleware can extend the 
         "user_id": "user-123",
     })
     ```
-  </Tab>
+  
+**Class:**
 
-  <Tab title="Class">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langchain.agents import create_agent
     from langchain.messages import HumanMessage
     from langchain.agents.middleware import AgentState, AgentMiddleware
@@ -521,9 +507,7 @@ If your middleware needs to track state across hooks, middleware can extend the 
         "user_id": "user-123",
     })
     ```
-  </Tab>
-</Tabs>
-
+  
 ## Execution order
 
 When using multiple middleware, understand how they execute:
@@ -536,8 +520,11 @@ agent = create_agent(
 )
 ```
 
-<Accordion title="Execution flow">
-  **Before hooks run in order:**
+
+<details>
+<summary>Execution flow</summary>
+
+**Before hooks run in order:**
 
   1. `middleware1.before_agent()`
   2. `middleware2.before_agent()`
@@ -564,7 +551,9 @@ agent = create_agent(
   11. `middleware3.after_agent()`
   12. `middleware2.after_agent()`
   13. `middleware1.after_agent()`
-</Accordion>
+
+</details>
+
 
 **Key rules:**
 
@@ -582,9 +571,9 @@ To exit early from middleware, return a dictionary with `jump_to`:
 * `'tools'`: Jump to the tools node
 * `'model'`: Jump to the model node (or the first `before_model` hook)
 
-<Tabs>
-  <Tab title="Decorator">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**Decorator:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langchain.agents.middleware import after_model, hook_config, AgentState
     from langchain.messages import AIMessage
     from langgraph.runtime import Runtime
@@ -602,10 +591,10 @@ To exit early from middleware, return a dictionary with `jump_to`:
             }
         return None
     ```
-  </Tab>
+  
+**Class:**
 
-  <Tab title="Class">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langchain.agents.middleware import AgentMiddleware, hook_config, AgentState
     from langchain.messages import AIMessage
     from langgraph.runtime import Runtime
@@ -622,9 +611,7 @@ To exit early from middleware, return a dictionary with `jump_to`:
                 }
             return None
     ```
-  </Tab>
-</Tabs>
-
+  
 ## Best practices
 
 1. Keep middleware focused - each should do one thing well
@@ -645,9 +632,9 @@ Dynamically modify the system prompt at runtime to inject context, user-specific
 
 Use the `system_message` field on `ModelRequest` to read and modify the system prompt. It contains a [`SystemMessage`](https://reference.langchain.com/python/langchain-core/messages/system/SystemMessage) object (even if the agent was created with a string `system_prompt`).
 
-<Tabs>
-  <Tab title="Decorator">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**Decorator:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from collections.abc import Callable
 
     from langchain.agents.middleware import ModelRequest, ModelResponse, wrap_model_call
@@ -665,10 +652,10 @@ Use the `system_message` field on `ModelRequest` to read and modify the system p
         new_system_message = SystemMessage(content=new_content)
         return handler(request.override(system_message=new_system_message))
     ```
-  </Tab>
+  
+**Class:**
 
-  <Tab title="Class">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from collections.abc import Callable
 
     from langchain.agents.middleware import AgentMiddleware, ModelRequest, ModelResponse
@@ -686,21 +673,21 @@ Use the `system_message` field on `ModelRequest` to read and modify the system p
             new_system_message = SystemMessage(content=new_content)
             return handler(request.override(system_message=new_system_message))
     ```
-  </Tab>
-</Tabs>
+  
 
-<Note>
-  * `ModelRequest.system_message` is always a [`SystemMessage`](https://reference.langchain.com/python/langchain-core/messages/system/SystemMessage) object, even if the agent was created with `system_prompt="string"`
-  * Use `SystemMessage.content_blocks` to access content as a list of blocks, regardless of whether the original content was a string or list
-  * When modifying system messages, use `content_blocks` and append new blocks to preserve existing structure
-  * You can pass [`SystemMessage`](https://reference.langchain.com/python/langchain-core/messages/system/SystemMessage) objects directly to `create_agent`'s `system_prompt` parameter for advanced use cases like cache control
-</Note>
+> ℹ️ **Note**
+>
+> * `ModelRequest.system_message` is always a [`SystemMessage`](https://reference.langchain.com/python/langchain-core/messages/system/SystemMessage) object, even if the agent was created with `system_prompt="string"`
+>   * Use `SystemMessage.content_blocks` to access content as a list of blocks, regardless of whether the original content was a string or list
+>   * When modifying system messages, use `content_blocks` and append new blocks to preserve existing structure
+>   * You can pass [`SystemMessage`](https://reference.langchain.com/python/langchain-core/messages/system/SystemMessage) objects directly to `create_agent`'s `system_prompt` parameter for advanced use cases like cache control
+
 
 ### Dynamic model selection
 
-<Tabs>
-  <Tab title="Decorator">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**Decorator:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from collections.abc import Callable
 
     from langchain.agents.middleware import ModelRequest, ModelResponse, wrap_model_call
@@ -721,10 +708,10 @@ Use the `system_message` field on `ModelRequest` to read and modify the system p
             model = simple_model
         return handler(request.override(model=model))
     ```
-  </Tab>
+  
+**Class:**
 
-  <Tab title="Class">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from collections.abc import Callable
 
     from langchain.agents.middleware import AgentMiddleware, ModelRequest, ModelResponse
@@ -746,9 +733,7 @@ Use the `system_message` field on `ModelRequest` to read and modify the system p
                 model = simple_model
             return handler(request.override(model=model))
     ```
-  </Tab>
-</Tabs>
-
+  
 ### Dynamically selecting tools
 
 Select relevant tools at runtime to improve performance and accuracy. This section covers filtering pre-registered tools. For registering tools that are discovered at runtime (e.g., from MCP servers), see [Runtime tool registration](/oss/python/langchain/agents#dynamic-tools).
@@ -759,9 +744,9 @@ Select relevant tools at runtime to improve performance and accuracy. This secti
 * **Better accuracy** - Models choose correctly from fewer options
 * **Permission control** - Dynamically filter tools based on user access
 
-<Tabs>
-  <Tab title="Decorator">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**Decorator:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langchain.agents import create_agent
     from langchain.agents.middleware import wrap_model_call, ModelRequest, ModelResponse
     from typing import Callable
@@ -783,10 +768,10 @@ Select relevant tools at runtime to improve performance and accuracy. This secti
         middleware=[select_tools],
     )
     ```
-  </Tab>
+  
+**Class:**
 
-  <Tab title="Class">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langchain.agents import create_agent
     from langchain.agents.middleware import AgentMiddleware, ModelRequest, ModelResponse
     from typing import Callable
@@ -809,14 +794,12 @@ Select relevant tools at runtime to improve performance and accuracy. This secti
         middleware=[ToolSelectorMiddleware()],
     )
     ```
-  </Tab>
-</Tabs>
-
+  
 ### Tool call monitoring
 
-<Tabs>
-  <Tab title="Decorator">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**Decorator:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from collections.abc import Callable
 
     from langchain.agents.middleware import wrap_tool_call
@@ -840,10 +823,10 @@ Select relevant tools at runtime to improve performance and accuracy. This secti
             print(f"Tool failed: {e}")
             raise
     ```
-  </Tab>
+  
+**Class:**
 
-  <Tab title="Class">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from collections.abc import Callable
 
     from langchain.agents.middleware import AgentMiddleware
@@ -868,16 +851,14 @@ Select relevant tools at runtime to improve performance and accuracy. This secti
                 print(f"Tool failed: {e}")
                 raise
     ```
-  </Tab>
-</Tabs>
-
+  
 ### Prompt caching (Anthropic)
 
 When working with Anthropic models, use structured content blocks with cache control directives to cache large system prompts:
 
-<Tabs>
-  <Tab title="Decorator">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**Decorator:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langchain.agents.middleware import wrap_model_call, ModelRequest, ModelResponse
     from langchain.messages import SystemMessage
     from typing import Callable
@@ -901,10 +882,10 @@ When working with Anthropic models, use structured content blocks with cache con
         new_system_message = SystemMessage(content=new_content)
         return handler(request.override(system_message=new_system_message))
     ```
-  </Tab>
+  
+**Class:**
 
-  <Tab title="Class">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langchain.agents.middleware import AgentMiddleware, ModelRequest, ModelResponse
     from langchain.messages import SystemMessage
     from typing import Callable
@@ -928,9 +909,7 @@ When working with Anthropic models, use structured content blocks with cache con
             new_system_message = SystemMessage(content=new_content)
             return handler(request.override(system_message=new_system_message))
     ```
-  </Tab>
-</Tabs>
-
+  
 **Notes:**
 
 * `ModelRequest.system_message` is always a [`SystemMessage`](https://reference.langchain.com/python/langchain-core/messages/system/SystemMessage) object, even if the agent was created with `system_prompt="string"`
@@ -948,12 +927,15 @@ When working with Anthropic models, use structured content blocks with cache con
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/middleware/custom.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/middleware/custom.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

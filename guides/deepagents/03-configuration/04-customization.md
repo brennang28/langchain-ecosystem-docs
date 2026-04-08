@@ -49,26 +49,32 @@ agent = create_deep_agent(
 )
 ```
 
-<Tip>For long-running agent tasks on unreliable networks, consider increasing `max_retries` to 10–15 and pairing it with a [checkpointer](/oss/python/langgraph/persistence) so that progress is preserved across failures.</Tip>
+
+> 💡 **Tip**
+>
+> For long-running agent tasks on unreliable networks, consider increasing `max_retries` to 10–15 and pairing it with a [checkpointer](/oss/python/langgraph/persistence) so that progress is preserved across failures.
+
 
 ## Model
 
-By default, `deepagents` uses [`claude-sonnet-4-6`](https://platform.claude.com/docs/en/about-claude/models/overview). You can customize the model by passing any supported <Tooltip tip="A string that follows the format `provider:model` (e.g. openai:gpt-5)" cta="See mappings" href="https://reference.langchain.com/python/langchain/models/#langchain.chat_models.init_chat_model(model)">model identifier string</Tooltip> or [LangChain model object](/oss/python/integrations/chat).
+By default, `deepagents` uses [`claude-sonnet-4-6`](https://platform.claude.com/docs/en/about-claude/models/overview). You can customize the model by passing any supported model identifier stringor [LangChain model object](/oss/python/integrations/chat).
 
-<Tip>
-  Use the `provider:model` format (for example `openai:gpt-5`) to quickly switch between models.
-</Tip>
 
-<Tabs>
-  <Tab title="OpenAI">
-    👉 Read the [OpenAI chat model integration docs](/oss/python/integrations/chat/openai/)
+> 💡 **Tip**
+>
+> Use the `provider:model` format (for example `openai:gpt-5`) to quickly switch between models.
+
+
+**OpenAI:**
+
+👉 Read the [OpenAI chat model integration docs](/oss/python/integrations/chat/openai/)
 
     ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain[openai]"
     ```
 
-    <CodeGroup>
-      ```python default parameters theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python default parameters theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       import os
       from deepagents import create_deep_agent
 
@@ -100,18 +106,17 @@ By default, `deepagents` uses [`claude-sonnet-4-6`](https://platform.claude.com/
       model = ChatOpenAI(model="gpt-5.2")
       agent = create_deep_agent(model=model)
       ```
-    </CodeGroup>
-  </Tab>
+    
+**Anthropic:**
 
-  <Tab title="Anthropic">
-    👉 Read the [Anthropic chat model integration docs](/oss/python/integrations/chat/anthropic/)
+👉 Read the [Anthropic chat model integration docs](/oss/python/integrations/chat/anthropic/)
 
     ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain[anthropic]"
     ```
 
-    <CodeGroup>
-      ```python default parameters theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python default parameters theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       import os
       from deepagents import create_deep_agent
 
@@ -143,18 +148,17 @@ By default, `deepagents` uses [`claude-sonnet-4-6`](https://platform.claude.com/
       model = ChatAnthropic(model="claude-sonnet-4-6")
       agent = create_deep_agent(model=model)
       ```
-    </CodeGroup>
-  </Tab>
+    
+**Azure:**
 
-  <Tab title="Azure">
-    👉 Read the [Azure chat model integration docs](/oss/python/integrations/chat/azure_chat_openai/)
+👉 Read the [Azure chat model integration docs](/oss/python/integrations/chat/azure_chat_openai/)
 
     ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain[openai]"
     ```
 
-    <CodeGroup>
-      ```python default parameters theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python default parameters theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       import os
       from deepagents import create_deep_agent
 
@@ -198,18 +202,17 @@ By default, `deepagents` uses [`claude-sonnet-4-6`](https://platform.claude.com/
       )
       agent = create_deep_agent(model=model)
       ```
-    </CodeGroup>
-  </Tab>
+    
+**Google Gemini:**
 
-  <Tab title="Google Gemini">
-    👉 Read the [Google GenAI chat model integration docs](/oss/python/integrations/chat/google_generative_ai/)
+👉 Read the [Google GenAI chat model integration docs](/oss/python/integrations/chat/google_generative_ai/)
 
     ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain[google-genai]"
     ```
 
-    <CodeGroup>
-      ```python default parameters theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python default parameters theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       import os
       from deepagents import create_deep_agent
 
@@ -241,18 +244,17 @@ By default, `deepagents` uses [`claude-sonnet-4-6`](https://platform.claude.com/
       model = ChatGoogleGenerativeAI(model="gemini-2.5-flash-lite")
       agent = create_deep_agent(model=model)
       ```
-    </CodeGroup>
-  </Tab>
+    
+**AWS Bedrock:**
 
-  <Tab title="AWS Bedrock">
-    👉 Read the [AWS Bedrock chat model integration docs](/oss/python/integrations/chat/bedrock/)
+👉 Read the [AWS Bedrock chat model integration docs](/oss/python/integrations/chat/bedrock/)
 
     ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain[aws]"
     ```
 
-    <CodeGroup>
-      ```python default parameters theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python default parameters theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       from deepagents import create_deep_agent
 
       # Follow the steps here to configure your credentials:
@@ -290,18 +292,17 @@ By default, `deepagents` uses [`claude-sonnet-4-6`](https://platform.claude.com/
       model = ChatBedrock(model="anthropic.claude-3-5-sonnet-20240620-v1:0")
       agent = create_deep_agent(model=model)
       ```
-    </CodeGroup>
-  </Tab>
+    
+**HuggingFace:**
 
-  <Tab title="HuggingFace">
-    👉 Read the [HuggingFace chat model integration docs](/oss/python/integrations/chat/huggingface/)
+👉 Read the [HuggingFace chat model integration docs](/oss/python/integrations/chat/huggingface/)
 
     ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain[huggingface]"
     ```
 
-    <CodeGroup>
-      ```python default parameters theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python default parameters theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       import os
       from deepagents import create_deep_agent
 
@@ -348,10 +349,7 @@ By default, `deepagents` uses [`claude-sonnet-4-6`](https://platform.claude.com/
       model = ChatHuggingFace(llm=llm)
       agent = create_deep_agent(model=model)
       ```
-    </CodeGroup>
-  </Tab>
-</Tabs>
-
+    
 ## Tools
 
 In addition to [built-in tools](/oss/python/deepagents/overview#core-capabilities) for planning, file management, and subagent spawning, you can provide custom tools:
@@ -472,39 +470,41 @@ agent = create_deep_agent(
 )
 ```
 
-<Warning>
-  **Do not mutate attributes after initialization**
 
-  If you need to track values across hook invocations (for example, counters or accumulated data), use graph state.
-  Graph state is scoped to a thread by design, so updates are safe under concurrency.
+> ⚠️ **Warning**
+>
+> **Do not mutate attributes after initialization**
+> 
+>   If you need to track values across hook invocations (for example, counters or accumulated data), use graph state.
+>   Graph state is scoped to a thread by design, so updates are safe under concurrency.
+> 
+>   **Do this:**
+> 
+>   ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+>   class CustomMiddleware(AgentMiddleware):
+>       def __init__(self):
+>           pass
+> 
+>       def before_agent(self, state, runtime):
+>           return {"x": state.get("x", 0) + 1}  # Update graph state instead
+>   ```
+> 
+>   Do **not** do this:
+> 
+>   ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+>   class CustomMiddleware(AgentMiddleware):
+>       def __init__(self):
+>           self.x = 1
+> 
+>       def before_agent(self, state, runtime):
+>           self.x += 1  # Mutation causes race conditions
+>   ```
+> 
+>   Mutation in place, such as modifying `self.x` in `before_agent` or changing other shared values in hooks, can lead to subtle bugs and race conditions because many operations run concurrently (subagents, parallel tools, and parallel invocations on different threads).
+> 
+>   For full details on extending state with custom properties, see [Custom middleware - Custom state schema](/oss/python/langchain/middleware/custom#custom-state-schema).
+>   If you must use mutation in custom middleware, consider what happens when subagents, parallel tools, or concurrent agent invocations run at the same time.
 
-  **Do this:**
-
-  ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-  class CustomMiddleware(AgentMiddleware):
-      def __init__(self):
-          pass
-
-      def before_agent(self, state, runtime):
-          return {"x": state.get("x", 0) + 1}  # Update graph state instead
-  ```
-
-  Do **not** do this:
-
-  ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-  class CustomMiddleware(AgentMiddleware):
-      def __init__(self):
-          self.x = 1
-
-      def before_agent(self, state, runtime):
-          self.x += 1  # Mutation causes race conditions
-  ```
-
-  Mutation in place, such as modifying `self.x` in `before_agent` or changing other shared values in hooks, can lead to subtle bugs and race conditions because many operations run concurrently (subagents, parallel tools, and parallel invocations on different threads).
-
-  For full details on extending state with custom properties, see [Custom middleware - Custom state schema](/oss/python/langchain/middleware/custom#custom-state-schema).
-  If you must use mutation in custom middleware, consider what happens when subagents, parallel tools, or concurrent agent invocations run at the same time.
-</Warning>
 
 ## Subagents
 
@@ -549,17 +549,15 @@ agent = create_deep_agent(
 
 For more information, see [Subagents](/oss/python/deepagents/subagents).
 
-{/* ## Context - You can persist agent state between runs to store information like user IDs. */}
-
 ## Backends
 
 Deep agent tools can make use of virtual file systems to store, access, and edit files. By default, Deep Agents use a [`StateBackend`](https://reference.langchain.com/python/deepagents/backends/state/StateBackend).
 
 If you are using [skills](#skills) or [memory](#memory), you must add the expected skill or memory files to the backend before creating the agent.
 
-<Tabs>
-  <Tab title="StateBackend">
-    An ephemeral filesystem backend stored in `langgraph` state.
+**StateBackend:**
+
+An ephemeral filesystem backend stored in `langgraph` state.
 
     This filesystem only persists *for a single thread*.
 
@@ -574,16 +572,18 @@ If you are using [skills](#skills) or [memory](#memory), you must add the expect
         backend=StateBackend()
     )
     ```
-  </Tab>
+  
+**FilesystemBackend:**
 
-  <Tab title="FilesystemBackend">
-    The local machine's filesystem.
+The local machine's filesystem.
 
-    <Warning>
-      This backend grants agents direct filesystem read/write access.
-      Use with caution and only in appropriate environments.
-      For more information, see [`FilesystemBackend`](/oss/python/deepagents/backends#filesystembackend-local-disk).
-    </Warning>
+    
+> ⚠️ **Warning**
+>
+> This backend grants agents direct filesystem read/write access.
+>       Use with caution and only in appropriate environments.
+>       For more information, see [`FilesystemBackend`](/oss/python/deepagents/backends#filesystembackend-local-disk).
+
 
     ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from deepagents.backends import FilesystemBackend
@@ -592,16 +592,18 @@ If you are using [skills](#skills) or [memory](#memory), you must add the expect
         backend=FilesystemBackend(root_dir=".", virtual_mode=True)
     )
     ```
-  </Tab>
+  
+**LocalShellBackend:**
 
-  <Tab title="LocalShellBackend">
-    A filesystem with shell execution directly on the host. Provides filesystem tools plus the `execute` tool for running commands.
+A filesystem with shell execution directly on the host. Provides filesystem tools plus the `execute` tool for running commands.
 
-    <Warning>
-      This backend grants agents direct filesystem read/write access **and** unrestricted shell execution on your host.
-      Use with extreme caution and only in appropriate environments.
-      For more information, see [`LocalShellBackend`](/oss/python/deepagents/backends#localshellbackend-local-shell).
-    </Warning>
+    
+> ⚠️ **Warning**
+>
+> This backend grants agents direct filesystem read/write access **and** unrestricted shell execution on your host.
+>       Use with extreme caution and only in appropriate environments.
+>       For more information, see [`LocalShellBackend`](/oss/python/deepagents/backends#localshellbackend-local-shell).
+
 
     ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from deepagents.backends import LocalShellBackend
@@ -610,10 +612,10 @@ If you are using [skills](#skills) or [memory](#memory), you must add the expect
         backend=LocalShellBackend(root_dir=".", env={"PATH": "/usr/bin:/bin"})
     )
     ```
-  </Tab>
+  
+**StoreBackend:**
 
-  <Tab title="StoreBackend">
-    A filesystem that provides long-term storage that is *persisted across threads*.
+A filesystem that provides long-term storage that is *persisted across threads*.
 
     ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langgraph.store.memory import InMemoryStore
@@ -627,17 +629,21 @@ If you are using [skills](#skills) or [memory](#memory), you must add the expect
     )
     ```
 
-    <Note>
-      When deploying to [LangSmith Deployment](/langsmith/deployment), omit the `store` parameter. The platform automatically provisions a store for your agent.
-    </Note>
+    
+> ℹ️ **Note**
+>
+> When deploying to [LangSmith Deployment](/langsmith/deployment), omit the `store` parameter. The platform automatically provisions a store for your agent.
 
-    <Tip>
-      The `namespace` parameter controls data isolation. For multi-user deployments, always set a [namespace factory](/oss/python/deepagents/backends#namespace-factories) to isolate data per user or tenant.
-    </Tip>
-  </Tab>
 
-  <Tab title="CompositeBackend">
-    A flexible backend where you can specify different routes in the filesystem to point towards different backends.
+    
+> 💡 **Tip**
+>
+> The `namespace` parameter controls data isolation. For multi-user deployments, always set a [namespace factory](/oss/python/deepagents/backends#namespace-factories) to isolate data per user or tenant.
+
+  
+**CompositeBackend:**
+
+A flexible backend where you can specify different routes in the filesystem to point towards different backends.
 
     ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from deepagents import create_deep_agent
@@ -654,9 +660,7 @@ If you are using [skills](#skills) or [memory](#memory), you must add the expect
         store=InMemoryStore()  # Store passed to create_deep_agent, not backend
     )
     ```
-  </Tab>
-</Tabs>
-
+  
 For more information, see [Backends](/oss/python/deepagents/backends).
 
 ### Sandboxes
@@ -666,19 +670,18 @@ Use a sandbox backend when you want your deep agent to write files, install depe
 
 You configure sandboxes by passing a sandbox backend to `backend` when creating your deep agent:
 
-<Tabs>
-  <Tab title="Modal">
-    <CodeGroup>
-      ```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**Modal:**
+
+
+```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       pip install langchain-modal
       ```
 
       ```bash uv theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       uv add langchain-modal
       ```
-    </CodeGroup>
-
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     import modal
     from deepagents import create_deep_agent
     from langchain_anthropic import ChatAnthropic
@@ -707,20 +710,19 @@ You configure sandboxes by passing a sandbox backend to `backend` when creating 
     finally:
         modal_sandbox.terminate()
     ```
-  </Tab>
+  
+**Runloop:**
 
-  <Tab title="Runloop">
-    <CodeGroup>
-      ```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       pip install langchain-runloop
       ```
 
       ```bash uv theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       uv add langchain-runloop
       ```
-    </CodeGroup>
-
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     import os
 
     from deepagents import create_deep_agent
@@ -753,20 +755,19 @@ You configure sandboxes by passing a sandbox backend to `backend` when creating 
     finally:
         devbox.shutdown()
     ```
-  </Tab>
+  
+**Daytona:**
 
-  <Tab title="Daytona">
-    <CodeGroup>
-      ```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       pip install langchain-daytona
       ```
 
       ```bash uv theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       uv add langchain-daytona
       ```
-    </CodeGroup>
-
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from daytona import Daytona
     from deepagents import create_deep_agent
     from langchain_anthropic import ChatAnthropic
@@ -795,9 +796,7 @@ You configure sandboxes by passing a sandbox backend to `backend` when creating 
     finally:
         sandbox.stop()
     ```
-  </Tab>
-</Tabs>
-
+  
 For more information, see [Sandboxes](/oss/python/deepagents/sandboxes).
 
 ## Human-in-the-loop
@@ -854,9 +853,9 @@ For example skills, see [Deep Agent example skills](https://github.com/langchain
 
 To add skills to your deep agent, pass them as an argument to `create_deep_agent`:
 
-<Tabs>
-  <Tab title="StateBackend">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**StateBackend:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from urllib.request import urlopen
     from deepagents import create_deep_agent
     from deepagents.backends.utils import create_file_data
@@ -891,10 +890,10 @@ To add skills to your deep agent, pass them as an argument to `create_deep_agent
         config={"configurable": {"thread_id": "12345"}},
     )
     ```
-  </Tab>
+  
+**StoreBackend:**
 
-  <Tab title="StoreBackend">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from urllib.request import urlopen
     from deepagents import create_deep_agent
     from deepagents.backends import StoreBackend
@@ -932,10 +931,10 @@ To add skills to your deep agent, pass them as an argument to `create_deep_agent
         config={"configurable": {"thread_id": "12345"}},
     )
     ```
-  </Tab>
+  
+**FilesystemBackend:**
 
-  <Tab title="FilesystemBackend">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from deepagents import create_deep_agent
     from langgraph.checkpoint.memory import MemorySaver
     from deepagents.backends.filesystem import FilesystemBackend
@@ -966,18 +965,16 @@ To add skills to your deep agent, pass them as an argument to `create_deep_agent
         config={"configurable": {"thread_id": "12345"}},
     )
     ```
-  </Tab>
-</Tabs>
-
+  
 ## Memory
 
 Use [`AGENTS.md` files](https://agents.md/) to provide extra context to your deep agent.
 
 You can pass one or more file paths to the `memory` parameter when creating your deep agent:
 
-<Tabs>
-  <Tab title="StateBackend">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**StateBackend:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from urllib.request import urlopen
 
     from deepagents import create_deep_agent
@@ -1009,10 +1006,10 @@ You can pass one or more file paths to the `memory` parameter when creating your
         config={"configurable": {"thread_id": "123456"}},
     )
     ```
-  </Tab>
+  
+**StoreBackend:**
 
-  <Tab title="StoreBackend">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from urllib.request import urlopen
 
     from deepagents import create_deep_agent
@@ -1053,10 +1050,10 @@ You can pass one or more file paths to the `memory` parameter when creating your
         config={"configurable": {"thread_id": "12345"}},
     )
     ```
-  </Tab>
+  
+**FilesystemBackend:**
 
-  <Tab title="FilesystemBackend">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from deepagents import create_deep_agent
     from langgraph.checkpoint.memory import MemorySaver
     from deepagents.backends import FilesystemBackend
@@ -1077,9 +1074,7 @@ You can pass one or more file paths to the `memory` parameter when creating your
         checkpointer=checkpointer,  # Required!
     )
     ```
-  </Tab>
-</Tabs>
-
+  
 ## Structured output
 
 Deep Agents support [structured output](/oss/python/langchain/structured-output).
@@ -1139,12 +1134,15 @@ For more information and examples, see [response format](/oss/python/langchain/s
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/customization.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/customization.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

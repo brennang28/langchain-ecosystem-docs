@@ -9,12 +9,6 @@ You can execute Experiments via UI (also called Prompt Experiments) in the Langf
 
 Optionally, you can use [LLM-as-a-Judge Evaluators](/docs/evaluation/evaluation-methods/llm-as-a-judge) to automatically score the responses based on the expected outputs to further analyze the results on an aggregate level.
 
-<Video
-  src="https://static.langfuse.com/docs-videos/prompt-experiments.mp4"
-  aspectRatio={16 / 9}
-  title="Introduction to Experiments via UI (Prompt Experiments)"
-/>
-
 ## Why use Prompt Experiments?
 
 - Quickly test different prompt versions or models
@@ -27,22 +21,20 @@ Experiments always run on the latest dataset version at experiment time. Support
 
 ## Prerequisites
 
-<Steps>
 
 ### Create a usable prompt
 
 Create a prompt that you want to test and evaluate. [How to create a prompt?](/docs/prompt-management/get-started)
 
-<Callout type="info">
-  **A prompt is usable when:** your prompt has variables that match the dataset
-  item keys in the dataset that will be used for the Dataset Run. See the
-  example below.
-</Callout>
+
+> ℹ️ **Note:** **A prompt is usable when:** your prompt has variables that match the dataset
+>   item keys in the dataset that will be used for the Dataset Run. See the
+>   example below.
+
 
 <details>
 <summary>Example: Prompt Variables & Dataset Item Keys Mapping</summary>
-<div className="grid md:grid-cols-1 gap-4">
-<div>
+
 
 <br />
 **Prompt:**
@@ -54,8 +46,6 @@ Question: {{question}}
 
 ```
 
-</div>
-<div>
 
 <br />
 **Dataset Item:**
@@ -67,8 +57,6 @@ Question: {{question}}
 }
 ```
 
-</div>
-</div>
 
 In this example:
 
@@ -118,16 +106,15 @@ In this example:
 
 Create a dataset with the inputs and expected outputs you want to use for your prompt experiments. [How to create a dataset?](/docs/evaluation/dataset-runs/datasets)
 
-<Callout type="info">
-  **A dataset is usable when:** [1] the dataset items have JSON objects as input
-  and [2] these objects have JSON keys that match the prompt variables of the
-  prompt(s) you will use. See the example below.
-</Callout>
+
+> ℹ️ **Note:** **A dataset is usable when:** [1] the dataset items have JSON objects as input
+>   and [2] these objects have JSON keys that match the prompt variables of the
+>   prompt(s) you will use. See the example below.
+
 
  <details>
 <summary>Example: Prompt Variables & Dataset Item Keys Mapping</summary>
-<div className="grid md:grid-cols-1 gap-4">
-<div>
+
 
 <br />
 **Prompt:**
@@ -139,8 +126,6 @@ Question: {{question}}
 
 ```
 
-</div>
-<div>
 
 <br />
 **Dataset Item:**
@@ -152,8 +137,6 @@ Question: {{question}}
 }
 ```
 
-</div>
-</div>
 
 In this example:
 
@@ -171,33 +154,30 @@ As your prompt will be executed for each dataset item, you need to configure an 
 
 You can set up an LLM-as-a-judge evaluator to score the responses based on the expected outputs. Make sure to set the target of the LLM-as-a-Judge to "Experiment runs" and filter for the dataset you want to use. [How to set up LLM-as-a-judge?](/docs/evaluation/evaluation-methods/llm-as-a-judge)
 
-</Steps>
 
 ## Trigger an Experiment via UI (Prompt Experiment)
 
-<Steps>
+
 ### Navigate to the dataset
 Dataset Runs are currently started from the detail page of a dataset.
 
 - **Navigate to** `Your Project` > `Datasets`
 - **Click on** the dataset you want to start a Dataset Run for
 
-<Frame fullWidth>
-  ![New Experiment Button](/images/docs/navigate-to-dataset.png)
-</Frame>
+
+![New Experiment Button](/images/docs/navigate-to-dataset.png)
 
 ### Open the setup page
 
 **Click on** `Start Experiment` to open the setup page
 
-<Frame fullWidth>
-  ![New Experiment Button](/images/docs/trigger-process.png)
-</Frame>
+
+![New Experiment Button](/images/docs/trigger-process.png)
 
 **Click on** `Create` below `prompt Experiment`
 
-<Frame>![New Experiment Button](/images/docs/trigger-process-2.png)</Frame>
 
+![New Experiment Button](/images/docs/trigger-process-2.png)
 ### Configure the Dataset run
 
 1. **Set** a Dataset Run name
@@ -213,14 +193,13 @@ Dataset Runs are currently started from the detail page of a dataset.
 6. **Optionally select** the evaluator you want to use
 7. **Click on** `Create` to trigger the Dataset Run
 
-<Frame>![New Experiment Button](/images/docs/configure_dataset_run.png)</Frame>
 
-<Callout type="info">
-  **Structured output** ensures that LLM responses conform to a specific JSON
-  schema. This is useful when you need consistent, parseable outputs for
-  evaluation or downstream processing. The same schemas you define in the
-  Playground are available for use in experiments.
-</Callout>
+![New Experiment Button](/images/docs/configure_dataset_run.png)
+> ℹ️ **Note:** **Structured output** ensures that LLM responses conform to a specific JSON
+>   schema. This is useful when you need consistent, parseable outputs for
+>   evaluation or downstream processing. The same schemas you define in the
+>   Playground are available for use in experiments.
+
 
 This will trigger the Dataset Run and you will be redirected to the Dataset Runs page. The run might take a few seconds or minutes to complete depending on the prompt complexity and dataset size.
 
@@ -228,20 +207,9 @@ This will trigger the Dataset Run and you will be redirected to the Dataset Runs
 
 After each experiment run, you can check the aggregated score in the Dataset Runs table and compare results side-by-side.
 
-<Video
-  src="https://static.langfuse.com/docs-videos/datasets-compare.mp4"
-  aspectRatio={16 / 9}
-  gifStyle
-/>
-
-</Steps>
-
 ## Related Resources
 
 - If you need to evaluate full application or agent logic (including custom runtime configuration) instead of prompt-only runs, use [Experiments via SDK](/docs/evaluation/experiments/experiments-via-sdk). You can also trigger an SDK-based evaluation run via the UI with [webhooks](/docs/evaluation/experiments/experiments-via-sdk#configure-webhook).
 
 ## GitHub Discussions
 
-import { GhDiscussionsPreview } from "@/components/gh-discussions/GhDiscussionsPreview";
-
-<GhDiscussionsPreview labels={["feat-prompt-experiments"]} />

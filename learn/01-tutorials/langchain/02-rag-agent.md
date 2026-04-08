@@ -23,11 +23,13 @@ We will cover the following concepts:
 
 Once we've indexed our data, we will use an [agent](/oss/python/langchain/agents) as our orchestration framework to implement the retrieval and generation steps.
 
-<Note>
-  The indexing portion of this tutorial will largely follow the [semantic search tutorial](/oss/python/langchain/knowledge-base).
 
-  If your data is already available for search (i.e., you have a function to execute a search), or you're comfortable with the content from that tutorial, feel free to skip to the section on [retrieval and generation](#2-retrieval-and-generation)
-</Note>
+> ℹ️ **Note**
+>
+> The indexing portion of this tutorial will largely follow the [semantic search tutorial](/oss/python/langchain/knowledge-base).
+> 
+>   If your data is already available for search (i.e., you have a function to execute a search), or you're comfortable with the content from that tutorial, feel free to skip to the section on [retrieval and generation](#2-retrieval-and-generation)
+
 
 ### Preview
 
@@ -35,8 +37,11 @@ In this guide we'll build an app that answers questions about the website's cont
 
 We can create a simple indexing pipeline and RAG chain to do this in \~40 lines of code. See below for the full code snippet:
 
-<Accordion title="Expand for full code snippet">
-  ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+<details>
+<summary>Expand for full code snippet</summary>
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   import bs4
   from langchain.agents import AgentState, create_agent
   from langchain_community.document_loaders import WebBaseLoader
@@ -116,7 +121,9 @@ We can create a simple indexing pipeline and RAG chain to do this in \~40 lines 
   ```
 
   Check out the [LangSmith trace](https://smith.langchain.com/public/a117a1f8-c96c-4c16-a285-00b85646118e/r).
-</Accordion>
+
+</details>
+
 
 ## Setup
 
@@ -124,15 +131,14 @@ We can create a simple indexing pipeline and RAG chain to do this in \~40 lines 
 
 This tutorial requires these langchain dependencies:
 
-<CodeGroup>
-  ```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   pip install langchain langchain-text-splitters langchain-community bs4
   ```
 
   ```bash uv theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   uv add langchain langchain-text-splitters langchain-community bs4
   ```
-</CodeGroup>
 
 For more details, see our [Installation guide](/oss/python/langchain/install).
 
@@ -163,16 +169,16 @@ We will need to select three components from LangChain's suite of integrations.
 
 Select a chat model:
 
-<Tabs>
-  <Tab title="OpenAI">
-    👉 Read the [OpenAI chat model integration docs](/oss/python/integrations/chat/openai/)
+**OpenAI:**
+
+👉 Read the [OpenAI chat model integration docs](/oss/python/integrations/chat/openai/)
 
     ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain[openai]"
     ```
 
-    <CodeGroup>
-      ```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       import os
       from langchain.chat_models import init_chat_model
 
@@ -189,18 +195,17 @@ Select a chat model:
 
       model = ChatOpenAI(model="gpt-5.2")
       ```
-    </CodeGroup>
-  </Tab>
+    
+**Anthropic:**
 
-  <Tab title="Anthropic">
-    👉 Read the [Anthropic chat model integration docs](/oss/python/integrations/chat/anthropic/)
+👉 Read the [Anthropic chat model integration docs](/oss/python/integrations/chat/anthropic/)
 
     ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain[anthropic]"
     ```
 
-    <CodeGroup>
-      ```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       import os
       from langchain.chat_models import init_chat_model
 
@@ -217,18 +222,17 @@ Select a chat model:
 
       model = ChatAnthropic(model="claude-sonnet-4-6")
       ```
-    </CodeGroup>
-  </Tab>
+    
+**Azure:**
 
-  <Tab title="Azure">
-    👉 Read the [Azure chat model integration docs](/oss/python/integrations/chat/azure_chat_openai/)
+👉 Read the [Azure chat model integration docs](/oss/python/integrations/chat/azure_chat_openai/)
 
     ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain[openai]"
     ```
 
-    <CodeGroup>
-      ```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       import os
       from langchain.chat_models import init_chat_model
 
@@ -255,18 +259,17 @@ Select a chat model:
           azure_deployment=os.environ["AZURE_OPENAI_DEPLOYMENT_NAME"]
       )
       ```
-    </CodeGroup>
-  </Tab>
+    
+**Google Gemini:**
 
-  <Tab title="Google Gemini">
-    👉 Read the [Google GenAI chat model integration docs](/oss/python/integrations/chat/google_generative_ai/)
+👉 Read the [Google GenAI chat model integration docs](/oss/python/integrations/chat/google_generative_ai/)
 
     ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain[google-genai]"
     ```
 
-    <CodeGroup>
-      ```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       import os
       from langchain.chat_models import init_chat_model
 
@@ -283,18 +286,17 @@ Select a chat model:
 
       model = ChatGoogleGenerativeAI(model="gemini-2.5-flash-lite")
       ```
-    </CodeGroup>
-  </Tab>
+    
+**AWS Bedrock:**
 
-  <Tab title="AWS Bedrock">
-    👉 Read the [AWS Bedrock chat model integration docs](/oss/python/integrations/chat/bedrock/)
+👉 Read the [AWS Bedrock chat model integration docs](/oss/python/integrations/chat/bedrock/)
 
     ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain[aws]"
     ```
 
-    <CodeGroup>
-      ```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       from langchain.chat_models import init_chat_model
 
       # Follow the steps here to configure your credentials:
@@ -311,18 +313,17 @@ Select a chat model:
 
       model = ChatBedrock(model="anthropic.claude-3-5-sonnet-20240620-v1:0")
       ```
-    </CodeGroup>
-  </Tab>
+    
+**HuggingFace:**
 
-  <Tab title="HuggingFace">
-    👉 Read the [HuggingFace chat model integration docs](/oss/python/integrations/chat/huggingface/)
+👉 Read the [HuggingFace chat model integration docs](/oss/python/integrations/chat/huggingface/)
 
     ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain[huggingface]"
     ```
 
-    <CodeGroup>
-      ```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       import os
       from langchain.chat_models import init_chat_model
 
@@ -349,18 +350,17 @@ Select a chat model:
       )
       model = ChatHuggingFace(llm=llm)
       ```
-    </CodeGroup>
-  </Tab>
+    
+**OpenRouter:**
 
-  <Tab title="OpenRouter">
-    👉 Read the [OpenRouter chat model integration docs](/oss/python/integrations/chat/openrouter/)
+👉 Read the [OpenRouter chat model integration docs](/oss/python/integrations/chat/openrouter/)
 
     ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain-openrouter"
     ```
 
-    <CodeGroup>
-      ```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       import os
       from langchain.chat_models import init_chat_model
 
@@ -380,15 +380,12 @@ Select a chat model:
 
       model = ChatOpenRouter(model="auto")
       ```
-    </CodeGroup>
-  </Tab>
-</Tabs>
-
+    
 Select an embeddings model:
 
-<Tabs>
-  <Tab title="OpenAI">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**OpenAI:**
+
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain-openai"
     ```
 
@@ -403,10 +400,10 @@ Select an embeddings model:
 
     embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
     ```
-  </Tab>
+  
+**Azure:**
 
-  <Tab title="Azure">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain-openai"
     ```
 
@@ -425,10 +422,10 @@ Select an embeddings model:
         openai_api_version=os.environ["AZURE_OPENAI_API_VERSION"],
     )
     ```
-  </Tab>
+  
+**Google Gemini:**
 
-  <Tab title="Google Gemini">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-google-genai
     ```
 
@@ -443,10 +440,10 @@ Select an embeddings model:
 
     embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
     ```
-  </Tab>
+  
+**Google Vertex:**
 
-  <Tab title="Google Vertex">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-google-vertexai
     ```
 
@@ -455,10 +452,10 @@ Select an embeddings model:
 
     embeddings = VertexAIEmbeddings(model="text-embedding-005")
     ```
-  </Tab>
+  
+**AWS:**
 
-  <Tab title="AWS">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-aws
     ```
 
@@ -467,10 +464,10 @@ Select an embeddings model:
 
     embeddings = BedrockEmbeddings(model_id="amazon.titan-embed-text-v2:0")
     ```
-  </Tab>
+  
+**HuggingFace:**
 
-  <Tab title="HuggingFace">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-huggingface
     ```
 
@@ -479,10 +476,10 @@ Select an embeddings model:
 
     embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2")
     ```
-  </Tab>
+  
+**Ollama:**
 
-  <Tab title="Ollama">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-ollama
     ```
 
@@ -491,10 +488,10 @@ Select an embeddings model:
 
     embeddings = OllamaEmbeddings(model="llama3")
     ```
-  </Tab>
+  
+**Cohere:**
 
-  <Tab title="Cohere">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-cohere
     ```
 
@@ -509,10 +506,10 @@ Select an embeddings model:
 
     embeddings = CohereEmbeddings(model="embed-english-v3.0")
     ```
-  </Tab>
+  
+**MistralAI:**
 
-  <Tab title="MistralAI">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-mistralai
     ```
 
@@ -527,10 +524,10 @@ Select an embeddings model:
 
     embeddings = MistralAIEmbeddings(model="mistral-embed")
     ```
-  </Tab>
+  
+**Nomic:**
 
-  <Tab title="Nomic">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-nomic
     ```
 
@@ -545,10 +542,10 @@ Select an embeddings model:
 
     embeddings = NomicEmbeddings(model="nomic-embed-text-v1.5")
     ```
-  </Tab>
+  
+**NVIDIA:**
 
-  <Tab title="NVIDIA">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-nvidia-ai-endpoints
     ```
 
@@ -563,10 +560,10 @@ Select an embeddings model:
 
     embeddings = NVIDIAEmbeddings(model="NV-Embed-QA")
     ```
-  </Tab>
+  
+**Voyage AI:**
 
-  <Tab title="Voyage AI">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-voyageai
     ```
 
@@ -581,10 +578,10 @@ Select an embeddings model:
 
     embeddings = VoyageAIEmbeddings(model="voyage-3")
     ```
-  </Tab>
+  
+**IBM watsonx:**
 
-  <Tab title="IBM watsonx">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-ibm
     ```
 
@@ -603,10 +600,10 @@ Select an embeddings model:
         project_id="<WATSONX PROJECT_ID>",
     )
     ```
-  </Tab>
+  
+**Fake:**
 
-  <Tab title="Fake">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-core
     ```
 
@@ -615,10 +612,10 @@ Select an embeddings model:
 
     embeddings = DeterministicFakeEmbedding(size=4096)
     ```
-  </Tab>
+  
+**Isaacus:**
 
-  <Tab title="Isaacus">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-isaacus
     ```
 
@@ -633,14 +630,12 @@ Select an embeddings model:
 
     embeddings = IsaacusEmbeddings(model="kanon-2-embedder")
     ```
-  </Tab>
-</Tabs>
-
+  
 Select a vector store:
 
-<Tabs>
-  <Tab title="In-memory">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**In-memory:**
+
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain-core"
     ```
 
@@ -649,10 +644,10 @@ Select a vector store:
 
     vector_store = InMemoryVectorStore(embeddings)
     ```
-  </Tab>
+  
+**Amazon OpenSearch:**
 
-  <Tab title="Amazon OpenSearch">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU  boto3
     ```
 
@@ -678,10 +673,10 @@ Select a vector store:
         index_name="test-index",
     )
     ```
-  </Tab>
+  
+**AstraDB:**
 
-  <Tab title="AstraDB">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain-astradb"
     ```
 
@@ -696,10 +691,10 @@ Select a vector store:
         namespace=ASTRA_DB_NAMESPACE,
     )
     ```
-  </Tab>
+  
+**Chroma:**
 
-  <Tab title="Chroma">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-chroma
     ```
 
@@ -712,10 +707,10 @@ Select a vector store:
         persist_directory="./chroma_langchain_db",  # Where to save data locally, remove if not necessary
     )
     ```
-  </Tab>
+  
+**FAISS:**
 
-  <Tab title="FAISS">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-community faiss-cpu
     ```
 
@@ -734,10 +729,10 @@ Select a vector store:
         index_to_docstore_id={},
     )
     ```
-  </Tab>
+  
+**Milvus:**
 
-  <Tab title="Milvus">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-milvus
     ```
 
@@ -752,10 +747,10 @@ Select a vector store:
         index_params={"index_type": "FLAT", "metric_type": "L2"},
     )
     ```
-  </Tab>
+  
+**MongoDB:**
 
-  <Tab title="MongoDB">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-mongodb
     ```
 
@@ -769,10 +764,10 @@ Select a vector store:
         relevance_score_fn="cosine",
     )
     ```
-  </Tab>
+  
+**PGVector:**
 
-  <Tab title="PGVector">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-postgres
     ```
 
@@ -785,10 +780,10 @@ Select a vector store:
         connection="postgresql+psycopg://...",
     )
     ```
-  </Tab>
+  
+**PGVectorStore:**
 
-  <Tab title="PGVectorStore">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-postgres
     ```
 
@@ -805,10 +800,10 @@ Select a vector store:
         embedding_service=embeddings
     )
     ```
-  </Tab>
+  
+**Pinecone:**
 
-  <Tab title="Pinecone">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-pinecone
     ```
 
@@ -821,10 +816,10 @@ Select a vector store:
 
     vector_store = PineconeVectorStore(embedding=embeddings, index=index)
     ```
-  </Tab>
+  
+**Qdrant:**
 
-  <Tab title="Qdrant">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-qdrant
     ```
 
@@ -848,16 +843,16 @@ Select a vector store:
         embedding=embeddings,
     )
     ```
-  </Tab>
-</Tabs>
-
+  
 ## 1. Indexing
 
-<Note>
-  **This section is an abbreviated version of the content in the [semantic search tutorial](/oss/python/langchain/knowledge-base).**
 
-  If your data is already indexed and available for search (i.e., you have a function to execute a search), or if you're comfortable with [document loaders](/oss/python/integrations/document_loaders), [embeddings](/oss/python/integrations/embeddings), and [vector stores](/oss/python/integrations/vectorstores), feel free to skip to the next section on [retrieval and generation](/oss/python/langchain/rag#2-retrieval-and-generation).
-</Note>
+> ℹ️ **Note**
+>
+> **This section is an abbreviated version of the content in the [semantic search tutorial](/oss/python/langchain/knowledge-base).**
+> 
+>   If your data is already indexed and available for search (i.e., you have a function to execute a search), or if you're comfortable with [document loaders](/oss/python/integrations/document_loaders), [embeddings](/oss/python/integrations/embeddings), and [vector stores](/oss/python/integrations/vectorstores), feel free to skip to the next section on [retrieval and generation](/oss/python/langchain/rag#2-retrieval-and-generation).
+
 
 Indexing commonly works as follows:
 
@@ -1012,20 +1007,23 @@ def retrieve_context(query: str):
     return serialized, retrieved_docs
 ```
 
-<Tip>
-  Here we use the [tool decorator](https://reference.langchain.com/python/langchain-core/tools/convert/tool) to configure the tool to attach raw documents as [artifacts](/oss/python/langchain/messages#param-artifact) to each [ToolMessage](/oss/python/langchain/messages#tool-message). This will let us access document metadata in our application, separate from the stringified representation that is sent to the model.
-</Tip>
 
-<Tip>
-  Retrieval tools are not limited to a single string `query` argument, as in the above example. You can
-  force the LLM to specify additional search parameters by adding arguments—for example, a category:
+> 💡 **Tip**
+>
+> Here we use the [tool decorator](https://reference.langchain.com/python/langchain-core/tools/convert/tool) to configure the tool to attach raw documents as [artifacts](/oss/python/langchain/messages#param-artifact) to each [ToolMessage](/oss/python/langchain/messages#tool-message). This will let us access document metadata in our application, separate from the stringified representation that is sent to the model.
 
-  ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-  from typing import Literal
 
-  def retrieve_context(query: str, section: Literal["beginning", "middle", "end"]):
-  ```
-</Tip>
+> 💡 **Tip**
+>
+> Retrieval tools are not limited to a single string `query` argument, as in the above example. You can
+>   force the LLM to specify additional search parameters by adding arguments—for example, a category:
+> 
+>   ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+>   from typing import Literal
+> 
+>   def retrieve_context(query: str, section: Literal["beginning", "middle", "end"]):
+>   ```
+
 
 Given our tool, we can construct the agent:
 
@@ -1107,9 +1105,11 @@ Note that the agent:
 
 We can see the full sequence of steps, along with latency and other metadata, in the [LangSmith trace](https://smith.langchain.com/public/7b42d478-33d2-4631-90a4-7cb731681e88/r).
 
-<Tip>
-  You can add a deeper level of control and customization using the [LangGraph](/oss/python/langgraph/overview) framework directly—for example, you can add steps to grade document relevance and rewrite search queries. Check out LangGraph's [Agentic RAG tutorial](/oss/python/langgraph/agentic-rag) for more advanced formulations.
-</Tip>
+
+> 💡 **Tip**
+>
+> You can add a deeper level of control and customization using the [LangGraph](/oss/python/langgraph/overview) framework directly—for example, you can add steps to grade document relevance and rewrite search queries. Check out LangGraph's [Agentic RAG tutorial](/oss/python/langgraph/agentic-rag) for more advanced formulations.
+
 
 ### RAG chains
 
@@ -1178,8 +1178,11 @@ In the [LangSmith trace](https://smith.langchain.com/public/0322904b-bc4c-4433-a
 
 This is a fast and effective method for simple queries in constrained settings, when we typically do want to run user queries through semantic search to pull additional context.
 
-<Accordion title="Returning source documents">
-  The above RAG chain incorporates retrieved context into a single system message for that run.
+
+<details>
+<summary>Returning source documents</summary>
+
+The above RAG chain incorporates retrieved context into a single system message for that run.
 
   As in the [agentic RAG](#rag-agents) formulation, we sometimes want to include raw source documents in the application state to have access to document metadata. We can do this for the two-step chain case by:
 
@@ -1224,15 +1227,19 @@ This is a fast and effective method for simple queries in constrained settings, 
       middleware=[RetrieveDocumentsMiddleware()],
   )
   ```
-</Accordion>
+
+</details>
+
 
 ## Security: indirect prompt injection
 
-<Warning>
-  RAG applications are susceptible to **indirect prompt injection**. Retrieved documents may contain text that resembles instructions (e.g., "respond in JSON format" or "ignore previous instructions"). Because the retrieved context shares the same context window as your system prompt, the model may inadvertently follow instructions embedded in the data rather than your intended prompt.
 
-  For example, the blog post indexed in this tutorial contains text describing an [Auto-GPT](https://lilianweng.github.io/posts/2023-06-23-agent/#case-studies) JSON response format. If a user query retrieves that chunk, the model may output JSON instead of a natural-language answer.
-</Warning>
+> ⚠️ **Warning**
+>
+> RAG applications are susceptible to **indirect prompt injection**. Retrieved documents may contain text that resembles instructions (e.g., "respond in JSON format" or "ignore previous instructions"). Because the retrieved context shares the same context window as your system prompt, the model may inadvertently follow instructions embedded in the data rather than your intended prompt.
+> 
+>   For example, the blog post indexed in this tutorial contains text describing an [Auto-GPT](https://lilianweng.github.io/posts/2023-06-23-agent/#case-studies) JSON response format. If a user query retrieves that chunk, the model may output JSON instead of a natural-language answer.
+
 
 To mitigate this:
 
@@ -1254,12 +1261,15 @@ Now that we've implemented a simple RAG application via [`create_agent`](https:/
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/rag.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/rag.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

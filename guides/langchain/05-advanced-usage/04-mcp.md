@@ -10,21 +10,22 @@
 
 Install the `langchain-mcp-adapters` library:
 
-<CodeGroup>
-  ```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   pip install langchain-mcp-adapters
   ```
 
   ```bash uv theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   uv add langchain-mcp-adapters
   ```
-</CodeGroup>
 
 `langchain-mcp-adapters` enables agents to use tools defined across one or more MCP servers.
 
-<Note>
-  `MultiServerMCPClient` is **stateless by default**. Each tool invocation creates a fresh MCP `ClientSession`, executes the tool, and then cleans up. See the [stateful sessions](#stateful-sessions) section for more details.
-</Note>
+
+> ℹ️ **Note**
+>
+> `MultiServerMCPClient` is **stateless by default**. Each tool invocation creates a fresh MCP `ClientSession`, executes the tool, and then cleans up. See the [stateful sessions](#stateful-sessions) section for more details.
+
 
 ```python Accessing multiple MCP servers icon="server" theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 import asyncio
@@ -70,20 +71,19 @@ if __name__ == "__main__":
 
 To create a custom MCP server, use the [FastMCP](https://gofastmcp.com/getting-started/welcome) library:
 
-<CodeGroup>
-  ```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   pip install fastmcp
   ```
 
   ```bash uv theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   uv add fastmcp
   ```
-</CodeGroup>
 
 To test your agent with MCP tool servers, use the following examples:
 
-<CodeGroup>
-  ```python title="Math server (stdio transport)" icon="device-floppy" theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```python title="Math server (stdio transport)" icon="device-floppy" theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   from fastmcp import FastMCP
 
   mcp = FastMCP("Math")
@@ -115,7 +115,6 @@ To test your agent with MCP tool servers, use the following examples:
   if __name__ == "__main__":
       mcp.run(transport="streamable-http")
   ```
-</CodeGroup>
 
 ## Transports
 
@@ -186,9 +185,11 @@ client = MultiServerMCPClient(
 
 Client launches server as a subprocess and communicates via standard input/output. Best for local tools and simple setups.
 
-<Note>
-  Unlike HTTP transports, `stdio` connections are inherently **stateful**: the subprocess persists for the lifetime of the client connection. However, when using `MultiServerMCPClient` without explicit session management, each tool call still creates a new session. See [stateful sessions](#stateful-sessions) for managing persistent connections.
-</Note>
+
+> ℹ️ **Note**
+>
+> Unlike HTTP transports, `stdio` connections are inherently **stateful**: the subprocess persists for the lifetime of the client connection. However, when using `MultiServerMCPClient` without explicit session management, each tool call still creates a new session. See [stateful sessions](#stateful-sessions) for managing persistent connections.
+
 
 ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 client = MultiServerMCPClient(
@@ -435,9 +436,9 @@ Interceptors also provide middleware-like control over tool calls: you can modif
 
 When MCP tools are used within a LangChain agent (via `create_agent`), interceptors receive access to the `ToolRuntime` context. This provides access to the tool call ID, state, config, and store—enabling powerful patterns for accessing user data, persisting information, and controlling agent behavior.
 
-<Tabs>
-  <Tab title="Runtime context">
-    Access user-specific configuration like user IDs, API keys, or permissions that are passed at invocation time:
+**Runtime context:**
+
+Access user-specific configuration like user IDs, API keys, or permissions that are passed at invocation time:
 
     ```python Inject user context into MCP tool calls theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from dataclasses import dataclass
@@ -478,10 +479,10 @@ When MCP tools are used within a LangChain agent (via `create_agent`), intercept
         context={"user_id": "user_123", "api_key": "sk-..."}
     )
     ```
-  </Tab>
+  
+**Store:**
 
-  <Tab title="Store">
-    Access long-term memory to retrieve user preferences or persist data across conversations:
+Access long-term memory to retrieve user preferences or persist data across conversations:
 
     ```python Access user preferences from store theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from dataclasses import dataclass
@@ -529,10 +530,10 @@ When MCP tools are used within a LangChain agent (via `create_agent`), intercept
         store=InMemoryStore()
     )
     ```
-  </Tab>
+  
+**State:**
 
-  <Tab title="State">
-    Access conversation state to make decisions based on the current session:
+Access conversation state to make decisions based on the current session:
 
     ```python Filter tools based on authentication state theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langchain_mcp_adapters.client import MultiServerMCPClient
@@ -564,10 +565,10 @@ When MCP tools are used within a LangChain agent (via `create_agent`), intercept
         tool_interceptors=[require_authentication],
     )
     ```
-  </Tab>
+  
+**Tool call ID:**
 
-  <Tab title="Tool call ID">
-    Access the tool call ID to return properly formatted responses or track tool executions:
+Access the tool call ID to return properly formatted responses or track tool executions:
 
     ```python Return custom responses with tool call ID theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langchain_mcp_adapters.client import MultiServerMCPClient
@@ -601,9 +602,7 @@ When MCP tools are used within a LangChain agent (via `create_agent`), intercept
         tool_interceptors=[rate_limit_interceptor],
     )
     ```
-  </Tab>
-</Tabs>
-
+  
 For more context engineering patterns, see [Context engineering](/oss/python/langchain/context-engineering) and [Tools](/oss/python/langchain/tools).
 
 #### State updates and commands
@@ -940,12 +939,15 @@ ElicitResult(action="cancel")
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/mcp.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/mcp.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

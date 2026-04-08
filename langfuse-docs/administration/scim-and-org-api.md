@@ -6,16 +6,6 @@ description: Langfuse is open and meant to be extended via custom workflows and 
 
 # SCIM & Organization-Key Scoped API Routes
 
-<AvailabilityBanner
-  availability={{
-    hobby: "not-available",
-    core: "not-available",
-    pro: "not-available",
-    enterprise: "full",
-    selfHosted: "ee",
-  }}
-/>
-
 Via organization-scoped API keys, you can administer projects, users, and project/organization memberships (see [RBAC docs](/docs/administration/rbac)).
 
 Langfuse is open and meant to be extended via custom workflows and integrations.
@@ -23,11 +13,9 @@ You can use these endpoints to automate project and user management on your Lang
 
 This documentation covers organization management APIs, SCIM-compliant user provisioning endpoints, and includes a comprehensive guide for setting up Okta authentication and user provisioning with Langfuse.
 
-<Callout type="info">
 
-If you self-host Langfuse, you can use the [Instance Management API](/self-hosting/administration/instance-management-api) to administer organizations across an instance.
+> ℹ️ **Note:** If you self-host Langfuse, you can use the [Instance Management API](/self-hosting/administration/instance-management-api) to administer organizations across an instance.
 
-</Callout>
 
 ## Authentication
 
@@ -69,10 +57,10 @@ Then it will add the user to the organization with role `NONE` (unless a `roles`
 
 Afterward, the role can be updated using the membership endpoints either on an organization or a project level (see above).
 
-<Callout type="warn">
-  When SCIM deprovisions and re-provisions a user (e.g. during initial SCIM setup or IdP sync), the user's organization role may be overwritten with the role configured in the SCIM `roles` attribute (defaulting to `NONE`).
-  To avoid accidental role downgrades, make sure the `roles` attribute in your IdP is set to the correct value - e.g. `OWNER` for organization owners - **before** enabling SCIM provisioning.
-</Callout>
+
+> ℹ️ **Note:** When SCIM deprovisions and re-provisions a user (e.g. during initial SCIM setup or IdP sync), the user's organization role may be overwritten with the role configured in the SCIM `roles` attribute (defaulting to `NONE`).
+>   To avoid accidental role downgrades, make sure the `roles` attribute in your IdP is set to the correct value - e.g. `OWNER` for organization owners - **before** enabling SCIM provisioning.
+
 
 To remove a user from an organization, call the `DELETE /Users/{id}` endpoint.
 This will not delete the user itself, only its membership with the organization.
@@ -98,12 +86,6 @@ The following SCIM endpoints are available:
 #### Okta
 
 This guide will cover how to setup Okta user provisioning for Langfuse. First, you will need to setup [authentication via OIDC](/docs/administration/authentication-and-sso).
-
-<Video
-  src="https://static.langfuse.com/docs-videos/2025-08-06-okta-scim-setup.mov.mp4"
-  aspectRatio={647 / 463}
-  gifStyle
-/>
 
 For user provisioning, Langfuse supports the SCIM 2.0 protocol.
 To setup user provisioning in Okta, follow these steps:

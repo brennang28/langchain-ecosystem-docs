@@ -99,37 +99,31 @@ temperature = 0.7
 
 Providers have the following configuration options:
 
-<ResponseField name="models" type="string[]" post={["optional"]}>
-  A list of model names to show in the interactive `/model` switcher for this provider. For providers that already ship with model profiles, any names you add here appear alongside the bundled ones, useful for newly released models that haven't been added to the package yet. For [arbitrary providers](#arbitrary-providers), this list is the only source of models in the switcher.
+
+- **`models`** (`string[]`): A list of model names to show in the interactive `/model` switcher for this provider. For providers that already ship with model profiles, any names you add here appear alongside the bundled ones, useful for newly released models that haven't been added to the package yet. For [arbitrary providers](#arbitrary-providers), this list is the only source of models in the switcher.
 
   Models listed here **bypass** the profile-based [filtering criteria](/oss/python/deepagents/cli/providers#which-models-appear-in-the-switcher) and always appear in the switcher. This makes it the recommended way to surface models that are excluded because their profile lacks `tool_calling` support or doesn't exist yet.
 
   This key is optional. You can always pass any model name directly to `/model` or `--model` regardless of whether it appears in the switcher; the provider validates the name at request time.
-</ResponseField>
 
-<ResponseField name="api_key_env" type="string" post={["optional"]}>
-  Override the environment variable name checked for credentials. Most chat model packages read from a default env var automatically. See the [Provider reference](/oss/python/deepagents/cli/providers#provider-reference) table for which variable each provider checks.
-</ResponseField>
 
-<ResponseField name="base_url" type="string" post={["optional"]}>
-  Override the base URL used by the provider, if supported. Refer to your provider packages' [reference docs](https://reference.langchain.com/python/integrations/) for more info.
-</ResponseField>
+- **`api_key_env`** (`string`): Override the environment variable name checked for credentials. Most chat model packages read from a default env var automatically. See the [Provider reference](/oss/python/deepagents/cli/providers#provider-reference) table for which variable each provider checks.
 
-<ResponseField name="params" type="object" post={["optional"]}>
-  Extra keyword arguments forwarded to the model constructor. Flat keys (e.g., `temperature = 0`) apply to every model from this provider. Model-keyed sub-tables (e.g., `[params."gpt-4o"]`) override individual values for that model only; the merge is shallow (model wins on conflict).
-</ResponseField>
 
-<ResponseField name="profile" type="object" post={["optional"]}>
-  (Advanced) Override fields in the model's runtime [profile](/oss/python/langchain/models#model-profiles) (e.g., `max_input_tokens`). Flat keys apply to every model from this provider. Model-keyed sub-tables (e.g., `[profile."claude-sonnet-4-5"]`) override individual values for that model only; the merge is shallow (model wins on conflict). These overrides are applied after the model is created, so they take effect for context-limit display, auto-summarization, and any other feature that reads the profile.
-</ResponseField>
+- **`base_url`** (`string`): Override the base URL used by the provider, if supported. Refer to your provider packages' [reference docs](https://reference.langchain.com/python/integrations/) for more info.
 
-<ResponseField name="class_path" type="string" post={["optional"]}>
-  Used for [arbitrary model](#arbitrary-providers) providers. Fully-qualified Python class in `module.path:ClassName` format. When set, the CLI imports and instantiates this class directly for provider `<name>`. The class must be a `BaseChatModel` subclass.
-</ResponseField>
 
-<ResponseField name="enabled" type="boolean" default="true" post={["optional"]}>
-  Whether this provider appears in the `/model` selector. Set to `false` to hide a provider that was auto-discovered from an installed package (e.g., a transitive dependency you don't want cluttering the switcher). You can still use a disabled provider directly via `/model provider:model` or `--model`.
-</ResponseField>
+- **`params`** (`object`): Extra keyword arguments forwarded to the model constructor. Flat keys (e.g., `temperature = 0`) apply to every model from this provider. Model-keyed sub-tables (e.g., `[params."gpt-4o"]`) override individual values for that model only; the merge is shallow (model wins on conflict).
+
+
+- **`profile`** (`object`): (Advanced) Override fields in the model's runtime [profile](/oss/python/langchain/models#model-profiles) (e.g., `max_input_tokens`). Flat keys apply to every model from this provider. Model-keyed sub-tables (e.g., `[profile."claude-sonnet-4-5"]`) override individual values for that model only; the merge is shallow (model wins on conflict). These overrides are applied after the model is created, so they take effect for context-limit display, auto-summarization, and any other feature that reads the profile.
+
+
+- **`class_path`** (`string`): Used for [arbitrary model](#arbitrary-providers) providers. Fully-qualified Python class in `module.path:ClassName` format. When set, the CLI imports and instantiates this class directly for provider `<name>`. The class must be a `BaseChatModel` subclass.
+
+
+- **`enabled`** (`boolean`): Whether this provider appears in the `/model` selector. Set to `false` to hide a provider that was auto-discovered from an installed package (e.g., a transitive dependency you don't want cluttering the switcher). You can still use a disabled provider directly via `/model provider:model` or `--model`.
+
 
 ### Model constructor params
 
@@ -253,9 +247,11 @@ api_key_env = "EXAMPLE_API_KEY"
 models = ["my-model"]
 ```
 
-<Note>
-  Any features added on top of the official spec by the provider will not be captured. If the provider offers a dedicated LangChain integration package, prefer that instead.
-</Note>
+
+> ℹ️ **Note**
+>
+> Any features added on top of the official spec by the provider will not be captured. If the provider offers a dedicated LangChain integration package, prefer that instead.
+
 
 ### Adding models to the interactive switcher
 
@@ -303,17 +299,19 @@ temperature = 0
 
 With this config, switch to the model with `/model xyz:abc-xyz-1` or `--model xyz:abc-xyz-1`.
 
-<Note>
-  Deep Agents requires **tool calling** support. If your custom model supports tool calling but the CLI doesn't know about it, declare it in the provider profile:
 
-  ```toml  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-  [models.providers.xyz.profile]
-  tool_calling = true
-  max_input_tokens = 128000
-  ```
+> ℹ️ **Note**
+>
+> Deep Agents requires **tool calling** support. If your custom model supports tool calling but the CLI doesn't know about it, declare it in the provider profile:
+> 
+>   ```toml  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+>   [models.providers.xyz.profile]
+>   tool_calling = true
+>   max_input_tokens = 128000
+>   ```
+> 
+>   Set `max_input_tokens` to what your model supports to enable accurate context length tracking and auto-summarization.
 
-  Set `max_input_tokens` to what your model supports to enable accurate context length tracking and auto-summarization.
-</Note>
 
 The provider package must be installed in the same Python environment as `deepagents-cli`:
 
@@ -328,9 +326,11 @@ When you switch to `my_custom:my-model-v1` (via `/model` or `--model`), the mode
 MyChatModel(model="my-model-v1", base_url="...", api_key="...", temperature=0, max_tokens=4096)
 ```
 
-<Warning>
-  `class_path` executes arbitrary Python code from your config file. This has the same trust model as `pyproject.toml` build scripts — you control your own machine.
-</Warning>
+
+> ⚠️ **Warning**
+>
+> `class_path` executes arbitrary Python code from your config file. This has the same trust model as `pyproject.toml` build scripts — you control your own machine.
+
 
 Your provider package may optionally provide model profiles at a `_PROFILES` dict in `<package>.data._profiles` in lieu of defining them under the `models` key. See LangChain [model profiles](https://github.com/langchain-ai/langchain/tree/master/libs/model-profiles) for more info.
 
@@ -342,8 +342,8 @@ By default, when the CLI loads skills it validates that a resolved skill file pa
 
 If you store shared skill assets in a non-standard location and use symlinks from a standard skill directory to reference them, you can add that location to the containment allowlist. This does **not** add a new skill discovery location: skills are still only discovered from the standard directories.
 
-<ResponseField name="extra_allowed_dirs" type="string[]" post={["optional"]}>
-  Paths added to the skill containment allowlist. Supports `~` expansion.
+
+- **`extra_allowed_dirs`** (`string[]`): Paths added to the skill containment allowlist. Supports `~` expansion.
 
   ```toml  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   [skills]
@@ -352,7 +352,7 @@ If you store shared skill assets in a non-standard location and use symlinks fro
       "/opt/team-skills",
   ]
   ```
-</ResponseField>
+
 
 Alternatively, set the `DEEPAGENTS_CLI_EXTRA_SKILLS_DIRS` environment variable as a colon-separated list:
 
@@ -414,21 +414,19 @@ Changes to `[themes.*]` sections take effect on `/reload`.
 
 The CLI can automatically check for and install updates.
 
-<Tabs>
-  <Tab title="Config file">
-    ```toml  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**Config file:**
+
+```toml  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     [update]
     auto_update = true
     ```
-  </Tab>
+  
+**Environment variable:**
 
-  <Tab title="Environment variable">
-    ```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     export DEEPAGENTS_CLI_AUTO_UPDATE=1
     ```
-  </Tab>
-</Tabs>
-
+  
 The environment variable takes precedence over the config file.
 
 When enabled, the CLI checks PyPI for a newer version at session start and automatically upgrades using the detected install method (uv, Homebrew, or pip). When disabled (default), the CLI shows an update hint with the appropriate install command instead.
@@ -460,37 +458,30 @@ To pre-configure auto-update for managed installs, set `DEEPAGENTS_CLI_AUTO_UPDA
 
 All CLI-specific environment variables use the `DEEPAGENTS_CLI_` prefix. See [`DEEPAGENTS_CLI_` prefix](#deepagents_cli_-prefix) for how the prefix also works as an override for third-party credentials.
 
-<ResponseField name="DEEPAGENTS_CLI_AUTO_UPDATE" type="string" post={["optional"]}>
-  Enable automatic CLI updates (`1`, `true`, or `yes`).
-</ResponseField>
 
-<ResponseField name="DEEPAGENTS_CLI_DEBUG" type="string" post={["optional"]}>
-  Enable verbose debug logging to a file.
-</ResponseField>
+- **`DEEPAGENTS_CLI_AUTO_UPDATE`** (`string`): Enable automatic CLI updates (`1`, `true`, or `yes`).
 
-<ResponseField name="DEEPAGENTS_CLI_DEBUG_FILE" type="string" default="/tmp/deepagents_debug.log" post={["optional"]}>
-  Path for the debug log file.
-</ResponseField>
 
-<ResponseField name="DEEPAGENTS_CLI_EXTRA_SKILLS_DIRS" type="string" post={["optional"]}>
-  Colon-separated paths added to the [skill containment allowlist](#extra-allowed-directories).
-</ResponseField>
+- **`DEEPAGENTS_CLI_DEBUG`** (`string`): Enable verbose debug logging to a file.
 
-<ResponseField name="DEEPAGENTS_CLI_LANGSMITH_PROJECT" type="string" post={["optional"]}>
-  Override the LangSmith project name for agent traces. See [Tracing with LangSmith](/oss/python/deepagents/cli/overview#tracing-with-langsmith).
-</ResponseField>
 
-<ResponseField name="DEEPAGENTS_CLI_NO_UPDATE_CHECK" type="string" post={["optional"]}>
-  Disable automatic update checking when set.
-</ResponseField>
+- **`DEEPAGENTS_CLI_DEBUG_FILE`** (`string`): Path for the debug log file.
 
-<ResponseField name="DEEPAGENTS_CLI_SHELL_ALLOW_LIST" type="string" post={["optional"]}>
-  Comma-separated shell commands to allow (or `recommended` / `all`).
-</ResponseField>
 
-<ResponseField name="DEEPAGENTS_CLI_USER_ID" type="string" post={["optional"]}>
-  Attach a user identifier to LangSmith trace metadata.
-</ResponseField>
+- **`DEEPAGENTS_CLI_EXTRA_SKILLS_DIRS`** (`string`): Colon-separated paths added to the [skill containment allowlist](#extra-allowed-directories).
+
+
+- **`DEEPAGENTS_CLI_LANGSMITH_PROJECT`** (`string`): Override the LangSmith project name for agent traces. See [Tracing with LangSmith](/oss/python/deepagents/cli/overview#tracing-with-langsmith).
+
+
+- **`DEEPAGENTS_CLI_NO_UPDATE_CHECK`** (`string`): Disable automatic update checking when set.
+
+
+- **`DEEPAGENTS_CLI_SHELL_ALLOW_LIST`** (`string`): Comma-separated shell commands to allow (or `recommended` / `all`).
+
+
+- **`DEEPAGENTS_CLI_USER_ID`** (`string`): Attach a user identifier to LangSmith trace metadata.
+
 
 ***
 
@@ -533,13 +524,12 @@ Now every time a session starts or ends, the CLI appends the event payload to `~
 
 The config file contains a single `hooks` array. Each entry has:
 
-<ResponseField name="command" type="list[str]" required>
-  Command and arguments to run. No shell expansion: use `["bash", "-c", "..."]` if needed.
-</ResponseField>
 
-<ResponseField name="events" type="list[str]" post={["optional"]}>
-  Event names to subscribe to. Omit or leave empty to receive **all** events.
-</ResponseField>
+- **`command`** (`list[str]`): Command and arguments to run. No shell expansion: use `["bash", "-c", "..."]` if needed.
+
+
+- **`events`** (`list[str]`): Event names to subscribe to. Omit or leave empty to receive **all** events.
+
 
 ```json  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 {
@@ -574,17 +564,17 @@ Each hook command receives a JSON object on stdin with an `"event"` key plus eve
 
 Fired when an agent session begins (both interactive and non-interactive modes).
 
-<ResponseField name="thread_id" type="string" required>
-  The session thread identifier.
-</ResponseField>
+
+- **`thread_id`** (`string`): The session thread identifier.
+
 
 #### `session.end`
 
 Fired when a session exits.
 
-<ResponseField name="thread_id" type="string" required>
-  The session thread identifier.
-</ResponseField>
+
+- **`thread_id`** (`string`): The session thread identifier.
+
 
 #### `user.prompt`
 
@@ -602,25 +592,25 @@ No additional fields.
 
 Fired before the approval dialog when one or more tool calls need user permission.
 
-<ResponseField name="tool_names" type="list[str]" required>
-  Names of the tools requesting approval.
-</ResponseField>
+
+- **`tool_names`** (`list[str]`): Names of the tools requesting approval.
+
 
 #### `tool.error`
 
 Fired when a tool call returns an error.
 
-<ResponseField name="tool_names" type="list[str]" required>
-  Names of the tool(s) that errored.
-</ResponseField>
+
+- **`tool_names`** (`list[str]`): Names of the tool(s) that errored.
+
 
 #### `task.complete`
 
 Fired when the agent finishes its current task (the streaming loop ends without further interrupts).
 
-<ResponseField name="thread_id" type="string" required>
-  The session thread identifier.
-</ResponseField>
+
+- **`thread_id`** (`string`): The session thread identifier.
+
 
 #### `context.compact`
 
@@ -639,8 +629,11 @@ No additional fields.
 
 ### Hook examples
 
-<Accordion title="Log all events to a file">
-  ```json  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+<details>
+<summary>Log all events to a file</summary>
+
+```json  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   {
     "hooks": [
       {
@@ -650,10 +643,14 @@ No additional fields.
     ]
   }
   ```
-</Accordion>
 
-<Accordion title="Desktop notification on task completion (macOS)">
-  ```json  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+</details>
+
+
+<details>
+<summary>Desktop notification on task completion (macOS)</summary>
+
+```json  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   {
     "hooks": [
       {
@@ -666,10 +663,14 @@ No additional fields.
     ]
   }
   ```
-</Accordion>
 
-<Accordion title="Python handler">
-  Write a handler script that reads the JSON payload from stdin:
+</details>
+
+
+<details>
+<summary>Python handler</summary>
+
+Write a handler script that reads the JSON payload from stdin:
 
   ```python title="my_handler.py" theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   import json
@@ -694,7 +695,9 @@ No additional fields.
     ]
   }
   ```
-</Accordion>
+
+</details>
+
 
 ### Security considerations
 
@@ -704,18 +707,23 @@ Hooks follow the same trust model as Git hooks or shell aliases — any user who
 * **No shell by default**: Commands run with `shell=False`, preventing shell injection.
 * **Malformed config**: Invalid JSON or unexpected types produce logged warnings, not security issues.
 
-<Warning>
-  Only add hooks from sources you trust. A hook has the same permissions as your user account.
-</Warning>
+
+> ⚠️ **Warning**
+>
+> Only add hooks from sources you trust. A hook has the same permissions as your user account.
+
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/cli/configuration.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/cli/configuration.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

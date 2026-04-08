@@ -17,12 +17,6 @@ Available export formats:
 - CSV
 - JSON
 
-<Video
-  src="https://static.langfuse.com/docs-videos/export-generations-csv.mp4"
-  aspectRatio={1844 / 1080}
-  gifStyle
-/>
-
 ## Alternatives
 
 You can also export data via:

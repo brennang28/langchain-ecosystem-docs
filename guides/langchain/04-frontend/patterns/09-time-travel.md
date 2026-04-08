@@ -687,7 +687,7 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
         backgroundColor: isSelected ? isDark ? "#1A2740" : "#E5F4FF" : "transparent",
         color: isSelected ? isDark ? "#C8DDF0" : "#030710" : "#6B8299"
       });
-      btn.innerHTML = `<span>${SDK_LOGOS[value]}</span>${label}`;
+      btn.innerHTML = `<span>${SDK_LOGOS[value]}${label}`;
       btn.addEventListener("mouseenter", () => {
         if (!isSelected) {
           btn.style.backgroundColor = isDark ? "#1A2740" : "#F2FAFF";
@@ -743,22 +743,18 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
   const tabInactiveClass = `${tabBase} lc-tab-inactive`;
   const tabTraceActiveClass = `${tabBase} lc-tab-trace`;
   const tabTraceLoadingClass = `${tabBase} lc-tab-trace-loading`;
-  const toolbar = showCodeTab && <div className="lc-toolbar flex items-stretch justify-between px-3 py-2 border-b lc-border lc-bg-wash">
-      <div className="inline-flex items-stretch gap-0.5 rounded-lg border lc-border lc-bg-surface" style={{
-    padding: 3
-  }}>
+  const toolbar = showCodeTab && 
+      
         <button type="button" aria-label="Preview" onClick={() => switchView("preview")} className={activeView === "preview" ? tabActiveClass : tabInactiveClass}>
           <span dangerouslySetInnerHTML={{
     __html: VIEW_EYE_SVG
   }} />
-          <span className="lc-tab-label">Preview</span>
-        </button>
+          Preview</button>
         <button type="button" aria-label="Code" onClick={() => switchView("code")} className={activeView === "code" ? tabActiveClass : tabInactiveClass}>
           <span dangerouslySetInnerHTML={{
     __html: VIEW_CODE_SVG
   }} />
-          <span className="lc-tab-label">Code</span>
-        </button>
+          Code</button>
         {(traceUrl || traceLoading) && !useLocalPreview && <a href={traceUrl ?? "#"} target="_blank" rel="noopener noreferrer" aria-label="Trace" onClick={e => {
     if (!traceUrl) e.preventDefault(); else cachedRef.current?.host.trackEvent("trace_tab_clicked", {
       pattern
@@ -767,16 +763,9 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
             <span dangerouslySetInnerHTML={{
     __html: traceUrl ? TRACE_ICON_SVG : TRACE_SPINNER_SVG
   }} />
-            <span className="lc-tab-label">Trace</span>
-            {traceUrl && <span className="ml-0.5" dangerouslySetInnerHTML={{
-    __html: EXTERNAL_LINK_SVG
-  }} />}
+            Trace{traceUrl && }
           </a>}
-      </div>
-
-      {activeView === "code" && <div className="lc-lang-switcher inline-flex items-stretch gap-0.5 rounded-lg border lc-border lc-bg-surface" style={{
-    padding: 3
-  }}>
+      {activeView === "code" && 
           <button type="button" aria-label="TypeScript" onClick={() => setAgentLang("js")} className={agentLang === "js" ? tabActiveClass : tabInactiveClass} title="TypeScript / JavaScript">
             <span dangerouslySetInnerHTML={{
     __html: LANG_TS_SVG
@@ -787,10 +776,10 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
     __html: LANG_PYTHON_SVG
   }} />
           </button>
-        </div>}
+        }
 
-      <div className="inline-flex items-center gap-1.5">
-        <button type="button" aria-label={expanded ? "Collapse" : "Expand"} onClick={() => setExpanded(v => !v)} className="lc-expand-btn" title={expanded ? "Collapse" : "Expand"}>
+      
+        <button type="button" aria-label={expanded ? "Collapse" : "Expand"} onClick={() => setExpanded(v => !v)} title={expanded ? "Collapse" : "Expand"}>
           <span dangerouslySetInnerHTML={{
     __html: expanded ? CLOSE_SVG : EXPAND_SVG
   }} />
@@ -815,14 +804,14 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
       sdk,
       lang: agentLang
     });
-  }} className="lc-expand-btn">
+  }}>
           <span dangerouslySetInnerHTML={{
     __html: DOWNLOAD_SVG
   }} />
         </button>
 
         {}
-        <button ref={sdkButtonRef} type="button" onClick={() => setSdkDropdownOpen(o => !o)} className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border lc-sdk-btn font-medium cursor-pointer transition-colors">
+        <button ref={sdkButtonRef} type="button" onClick={() => setSdkDropdownOpen(o => !o)}>
           <span dangerouslySetInnerHTML={{
     __html: SDK_LOGOS[sdk]
   }} />
@@ -831,36 +820,34 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
     __html: CHEVRON_DOWN_SVG
   }} />
         </button>
-      </div>
-    </div>;
-  const slot = <div ref={slotRef} className="relative w-full" style={expanded ? {
+      ;
+  const slot = <div ref={slotRef} style={expanded ? {
     flex: 1,
     minHeight: 0
   } : {
     height: heightStyle
   }}>
-      {!ready && !error && <div className="absolute inset-0 flex items-center justify-center z-10 lc-bg-wash">
-          <div className="size-6 border-2 lc-spinner rounded-full animate-spin" />
-        </div>}
+      {!ready && !error && 
+          
+        }
 
-      {error && <div className="absolute top-3 inset-x-3 z-10 px-4 py-3 rounded-2xl border lc-error text-sm">
+      {error && 
           <strong>Preview Error</strong>
-          <p className="mt-1 opacity-80" style={{
+          <p style={{
     fontSize: 13
   }}>
             {error}
           </p>
-          <button type="button" onClick={handleReset} className="mt-2 px-3 py-1 text-xs rounded-lg border lc-error-btn cursor-pointer">
+          <button type="button" onClick={handleReset}>
             Retry
           </button>
-        </div>}
-    </div>;
+        }
+    ;
   return <div data-lc-pe ref={placeholderRef} className={`${effectiveTheme === "dark" ? "dark" : ""} ${className ?? ""}`}>
-      <div ref={cardRef} className="rounded-2xl border lc-border overflow-hidden lc-bg-surface">
+      <div ref={cardRef}>
         {toolbar}
         {slot}
-      </div>
-    </div>;
+      ;
 };
 
 Every state change in a LangGraph agent creates a **checkpoint**, a complete
@@ -869,11 +856,11 @@ checkpoint, view the exact state the agent held, and **resume execution from
 that point** to explore alternative paths. It's a debugger, an undo button, and
 an audit log all in one.
 
-<PatternEmbed pattern="time-travel" />
 
-<Note>
-  This feature requires the [LangGraph Agent Server](/langsmith/local-server). Run your agent locally with `langgraph dev` or [deploy it to LangSmith](/langsmith/deployment) to use this pattern.
-</Note>
+> ℹ️ **Note**
+>
+> This feature requires the [LangGraph Agent Server](/langsmith/local-server). Run your agent locally with `langgraph dev` or [deploy it to LangSmith](/langsmith/deployment) to use this pattern.
+
 
 ## How checkpoints work
 
@@ -897,15 +884,13 @@ This tells the hook to load the full checkpoint timeline for the current thread.
 Define a TypeScript interface matching your agent's state schema and pass it as a type parameter to `useStream` for type-safe access to state values. In the examples below, replace `typeof myAgent` with your interface name:
 
 ```ts  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-import type { BaseMessage } from "@langchain/core/messages";
-
 interface AgentState {
   messages: BaseMessage[];
 }
 ```
 
-<CodeGroup>
-  ```tsx React theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```tsx React theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   import { useStream } from "@langchain/react";
 
   const AGENT_URL = "http://localhost:2024";
@@ -920,14 +905,12 @@ interface AgentState {
     const history = stream.history ?? [];
 
     return (
-      <div className="flex h-screen">
-        <ChatPanel messages={stream.messages} />
+      
         <TimelineSidebar
           history={history}
           onSelect={(cp) => stream.submit(null, { checkpoint: cp.checkpoint })}
         />
-      </div>
-    );
+      );
   }
   ```
 
@@ -953,10 +936,7 @@ interface AgentState {
 
   <template>
     <div class="flex h-screen">
-      <ChatPanel :messages="stream.messages.value" />
-      <TimelineSidebar :history="history" @select="resumeFrom" />
-    </div>
-  </template>
+      </template>
   ```
 
   ```svelte Svelte theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
@@ -977,10 +957,7 @@ interface AgentState {
   </script>
 
   <div class="flex h-screen">
-    <ChatPanel messages={$messages} />
-    <TimelineSidebar history={$history ?? []} onSelect={resumeFrom} />
-  </div>
-  ```
+    ```
 
   ```ts Angular theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   import { Component, computed } from "@angular/core";
@@ -997,8 +974,7 @@ interface AgentState {
           [history]="history()"
           (select)="resumeFrom($event)"
         />
-      </div>
-    `,
+      `,
   })
   export class TimeTravelChatComponent {
     stream = useStream<typeof myAgent>({
@@ -1014,7 +990,6 @@ interface AgentState {
     }
   }
   ```
-</CodeGroup>
 
 ## The ThreadState object
 
@@ -1058,11 +1033,11 @@ function TimelineSidebar({
   onSelect: (cp: ThreadState) => void;
 }) {
   return (
-    <aside className="w-80 overflow-y-auto border-l bg-gray-50 p-4">
-      <h2 className="mb-4 text-sm font-semibold uppercase text-gray-500">
+    <aside>
+      <h2>
         Checkpoint Timeline
       </h2>
-      <div className="space-y-2">
+      
         {history.map((cp, i) => {
           const taskName = cp.tasks?.[0]?.name ?? "unknown";
           const msgCount = (cp.values?.messages as unknown[])?.length ?? 0;
@@ -1071,22 +1046,16 @@ function TimelineSidebar({
             <button
               key={cp.checkpoint.checkpoint_id}
               onClick={() => onSelect(cp)}
-              className="w-full rounded-lg border bg-white p-3 text-left
-                         hover:border-blue-400 hover:shadow-sm transition-all"
             >
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-gray-400">#{i + 1}</span>
-                <NodeBadge name={taskName} />
-              </div>
-              <p className="mt-1 text-sm font-medium">{taskName}</p>
-              <p className="text-xs text-gray-500">
+              
+                #{i + 1}<p>{taskName}</p>
+              <p>
                 {msgCount} message{msgCount !== 1 ? "s" : ""}
               </p>
             </button>
           );
         })}
-      </div>
-    </aside>
+      </aside>
   );
 }
 ```
@@ -1101,21 +1070,17 @@ function CheckpointInspector({ checkpoint }: { checkpoint: ThreadState }) {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <div className="rounded-lg border bg-white p-4">
-      <div className="flex items-center justify-between">
-        <h3 className="font-semibold">
+    
+      
+        <h3>
           Checkpoint {checkpoint.checkpoint.checkpoint_id.slice(0, 8)}...
         </h3>
         <button
           onClick={() => setExpanded(!expanded)}
-          className="text-sm text-blue-600 hover:underline"
         >
           {expanded ? "Collapse" : "Expand"} state
         </button>
-      </div>
-
-      <div className="mt-2 space-y-1 text-sm">
-        <p>
+      <p>
           <strong>Node:</strong>{" "}
           {checkpoint.tasks?.[0]?.name ?? "—"}
         </p>
@@ -1127,26 +1092,24 @@ function CheckpointInspector({ checkpoint }: { checkpoint: ThreadState }) {
           <strong>Messages:</strong>{" "}
           {(checkpoint.values?.messages as unknown[])?.length ?? 0}
         </p>
-      </div>
-
       {expanded && (
-        <div className="mt-3 max-h-96 overflow-auto rounded bg-gray-900 p-3">
-          <pre className="text-xs text-gray-200">
+        
+          <pre>
             {JSON.stringify(checkpoint.values, null, 2)}
           </pre>
-        </div>
-      )}
-    </div>
-  );
+        )}
+    );
 }
 ```
 
-<Tip>
-  For production UIs, consider using a proper JSON viewer component with
-  collapsible nodes instead of raw `JSON.stringify`. Libraries like
-  `react-json-view` or `react-json-tree` give users a much better exploration
-  experience.
-</Tip>
+
+> 💡 **Tip**
+>
+> For production UIs, consider using a proper JSON viewer component with
+>   collapsible nodes instead of raw `JSON.stringify`. Libraries like
+>   `react-json-view` or `react-json-tree` give users a much better exploration
+>   experience.
+
 
 ## Resuming from a checkpoint
 
@@ -1168,11 +1131,13 @@ The existing messages after the selected checkpoint are replaced by the new
 execution path. This effectively creates a **branch** in the conversation
 timeline.
 
-<Note>
-  Resuming from a checkpoint does not delete the original timeline. The previous
-  checkpoints remain available in the history. This means users can always go back
-  and try a different path without losing any prior work.
-</Note>
+
+> ℹ️ **Note**
+>
+> Resuming from a checkpoint does not delete the original timeline. The previous
+>   checkpoints remain available in the history. This means users can always go back
+>   and try a different path without losing any prior work.
+
 
 ## The SplitView layout
 
@@ -1193,14 +1158,11 @@ function TimeTravelLayout() {
   const history = stream.history ?? [];
 
   return (
-    <div className="flex h-screen">
-      {/* Main chat area */}
-      <main className="flex-1 overflow-y-auto p-6">
-        <div className="mx-auto max-w-2xl space-y-4">
+    
+      <main>
+        
           {stream.messages.map((msg) => (
-            <Message key={msg.id} message={msg} />
-          ))}
-        </div>
+            ))}
         <ChatInput
           onSubmit={(text) =>
             stream.submit({ messages: [{ type: "human", content: text }] })
@@ -1209,8 +1171,7 @@ function TimeTravelLayout() {
         />
       </main>
 
-      {/* Timeline sidebar */}
-      <aside className="w-96 overflow-y-auto border-l bg-gray-50">
+      <aside>
         <TimelineSidebar
           history={history}
           selected={selectedCheckpoint}
@@ -1220,11 +1181,9 @@ function TimeTravelLayout() {
           }
         />
         {selectedCheckpoint && (
-          <CheckpointInspector checkpoint={selectedCheckpoint} />
-        )}
+          )}
       </aside>
-    </div>
-  );
+    );
 }
 ```
 
@@ -1263,12 +1222,14 @@ Time travel is invaluable across many scenarios:
 * **Teaching**: walk through an agent's execution step by step to explain how
   multi-step reasoning works
 
-<Info>
-  Time travel is especially powerful when combined with
-  [human-in-the-loop](/oss/python/langchain/frontend/human-in-the-loop) patterns. If a human reviewer
-  rejects an agent's action at an interrupt, they can resume from the checkpoint
-  before the action was taken and provide corrective input.
-</Info>
+
+> ℹ️ **Info**
+>
+> Time travel is especially powerful when combined with
+>   [human-in-the-loop](/oss/python/langchain/frontend/human-in-the-loop) patterns. If a human reviewer
+>   rejects an agent's action at an interrupt, they can resume from the checkpoint
+>   before the action was taken and provide corrective input.
+
 
 ## Handling interrupts in the timeline
 
@@ -1296,19 +1257,15 @@ function TimelineEntry({
           : "border-gray-200 bg-white"
       }`}
     >
-      <div className="flex items-center gap-2">
-        <span className="text-xs text-gray-400">#{index + 1}</span>
-        {hasInterrupt && (
-          <span className="rounded bg-amber-200 px-1.5 py-0.5 text-xs font-medium text-amber-800">
+      
+        #{index + 1}{hasInterrupt && (
+          
             Interrupt
-          </span>
-        )}
-      </div>
-      <p className="mt-1 text-sm font-medium">
+          )}
+      <p>
         {checkpoint.tasks?.[0]?.name ?? "—"}
       </p>
-    </div>
-  );
+    );
 }
 ```
 
@@ -1332,12 +1289,15 @@ function TimelineEntry({
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/frontend/time-travel.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/frontend/time-travel.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

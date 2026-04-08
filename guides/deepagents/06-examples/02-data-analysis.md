@@ -16,9 +16,11 @@ The agent we'll build will:
 2. Perform exploratory data analysis and generate visualizations
 3. Share results to a Slack channel
 
-<Tip>
-  The Slack integration is optional. The agent can be modified to save artifacts locally or share results through other channels.
-</Tip>
+
+> 💡 **Tip**
+>
+> The Slack integration is optional. The agent can be modified to save artifacts locally or share results through other channels.
+
 
 ### Key concepts
 
@@ -48,9 +50,11 @@ For this tutorial, we'll use:
 pip install slack-sdk
 ```
 
-<Note>
-  These services are optional, though a sandboxed environment is highly recommended for any production use. You can alternatively use the local shell backend (with important [security considerations](/oss/python/deepagents/backends#localshellbackend-local-shell)) or download artifacts directly from the backend.
-</Note>
+
+> ℹ️ **Note**
+>
+> These services are optional, though a sandboxed environment is highly recommended for any production use. You can alternatively use the local shell backend (with important [security considerations](/oss/python/deepagents/backends#localshellbackend-local-shell)) or download artifacts directly from the backend.
+
 
 ### LangSmith
 
@@ -79,19 +83,18 @@ Deep Agents use [backends](/oss/python/deepagents/backends) to execute code in s
 
 See [available providers](/oss/python/deepagents/sandboxes#available-providers) for setup details.
 
-<Tabs>
-  <Tab title="AgentCore">
-    <CodeGroup>
-      ```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**AgentCore:**
+
+
+```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       pip install langchain-agentcore-codeinterpreter
       ```
 
       ```bash uv theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       uv add langchain-agentcore-codeinterpreter
       ```
-    </CodeGroup>
-
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from bedrock_agentcore.tools.code_interpreter_client import CodeInterpreter
     from langchain_agentcore_codeinterpreter import AgentCoreSandbox
 
@@ -99,20 +102,19 @@ See [available providers](/oss/python/deepagents/sandboxes#available-providers) 
     interpreter.start()
     backend = AgentCoreSandbox(interpreter=interpreter)
     ```
-  </Tab>
+  
+**Daytona:**
 
-  <Tab title="Daytona">
-    <CodeGroup>
-      ```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       pip install langchain-daytona
       ```
 
       ```bash uv theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       uv add langchain-daytona
       ```
-    </CodeGroup>
-
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from daytona import Daytona
 
     from langchain_daytona import DaytonaSandbox
@@ -128,10 +130,10 @@ See [available providers](/oss/python/deepagents/sandboxes#available-providers) 
     print(result)
     # ExecuteResponse(output='ready', exit_code=0, ...)
     ```
-  </Tab>
+  
+**Modal:**
 
-  <Tab title="Modal">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     import modal
 
     from langchain_modal import ModalSandbox
@@ -140,20 +142,19 @@ See [available providers](/oss/python/deepagents/sandboxes#available-providers) 
     modal_sandbox = modal.Sandbox.create(app=app)
     backend = ModalSandbox(sandbox=modal_sandbox)
     ```
-  </Tab>
+  
+**Runloop:**
 
-  <Tab title="Runloop">
-    <CodeGroup>
-      ```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       pip install langchain-runloop
       ```
 
       ```bash uv theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       uv add langchain-runloop
       ```
-    </CodeGroup>
-
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from runloop_api_client import RunloopSDK
 
     from langchain_runloop import RunloopSandbox
@@ -164,21 +165,21 @@ See [available providers](/oss/python/deepagents/sandboxes#available-providers) 
     devbox = client.devbox.create()
     backend = RunloopSandbox(devbox=devbox)
     ```
-  </Tab>
+  
+**Local shell:**
 
-  <Tab title="Local shell">
-    <Warning>
-      This backend provides unrestricted filesystem and shell access. Use only in controlled environments for development and testing. See the [security considerations](/oss/python/deepagents/backends#localshellbackend-local-shell) for more details.
-    </Warning>
+
+> ⚠️ **Warning**
+>
+> This backend provides unrestricted filesystem and shell access. Use only in controlled environments for development and testing. See the [security considerations](/oss/python/deepagents/backends#localshellbackend-local-shell) for more details.
+
 
     ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from deepagents.backends import LocalShellBackend
 
     backend = LocalShellBackend(root_dir=".", env={"PATH": "/usr/bin:/bin"})
     ```
-  </Tab>
-</Tabs>
-
+  
 ### Upload sample data
 
 Create and upload sample sales data to the backend:
@@ -244,9 +245,11 @@ def slack_send_message(text: str, file_path: str | None = None) -> str:
     return "Message sent."
 ```
 
-<Note>
-  It is generally good practice to avoid adding credentials and other secrets to the sandbox. Here we manage the Slack token outside the sandbox in a tool.
-</Note>
+
+> ℹ️ **Note**
+>
+> It is generally good practice to avoid adding credentials and other secrets to the sandbox. Here we manage the Slack token outside the sandbox in a tool.
+
 
 ## Run the agent
 
@@ -657,21 +660,23 @@ View the full [LangSmith trace](https://smith.langchain.com/public/ac2443a8-16ad
 
 The agent successfully analyzes the data and shares a comprehensive report with visualizations to Slack:
 
-<Frame caption="Agent-generated analysis report and visualization dashboard delivered to Slack">
-    <img src="https://mintcdn.com/langchain-5e9cc07a/7KAsBk-8tguhrRJ6/images/data_analysis_slack_response.png?fit=max&auto=format&n=7KAsBk-8tguhrRJ6&q=85&s=b0a89738510117d55b35fc7a10265053" alt="Sales analysis results in Slack" width="514" height="961" data-path="images/data_analysis_slack_response.png" />
-</Frame>
 
-<Tip>
-  You can download artifacts directly from the backend without using external tools:
+<img src="https://mintcdn.com/langchain-5e9cc07a/7KAsBk-8tguhrRJ6/images/data_analysis_slack_response.png?fit=max&auto=format&n=7KAsBk-8tguhrRJ6&q=85&s=b0a89738510117d55b35fc7a10265053" alt="Sales analysis results in Slack" width="514" height="961" data-path="images/data_analysis_slack_response.png" />
 
-  ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-  backend.download_files(list_of_filepaths)
-  ```
-</Tip>
 
-<Note>
-  See [provider guides](/oss/python/deepagents/sandboxes#available-providers) for how to clean up the sandbox once finished.
-</Note>
+> 💡 **Tip**
+>
+> You can download artifacts directly from the backend without using external tools:
+> 
+>   ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+>   backend.download_files(list_of_filepaths)
+>   ```
+
+
+> ℹ️ **Note**
+>
+> See [provider guides](/oss/python/deepagents/sandboxes#available-providers) for how to clean up the sandbox once finished.
+
 
 ## Next steps
 
@@ -686,12 +691,15 @@ Now that you've built a data analysis agent, explore these resources to extend i
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/data-analysis.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/data-analysis.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

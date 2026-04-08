@@ -9,56 +9,33 @@ Langfuse metrics derive actionable insights from [observability](/docs/observabi
 
 Metrics can be sliced and diced via the [customizable dashboards](/docs/metrics/features/custom-dashboards) and the [metrics API](/docs/metrics/features/metrics-api).
 
-<Frame fullWidth>
-  <img src="/images/docs/llm-analytics.png" alt="LLM Analytics" />
-</Frame>
+
+<img src="/images/docs/llm-analytics.png" alt="LLM Analytics" />
 
 ## Features
 
-import { LayoutDashboard, Activity } from "lucide-react";
-
-<Cards num={2}>
-  <Card
-    title="Custom Dashboards"
-    href="/docs/metrics/features/custom-dashboards"
-    icon={<LayoutDashboard />}
+}
     arrow
   />
-  <Card
-    title="Metrics API"
-    href="/docs/metrics/features/metrics-api"
-    icon={<Activity />}
+  }
     arrow
   />
-  <Card
-    title="Export to PostHog"
-    href="/integrations/analytics/posthog"
-    icon={
-      <div className="w-6 h-6 dark:bg-white rounded-sm p-1 flex items-center justify-center">
-        <img
+  <img
           src="/images/integrations/posthog_icon.svg"
           alt="PostHog icon"
-          className="w-full h-full object-contain"
-        />
-      </div>
-    }
+          />
+      
+}
     arrow
   />
-  <Card
-    title="Export to Mixpanel"
-    href="/integrations/analytics/mixpanel"
-    icon={
-      <div className="w-6 h-6 dark:bg-white rounded-sm p-1 flex items-center justify-center">
-        <img
+  <img
           src="/images/integrations/mixpanel_icon.svg"
           alt="Mixpanel icon"
-          className="w-full h-full object-contain"
-        />
-      </div>
-    }
+          />
+      
+}
     arrow
   />
-</Cards>
 
 ## Metrics & Dimensions
 

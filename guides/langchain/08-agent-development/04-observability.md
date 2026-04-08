@@ -75,16 +75,23 @@ agent.invoke({"messages": [{"role": "user", "content": "Send another email"}]})
 
 ## Log to a project
 
-<Accordion title="Statically">
-  You can set a custom project name for your entire application by setting the `LANGSMITH_PROJECT` environment variable:
+
+<details>
+<summary>Statically</summary>
+
+You can set a custom project name for your entire application by setting the `LANGSMITH_PROJECT` environment variable:
 
   ```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   export LANGSMITH_PROJECT=my-agent-project
   ```
-</Accordion>
 
-<Accordion title="Dynamically">
-  You can set the project name programmatically for specific operations:
+</details>
+
+
+<details>
+<summary>Dynamically</summary>
+
+You can set the project name programmatically for specific operations:
 
   ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   import langsmith as ls
@@ -94,7 +101,9 @@ agent.invoke({"messages": [{"role": "user", "content": "Send another email"}]})
           "messages": [{"role": "user", "content": "Send a welcome email"}]
       })
   ```
-</Accordion>
+
+</details>
+
 
 ## Add metadata to traces
 
@@ -129,18 +138,23 @@ with ls.tracing_context(
 
 This custom metadata and tags will be attached to the trace in LangSmith.
 
-<Tip>
-  To learn more about how to use traces to debug, evaluate, and monitor your agents, see the [LangSmith documentation](/langsmith/home).
-</Tip>
+
+> 💡 **Tip**
+>
+> To learn more about how to use traces to debug, evaluate, and monitor your agents, see the [LangSmith documentation](/langsmith/home).
+
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/observability.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/observability.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

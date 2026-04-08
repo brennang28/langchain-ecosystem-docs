@@ -8,9 +8,6 @@ description: Langfuse prompts are cached client-side in the SDKs, so there's no 
 
 Langfuse prompts are cached client-side in the SDKs, so **there's no latency impact after the first use** and no availability risk. You can also pre-fetch prompts on startup to populate the cache or provide a fallback prompt.
 
-<Tabs items={["Cache Hit", "Background Revalidation", "Cache Miss", "Optional: Pre-fetch", "Optional: Fallback"]}>
-<Tab>
-
 When the SDK cache contains a fresh prompt, it's returned **immediately** without any network requests.
 
 ```mermaid
@@ -25,8 +22,6 @@ sequenceDiagram
     SDK-->>App: Return cached prompt
 ```
 
-</Tab>
-<Tab>
 
 When the cache TTL has expired, stale prompts are served **immediately** while it **revalidates in the background**.
 
@@ -54,8 +49,6 @@ sequenceDiagram
 
 This ensures **high availability** - users never wait for network requests while the cache stays fresh.
 
-</Tab>
-<Tab>
 
 When no cached prompt exists (e.g., first application startup), the prompt is fetched from the API. The API caches prompts in a Redis cache to ensure low latency.
 
@@ -90,8 +83,6 @@ sequenceDiagram
 
 Multiple fallback layers ensure **resilience** - if Redis is unavailable, the database serves as backup.
 
-</Tab>
-<Tab>
 
 Pre-fetching prompts during application startup ensures that the cache is populated before runtime requests.
 
@@ -114,8 +105,6 @@ sequenceDiagram
     Note over Cache: Cache now warm for runtime
 ```
 
-</Tab>
-<Tab>
 
 When both the local cache is empty and the Langfuse API is unavailable, a fallback prompt can be used to ensure 100% availability.
 
@@ -139,28 +128,18 @@ sequenceDiagram
     Note over App: Application continues with fallback
 ```
 
-</Tab>
-</Tabs>
 
 ## Optional: Customize caching duration (TTL)
 
 The caching duration is configurable if you wish to reduce network overhead of the Langfuse Client. The default cache TTL (Time To Live) is 60 seconds. After the TTL expires, the SDKs will refetch the prompt in the background and update the cache. Refetching is done asynchronously and does not block the application.
-
-<LangTabs items={["Python SDK", "JS/TS SDK"]}>
-<Tab>
 
 ```python
 # Get current `production` prompt version and cache for 5 minutes
 prompt = langfuse.get_prompt("movie-critic", cache_ttl_seconds=300)
 ```
 
-</Tab>
-
-<Tab>
 
 ```ts
-import { LangfuseClient } from "@langfuse/client";
-
 const langfuse = new LangfuseClient();
 
 // Get current `production` version and cache prompt for 5 minutes
@@ -169,16 +148,10 @@ const prompt = await langfuse.prompt.get("movie-critic", {
 });
 ```
 
-</Tab>
-
-</LangTabs>
 
 ## Optional: Disable caching [#disable-caching]
 
 You can disable caching by setting the `cacheTtlSeconds` to `0`. This will ensure that the prompt is fetched from the Langfuse API on every call. This is recommended for non-production use cases where you want to ensure that the prompt is always up to date with the latest version in Langfuse.
-
-<LangTabs items={["Python SDK", "JS/TS SDK"]} >
-<Tab>
 
 ```python
 prompt = langfuse.get_prompt("movie-critic", cache_ttl_seconds=0)
@@ -187,9 +160,6 @@ prompt = langfuse.get_prompt("movie-critic", cache_ttl_seconds=0)
 prompt = langfuse.get_prompt("movie-critic", cache_ttl_seconds=0, label="latest")
 ```
 
-</Tab>
-
-<Tab>
 
 ```ts
 const prompt = await langfuse.prompt.get("movie-critic", {
@@ -203,8 +173,6 @@ const prompt = await langfuse.prompt.get("movie-critic", {
 });
 ```
 
-</Tab>
-</LangTabs>
 
 ## Optional: Guaranteed availability of prompts [#guaranteed-availability]
 
@@ -221,11 +189,8 @@ prompt.compile(input="test")
 
 Results from 1000 sequential executions using Langfuse Cloud (includes network latency):
 
-<div className="sm:grid sm:grid-cols-2 gap-4">
 
-<Frame className="max-w-md">
-  ![Performance Chart](/images/docs/prompt-performance-chart.png)
-</Frame>
+![Performance Chart](/images/docs/prompt-performance-chart.png)
 
 ```
 count    1000.000000
@@ -239,4 +204,4 @@ min         0.032702 sec
 max         0.409609 sec
 ```
 
-</div>
+

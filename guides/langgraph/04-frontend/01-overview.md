@@ -65,8 +65,6 @@ app = graph.compile()
 On the frontend, `useStream` exposes `stream.values` for completed node outputs and `getMessagesMetadata` for identifying which node produced each streaming token.
 
 ```ts  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-import { useStream } from "@langchain/react";
-
 function Pipeline() {
   const stream = useStream<typeof graph>({
     apiUrl: "http://localhost:2024",
@@ -81,11 +79,8 @@ function Pipeline() {
 
 ## Patterns
 
-<CardGroup cols={2}>
-  <Card title="Graph execution" icon="chart-dots" href="/oss/python/langgraph/frontend/graph-execution">
-    Visualize multi-step graph pipelines with per-node status and streaming content.
-  </Card>
-</CardGroup>
+Visualize multi-step graph pipelines with per-node status and streaming content.
+  
 
 ## Related patterns
 
@@ -93,12 +88,15 @@ The [LangChain frontend patterns](/oss/python/langchain/frontend/overview)—mar
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/frontend/overview.md) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/frontend/overview.md) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

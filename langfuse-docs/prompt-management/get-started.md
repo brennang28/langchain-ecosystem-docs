@@ -9,55 +9,27 @@ description: Get started with Langfuse Prompt Management.
 This guide walks you through creating and using a prompt with Langfuse. If you're looking to understand what prompt management is and why it matters, check out the [Prompt Management Overview](/docs/prompt-management/overview) first. For details on how prompts are structured in Langfuse and how it works in the background, see [Core Concepts](/docs/prompt-management/data-model).
 
 
-
-import { FaqPreview } from "@/components/faq/FaqPreview";
-import { Button } from "@/components/ui/button";
-import { Link } from "@/components/ui/link";
-
-<div className="rounded-lg border bg-muted-blue/5 px-6 pb-6 [&>h2]:mt-6 [&>h2]:mb-4">
-
 ## Agentic installation [#agentic-installation]
 
 Install the [Langfuse AI Skill](https://github.com/langfuse/skills) to let your coding agent access all Langfuse features.
 
-<Tabs items={["Ask your coding agent", "Cursor plugin", "Manual installation"]}>
-
-<Tab>
-
 Ask your coding agent to install the skill by pointing to the [GitHub repository](https://github.com/langfuse/skills) and instruct it to migrate your prompts.
 
-```txt filename="Agent instruction"
+```txt
 Install the Langfuse AI skill from github.com/langfuse/skills
 and use it to migrate the prompts in this codebase to Langfuse.
 ```
 
-</Tab>
-
-<Tab>
 
 Langfuse has a [Cursor Plugin](https://cursor.com/docs/plugins) that includes the skill automatically.
 
-<div className="flex gap-2 mt-3 mb-6">
-  <Button asChild>
-    <Link
-      href="https://cursor.com/marketplace/langfuse"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      Install Plugin in Cursor
-    </Link>
-  </Button>
-</div>
 
 Then prompt your agent:
 
-```txt filename="Agent instruction"
+```txt
 Migrate the prompts in this codebase to Langfuse.
 ```
 
-</Tab>
-
-<Tab>
 
 Install via npm ([skills CLI](https://www.npmjs.com/package/skills)):
 
@@ -93,20 +65,15 @@ ln -s /path/to/langfuse-skills/skills/langfuse /path/to/<agent-skill-root>/skill
 
 Then prompt your agent:
 
-```txt filename="Agent instruction"
+```txt
 Migrate the prompts in this codebase to Langfuse.
 ```
 
-</Tab>
-
-</Tabs>
-
-</div>
 
 ## Manual installation [#manual-installation]
 This guide helps you get started with Langfuse Prompt Management manually.
 
-<Steps>
+
 ### Get API keys
 
 1.  [Create Langfuse account](https://langfuse.com/cloud) or [self-host Langfuse](/self-hosting).
@@ -115,21 +82,7 @@ This guide helps you get started with Langfuse Prompt Management manually.
 ### Create a prompt [#create-update-prompt-diy]
 
 
-
-
-<LangTabs items={["Langfuse UI", "Python SDK", "JS/TS SDK", "API", "Migrate from existing code"]}>
-<Tab>
-
 Use the Langfuse UI to create a new prompt or update an existing one. You'll need to select the [prompt type](/docs/prompt-management/data-model#text-vs-chat-prompts), you can't change this afterwards.
-
-<Video
-  src="https://static.langfuse.com/docs-videos/create-update-prompts.mp4%20MOVED%20TO%20R2.mp4"
-  aspectRatio={16 / 9}
-  gifStyle
-/>
-
-</Tab>
-<Tab>
 
 ```bash
 pip install langfuse
@@ -138,13 +91,12 @@ pip install langfuse
 Add your Langfuse credentials as environment variables so the SDK knows which project to create the prompt in.
 
 
-```bash filename=".env"
+```bash
 LANGFUSE_SECRET_KEY = "sk-lf-..."
 LANGFUSE_PUBLIC_KEY = "pk-lf-..."
 LANGFUSE_BASE_URL = "https://cloud.langfuse.com" # 🇪🇺 EU region
 # LANGFUSE_BASE_URL = "https://us.cloud.langfuse.com" # 🇺🇸 US region
 ```
-
 
 
 Use the Python SDK to create a new prompt or update an existing one.
@@ -172,9 +124,6 @@ langfuse.create_prompt(
 
 If you already have a prompt with the same `name`, the prompt will be added as a new version.
 
-</Tab>
-
-<Tab>
 
 ```bash
 npm i @langfuse/client
@@ -183,7 +132,7 @@ npm i @langfuse/client
 Add your Langfuse credentials as environment variables so the SDK knows which project to create the prompt in.
 
 
-```bash filename=".env"
+```bash
 LANGFUSE_SECRET_KEY = "sk-lf-..."
 LANGFUSE_PUBLIC_KEY = "pk-lf-..."
 LANGFUSE_BASE_URL = "https://cloud.langfuse.com" # 🇪🇺 EU region
@@ -191,10 +140,7 @@ LANGFUSE_BASE_URL = "https://cloud.langfuse.com" # 🇪🇺 EU region
 ```
 
 
-
 ```ts
-import { LangfuseClient } from "@langfuse/client";
-
 const langfuse = new LangfuseClient();
 ```
 
@@ -223,9 +169,6 @@ await langfuse.prompt.create({
 
 If you already have a prompt with the same `name`, the prompt will be added as a new version.
 
-</Tab>
-
-<Tab>
 
 Use the [Public API](https://api.reference.langfuse.com/#tag/prompts/post/api/public/v2/prompts) to create a new prompt or update an existing one.
 
@@ -244,17 +187,6 @@ curl -X POST "https://cloud.langfuse.com/api/public/v2/prompts" \
 
 ```
 
-<Cards num={1}>
-  <Card
-    title="API Reference"
-    href="https://api.reference.langfuse.com/#tag/prompts/POST/api/public/v2/prompts"
-    arrow
-  />
-</Cards>
-
-</Tab>
-
-<Tab>
 
 If you have prompts in your existing codebase, you can migrate them to Langfuse programmatically.
 
@@ -284,33 +216,16 @@ Migrate the hardcoded prompts in this codebase to Langfuse prompt management.
 
 You can write a script that reads your existing prompts and creates them in Langfuse using the [Public API](https://api.reference.langfuse.com/#tag/prompts/post/api/public/v2/prompts). This is ideal for bulk migrations or CI/CD integration.
 
-<Cards num={1}>
-  <Card
-    title="API Reference"
-    href="https://api.reference.langfuse.com/#tag/prompts/POST/api/public/v2/prompts"
-    arrow
-  />
-</Cards>
 
 Things to look out for
 
 - Langfuse uses a specific syntax for [variables, prompt references, and message placeholders](/docs/prompt-management/data-model#dynamic-rendering-of-prompts). Make sure to update your prompts to use the correct format, if you want to use Langfuse's dynamic rendering capabilities.
 
-</Tab>
-
-</LangTabs>
-
-
 
 ### Use the prompt in your code [#use-prompt-diy]
 
 
-import { FileCode } from "lucide-react";
-
 At runtime, you can fetch the prompt from Langfuse. We recommend using the `production` label to fetch the version intentionally chosen for production. Learn more about control (versions/labels) [here](/docs/prompt-management/features/prompt-version-control).
-
-<LangTabs items={["Python SDK", "JS/TS SDK", "API", "OpenAI SDK (Python)", "OpenAI SDK (JS/TS)", "Langchain (Python)", "Langchain (JS)", "Vercel AI SDK"]}>
-<Tab>
 
 ```python
 from langfuse import get_client
@@ -343,13 +258,8 @@ compiled_chat_prompt = chat_prompt.compile(criticlevel="expert", movie="Dune 2")
 # -> [{"role": "system", "content": "You are an expert movie critic"}, {"role": "user", "content": "Do you like Dune 2?"}]
 ```
 
-</Tab>
-
-<Tab>
 
 ```ts
-import { LangfuseClient } from "@langfuse/client";
-
 // Initialize the Langfuse client
 const langfuse = new LangfuseClient();
 ```
@@ -386,9 +296,6 @@ const compiledChatPrompt = chatPrompt.compile({
 // -> [{"role": "system", "content": "You are an expert movie critic"}, {"role": "user", "content": "Do you like Dune 2?"}]
 ```
 
-</Tab>
-
-<Tab>
 
 Use the [Public API](https://api.reference.langfuse.com/#tag/prompts/get/api/public/v2/prompts/{promptName}) to fetch a prompt at runtime. By default, the prompt labeled `production` is returned.
 
@@ -403,18 +310,6 @@ For fetching a specific version instead of a label:
 curl "https://cloud.langfuse.com/api/public/v2/prompts/movie-critic?version=1" \
   -u "your-public-key:your-secret-key"
 ```
-
-<Cards num={1}>
-  <Card
-    title="API Reference"
-    href="https://api.reference.langfuse.com/#tag/prompts/get/api/public/v2/prompts/{promptName}"
-    arrow
-  />
-</Cards>
-
-</Tab>
-
-<Tab>
 
 
 ```bash
@@ -465,27 +360,15 @@ completion = openai.chat.completions.create(
 
 **Example notebook**
 
-<Cards num={1}>
-  <Card
-    title="Example Cookbook"
-    href="/guides/cookbook/prompt_management_openai_functions"
-    icon={<FileCode />}
+
+}
   />
-</Cards>
-
-</Tab>
-
-<Tab>
 
 ```bash
 npm install @langfuse/openai openai
 ```
 
 ```typescript
-import { observeOpenAI } from "@langfuse/openai";
-import { LangfuseClient } from "@langfuse/client";
-import OpenAI from "openai";
-
 // Initialize Langfuse client
 const langfuse = new LangfuseClient();
 
@@ -537,9 +420,6 @@ const completion = await openai.chat.completions.create({
 });
 ```
 
-</Tab>
-
-<Tab>
 
 ```python
 from langfuse import Langfuse
@@ -579,22 +459,11 @@ langchain_prompt = ChatPromptTemplate.from_messages(langfuse_prompt.get_langchai
 
 **Example notebook**
 
-<Cards num={1}>
-  <Card
-    title="Example Cookbook"
-    href="/guides/cookbook/prompt_management_langchain"
-    icon={<FileCode />}
+
+}
   />
-</Cards>
-
-</Tab>
-
-<Tab>
 
 ```ts
-import { LangfuseClient } from "@langfuse/client";
-import { ChatPromptTemplate } from "@langchain/core/prompts";
-
 const langfuse = new LangfuseClient();
 ```
 
@@ -632,17 +501,9 @@ const promptTemplate = ChatPromptTemplate.fromMessages(
 
 **Example notebook**
 
-<Cards num={1}>
-  <Card
-    title="Example Cookbook."
-    href="/guides/cookbook/js_prompt_management_langchain"
-    icon={<FileCode />}
+
+}
   />
-</Cards>
-
-</Tab>
-
-<Tab>
 
 Use Langfuse Prompt Management with the Vercel AI SDK.
 
@@ -651,10 +512,6 @@ npm install @langfuse/client ai
 ```
 
 ```typescript
-import { generateText } from "ai";
-import { openai } from "@ai-sdk/openai";
-import { LangfuseClient } from "@langfuse/client";
-
 // Initialize Langfuse client
 const langfuse = new LangfuseClient();
 ```
@@ -709,19 +566,11 @@ const result = await generateText({
 });
 ```
 
-</Tab>
-
-</LangTabs>
 
 Not seeing your latest version? This might be because of the caching behavior. See [prompt caching](/docs/prompt-management/data-model#prompt-caching) for more details.
 
 
-
-</Steps>
-
 ## Not seeing what you expected?
-
-<FaqPreview tags={["prompt-management-get-started"]} />
 
 ## Next steps
 

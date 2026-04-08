@@ -5,16 +5,12 @@ category: SDKs
 ---
 
 
-
-
-import { Rocket, Plug, Settings, LifeBuoy, BookOpen } from "lucide-react";
-
 # Langfuse SDKs
 
 Langfuse offers two SDKs:
 
-- **Python** <a href="https://github.com/langfuse/langfuse-python"><img className="inline" alt="GitHub repository langfuse/langfuse-python" src="https://img.shields.io/badge/repo-langfuse--python-blue?style=flat-square&logo=GitHub" /></a> <a href="https://pypi.org/project/langfuse/"><img className="inline" src="https://img.shields.io/pypi/v/langfuse?style=flat-square&label=pypi+langfuse" alt="PyPi langfuse" /></a>
-- **JS/TS** <a href="https://github.com/langfuse/langfuse-js"><img className="inline" alt="GitHub repository langfuse/langfuse-js" src="https://img.shields.io/badge/repo-langfuse--js-blue?style=flat-square&logo=GitHub" /></a> <a href="https://www.npmjs.com/package/@langfuse/tracing"><img className="inline" src="https://img.shields.io/npm/v/@langfuse/tracing?style=flat-square&label=npm+@langfuse/tracing" alt="NPM @langfuse/tracing" /></a>
+- **Python** <a href="https://github.com/langfuse/langfuse-python"><img alt="GitHub repository langfuse/langfuse-python" src="https://img.shields.io/badge/repo-langfuse--python-blue?style=flat-square&logo=GitHub" /></a> <a href="https://pypi.org/project/langfuse/"><img src="https://img.shields.io/pypi/v/langfuse?style=flat-square&label=pypi+langfuse" alt="PyPi langfuse" /></a>
+- **JS/TS** <a href="https://github.com/langfuse/langfuse-js"><img alt="GitHub repository langfuse/langfuse-js" src="https://img.shields.io/badge/repo-langfuse--js-blue?style=flat-square&logo=GitHub" /></a> <a href="https://www.npmjs.com/package/@langfuse/tracing"><img src="https://img.shields.io/npm/v/@langfuse/tracing?style=flat-square&label=npm+@langfuse/tracing" alt="NPM @langfuse/tracing" /></a>
 - [**Other Languages**](#other-languages) via OpenTelemetry
 
 The Langfuse SDKs are the recommended way to create [custom observations and traces](/docs/observability/sdk/instrumentation#custom-instrumentation) and use the Langfuse [prompt-management](/docs/prompt-management/overview) and [evaluation](/docs/evaluation/overview) features. 
@@ -29,16 +25,16 @@ The Langfuse SDKs are the recommended way to create [custom observations and tra
 - Great DX when nesting observations.
 - Cannot break your application: SDK errors are caught and logged.
 
-<Callout type="info">
-This section documents tracing related features of the Langfuse SDK. To use the Langfuse SDK for [prompt management](/docs/prompt-management/overview) and [evaluation](/docs/evaluation/overview), visit their respective documentation.
-</Callout>
+
+> ℹ️ **Note:** This section documents tracing related features of the Langfuse SDK. To use the Langfuse SDK for [prompt management](/docs/prompt-management/overview) and [evaluation](/docs/evaluation/overview), visit their respective documentation.
+
 
 <details>
 <summary>Requirements for self-hosted Langfuse</summary>
 
-<Callout type="info">
-If you are self-hosting Langfuse, the Python SDK v3 requires [**Langfuse platform version ≥ 3.125.0**](https://github.com/langfuse/langfuse/releases/tag/v3.125.0) and the TypeScript SDK v4 requires [**Langfuse platform version ≥ 3.95.0**](https://github.com/langfuse/langfuse/releases/tag/v3.95.0) for all features to work correctly.
-</Callout>
+
+> ℹ️ **Note:** If you are self-hosting Langfuse, the Python SDK v3 requires [**Langfuse platform version ≥ 3.125.0**](https://github.com/langfuse/langfuse/releases/tag/v3.125.0) and the TypeScript SDK v4 requires [**Langfuse platform version ≥ 3.95.0**](https://github.com/langfuse/langfuse/releases/tag/v3.95.0) for all features to work correctly.
+
 
 </details>
 
@@ -57,8 +53,8 @@ This documentation is for the latest versions of the Langfuse SDKs.
 
 Follow the quickstart guide to get the first trace into Langfuse. See the [setup](#setup) section for more details.
 
-<LangTabs items={["Python SDK", "JS/TS SDK"]}>
-<Tab title="Python SDK">
+
+**Python SDK:**
 
 **1. Install package:**
 
@@ -69,14 +65,12 @@ pip install langfuse
 **2. Add credentials:**
 
 
-
-```bash filename=".env"
+```bash
 LANGFUSE_SECRET_KEY = "sk-lf-..."
 LANGFUSE_PUBLIC_KEY = "pk-lf-..."
 LANGFUSE_BASE_URL = "https://cloud.langfuse.com" # 🇪🇺 EU region
 # LANGFUSE_BASE_URL = "https://us.cloud.langfuse.com" # 🇺🇸 US region
 ```
-
 
 
 **3. Instrument your application:**
@@ -110,17 +104,13 @@ _[When should I call `langfuse.flush()`?](/docs/observability/data-model#backgro
 
 **4. Run your application and see the trace in Langfuse:**
 
-<Frame>
+
 ![First trace in Langfuse](/images/docs/observability/first-trace-python.png)
-</Frame>
 
 See the [trace in Langfuse](https://cloud.langfuse.com/project/cloramnkj0002jz088vzn1ja4/traces/b8789d62464dc7627016d9748a48ad0d?observation=5c7c133ec919ded7&timestamp=2025-12-03T14:56:19.285Z).
 
 
-
-
-</Tab>
-<Tab title="JS/TS SDK">
+**JS/TS SDK:**
 
 **1. Install packages:**
 
@@ -131,7 +121,7 @@ npm install @langfuse/tracing @langfuse/otel @opentelemetry/sdk-node
 **2. Set environment variables:**
 
 
-```bash filename=".env"
+```bash
 LANGFUSE_SECRET_KEY = "sk-lf-..."
 LANGFUSE_PUBLIC_KEY = "pk-lf-..."
 LANGFUSE_BASE_URL = "https://cloud.langfuse.com" # 🇪🇺 EU region
@@ -139,15 +129,11 @@ LANGFUSE_BASE_URL = "https://cloud.langfuse.com" # 🇪🇺 EU region
 ```
 
 
-
 **3. Initialize OpenTelemetry:**
 
 Create an `instrumentation.ts` to register the Langfuse span processor so traces reach Langfuse.
 
-```ts filename="instrumentation.ts" /LangfuseSpanProcessor/
-import { NodeSDK } from "@opentelemetry/sdk-node";
-import { LangfuseSpanProcessor } from "@langfuse/otel";
-
+```ts /LangfuseSpanProcessor/
 export const sdk = new NodeSDK({
   spanProcessors: [new LangfuseSpanProcessor()],
 });
@@ -163,10 +149,7 @@ Instrumentation means adding code that records what’s happening in your applic
 
 In this example we will use the [context manager](/docs/observability/sdk/instrumentation#context-manager). You can also use the [decorator](/docs/observability/sdk/instrumentation#observe-wrapper) or create [manual observations](/docs/observability/sdk/instrumentation#manual-observations).
 
-```ts filename="index.ts" /startActiveObservation/
-import { sdk } from "./instrumentation";
-import { startActiveObservation } from "@langfuse/tracing";
-
+```ts /startActiveObservation/
 async function main() {
   await startActiveObservation("my-first-trace", async (span) => {
     span.update({
@@ -187,34 +170,29 @@ _[When do I need to use `shutdown()`?](/docs/observability/data-model#background
 npx tsx index.ts
 ```
 
-<Frame>
+
 ![First trace in Langfuse](/images/docs/observability/first-trace.png)
-</Frame>
 
 See the [trace in Langfuse](https://cloud.langfuse.com/project/cloramnkj0002jz088vzn1ja4/traces/ef10df7b3f9e4a8adc834c18934bace0?timestamp=2025-12-03T14%3A44%3A10.907Z&observation=c71b480595bbe18c).
 
-
-</Tab>
-</LangTabs>
 
 ## Setup
 
 This section covers all detail of setting up the Langfuse SDKs. Follow the [Quickstart](#quickstart) guide to create your first trace. 
 
-<Steps>
 
 ### Install the SDK
 
-<LangTabs items={["Python SDK", "JS/TS SDK"]}>
-<Tab title="Python SDK">
+
+**Python SDK:**
 
 Pip install the [Langfuse Python SDK](https://pypi.org/project/langfuse/).
 
 ```bash
 pip install langfuse
 ```
-</Tab>
-<Tab title="JS/TS SDK">
+
+**JS/TS SDK:**
 
 The Langfuse JS/TS SDK is designed to be modular. Install the relevant packages for a full tracing setup:
 
@@ -235,10 +213,6 @@ Here's an overview of the available packages for the TypeScript SDK:
 | [**`@langfuse/langchain`**](https://www.npmjs.com/package/@langfuse/langchain) | CallbackHandler for tracing LangChain applications.                    | Universal JS |
 
 
-
-</Tab>
-</LangTabs>
-
 ### Configure credentials
 
 To authenticate with Langfuse, add your Langfuse credentials as environment variables. You can get your credentials by signing up for a free [Langfuse Cloud](https://langfuse.com/cloud) account or by [self-hosting Langfuse](https://langfuse.com/self-hosting).
@@ -248,7 +222,7 @@ If you are self-hosting Langfuse or using a [data region](/security/data-regions
 You can also pass the credentials [directly to the constructor](#client-setup).
 
 
-```bash filename=".env"
+```bash
 LANGFUSE_SECRET_KEY = "sk-lf-..."
 LANGFUSE_PUBLIC_KEY = "pk-lf-..."
 LANGFUSE_BASE_URL = "https://cloud.langfuse.com" # 🇪🇺 EU region
@@ -256,25 +230,21 @@ LANGFUSE_BASE_URL = "https://cloud.langfuse.com" # 🇪🇺 EU region
 ```
 
 
-
 ### Initialize OpenTelemetry (JS/TS only)
 
-<LangTabs items={["Python SDK", "JS/TS SDK"]}>
-<Tab title="Python SDK">
+
+**Python SDK:**
 
 The Python SDK automatically sets up OpenTelemetry when [initializing the client](#client-setup).
 
 By default, the SDK exports Langfuse + GenAI/LLM spans. To customize this, use `should_export_span` (recommended). `blocked_instrumentation_scopes` still works but is deprecated and planned for removal in a future version.
 
-</Tab>
-<Tab title="JS/TS SDK">
+
+**JS/TS SDK:**
 
 The JS/TS SDK's tracing is built on top of OpenTelemetry, so you need to set up the OpenTelemetry SDK. The [`LangfuseSpanProcessor`](https://langfuse-js-git-main-langfuse.vercel.app/classes/_langfuse_otel.LangfuseSpanProcessor.html) is the key component that sends traces to Langfuse.
 
-```ts filename="instrumentation.ts" /LangfuseSpanProcessor/
-import { NodeSDK } from "@opentelemetry/sdk-node";
-import { LangfuseSpanProcessor } from "@langfuse/otel";
-
+```ts /LangfuseSpanProcessor/
 const sdk = new NodeSDK({
   spanProcessors: [new LangfuseSpanProcessor()],
 });
@@ -288,27 +258,22 @@ For more options to configure the [`LangfuseSpanProcessor`](https://langfuse-js-
 
 You can learn more about setting up OpenTelemetry in your JS environment [here](https://opentelemetry.io/docs/languages/js/getting-started/nodejs/).
 
-<Callout type="info">
-**Next.js users:**
 
-If you are using Next.js, please use the OpenTelemetry setup via the `NodeSDK` described above rather than via `registerOTel` from `@vercel/otel`. This is because [the `@vercel/otel` package does not yet support the OpenTelemetry JS SDK v2](https://github.com/vercel/otel/issues/154) on which the `@langfuse/tracing` and `@langfuse/otel` packages are based.
-
-[See here for a full example for the Vercel AI SDK with NextJS on Vercel](/docs/observability/sdk/typescript/instrumentation#native-instrumentation).
-
-</Callout>
-
-</Tab>
-</LangTabs>
+> ℹ️ **Note:** **Next.js users:**
+> 
+> If you are using Next.js, please use the OpenTelemetry setup via the `NodeSDK` described above rather than via `registerOTel` from `@vercel/otel`. This is because [the `@vercel/otel` package does not yet support the OpenTelemetry JS SDK v2](https://github.com/vercel/otel/issues/154) on which the `@langfuse/tracing` and `@langfuse/otel` packages are based.
+> 
+> [See here for a full example for the Vercel AI SDK with NextJS on Vercel](/docs/observability/sdk/typescript/instrumentation#native-instrumentation).
 
 
 ### Client Setup [#client-setup]
 
-<LangTabs items={["Python SDK", "JS/TS SDK"]}>
-<Tab title="Python SDK">
+
+**Python SDK:**
 
 Initialize the Langfuse client with [`get_client()`](https://python.reference.langfuse.com/langfuse#get_client) to interact with Langfuse. It will automatically use the environment variables you set above.
 
-```python filename="Initialize client"
+```python
 from langfuse import get_client
 
 langfuse = get_client()
@@ -327,11 +292,11 @@ The Langfuse client is a singleton. It can be accessed anywhere in your applicat
 
 Optionally, you can initialize the client via [`Langfuse()`](https://python.reference.langfuse.com/langfuse#Langfuse) to pass in configuration options (see below). Otherwise, it is created automatically when you call [`get_client()`](https://python.reference.langfuse.com/langfuse#get_client) based on environment variables.
 
-<Callout type="info">
-If you create multiple `Langfuse` instances with the same `public_key`, the singleton instance is reused and new arguments are ignored.
-</Callout>
 
-```python filename="Initialize client"
+> ℹ️ **Note:** If you create multiple `Langfuse` instances with the same `public_key`, the singleton instance is reused and new arguments are ignored.
+
+
+```python
 from langfuse import Langfuse
 
 langfuse = Langfuse(
@@ -346,14 +311,12 @@ All key configuration options are listed in the [Python SDK reference](https://p
 
 </details>
 
-</Tab>
-<Tab title="JS/TS SDK">
+
+**JS/TS SDK:**
 
 Initialize the [`LangfuseClient`](https://langfuse-js-git-main-langfuse.vercel.app/classes/_langfuse_client.LangfuseClient.html) to interact with Langfuse. The client will automatically use the environment variables you set above.
 
-```ts filename="client.ts"
-import { LangfuseClient } from "@langfuse/client";
-
+```ts
 const langfuse = new LangfuseClient();
 ```
 
@@ -362,9 +325,7 @@ const langfuse = new LangfuseClient();
 
 You can also pass the Langfuse credentials directly to the constructor:
 
-```ts filename="client.ts"
-import { LangfuseClient } from "@langfuse/client";
-
+```ts
 const langfuse = new LangfuseClient({
   publicKey: "your-public-key",
   secretKey: "your-secret-key",
@@ -375,9 +336,6 @@ const langfuse = new LangfuseClient({
 </details>
 
 
-</Tab>
-</LangTabs>
-
 ### Use the SDK
 
 With the SDK set up, you can: 
@@ -386,8 +344,6 @@ With the SDK set up, you can:
 - Use [Langfuse Prompt Management](/docs/prompt-management/get-started)
 - Run [Experiments](/docs/evaluation/experiments/experiments-via-sdk) and create [Scores](/docs/evaluation/evaluation-methods/custom-scores)
 - [Query data](/docs/api-and-data-platform/features/query-via-sdk)
-
-</Steps>
 
 
 ## OpenTelemetry foundation
@@ -451,46 +407,39 @@ The Langfuse SDKs provide wrappers around OTel spans ([`LangfuseSpan`](https://p
 
 ## Learn more
 
-<Cards num={2}>
-  <Card
-    icon={<Rocket size="24" />}
+
+}
     title="Instrument your app"
     href="/docs/observability/sdk/instrumentation"
     arrow
   />
-  <Card
-    icon={<Plug size="24" />}
+  }
     title="Advanced features"
     href="/docs/observability/sdk/advanced-features"
     arrow
   />
-  <Card
-    icon={<Settings size="24" />}
+  }
     title="Upgrade path"
     href="/docs/observability/sdk/upgrade-path"
     arrow
   />
-  <Card
-    icon={<LifeBuoy size="24" />}
+  }
     title="Troubleshooting & FAQ"
     href="/docs/observability/sdk/troubleshooting-and-faq"
     arrow
   />
-  <Card
-    icon={<BookOpen size="24" />}
+  }
     title="Python API reference"
     href="https://python.reference.langfuse.com"
     newWindow
     arrow
   />
-  <Card
-    icon={<BookOpen size="24" />}
+  }
     title="JS/TS API reference"
     href="https://js.reference.langfuse.com/"
     newWindow
     arrow
   />
-</Cards>
 
 ## Other languages
 

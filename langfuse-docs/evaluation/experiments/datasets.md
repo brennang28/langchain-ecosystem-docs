@@ -10,8 +10,8 @@ A dataset is a collection of inputs and expected outputs and is used to test you
 
 _Langfuse Dataset View_
 
-<Frame fullWidth>![Datasets](/images/docs/datasets-overview.png)</Frame>
 
+![Datasets](/images/docs/datasets-overview.png)
 ## Why use datasets?
 
 - Create test cases for your application with real production traces
@@ -20,16 +20,11 @@ _Langfuse Dataset View_
 
 ## Get Started
 
-<Steps>
 
 ### Creating a dataset
 
 Datasets have a name which is unique within a project.
 
-
-
-<LangTabs items={["Python SDK", "JS/TS SDK", "Langfuse UI"]}>
-<Tab>
 
 ```python
 langfuse.create_dataset(
@@ -47,12 +42,8 @@ langfuse.create_dataset(
 
 _See [Python SDK](/docs/sdk/python/sdk-v3) docs for details on how to initialize the Python client._
 
-</Tab>
-<Tab>
 
 ```ts
-import { LangfuseClient } from "@langfuse/client"
-
 const langfuse = new LangfuseClient()
 
 await langfuse.api.datasets.create({
@@ -68,31 +59,17 @@ await langfuse.api.datasets.create({
 });
 ```
 
-</Tab>
-
-<Tab>
 
 1. **Navigate to** `Your Project` > `Datasets` 
 2. **Click on** `+ New dataset` to create a new dataset.
 
-<Frame fullWidth>
+
 ![Create dataset](/images/docs/create_dataset.png)
-</Frame>
-
-</Tab>
-
-</LangTabs>
-
-
 
 ### Upload or create new dataset items
 
 Dataset items can be added to a dataset by providing the input and optionally the expected output. If preferred, dataset items can be imported using the CSV uploader in the Langfuse UI.
 
-
-
-<LangTabs items={["Python SDK", "JS/TS SDK", "Langfuse UI"]}>
-<Tab>
 
 ```python
 langfuse.create_dataset_item(
@@ -114,12 +91,8 @@ langfuse.create_dataset_item(
 
 _See [Python SDK](/docs/sdk/python/sdk-v3) docs for details on how to initialize the Python client._
 
-</Tab>
-<Tab>
 
 ```ts
-import { LangfuseClient } from "@langfuse/client";
-
 const langfuse = new LangfuseClient();
 
 await langfuse.api.datasetItems.create({
@@ -141,49 +114,12 @@ await langfuse.api.datasetItems.create({
 
 _See [JS/TS SDK](/docs/sdk/typescript/guide) docs for details on how to initialize the JS/TS client._
 
-</Tab>
 
-<Tab>
-<Tabs items={["Add item", "Import CSV", "Add from trace", "Add batch from observations table"]}>
-
-<Tab>
-  <Video
-    src="https://static.langfuse.com/docs-videos/dataset-item-create.mp4"
-    aspectRatio={16 / 9}
-    gifStyle
-  />
-</Tab>
-
-<Tab>
-  <Video
-    src="https://static.langfuse.com/docs-videos/dataset-item-upload.mp4"
-    aspectRatio={16 / 9}
-    gifStyle
-  />
-  _Dataset uploads are meant to upload the input and expected output. If you already have generated outputs, please use the [Experiments SDK](/docs/evaluation/experiments/experiments-via-sdk)._
-
-</Tab>
-
-<Tab>
-  <Video
-    src="https://static.langfuse.com/docs-videos/datasets-add-from-trace.mp4"
-    aspectRatio={16 / 9}
-    gifStyle
-  />
-</Tab>
-
-<Tab>
-  Select multiple observations from the **Observations** table, then click **Actions** → **Add to dataset**. You can create a new dataset or add to an existing one, with flexible field mapping options to control how observation data maps to dataset items. See [Batch add observations to datasets](/docs/datasets#batch-add-observations-to-datasets) for details.
-</Tab>
-
-</Tabs>
-
-</Tab>
-
-</LangTabs>
+_Dataset uploads are meant to upload the input and expected output. If you already have generated outputs, please use the [Experiments SDK](/docs/evaluation/experiments/experiments-via-sdk)._
 
 
-</Steps>
+Select multiple observations from the **Observations** table, then click **Actions** → **Add to dataset**. You can create a new dataset or add to an existing one, with flexible field mapping options to control how observation data maps to dataset items. See [Batch add observations to datasets](/docs/datasets#batch-add-observations-to-datasets) for details.
+
 
 ## Dataset Folders
 
@@ -193,9 +129,6 @@ To create a folder, add slashes (`/`) to a dataset name. The UI shows every segm
 ### Create and fetch a dataset in a folder
 
 Use the Langfuse UI or SDK to create and fetch a dataset in a folder by adding a slash (`/`) to a dataset name.
-
-<LangTabs items={["Python SDK", "JS/TS SDK", "Langfuse UI"]}>
-<Tab>
 
 ```python
 dataset_name = "evaluation/qa-dataset"
@@ -214,12 +147,8 @@ langfuse.get_dataset(
 
 This creates and fetches a dataset named `qa-dataset` in a folder named `evaluation`. The full dataset name remains `evaluation/qa-dataset`.
 
-</Tab>
-<Tab>
 
 ```ts
-import { LangfuseClient } from "@langfuse/client";
-
 const langfuse = new LangfuseClient();
 
 const datasetName = "evaluation/qa-dataset";
@@ -234,18 +163,13 @@ await langfuse.dataset.get(encodedName);
 
 This creates and fetches a dataset named `qa-dataset` in a folder named `evaluation`. The full dataset name remains `evaluation/qa-dataset`.
 
-</Tab>
-<Tab>
 
 In the UI, create a dataset and use a slash (`/`) in the name field to organize it into a folder. Fetch it by navigating to the folder, clicking on the folder name and clicking on the dataset name in the list.
 
-</Tab>
-</LangTabs>
 
-<Callout type="info">
-  **URL Encoding**: When using dataset names with slashes as path parameters in
-  the API or JS/TS SDK, use URL encoding. For example, in TypeScript: `encodeURIComponent(name)`.
-</Callout>
+> ℹ️ **Note:** **URL Encoding**: When using dataset names with slashes as path parameters in
+>   the API or JS/TS SDK, use URL encoding. For example, in TypeScript: `encodeURIComponent(name)`.
+
 
 ## Versioning
 
@@ -260,9 +184,6 @@ Versioning applies to dataset items only, not dataset schemas. Dataset schema ch
 ### Fetch dataset at a specific version
 
 You can retrieve a dataset as it existed at a specific point in time by providing a version timestamp. This returns only the items that existed at that timestamp.
-
-<LangTabs items={["Python SDK", "JS/TS SDK", "Langfuse UI"]}>
-<Tab>
 
 ```python
 from langfuse import get_client
@@ -283,12 +204,8 @@ dataset_at_version = langfuse.get_dataset(
 dataset_latest = langfuse.get_dataset(name="my-dataset")
 ```
 
-</Tab>
-<Tab>
 
 ```typescript
-import { LangfuseClient } from "@langfuse/client";
-
 const langfuse = new LangfuseClient();
 
 // Capture the timestamp (use item's createdAt)
@@ -303,22 +220,14 @@ const datasetAtVersion = await langfuse.dataset.get("my-dataset", {
 const datasetLatest = await langfuse.dataset.get("my-dataset");
 ```
 
-</Tab>
-<Tab>
 
 You can view all dataset versions by navigating to **Datasets** → **Select a dataset** → **Items Tab** → Toggle the **Version view**.
 
-<Frame fullWidth>![Dataset Version View](/images/docs/dataset-versioned-items.png)</Frame>
 
-</Tab>
-</LangTabs>
-
+![Dataset Version View](/images/docs/dataset-versioned-items.png)
 ### Run experiments on versioned datasets
 
 You can run experiments directly on versioned datasets. This is useful for comparing how your model performs against different dataset versions or reproducing experiment results with the exact dataset state from a specific point in time.
-
-<LangTabs items={["Python SDK", "JS/TS SDK", "Langfuse UI"]}>
-<Tab>
 
 ```python
 from datetime import timedelta
@@ -345,12 +254,8 @@ result = versioned_dataset.run_experiment(
 )
 ```
 
-</Tab>
-<Tab>
 
 ```typescript
-import { LangfuseClient } from "@langfuse/client";
-
 const langfuse = new LangfuseClient();
 
 // Capture the version timestamp
@@ -372,8 +277,6 @@ const result = await versionedDataset.runExperiment({
 });
 ```
 
-</Tab>
-<Tab>
 
 In the UI, you can select a specific dataset version when running experiments:
 
@@ -384,11 +287,8 @@ In the UI, you can select a specific dataset version when running experiments:
 5. The experiment will run against the dataset state at that specific point in time
 6. If no version is selected, the experiment runs against the latest version
 
-<Frame fullWidth>![Dataset Version Selection](/images/docs/dataset-versioned-items.png)</Frame>
 
-</Tab>
-</LangTabs>
-
+![Dataset Version Selection](/images/docs/dataset-versioned-items.png)
 This approach ensures reproducibility by allowing you to:
 - Re-run experiments on historical dataset versions even after items are updated or deleted
 - Compare model performance before and after dataset changes
@@ -400,9 +300,6 @@ This approach ensures reproducibility by allowing you to:
 Optionally add JSON Schema validation to your datasets to ensure all dataset items conform to a defined structure. This helps maintain data quality, catch errors early, and ensure consistency across your team.
 
 You can define JSON schemas for `input` and/or `expectedOutput` fields when creating or updating a dataset. Once set, all dataset items are automatically validated against these schemas. Valid items are accepted, invalid items are rejected with detailed error messages showing the validation issue.
-
-<LangTabs items={["Python SDK", "JS/TS SDK", "Langfuse UI"]}>
-<Tab>
 
 ```python
 langfuse.create_dataset(
@@ -432,8 +329,6 @@ langfuse.create_dataset(
 )
 ```
 
-</Tab>
-<Tab>
 
 ```typescript
 await langfuse.createDataset({
@@ -463,13 +358,9 @@ await langfuse.createDataset({
 });
 ```
 
-</Tab>
-<Tab>
 
 Navigate to **Datasets** → **New Dataset** or edit an existing dataset → Expand **Schema Validation** section → Add your JSON schemas → Click **Save**.
 
-</Tab>
-</LangTabs>
 
 ## Create synthetic datasets
 
@@ -477,22 +368,12 @@ Frequently, you want to create synthetic examples to test your application to bo
 
 To get started have a look at this cookbook for examples on how to generate synthetic datasets:
 
-import { FileCode } from "lucide-react";
-
-<Cards num={1}>
-  <Card
-    title="Notebook: Synthetic Datasets"
-    href="/docs/evaluation/features/synthetic-datasets"
-    icon={<FileCode />}
+}
   />
-</Cards>
 
 ## Create items from production data
 
 A common workflow is to select production traces where the application did not perform as expected. Then you let an expert add the expected output to test new versions of your application on the same data.
-
-<LangTabs items={["Python SDK", "JS/TS SDK", "Langfuse UI"]}>
-<Tab>
 
 ```python
 langfuse.create_dataset_item(
@@ -506,12 +387,8 @@ langfuse.create_dataset_item(
 )
 ```
 
-</Tab>
-<Tab>
 
 ```ts
-import { LangfuseClient } from "@langfuse/client";
-
 const langfuse = new LangfuseClient();
 
 await langfuse.api.datasetItems.create({
@@ -525,18 +402,8 @@ await langfuse.api.datasetItems.create({
 });
 ```
 
-</Tab>
-<Tab>
+
 In the UI, use `+ Add to dataset` on any observation (span, event, generation) of a production trace.
-
-<Video
-  src="https://static.langfuse.com/docs-videos/datasets-add-from-trace.mp4"
-  aspectRatio={16 / 9}
-  gifStyle
-/>
-
-</Tab>
-</LangTabs>
 
 ## Batch add observations to datasets
 
@@ -558,10 +425,6 @@ Batch operations run in the background with support for partial success. If some
 
 You can edit or archive dataset items. Archiving items will remove them from future experiment runs.
 
-<LangTabs items={["Python SDK", "JS/TS SDK", "Langfuse UI"]}>
-
-<Tab>
-
 You can upsert items by providing the `id` of the item you want to update.
 
 ```python
@@ -572,14 +435,10 @@ langfuse.create_dataset_item(
 )
 ```
 
-</Tab>
-<Tab>
 
 You can upsert items by providing the `id` of the item you want to update.
 
 ```ts
-import { LangfuseClient } from "@langfuse/client";
-
 const langfuse = new LangfuseClient();
 
 await langfuse.api.datasetItems.create({
@@ -589,35 +448,24 @@ await langfuse.api.datasetItems.create({
 });
 ```
 
-</Tab>
-<Tab>
+
 In the UI, you can edit the item by clicking on the item id. To archive or delete the item, click on the dots next to the item and select `Archive` or `Delete`.
 
-<Frame fullWidth>![Delete items](/images/docs/dataset-delete-items.png)</Frame>
 
-</Tab>
-</LangTabs>
-
+![Delete items](/images/docs/dataset-delete-items.png)
 ## Dataset runs
 
 Once you created a dataset, you can test and evaluate your application based on it.
 
-import { Table, WandSparkles, CodeXml, Database } from "lucide-react";
-
-<Cards num={1}>
-
-  <Card
-    icon={<WandSparkles size="24" />}
+}
     title="Experiments via SDK"
     href="/docs/evaluation/experiments/experiments-via-sdk"
     arrow
   />
-  <Card
-    icon={<CodeXml size="24" />}
+  }
     title="Experiments via UI"
     href="/docs/evaluation/experiments/experiments-via-ui"
     arrow
   />
-</Cards>
 
 Learn more about the [Experiments data model](/docs/evaluation/experiments/data-model).

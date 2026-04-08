@@ -12,12 +12,11 @@ The Langfuse [Model Context Protocol](https://modelcontextprotocol.io) (MCP) Ser
 
 The Langfuse MCP Server provides five tools for comprehensive prompt management in Claude Code and other MCP clients:
 
-<Frame className="max-w-4xl">
-  <img
+
+<img
     src="/images/changelog/2025-11-20-native-mcp-server.png"
     alt="Langfuse MCP Server tools in Claude Code showing 5 tools: getPrompt, listPrompts, createTextPrompt, createChatPrompt, and updatePromptLabels"
   />
-</Frame>
 
 ## Features
 

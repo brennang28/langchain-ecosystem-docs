@@ -4,19 +4,9 @@ sidebarTitle: Prompt Composability
 description: Reference other prompts in your prompts using a simple tag format.
 ---
 
-import { FaqPreview } from "@/components/faq/FaqPreview";
-
 # Prompt Composability
 
 As you create more prompts, you will often find yourself using the same snippets of text or instructions in multiple prompts. To avoid duplication, you can compose prompts by referencing other prompts.
-
-<Video
-  src="/images/docs/prompt-composition.mp4"
-  aspectRatio={1030 / 712}
-  gifStyle
-  className="rounded-lg max-w-lg"
-  title="Prompt Composability"
-/>
 
 ## Why Use Composed Prompts?
 
@@ -26,20 +16,7 @@ As you create more prompts, you will often find yourself using the same snippets
 
 ## Get started
 
-<LangTabs items={["Langfuse UI", "SDKs/API"]}>
-
-<Tab>
 When creating the prompt via the Langfuse UI, you can use the `Add prompt reference` button to insert a prompt reference into your prompt.
-
-<Video
-  src="https://static.langfuse.com/docs-videos/prompt-composability.mp4"
-  aspectRatio={16 / 9}
-  gifStyle
-/>
-
-</Tab>
-
-<Tab>
 
 You can reference other **text** prompts in your prompts the following format:
 
@@ -53,11 +30,6 @@ You can also use a label instead of a specific version for dynamic resolution:
 @@@langfusePrompt:name=PromptName|label=production@@@
 ```
 
-</Tab>
-
-</LangTabs>
-
-
 
 Not exactly what you need? Consider these similar features:
 - [Variables](/docs/prompt-management/features/variables) for inserting dynamic text into prompts
@@ -65,4 +37,3 @@ Not exactly what you need? Consider these similar features:
 
 Or related FAQ pages:
 
-<FaqPreview tags={["prompt-management"]} />

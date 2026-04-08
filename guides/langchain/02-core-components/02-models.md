@@ -8,10 +8,10 @@
 
 In addition to text generation, many models support:
 
-* <Icon icon="hammer" size={16} /> [Tool calling](#tool-calling) - calling external tools (like databases queries or API calls) and use results in their responses.
-* <Icon icon="layout-grid" size={16} /> [Structured output](#structured-output) - where the model's response is constrained to follow a defined format.
-* <Icon icon="photo" size={16} /> [Multimodality](#multimodal) - process and return data other than text, such as images, audio, and video.
-* <Icon icon="brain" size={16} /> [Reasoning](#reasoning) - models perform multi-step reasoning to arrive at a conclusion.
+* [Tool calling](#tool-calling) - calling external tools (like databases queries or API calls) and use results in their responses.
+* [Structured output](#structured-output) - where the model's response is constrained to follow a defined format.
+* [Multimodality](#multimodal) - process and return data other than text, such as images, audio, and video.
+* [Reasoning](#reasoning) - models perform multi-step reasoning to arrive at a conclusion.
 
 Models are the reasoning engine of [agents](/oss/python/langchain/agents). They drive the agent's decision-making process, determining which tools to call, how to interpret results, and when to provide a final answer.
 
@@ -19,9 +19,11 @@ The quality and capabilities of the model you choose directly impact your agent'
 
 LangChain's standard model interfaces give you access to many different provider integrations, which makes it easy to experiment with and switch between models to find the best fit for your use case.
 
-<Info>
-  For provider-specific integration information and capabilities, see the provider's [chat model page](/oss/python/integrations/chat).
-</Info>
+
+> ℹ️ **Info**
+>
+> For provider-specific integration information and capabilities, see the provider's [chat model page](/oss/python/integrations/chat).
+
 
 ## Basic usage
 
@@ -36,16 +38,16 @@ The same model interface works in both contexts, which gives you the flexibility
 
 The easiest way to get started with a standalone model in LangChain is to use [`init_chat_model`](https://reference.langchain.com/python/langchain/chat_models/base/init_chat_model) to initialize one from a chat model provider of your choice (examples below):
 
-<Tabs>
-  <Tab title="OpenAI">
-    👉 Read the [OpenAI chat model integration docs](/oss/python/integrations/chat/openai/)
+**OpenAI:**
+
+👉 Read the [OpenAI chat model integration docs](/oss/python/integrations/chat/openai/)
 
     ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain[openai]"
     ```
 
-    <CodeGroup>
-      ```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       import os
       from langchain.chat_models import init_chat_model
 
@@ -62,18 +64,17 @@ The easiest way to get started with a standalone model in LangChain is to use [`
 
       model = ChatOpenAI(model="gpt-5.2")
       ```
-    </CodeGroup>
-  </Tab>
+    
+**Anthropic:**
 
-  <Tab title="Anthropic">
-    👉 Read the [Anthropic chat model integration docs](/oss/python/integrations/chat/anthropic/)
+👉 Read the [Anthropic chat model integration docs](/oss/python/integrations/chat/anthropic/)
 
     ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain[anthropic]"
     ```
 
-    <CodeGroup>
-      ```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       import os
       from langchain.chat_models import init_chat_model
 
@@ -90,18 +91,17 @@ The easiest way to get started with a standalone model in LangChain is to use [`
 
       model = ChatAnthropic(model="claude-sonnet-4-6")
       ```
-    </CodeGroup>
-  </Tab>
+    
+**Azure:**
 
-  <Tab title="Azure">
-    👉 Read the [Azure chat model integration docs](/oss/python/integrations/chat/azure_chat_openai/)
+👉 Read the [Azure chat model integration docs](/oss/python/integrations/chat/azure_chat_openai/)
 
     ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain[openai]"
     ```
 
-    <CodeGroup>
-      ```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       import os
       from langchain.chat_models import init_chat_model
 
@@ -128,18 +128,17 @@ The easiest way to get started with a standalone model in LangChain is to use [`
           azure_deployment=os.environ["AZURE_OPENAI_DEPLOYMENT_NAME"]
       )
       ```
-    </CodeGroup>
-  </Tab>
+    
+**Google Gemini:**
 
-  <Tab title="Google Gemini">
-    👉 Read the [Google GenAI chat model integration docs](/oss/python/integrations/chat/google_generative_ai/)
+👉 Read the [Google GenAI chat model integration docs](/oss/python/integrations/chat/google_generative_ai/)
 
     ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain[google-genai]"
     ```
 
-    <CodeGroup>
-      ```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       import os
       from langchain.chat_models import init_chat_model
 
@@ -156,18 +155,17 @@ The easiest way to get started with a standalone model in LangChain is to use [`
 
       model = ChatGoogleGenerativeAI(model="gemini-2.5-flash-lite")
       ```
-    </CodeGroup>
-  </Tab>
+    
+**AWS Bedrock:**
 
-  <Tab title="AWS Bedrock">
-    👉 Read the [AWS Bedrock chat model integration docs](/oss/python/integrations/chat/bedrock/)
+👉 Read the [AWS Bedrock chat model integration docs](/oss/python/integrations/chat/bedrock/)
 
     ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain[aws]"
     ```
 
-    <CodeGroup>
-      ```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       from langchain.chat_models import init_chat_model
 
       # Follow the steps here to configure your credentials:
@@ -184,18 +182,17 @@ The easiest way to get started with a standalone model in LangChain is to use [`
 
       model = ChatBedrock(model="anthropic.claude-3-5-sonnet-20240620-v1:0")
       ```
-    </CodeGroup>
-  </Tab>
+    
+**HuggingFace:**
 
-  <Tab title="HuggingFace">
-    👉 Read the [HuggingFace chat model integration docs](/oss/python/integrations/chat/huggingface/)
+👉 Read the [HuggingFace chat model integration docs](/oss/python/integrations/chat/huggingface/)
 
     ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain[huggingface]"
     ```
 
-    <CodeGroup>
-      ```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       import os
       from langchain.chat_models import init_chat_model
 
@@ -222,18 +219,17 @@ The easiest way to get started with a standalone model in LangChain is to use [`
       )
       model = ChatHuggingFace(llm=llm)
       ```
-    </CodeGroup>
-  </Tab>
+    
+**OpenRouter:**
 
-  <Tab title="OpenRouter">
-    👉 Read the [OpenRouter chat model integration docs](/oss/python/integrations/chat/openrouter/)
+👉 Read the [OpenRouter chat model integration docs](/oss/python/integrations/chat/openrouter/)
 
     ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain-openrouter"
     ```
 
-    <CodeGroup>
-      ```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    
+```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       import os
       from langchain.chat_models import init_chat_model
 
@@ -253,10 +249,7 @@ The easiest way to get started with a standalone model in LangChain is to use [`
 
       model = ChatOpenRouter(model="auto")
       ```
-    </CodeGroup>
-  </Tab>
-</Tabs>
-
+    
 ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 response = model.invoke("Why do parrots talk?")
 ```
@@ -269,51 +262,42 @@ LangChain supports all major model providers, including OpenAI, Anthropic, Googl
 
 ### Key methods
 
-<Card title="Invoke" href="#invoke" icon="send" arrow="true" horizontal>
-  The model takes messages as input and outputs messages after generating a complete response.
-</Card>
+The model takes messages as input and outputs messages after generating a complete response.
 
-<Card title="Stream" href="#stream" icon="broadcast" arrow="true" horizontal>
-  Invoke the model, but stream the output as it is generated in real-time.
-</Card>
+Invoke the model, but stream the output as it is generated in real-time.
 
-<Card title="Batch" href="#batch" icon="grip-vertical" arrow="true" horizontal>
-  Send multiple requests to a model in a batch for more efficient processing.
-</Card>
+Send multiple requests to a model in a batch for more efficient processing.
 
-<Info>
-  In addition to chat models, LangChain provides support for other adjacent technologies, such as embedding models and vector stores. See the [integrations page](/oss/python/integrations/providers/overview) for details.
-</Info>
+
+> ℹ️ **Info**
+>
+> In addition to chat models, LangChain provides support for other adjacent technologies, such as embedding models and vector stores. See the [integrations page](/oss/python/integrations/providers/overview) for details.
+
 
 ## Parameters
 
 A chat model takes parameters that can be used to configure its behavior. The full set of supported parameters varies by model and provider, but standard ones include:
 
-<ParamField body="model" type="string" required>
-  The name or identifier of the specific model you want to use with a provider. You can also specify both the model and its provider in a single argument using the '{model_provider}:{model}' format, for example, 'openai:o1'.
-</ParamField>
 
-<ParamField body="api_key" type="string">
-  The key required for authenticating with the model's provider. This is usually issued when you sign up for access to the model. Often accessed by setting an <Tooltip tip="A variable whose value is set outside the program, typically through functionality built into the operating system or microservice.">environment variable</Tooltip>.
-</ParamField>
+- **`param`** (`string`): The name or identifier of the specific model you want to use with a provider. You can also specify both the model and its provider in a single argument using the '{model_provider}:{model}' format, for example, 'openai:o1'.
 
-<ParamField body="temperature" type="number">
-  Controls the randomness of the model's output. A higher number makes responses more creative; lower ones make them more deterministic.
-</ParamField>
 
-<ParamField body="max_tokens" type="number">
-  Limits the total number of <Tooltip tip="The basic unit that a model reads and generates. Providers may define them differently, but in general, they can represent a whole or part of word.">tokens</Tooltip> in the response, effectively controlling how long the output can be.
-</ParamField>
+- **`param`** (`string`): The key required for authenticating with the model's provider. This is usually issued when you sign up for access to the model. Often accessed by setting an environment variable.
 
-<ParamField body="timeout" type="number">
-  The maximum time (in seconds) to wait for a response from the model before canceling the request.
-</ParamField>
 
-<ParamField body="max_retries" type="number" default="6">
-  The maximum number of attempts the system will make to resend a request if it fails due to issues like network timeouts or rate limits. Retries use exponential backoff with jitter. Network errors, rate limits (429), and server errors (5xx) are retried automatically. Client errors such as 401 (unauthorized) or 404 are not retried. For long-running [agent](/oss/python/deepagents/overview) tasks on unreliable networks, consider increasing this to 10–15.
-</ParamField>
+- **`param`** (`number`): Controls the randomness of the model's output. A higher number makes responses more creative; lower ones make them more deterministic.
 
-Using [`init_chat_model`](https://reference.langchain.com/python/langchain/chat_models/base/init_chat_model), pass these parameters as inline <Tooltip tip="Arbitrary keyword arguments" cta="Learn more" href="https://www.w3schools.com/python/python_args_kwargs.asp">`**kwargs`</Tooltip>:
+
+- **`param`** (`number`): Limits the total number of tokensin the response, effectively controlling how long the output can be.
+
+
+- **`param`** (`number`): The maximum time (in seconds) to wait for a response from the model before canceling the request.
+
+
+- **`param`** (`number`): The maximum number of attempts the system will make to resend a request if it fails due to issues like network timeouts or rate limits. Retries use exponential backoff with jitter. Network errors, rate limits (429), and server errors (5xx) are retried automatically. Client errors such as 401 (unauthorized) or 404 are not retried. For long-running [agent](/oss/python/deepagents/overview) tasks on unreliable networks, consider increasing this to 10–15.
+
+
+Using [`init_chat_model`](https://reference.langchain.com/python/langchain/chat_models/base/init_chat_model), pass these parameters as inline `**kwargs`:
 
 ```python Initialize using model parameters theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 model = init_chat_model(
@@ -326,13 +310,15 @@ model = init_chat_model(
 )
 ```
 
-<Info>
-  Each chat model integration may have additional params used to control provider-specific functionality.
 
-  For example, [`ChatOpenAI`](https://reference.langchain.com/python/langchain-openai/chat_models/base/ChatOpenAI) has `use_responses_api` to dictate whether to use the OpenAI Responses or Completions API.
+> ℹ️ **Info**
+>
+> Each chat model integration may have additional params used to control provider-specific functionality.
+> 
+>   For example, [`ChatOpenAI`](https://reference.langchain.com/python/langchain-openai/chat_models/base/ChatOpenAI) has `use_responses_api` to dictate whether to use the OpenAI Responses or Completions API.
+> 
+>   To find all the parameters supported by a given chat model, head to the [chat model integrations](/oss/python/integrations/chat) page.
 
-  To find all the parameters supported by a given chat model, head to the [chat model integrations](/oss/python/integrations/chat) page.
-</Info>
 
 ***
 
@@ -379,18 +365,20 @@ response = model.invoke(conversation)
 print(response)  # AIMessage("J'adore créer des applications.")
 ```
 
-<Info>
-  If the return type of your invocation is a string, ensure that you are using a chat model as opposed to a LLM. Legacy, text-completion LLMs return strings directly. LangChain chat models are prefixed with "Chat", e.g., [`ChatOpenAI`](https://reference.langchain.com/python/langchain-openai/chat_models/base/ChatOpenAI)(/oss/integrations/chat/openai).
-</Info>
+
+> ℹ️ **Info**
+>
+> If the return type of your invocation is a string, ensure that you are using a chat model as opposed to a LLM. Legacy, text-completion LLMs return strings directly. LangChain chat models are prefixed with "Chat", e.g., [`ChatOpenAI`](https://reference.langchain.com/python/langchain-openai/chat_models/base/ChatOpenAI)(/oss/integrations/chat/openai).
+
 
 ### Stream
 
 Most models can stream their output content while it is being generated. By displaying output progressively, streaming significantly improves user experience, particularly for longer responses.
 
-Calling [`stream()`](https://reference.langchain.com/python/langchain-core/language_models/chat_models/BaseChatModel/stream) returns an <Tooltip tip="An object that progressively provides access to each item of a collection, in order.">iterator</Tooltip> that yields output chunks as they are produced. You can use a loop to process each chunk in real-time:
+Calling [`stream()`](https://reference.langchain.com/python/langchain-core/language_models/chat_models/BaseChatModel/stream) returns an iteratorthat yields output chunks as they are produced. You can use a loop to process each chunk in real-time:
 
-<CodeGroup>
-  ```python Basic text streaming theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```python Basic text streaming theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   for chunk in model.stream("Why do parrots have colorful feathers?"):
       print(chunk.text, end="|", flush=True)
   ```
@@ -407,7 +395,6 @@ Calling [`stream()`](https://reference.langchain.com/python/langchain-core/langu
           else:
               ...
   ```
-</CodeGroup>
 
 As opposed to [`invoke()`](#invoke), which returns a single [`AIMessage`](https://reference.langchain.com/python/langchain-core/messages/ai/AIMessage) after the model has finished generating its full response, `stream()` returns multiple [`AIMessageChunk`](https://reference.langchain.com/python/langchain-core/messages/ai/AIMessageChunk) objects, each containing a portion of the output text. Importantly, each chunk in a stream is designed to be gathered into a full message via summation:
 
@@ -430,12 +417,16 @@ print(full.content_blocks)
 
 The resulting message can be treated the same as a message that was generated with [`invoke()`](#invoke)—for example, it can be aggregated into a message history and passed back to the model as conversational context.
 
-<Warning>
-  Streaming only works if all steps in the program know how to process a stream of chunks. For instance, an application that isn't streaming-capable would be one that needs to store the entire output in memory before it can be processed.
-</Warning>
 
-<Accordion title="Advanced streaming topics">
-  <Accordion title="Streaming events">
+> ⚠️ **Warning**
+>
+> Streaming only works if all steps in the program know how to process a stream of chunks. For instance, an application that isn't streaming-capable would be one that needs to store the entire output in memory before it can be processed.
+
+
+<details>
+<summary>Advanced streaming topics</summary>
+
+<Accordion title="Streaming events">
     LangChain chat models can also stream semantic events using `astream_events()`.
 
     This simplifies filtering based on event types and other metadata, and will aggregate the full message in the background. See below for an example.
@@ -468,13 +459,19 @@ The resulting message can be treated the same as a message that was generated wi
     Full message: Hi there! How can I help today?
     ```
 
-    <Tip>
-      See the [`astream_events()`](https://reference.langchain.com/python/langchain_core/language_models/#langchain_core.language_models.chat_models.BaseChatModel.astream_events) reference for event types and other details.
-    </Tip>
-  </Accordion>
+    
+> 💡 **Tip**
+>
+> See the [`astream_events()`](https://reference.langchain.com/python/langchain_core/language_models/#langchain_core.language_models.chat_models.BaseChatModel.astream_events) reference for event types and other details.
 
-  <Accordion title="&#x22;Auto-streaming&#x22; chat models">
-    LangChain simplifies streaming from chat models by automatically enabling streaming mode in certain cases, even when you're not explicitly calling the streaming methods. This is particularly useful when you use the non-streaming invoke method but still want to stream the entire application, including intermediate results from the chat model.
+</details>
+
+
+  
+<details>
+<summary>&#x22;Auto-streaming&#x22; chat models</summary>
+
+LangChain simplifies streaming from chat models by automatically enabling streaming mode in certain cases, even when you're not explicitly calling the streaming methods. This is particularly useful when you use the non-streaming invoke method but still want to stream the entire application, including intermediate results from the chat model.
 
     In [LangGraph agents](/oss/python/langchain/agents), for example, you can call `model.invoke()` within nodes, but LangChain will automatically delegate to streaming if running in a streaming mode.
 
@@ -483,7 +480,9 @@ The resulting message can be treated the same as a message that was generated wi
     When you `invoke()` a chat model, LangChain will automatically switch to an internal streaming mode if it detects that you are trying to stream the overall application. The result of the invocation will be the same as far as the code that was using invoke is concerned; however, while the chat model is being streamed, LangChain will take care of invoking [`on_llm_new_token`](https://reference.langchain.com/python/langchain-core/callbacks/base/AsyncCallbackHandler/on_llm_new_token) events in LangChain's callback system.
 
     Callback events allow LangGraph `stream()` and `astream_events()` to surface the chat model's output in real-time.
-  </Accordion>
+
+</details>
+
 </Accordion>
 
 ### Batch
@@ -500,11 +499,13 @@ for response in responses:
     print(response)
 ```
 
-<Note>
-  This section describes a chat model method [`batch()`](https://reference.langchain.com/python/langchain_core/language_models/#langchain_core.language_models.chat_models.BaseChatModel.batch), which parallelizes model calls client-side.
 
-  It is **distinct** from batch APIs supported by inference providers, such as [OpenAI](https://platform.openai.com/docs/guides/batch) or [Anthropic](https://platform.claude.com/docs/en/build-with-claude/batch-processing#message-batches-api).
-</Note>
+> ℹ️ **Note**
+>
+> This section describes a chat model method [`batch()`](https://reference.langchain.com/python/langchain_core/language_models/#langchain_core.language_models.chat_models.BaseChatModel.batch), which parallelizes model calls client-side.
+> 
+>   It is **distinct** from batch APIs supported by inference providers, such as [OpenAI](https://platform.openai.com/docs/guides/batch) or [Anthropic](https://platform.claude.com/docs/en/build-with-claude/batch-processing#message-batches-api).
+
 
 By default, [`batch()`](https://reference.langchain.com/python/langchain_core/language_models/#langchain_core.language_models.chat_models.BaseChatModel.batch) will only return the final output for the entire batch. If you want to receive the output for each individual input as it finishes generating, you can stream results with [`batch_as_completed()`](https://reference.langchain.com/python/langchain_core/language_models/#langchain_core.language_models.chat_models.BaseChatModel.batch_as_completed):
 
@@ -517,24 +518,27 @@ for response in model.batch_as_completed([
     print(response)
 ```
 
-<Note>
-  When using [`batch_as_completed()`](https://reference.langchain.com/python/langchain_core/language_models/#langchain_core.language_models.chat_models.BaseChatModel.batch_as_completed), results may arrive out of order. Each includes the input index for matching to reconstruct the original order as needed.
-</Note>
 
-<Tip>
-  When processing a large number of inputs using [`batch()`](https://reference.langchain.com/python/langchain_core/language_models/#langchain_core.language_models.chat_models.BaseChatModel.batch) or [`batch_as_completed()`](https://reference.langchain.com/python/langchain_core/language_models/#langchain_core.language_models.chat_models.BaseChatModel.batch_as_completed), you may want to control the maximum number of parallel calls. This can be done by setting the [`max_concurrency`](https://reference.langchain.com/python/langchain-core/runnables/config/RunnableConfig) attribute in the [`RunnableConfig`](https://reference.langchain.com/python/langchain-core/runnables/config/RunnableConfig) dictionary.
+> ℹ️ **Note**
+>
+> When using [`batch_as_completed()`](https://reference.langchain.com/python/langchain_core/language_models/#langchain_core.language_models.chat_models.BaseChatModel.batch_as_completed), results may arrive out of order. Each includes the input index for matching to reconstruct the original order as needed.
 
-  ```python Batch with max concurrency theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-  model.batch(
-      list_of_inputs,
-      config={
-          'max_concurrency': 5,  # Limit to 5 parallel calls
-      }
-  )
-  ```
 
-  See the [`RunnableConfig`](https://reference.langchain.com/python/langchain-core/runnables/config/RunnableConfig) reference for a full list of supported attributes.
-</Tip>
+> 💡 **Tip**
+>
+> When processing a large number of inputs using [`batch()`](https://reference.langchain.com/python/langchain_core/language_models/#langchain_core.language_models.chat_models.BaseChatModel.batch) or [`batch_as_completed()`](https://reference.langchain.com/python/langchain_core/language_models/#langchain_core.language_models.chat_models.BaseChatModel.batch_as_completed), you may want to control the maximum number of parallel calls. This can be done by setting the [`max_concurrency`](https://reference.langchain.com/python/langchain-core/runnables/config/RunnableConfig) attribute in the [`RunnableConfig`](https://reference.langchain.com/python/langchain-core/runnables/config/RunnableConfig) dictionary.
+> 
+>   ```python Batch with max concurrency theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+>   model.batch(
+>       list_of_inputs,
+>       config={
+>           'max_concurrency': 5,  # Limit to 5 parallel calls
+>       }
+>   )
+>   ```
+> 
+>   See the [`RunnableConfig`](https://reference.langchain.com/python/langchain-core/runnables/config/RunnableConfig) reference for a full list of supported attributes.
+
 
 For more details on batching, see the [reference](https://reference.langchain.com/python/langchain_core/language_models/#langchain_core.language_models.chat_models.BaseChatModel.batch).
 
@@ -545,11 +549,13 @@ For more details on batching, see the [reference](https://reference.langchain.co
 Models can request to call tools that perform tasks such as fetching data from a database, searching the web, or running code. Tools are pairings of:
 
 1. A schema, including the name of the tool, a description, and/or argument definitions (often a JSON schema)
-2. A function or <Tooltip tip="A method that can suspend execution and resume at a later time">coroutine</Tooltip> to execute.
+2. A function or coroutineto execute.
 
-<Note>
-  You may hear the term "function calling". We use this interchangeably with "tool calling".
-</Note>
+
+> ℹ️ **Note**
+>
+> You may hear the term "function calling". We use this interchangeably with "tool calling".
+
 
 Here's the basic tool calling flow between a user and a model:
 
@@ -578,11 +584,13 @@ sequenceDiagram
 
 To make tools that you have defined available for use by a model, you must bind them using [`bind_tools`](https://reference.langchain.com/python/langchain-core/language_models/chat_models/BaseChatModel/bind_tools). In subsequent invocations, the model can choose to call any of the bound tools as needed.
 
-Some model providers offer <Tooltip tip="Tools that are executed server-side, such as web search and code interpreters">built-in tools</Tooltip> that can be enabled via model or invocation parameters (e.g. [`ChatOpenAI`](/oss/python/integrations/chat/openai), [`ChatAnthropic`](/oss/python/integrations/chat/anthropic)). Check the respective [provider reference](/oss/python/integrations/providers/overview) for details.
+Some model providers offer built-in toolsthat can be enabled via model or invocation parameters (e.g. [`ChatOpenAI`](/oss/python/integrations/chat/openai), [`ChatAnthropic`](/oss/python/integrations/chat/anthropic)). Check the respective [provider reference](/oss/python/integrations/providers/overview) for details.
 
-<Tip>
-  See the [tools guide](/oss/python/langchain/tools) for details and other options for creating tools.
-</Tip>
+
+> 💡 **Tip**
+>
+> See the [tools guide](/oss/python/langchain/tools) for details and other options for creating tools.
+
 
 ```python Binding user tools theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 from langchain.tools import tool
@@ -606,9 +614,11 @@ When binding user-defined tools, the model's response includes a **request** to 
 
 Below, we show some common ways you can use tool calling.
 
-<AccordionGroup>
-  <Accordion title="Tool execution loop" icon="refresh">
-    When a model returns tool calls, you need to execute the tools and pass the results back to the model. This creates a conversation loop where the model can use tool results to generate its final response. LangChain includes [agent](/oss/python/langchain/agents) abstractions that handle this orchestration for you.
+
+<details>
+<summary>Tool execution loop</summary>
+
+When a model returns tool calls, you need to execute the tools and pass the results back to the model. This creates a conversation loop where the model can use tool results to generate its final response. LangChain includes [agent](/oss/python/langchain/agents) abstractions that handle this orchestration for you.
 
     Here's a simple example of how to do this:
 
@@ -634,24 +644,33 @@ Below, we show some common ways you can use tool calling.
     ```
 
     Each [`ToolMessage`](https://reference.langchain.com/python/langchain-core/messages/tool/ToolMessage) returned by the tool includes a `tool_call_id` that matches the original tool call, helping the model correlate results with requests.
-  </Accordion>
 
-  <Accordion title="Forcing tool calls" icon="asterisk">
-    By default, the model has the freedom to choose which bound tool to use based on the user's input. However, you might want to force choosing a tool, ensuring the model uses either a particular tool or **any** tool from a given list:
+</details>
 
-    <CodeGroup>
-      ```python Force use of any tool theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+  
+<details>
+<summary>Forcing tool calls</summary>
+
+By default, the model has the freedom to choose which bound tool to use based on the user's input. However, you might want to force choosing a tool, ensuring the model uses either a particular tool or **any** tool from a given list:
+
+    
+```python Force use of any tool theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       model_with_tools = model.bind_tools([tool_1], tool_choice="any")
       ```
 
       ```python Force use of specific tools theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       model_with_tools = model.bind_tools([tool_1], tool_choice="tool_1")
       ```
-    </CodeGroup>
-  </Accordion>
 
-  <Accordion title="Parallel tool calls" icon="stack-2">
-    Many models support calling multiple tools in parallel when appropriate. This allows the model to gather information from different sources simultaneously.
+</details>
+
+
+  
+<details>
+<summary>Parallel tool calls</summary>
+
+Many models support calling multiple tools in parallel when appropriate. This allows the model to gather information from different sources simultaneously.
 
     ```python Parallel tool calls theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     model_with_tools = model.bind_tools([get_weather])
@@ -680,17 +699,23 @@ Below, we show some common ways you can use tool calling.
 
     The model intelligently determines when parallel execution is appropriate based on the independence of the requested operations.
 
-    <Tip>
-      Most models supporting tool calling enable parallel tool calls by default. Some (including [OpenAI](/oss/python/integrations/chat/openai) and [Anthropic](/oss/python/integrations/chat/anthropic)) allow you to disable this feature. To do this, set `parallel_tool_calls=False`:
+    
+> 💡 **Tip**
+>
+> Most models supporting tool calling enable parallel tool calls by default. Some (including [OpenAI](/oss/python/integrations/chat/openai) and [Anthropic](/oss/python/integrations/chat/anthropic)) allow you to disable this feature. To do this, set `parallel_tool_calls=False`:
+> 
+>       ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+>       model.bind_tools([get_weather], parallel_tool_calls=False)
+>       ```
 
-      ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-      model.bind_tools([get_weather], parallel_tool_calls=False)
-      ```
-    </Tip>
-  </Accordion>
+</details>
 
-  <Accordion title="Streaming tool calls" icon="rss">
-    When streaming responses, tool calls are progressively built through [`ToolCallChunk`](https://reference.langchain.com/python/langchain-core/messages/tool/ToolCallChunk). This allows you to see tool calls as they're being generated rather than waiting for the complete response.
+
+  
+<details>
+<summary>Streaming tool calls</summary>
+
+When streaming responses, tool calls are progressively built through [`ToolCallChunk`](https://reference.langchain.com/python/langchain-core/messages/tool/ToolCallChunk). This allows you to see tool calls as they're being generated rather than waiting for the complete response.
 
     ```python Streaming tool calls theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     for chunk in model_with_tools.stream(
@@ -730,8 +755,9 @@ Below, we show some common ways you can use tool calling.
         gathered = chunk if gathered is None else gathered + chunk
         print(gathered.tool_calls)
     ```
-  </Accordion>
-</AccordionGroup>
+
+</details>
+
 
 ***
 
@@ -739,13 +765,15 @@ Below, we show some common ways you can use tool calling.
 
 Models can be requested to provide their response in a format matching a given schema. This is useful for ensuring the output can be easily parsed and used in subsequent processing. LangChain supports multiple schema types and methods for enforcing structured output.
 
-<Tip>
-  To learn about structured output, see [Structured output](/oss/python/langchain/structured-output).
-</Tip>
 
-<Tabs>
-  <Tab title="Pydantic">
-    [Pydantic models](https://docs.pydantic.dev/latest/concepts/models/#basic-model-usage) provide the richest feature set with field validation, descriptions, and nested structures.
+> 💡 **Tip**
+>
+> To learn about structured output, see [Structured output](/oss/python/langchain/structured-output).
+
+
+**Pydantic:**
+
+[Pydantic models](https://docs.pydantic.dev/latest/concepts/models/#basic-model-usage) provide the richest feature set with field validation, descriptions, and nested structures.
 
     ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from pydantic import BaseModel, Field
@@ -761,10 +789,10 @@ Models can be requested to provide their response in a format matching a given s
     response = model_with_structure.invoke("Provide details about the movie Inception")
     print(response)  # Movie(title="Inception", year=2010, director="Christopher Nolan", rating=8.8)
     ```
-  </Tab>
+  
+**TypedDict:**
 
-  <Tab title="TypedDict">
-    Python's `TypedDict` provides a simpler alternative to Pydantic models, ideal when you don't need runtime validation.
+Python's `TypedDict` provides a simpler alternative to Pydantic models, ideal when you don't need runtime validation.
 
     ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from typing_extensions import TypedDict, Annotated
@@ -780,10 +808,10 @@ Models can be requested to provide their response in a format matching a given s
     response = model_with_structure.invoke("Provide details about the movie Inception")
     print(response)  # {'title': 'Inception', 'year': 2010, 'director': 'Christopher Nolan', 'rating': 8.8}
     ```
-  </Tab>
+  
+**JSON Schema:**
 
-  <Tab title="JSON Schema">
-    Provide a [JSON Schema](https://json-schema.org/understanding-json-schema/about) for maximum control and interoperability.
+Provide a [JSON Schema](https://json-schema.org/understanding-json-schema/about) for maximum control and interoperability.
 
     ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     import json
@@ -820,24 +848,26 @@ Models can be requested to provide their response in a format matching a given s
     response = model_with_structure.invoke("Provide details about the movie Inception")
     print(response)  # {'title': 'Inception', 'year': 2010, ...}
     ```
-  </Tab>
-</Tabs>
+  
 
-<Note>
-  **Key considerations for structured output**
+> ℹ️ **Note**
+>
+> **Key considerations for structured output**
+> 
+>   * **Method parameter**: Some providers support different methods for structured output:
+>     * `'json_schema'`: Uses dedicated structured output features offered by the provider.
+>     * `'function_calling'`: Derives structured output by forcing a [tool call](#tool-calling) that follows the given schema.
+>     * `'json_mode'`: A precursor to `'json_schema'` offered by some providers. Generates valid JSON, but the schema must be described in the prompt.
+>   * **Include raw**: Set `include_raw=True` to get both the parsed output and the raw AI message.
+>   * **Validation**: Pydantic models provide automatic validation. `TypedDict` and JSON Schema require manual validation.
+> 
+>   See your [provider's integration page](/oss/python/integrations/providers/overview) for supported methods and configuration options.
 
-  * **Method parameter**: Some providers support different methods for structured output:
-    * `'json_schema'`: Uses dedicated structured output features offered by the provider.
-    * `'function_calling'`: Derives structured output by forcing a [tool call](#tool-calling) that follows the given schema.
-    * `'json_mode'`: A precursor to `'json_schema'` offered by some providers. Generates valid JSON, but the schema must be described in the prompt.
-  * **Include raw**: Set `include_raw=True` to get both the parsed output and the raw AI message.
-  * **Validation**: Pydantic models provide automatic validation. `TypedDict` and JSON Schema require manual validation.
 
-  See your [provider's integration page](/oss/python/integrations/providers/overview) for supported methods and configuration options.
-</Note>
+<details>
+<summary>Example: Message output alongside parsed structure</summary>
 
-<Accordion title="Example: Message output alongside parsed structure">
-  It can be useful to return the raw [`AIMessage`](https://reference.langchain.com/python/langchain-core/messages/ai/AIMessage) object alongside the parsed representation to access response metadata such as [token counts](#token-usage). To do this, set [`include_raw=True`](https://reference.langchain.com/python/langchain-core/language_models/chat_models/BaseChatModel/with_structured_output) when calling [`with_structured_output`](https://reference.langchain.com/python/langchain-core/language_models/chat_models/BaseChatModel/with_structured_output):
+It can be useful to return the raw [`AIMessage`](https://reference.langchain.com/python/langchain-core/messages/ai/AIMessage) object alongside the parsed representation to access response metadata such as [token counts](#token-usage). To do this, set [`include_raw=True`](https://reference.langchain.com/python/langchain-core/language_models/chat_models/BaseChatModel/with_structured_output) when calling [`with_structured_output`](https://reference.langchain.com/python/langchain-core/language_models/chat_models/BaseChatModel/with_structured_output):
 
   ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   from pydantic import BaseModel, Field
@@ -858,13 +888,17 @@ Models can be requested to provide their response in a format matching a given s
   #     "parsing_error": None,
   # }
   ```
-</Accordion>
 
-<Accordion title="Example: Nested structures">
-  Schemas can be nested:
+</details>
 
-  <CodeGroup>
-    ```python Pydantic BaseModel theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+<details>
+<summary>Example: Nested structures</summary>
+
+Schemas can be nested:
+
+  
+```python Pydantic BaseModel theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from pydantic import BaseModel, Field
 
     class Actor(BaseModel):
@@ -897,8 +931,9 @@ Models can be requested to provide their response in a format matching a given s
 
     model_with_structure = model.with_structured_output(MovieDetails)
     ```
-  </CodeGroup>
-</Accordion>
+
+</details>
+
 
 ***
 
@@ -906,9 +941,11 @@ Models can be requested to provide their response in a format matching a given s
 
 ### Model profiles
 
-<Info>
-  Model profiles require `langchain>=1.1`.
-</Info>
+
+> ℹ️ **Info**
+>
+> Model profiles require `langchain>=1.1`.
+
 
 LangChain chat models can expose a dictionary of supported features and capabilities through a `profile` attribute:
 
@@ -934,8 +971,11 @@ Model profile data allow applications to work around model capabilities dynamica
 3. Model inputs can be gated based on supported [modalities](#multimodal) and maximum input tokens.
 4. The [Deep Agents CLI](/oss/python/deepagents/cli) filters the [interactive model switcher](/oss/python/deepagents/cli/providers#which-models-appear-in-the-switcher) to models whose profiles report `tool_calling` support and text I/O, and displays context window sizes and capability flags in the selector detail view.
 
-<Accordion title="Updating or overwriting profile data">
-  Model profile data can be changed if it is missing, stale, or incorrect.
+
+<details>
+<summary>Updating or overwriting profile data</summary>
+
+Model profile data can be changed if it is missing, stale, or incorrect.
 
   **Option 1 (quick fix)**
 
@@ -987,27 +1027,32 @@ Model profile data allow applications to work around model capabilities dynamica
   ```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   uv run --with langchain-model-profiles --provider anthropic --data-dir langchain_anthropic/data
   ```
-</Accordion>
 
-<Warning>
-  Model profiles are a beta feature. The format of a profile is subject to change.
-</Warning>
+</details>
+
+
+> ⚠️ **Warning**
+>
+> Model profiles are a beta feature. The format of a profile is subject to change.
+
 
 ### Multimodal
 
 Certain models can process and return non-textual data such as images, audio, and video. You can pass non-textual data to a model by providing [content blocks](/oss/python/langchain/messages#message-content).
 
-<Tip>
-  All LangChain chat models with underlying multimodal capabilities support:
 
-  1. Data in the cross-provider standard format (see [our messages guide](/oss/python/langchain/messages))
-  2. OpenAI [chat completions](https://platform.openai.com/docs/api-reference/chat) format
-  3. Any format that is native to that specific provider (e.g., Anthropic models accept Anthropic native format)
-</Tip>
+> 💡 **Tip**
+>
+> All LangChain chat models with underlying multimodal capabilities support:
+> 
+>   1. Data in the cross-provider standard format (see [our messages guide](/oss/python/langchain/messages))
+>   2. OpenAI [chat completions](https://platform.openai.com/docs/api-reference/chat) format
+>   3. Any format that is native to that specific provider (e.g., Anthropic models accept Anthropic native format)
+
 
 See the [multimodal section](/oss/python/langchain/messages#multimodal) of the messages guide for details.
 
-<Tooltip tip="Not all LLMs are made equally!" cta="See reference" href="https://models.dev/">Some models</Tooltip> can return multimodal data as part of their response. If invoked to do so, the resulting [`AIMessage`](https://reference.langchain.com/python/langchain-core/messages/ai/AIMessage) will have content blocks with multimodal types.
+Some modelscan return multimodal data as part of their response. If invoked to do so, the resulting [`AIMessage`](https://reference.langchain.com/python/langchain-core/messages/ai/AIMessage) will have content blocks with multimodal types.
 
 ```python Multimodal output theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 response = model.invoke("Create a picture of a cat")
@@ -1026,8 +1071,8 @@ Many models are capable of performing multi-step reasoning to arrive at a conclu
 
 **If supported by the underlying model,** you can surface this reasoning process to better understand how the model arrived at its final answer.
 
-<CodeGroup>
-  ```python Stream reasoning output theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```python Stream reasoning output theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   for chunk in model.stream("Why do parrots have colorful feathers?"):
       reasoning_steps = [r for r in chunk.content_blocks if r["type"] == "reasoning"]
       print(reasoning_steps if reasoning_steps else chunk.text)
@@ -1038,7 +1083,6 @@ Many models are capable of performing multi-step reasoning to arrive at a conclu
   reasoning_steps = [b for b in response.content_blocks if b["type"] == "reasoning"]
   print(" ".join(step["reasoning"] for step in reasoning_steps))
   ```
-</CodeGroup>
 
 Depending on the model, you can sometimes specify the level of effort it should put into reasoning. Similarly, you can request that the model turn off reasoning entirely. This may take the form of categorical "tiers" of reasoning (e.g., `'low'` or `'high'`) or integer token budgets.
 
@@ -1061,9 +1105,11 @@ Many providers offer prompt caching features to reduce latency and cost on repea
   * [Gemini](https://reference.langchain.com/python/integrations/langchain_google_genai/).
   * [AWS Bedrock](/oss/python/integrations/chat/bedrock#prompt-caching)
 
-<Warning>
-  Prompt caching is often only engaged above a minimum input token threshold. See [provider pages](/oss/python/integrations/chat) for details.
-</Warning>
+
+> ⚠️ **Warning**
+>
+> Prompt caching is often only engaged above a minimum input token threshold. See [provider pages](/oss/python/integrations/chat) for details.
+
 
 Cache usage will be reflected in the [usage metadata](/oss/python/langchain/messages#token-usage) of the model response.
 
@@ -1127,8 +1173,11 @@ Many chat model providers impose a limit on the number of invocations that can b
 
 To help manage rate limits, chat model integrations accept a `rate_limiter` parameter that can be provided during initialization to control the rate at which requests are made.
 
-<Accordion title="Initialize and use a rate limiter" icon="gauge">
-  LangChain in comes with (an optional) built-in [`InMemoryRateLimiter`](https://reference.langchain.com/python/langchain-core/rate_limiters/InMemoryRateLimiter). This limiter is thread safe and can be shared by multiple threads in the same process.
+
+<details>
+<summary>Initialize and use a rate limiter</summary>
+
+LangChain in comes with (an optional) built-in [`InMemoryRateLimiter`](https://reference.langchain.com/python/langchain-core/rate_limiters/InMemoryRateLimiter). This limiter is thread safe and can be shared by multiple threads in the same process.
 
   ```python Define a rate limiter theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   from langchain_core.rate_limiters import InMemoryRateLimiter
@@ -1146,26 +1195,33 @@ To help manage rate limits, chat model integrations accept a `rate_limiter` para
   )
   ```
 
-  <Warning>
-    The provided rate limiter can only limit the number of requests per unit time. It will not help if you need to also limit based on the size of the requests.
-  </Warning>
-</Accordion>
+  
+> ⚠️ **Warning**
+>
+> The provided rate limiter can only limit the number of requests per unit time. It will not help if you need to also limit based on the size of the requests.
+
+</details>
+
 
 ### Base URL and proxy settings
 
 You can configure a custom base URL for providers that implement the OpenAI Chat Completions API.
 
-<Warning>
-  `model_provider="openai"` (or direct `ChatOpenAI` usage) targets the official OpenAI API specification. Provider-specific fields from routers and proxies may not be extracted or preserved.
 
-  For OpenRouter and LiteLLM, prefer the dedicated integrations:
+> ⚠️ **Warning**
+>
+> `model_provider="openai"` (or direct `ChatOpenAI` usage) targets the official OpenAI API specification. Provider-specific fields from routers and proxies may not be extracted or preserved.
+> 
+>   For OpenRouter and LiteLLM, prefer the dedicated integrations:
+> 
+>   * [OpenRouter via `ChatOpenRouter`](/oss/python/integrations/chat/openrouter) (`langchain-openrouter`)
+>   * [LiteLLM via `ChatLiteLLM` / `ChatLiteLLMRouter`](/oss/python/integrations/chat) (`langchain-litellm`)
 
-  * [OpenRouter via `ChatOpenRouter`](/oss/python/integrations/chat/openrouter) (`langchain-openrouter`)
-  * [LiteLLM via `ChatLiteLLM` / `ChatLiteLLMRouter`](/oss/python/integrations/chat) (`langchain-litellm`)
-</Warning>
 
-<Accordion title="Custom base URL" icon="link">
-  Many model providers offer OpenAI-compatible APIs (e.g., [Together AI](https://www.together.ai/), [vLLM](https://github.com/vllm-project/vllm)). You can use [`init_chat_model`](https://reference.langchain.com/python/langchain/chat_models/base/init_chat_model) with these providers by specifying the appropriate `base_url` parameter:
+<details>
+<summary>Custom base URL</summary>
+
+Many model providers offer OpenAI-compatible APIs (e.g., [Together AI](https://www.together.ai/), [vLLM](https://github.com/vllm-project/vllm)). You can use [`init_chat_model`](https://reference.langchain.com/python/langchain/chat_models/base/init_chat_model) with these providers by specifying the appropriate `base_url` parameter:
 
   ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   model = init_chat_model(
@@ -1176,13 +1232,18 @@ You can configure a custom base URL for providers that implement the OpenAI Chat
   )
   ```
 
-  <Note>
-    When using direct chat model class instantiation, the parameter name may vary by provider. Check the respective [reference](/oss/python/integrations/providers/overview) for details.
-  </Note>
-</Accordion>
+  
+> ℹ️ **Note**
+>
+> When using direct chat model class instantiation, the parameter name may vary by provider. Check the respective [reference](/oss/python/integrations/providers/overview) for details.
 
-<Accordion title="HTTP proxy configuration" icon="shield">
-  For deployments requiring HTTP proxies, some model integrations support proxy configuration:
+</details>
+
+
+<details>
+<summary>HTTP proxy configuration</summary>
+
+For deployments requiring HTTP proxies, some model integrations support proxy configuration:
 
   ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   from langchain_openai import ChatOpenAI
@@ -1193,10 +1254,13 @@ You can configure a custom base URL for providers that implement the OpenAI Chat
   )
   ```
 
-  <Note>
-    Proxy support varies by integration. Check the specific model provider's [reference](/oss/python/integrations/providers/overview) for proxy configuration options.
-  </Note>
-</Accordion>
+  
+> ℹ️ **Note**
+>
+> Proxy support varies by integration. Check the specific model provider's [reference](/oss/python/integrations/providers/overview) for proxy configuration options.
+
+</details>
+
 
 ### Log probabilities
 
@@ -1216,15 +1280,17 @@ print(response.response_metadata["logprobs"])
 
 A number of model providers return token usage information as part of the invocation response. When available, this information will be included on the [`AIMessage`](https://reference.langchain.com/python/langchain-core/messages/ai/AIMessage) objects produced by the corresponding model. For more details, see the [messages](/oss/python/langchain/messages) guide.
 
-<Note>
-  Some provider APIs, notably OpenAI and Azure OpenAI chat completions, require users opt-in to receiving token usage data in streaming contexts. See the [streaming usage metadata](/oss/python/integrations/chat/openai#streaming-usage-metadata) section of the integration guide for details.
-</Note>
+
+> ℹ️ **Note**
+>
+> Some provider APIs, notably OpenAI and Azure OpenAI chat completions, require users opt-in to receiving token usage data in streaming contexts. See the [streaming usage metadata](/oss/python/integrations/chat/openai#streaming-usage-metadata) section of the integration guide for details.
+
 
 You can track aggregate token counts across models in an application using either a callback or context manager, as shown below:
 
-<Tabs>
-  <Tab title="Callback handler">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**Callback handler:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langchain.chat_models import init_chat_model
     from langchain_core.callbacks import UsageMetadataCallbackHandler
 
@@ -1254,10 +1320,10 @@ You can track aggregate token counts across models in an application using eithe
         }
     }
     ```
-  </Tab>
+  
+**Context manager:**
 
-  <Tab title="Context manager">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langchain.chat_models import init_chat_model
     from langchain_core.callbacks import get_usage_metadata_callback
 
@@ -1287,9 +1353,7 @@ You can track aggregate token counts across models in an application using eithe
         }
     }
     ```
-  </Tab>
-</Tabs>
-
+  
 ### Invocation config
 
 When invoking a model, you can pass additional configuration through the `config` parameter using a [`RunnableConfig`](https://reference.langchain.com/python/langchain-core/runnables/config/RunnableConfig) dictionary. This provides run-time control over execution behavior, callbacks, and metadata tracking.
@@ -1315,35 +1379,41 @@ These configuration values are particularly useful when:
 * Controlling resource usage in production
 * Tracking invocations across complex pipelines
 
-<Accordion title="Key configuration attributes">
-  <ParamField body="run_name" type="string">
-    Identifies this specific invocation in logs and traces. Not inherited by sub-calls.
-  </ParamField>
 
-  <ParamField body="tags" type="string[]">
-    Labels inherited by all sub-calls for filtering and organization in debugging tools.
-  </ParamField>
+<details>
+<summary>Key configuration attributes</summary>
 
-  <ParamField body="metadata" type="object">
-    Custom key-value pairs for tracking additional context, inherited by all sub-calls.
-  </ParamField>
 
-  <ParamField body="max_concurrency" type="number">
-    Controls the maximum number of parallel calls when using [`batch()`](https://reference.langchain.com/python/langchain_core/language_models/#langchain_core.language_models.chat_models.BaseChatModel.batch) or [`batch_as_completed()`](https://reference.langchain.com/python/langchain_core/language_models/#langchain_core.language_models.chat_models.BaseChatModel.batch_as_completed).
-  </ParamField>
+- **`param`** (`string`): Identifies this specific invocation in logs and traces. Not inherited by sub-calls.
 
-  <ParamField body="callbacks" type="array">
-    Handlers for monitoring and responding to events during execution.
-  </ParamField>
 
-  <ParamField body="recursion_limit" type="number">
-    Maximum recursion depth for chains to prevent infinite loops in complex pipelines.
-  </ParamField>
-</Accordion>
+  
+- **`param`** (`string[]`): Labels inherited by all sub-calls for filtering and organization in debugging tools.
 
-<Tip>
-  See full [`RunnableConfig`](https://reference.langchain.com/python/langchain-core/runnables/config/RunnableConfig) reference for all supported attributes.
-</Tip>
+
+  
+- **`param`** (`object`): Custom key-value pairs for tracking additional context, inherited by all sub-calls.
+
+
+  
+- **`param`** (`number`): Controls the maximum number of parallel calls when using [`batch()`](https://reference.langchain.com/python/langchain_core/language_models/#langchain_core.language_models.chat_models.BaseChatModel.batch) or [`batch_as_completed()`](https://reference.langchain.com/python/langchain_core/language_models/#langchain_core.language_models.chat_models.BaseChatModel.batch_as_completed).
+
+
+  
+- **`param`** (`array`): Handlers for monitoring and responding to events during execution.
+
+
+  
+- **`param`** (`number`): Maximum recursion depth for chains to prevent infinite loops in complex pipelines.
+
+
+</details>
+
+
+> 💡 **Tip**
+>
+> See full [`RunnableConfig`](https://reference.langchain.com/python/langchain-core/runnables/config/RunnableConfig) reference for all supported attributes.
+
 
 ### Configurable models
 
@@ -1364,8 +1434,11 @@ configurable_model.invoke(
 )
 ```
 
-<Accordion title="Configurable model with default values">
-  We can create a configurable model with default model values, specify which parameters are configurable, and add prefixes to configurable params:
+
+<details>
+<summary>Configurable model with default values</summary>
+
+We can create a configurable model with default model values, specify which parameters are configurable, and add prefixes to configurable params:
 
   ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   first_model = init_chat_model(
@@ -1392,10 +1465,14 @@ configurable_model.invoke(
   ```
 
   See the [`init_chat_model`](https://reference.langchain.com/python/langchain/chat_models/base/init_chat_model) reference for more details on `configurable_fields` and `config_prefix`.
-</Accordion>
 
-<Accordion title="Using a configurable model declaratively">
-  We can call declarative operations like `bind_tools`, `with_structured_output`, `with_configurable`, etc. on a configurable model and chain a configurable model in the same way that we would a regularly instantiated chat model object.
+</details>
+
+
+<details>
+<summary>Using a configurable model declaratively</summary>
+
+We can call declarative operations like `bind_tools`, `with_structured_output`, `with_configurable`, etc. on a configurable model and chain a configurable model in the same way that we would a regularly instantiated chat model object.
 
   ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   from pydantic import BaseModel, Field
@@ -1461,16 +1538,21 @@ configurable_model.invoke(
       }
   ]
   ```
-</Accordion>
+
+</details>
+
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/models.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/models.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

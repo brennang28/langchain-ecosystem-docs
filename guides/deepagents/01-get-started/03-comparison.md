@@ -8,9 +8,11 @@
 
 This page helps you understand how [LangChain Deep Agents](/oss/python/deepagents/overview) compare to the [Claude Agent SDK](https://platform.anthropic.com/docs/en/agent-sdk/overview) and the [Codex SDK](https://developers.openai.com/codex/sdk).
 
-<Info>
-  Deep Agents is used in production by [OpenSWE](https://github.com/langchain-ai/open-swe) and [LangSmith Fleet](/langsmith/fleet/index).
-</Info>
+
+> ℹ️ **Info**
+>
+> Deep Agents is used in production by [OpenSWE](https://github.com/langchain-ai/open-swe) and [LangSmith Fleet](/langsmith/fleet/index).
+
 
 ## Overview
 
@@ -97,12 +99,15 @@ If you notice mistakes or changes in products, please [file an issue](https://gi
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/comparison.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/comparison.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

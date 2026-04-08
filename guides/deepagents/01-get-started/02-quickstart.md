@@ -8,25 +8,29 @@
 
 This guide walks you through creating your first deep agent with planning, file system tools, and subagent capabilities. You'll build a research agent that can conduct research and write reports.
 
-<Tip>
-  **Using an AI coding assistant?**
 
-  * Install the [LangChain Docs MCP server](/use-these-docs) to give your agent access to up-to-date LangChain documentation and examples.
-  * Install [LangChain Skills](https://github.com/langchain-ai/langchain-skills) to improve your agent's performance on LangChain ecosystem tasks.
-</Tip>
+> 💡 **Tip**
+>
+> **Using an AI coding assistant?**
+> 
+>   * Install the [LangChain Docs MCP server](/use-these-docs) to give your agent access to up-to-date LangChain documentation and examples.
+>   * Install [LangChain Skills](https://github.com/langchain-ai/langchain-skills) to improve your agent's performance on LangChain ecosystem tasks.
+
 
 ## Prerequisites
 
 Before you begin, make sure you have an API key from a model provider (e.g., Anthropic, OpenAI).
 
-<Note>
-  Deep Agents require a model that supports [tool calling](/oss/python/langchain/models#tool-calling). See [customization](/oss/python/deepagents/customization#model) for how to configure your model.
-</Note>
+
+> ℹ️ **Note**
+>
+> Deep Agents require a model that supports [tool calling](/oss/python/langchain/models#tool-calling). See [customization](/oss/python/deepagents/customization#model) for how to configure your model.
+
 
 ### Step 1: Install dependencies
 
-<CodeGroup>
-  ```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   pip install deepagents tavily-python
   ```
 
@@ -35,67 +39,65 @@ Before you begin, make sure you have an API key from a model provider (e.g., Ant
   uv add deepagents tavily-python
   uv sync
   ```
-</CodeGroup>
 
-<Note>
-  This guide uses [Tavily](https://tavily.com/) as an example search provider, but you can substitute any search API (e.g., DuckDuckGo, SerpAPI, Brave Search).
-</Note>
+> ℹ️ **Note**
+>
+> This guide uses [Tavily](https://tavily.com/) as an example search provider, but you can substitute any search API (e.g., DuckDuckGo, SerpAPI, Brave Search).
+
 
 ### Step 2: Set up your API keys
 
-<Tabs>
-  <Tab title="Anthropic">
-    ```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**Anthropic:**
+
+```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     export ANTHROPIC_API_KEY="your-api-key"
     export TAVILY_API_KEY="your-tavily-api-key"
     ```
-  </Tab>
+  
+**OpenAI:**
 
-  <Tab title="OpenAI">
-    ```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     export OPENAI_API_KEY="your-api-key"
     export TAVILY_API_KEY="your-tavily-api-key"
     ```
-  </Tab>
+  
+**Google:**
 
-  <Tab title="Google">
-    ```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     export GOOGLE_API_KEY="your-api-key"
     export TAVILY_API_KEY="your-tavily-api-key"
     ```
-  </Tab>
+  
+**OpenRouter:**
 
-  <Tab title="OpenRouter">
-    ```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     export OPENROUTER_API_KEY="your-api-key"
     export TAVILY_API_KEY="your-tavily-api-key"
     ```
-  </Tab>
+  
+**Fireworks:**
 
-  <Tab title="Fireworks">
-    ```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     export FIREWORKS_API_KEY="your-api-key"
     export TAVILY_API_KEY="your-tavily-api-key"
     ```
-  </Tab>
+  
+**Baseten:**
 
-  <Tab title="Baseten">
-    ```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     export BASETEN_API_KEY="your-api-key"
     export TAVILY_API_KEY="your-tavily-api-key"
     ```
-  </Tab>
+  
+**Ollama:**
 
-  <Tab title="Ollama">
-    ```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     # Local: Ollama must be running (https://ollama.com)
     # Cloud: Set your Ollama API key for hosted inference
     export OLLAMA_API_KEY="your-api-key"
     export TAVILY_API_KEY="your-tavily-api-key"
     ```
-  </Tab>
-</Tabs>
-
+  
 ### Step 3: Create a search tool
 
 ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
@@ -137,78 +139,76 @@ Use this to run an internet search for a given query. You can specify the max nu
 
 Pick a model from your provider. By default, `create_deep_agent` uses `claude-sonnet-4-6`. Pass a `model` string to use a different provider — see [Suggested models](/oss/python/deepagents/models#suggested-models) for the full list.
 
-<Tabs>
-  <Tab title="Anthropic">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**Anthropic:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     agent = create_deep_agent(
         model="anthropic:claude-sonnet-4-6",
         tools=[internet_search],
         system_prompt=research_instructions,
     )
     ```
-  </Tab>
+  
+**OpenAI:**
 
-  <Tab title="OpenAI">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     agent = create_deep_agent(
         model="openai:gpt-5.4",
         tools=[internet_search],
         system_prompt=research_instructions,
     )
     ```
-  </Tab>
+  
+**Google:**
 
-  <Tab title="Google">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     agent = create_deep_agent(
         model="google_genai:gemini-3.1-pro-preview",
         tools=[internet_search],
         system_prompt=research_instructions,
     )
     ```
-  </Tab>
+  
+**OpenRouter:**
 
-  <Tab title="OpenRouter">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     agent = create_deep_agent(
         model="openrouter:anthropic/claude-sonnet-4-6",
         tools=[internet_search],
         system_prompt=research_instructions,
     )
     ```
-  </Tab>
+  
+**Fireworks:**
 
-  <Tab title="Fireworks">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     agent = create_deep_agent(
         model="fireworks:accounts/fireworks/models/qwen3p5-397b-a17b",
         tools=[internet_search],
         system_prompt=research_instructions,
     )
     ```
-  </Tab>
+  
+**Baseten:**
 
-  <Tab title="Baseten">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     agent = create_deep_agent(
         model="baseten:zai-org/GLM-5",
         tools=[internet_search],
         system_prompt=research_instructions,
     )
     ```
-  </Tab>
+  
+**Ollama:**
 
-  <Tab title="Ollama">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     agent = create_deep_agent(
         model="ollama:devstral-2",
         tools=[internet_search],
         system_prompt=research_instructions,
     )
     ```
-  </Tab>
-</Tabs>
-
+  
 ### Step 5: Run the agent
 
 ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
@@ -247,12 +247,15 @@ Now that you've built your first deep agent:
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/quickstart.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/quickstart.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

@@ -18,17 +18,16 @@ Use webhooks to receive real‑time notifications whenever a prompt version is c
 
 Navigate to `Prompts` and click on `Automations`.
 
-<Frame fullWidth>![Select events](/images/docs/webhook-navigation.png)</Frame>
 
+![Select events](/images/docs/webhook-navigation.png)
 Click on `Create Automation`.
 
-<Frame fullWidth>![Select events](/images/docs/webhook-create.png)</Frame>
 
+![Select events](/images/docs/webhook-create.png)
 Select events to watch.
 
-<Frame className="max-w-md">
-  ![Select events](/images/docs/webhook-trigger.png)
-</Frame>
+
+![Select events](/images/docs/webhook-trigger.png)
 
 Choose the prompt‑version actions that should fire the webhook:
 
@@ -38,17 +37,11 @@ Choose the prompt‑version actions that should fire the webhook:
 
 (Optional) filter to only trigger on specific prompts.
 
-<Tabs items={["Webhook Call", "Slack Message"]}>
-
-<Tab>
-
-<Steps>
 
 ### Configure the request
 
-<Frame className="max-w-md">
-  ![Configure request](/images/docs/webhook-action.png)
-</Frame>
+
+![Configure request](/images/docs/webhook-action.png)
 
 - **URL**: HTTPS endpoint that accepts POST requests.
 - **Headers**: Default headers include:
@@ -61,7 +54,7 @@ Choose the prompt‑version actions that should fire the webhook:
 
 Your endpoint receives a JSON body like:
 
-```json filename="webhook-payload.json"
+```json
 {
   "id": "550e8400-e29b-41d4-a716-446655440000",
   "timestamp": "2024-07-10T10:30:00Z",
@@ -96,9 +89,6 @@ Your handler must:
 
 Each request carries an HMAC SHA‑256 signature in `x-langfuse-signature`.
 Retrieve the secret when you create the webhook (you can regenerate it later).
-
-<LangTabs items={["Python SDK", "JS/TS SDK"]}>
-<Tab>
 
 ```python
 import hmac
@@ -155,13 +145,8 @@ def verify_langfuse_signature(
         return False
 ```
 
-</Tab>
-
-<Tab>
 
 ```ts
-import crypto from "crypto";
-
 export function verifyLangfuseSignature(
   rawBody: string,
   signatureHeader: string,
@@ -184,37 +169,24 @@ export function verifyLangfuseSignature(
 }
 ```
 
-</Tab>
 
-</LangTabs>
-</Steps>
-
-</Tab>
-
-<Tab>
 ### Authenticate Slack with Langfuse
-<Frame className="max-w-md">
-  ![Configure request](/images/docs/slack-connection-auth-init.png)
-</Frame>
+
+![Configure request](/images/docs/slack-connection-auth-init.png)
 
 - Langfuse connects to Slack via OAuth.
 - We store secrets to Slack encrypted in our database.
 
 ### Select channels to send notifications to
 
-<Frame className="max-w-md">
-  ![Configure request](/images/docs/slack-connection-channel-select.png)
-</Frame>
+
+![Configure request](/images/docs/slack-connection-channel-select.png)
 
 - You can select a channel where you want to send notifications.
 - You can run a dry run to see that messages arrive in your channel.
 
 ### See the message in Slack
 
-<Frame className="max-w-md">
-  ![Configure request](/images/docs/slack-prompt-message.png)
-</Frame>
 
-</Tab>
+![Configure request](/images/docs/slack-prompt-message.png)
 
-</Tabs>

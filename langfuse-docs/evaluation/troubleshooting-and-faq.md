@@ -4,9 +4,6 @@ sidebarTitle: Troubleshooting and FAQ
 description: Troubleshooting and FAQ for Langfuse Evaluation.
 ---
 
-import { FaqPreview } from "@/components/faq/FaqPreview";
-import { GhDiscussionsPreview } from "@/components/gh-discussions/GhDiscussionsPreview";
-
 # Troubleshooting and FAQ
 
 This page addresses frequently asked questions and common troubleshooting topics for Langfuse Evaluation.
@@ -15,18 +12,5 @@ If you don't find a solution to your issue here, try using [Ask AI](/docs/ask-ai
 
 ## FAQ
 
-<FaqPreview tags={["evaluation"]} />
-
 ## GitHub Discussions
 
-<GhDiscussionsPreview
-  labels={[
-    "feat-datasets",
-    "feat-evals",
-    "feat-llm-security",
-    "feat-prompt-experiments",
-    "feat-scores",
-    "feat-annotation",
-    "feat-datasets",
-  ]}
-/>

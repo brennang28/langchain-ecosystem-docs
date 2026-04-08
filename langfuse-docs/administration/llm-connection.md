@@ -10,22 +10,8 @@ LLM connections are used to call models in the Langfuse Playground or for LLM-as
 
 ## Setup
 
-<Tabs items={["Via the UI", "Via the API"]}>
-
-<Tab>
-
 1. Navigate to your `Project Settings` > `LLM Connections` and **click on** `Add new LLM API key`.
 2. Enter the name of the LLM connection and the API key for the model you want to use.
-
-<Video
-  src="https://static.langfuse.com/docs-videos/2026-03-06-add-llm-connection-v3.mp4"
-  gifStyle
-  className="mt-4"
-/>
-
-</Tab>
-
-<Tab>
 
 You can use the [API](/docs/api-and-data-platform/features/public-api) to manage LLM connections:
 
@@ -34,9 +20,6 @@ GET /api/public/llm-connections
 PUT /api/public/llm-connections
 ```
 
-</Tab>
-
-</Tabs>
 
 ## Supported providers
 
@@ -120,8 +103,8 @@ export function ModelList() {
     "gemini-1.5-flash-8b",
   ];
   return (
-    <div>
-      <ul>
+    
+<ul>
         <li>
           <strong>Any model that supports the OpenAI API schema:</strong> The
           Playground and LLM-as-a-Judge evaluations can be used by any framework
@@ -151,11 +134,9 @@ export function ModelList() {
           `bedrock:InvokeModelWithResponseStream`.
         </li>
       </ul>
-    </div>
-  );
+    
+);
 }
-
-<ModelList />
 
 </details>
 
@@ -165,13 +146,13 @@ You may connect to third party LLM providers if their API schema implements the 
 
 ### Additional provider options
 
-<Callout type="info">
-  Provider options are **not set up in the Project Settings > LLM Connections**
-  page but either when selecting a LLM Connection on the
-  [Playground](/docs/prompt-management/features/playground) or during
-  [LLM-as-a-Judge](/docs/evaluation/evaluation-methods/llm-as-a-judge) Evaluator
-  setup.
-</Callout>
+
+> ℹ️ **Note:** Provider options are **not set up in the Project Settings > LLM Connections**
+>   page but either when selecting a LLM Connection on the
+>   [Playground](/docs/prompt-management/features/playground) or during
+>   [LLM-as-a-Judge](/docs/evaluation/evaluation-methods/llm-as-a-judge) Evaluator
+>   setup.
+
 
 LLM calls from a created LLM connection can be configured with a specific set of parameters, such as `temperature`, `top_p`, and `max_tokens`.
 
@@ -196,18 +177,6 @@ This feature is currently available for the adapters for:
 
 Example for forcing reasoning effort `minimal` on an OpenAI gpt-5 invocation:
 
-import { Frame } from "@/components/Frame";
-import Image from "next/image";
-
-<Frame>
-  <Image
-    alt="Trace Detail"
-    src="/images/docs/llm-connection-provider-options.png"
-    width="480"
-    height="480"
-  />
-</Frame>
-
 Example provider options for Google models (Google AI Studio and Google Vertex AI) to control thinking:
 
 ```json
@@ -231,11 +200,11 @@ To set this up:
 4. Under **Advanced Settings**, set the **Base URL** to your gateway's endpoint, e.g. `https://your-litellm-instance.com/v1`.
 5. Add any **custom model names** that your gateway exposes.
 
-<Callout type="info">
-  The gateway must support [tool
-  calling](https://platform.openai.com/docs/guides/function-calling) in the
-  OpenAI format for LLM-as-a-Judge evaluations to work.
-</Callout>
+
+> ℹ️ **Note:** The gateway must support [tool
+>   calling](https://platform.openai.com/docs/guides/function-calling) in the
+>   OpenAI format for LLM-as-a-Judge evaluations to work.
+
 
 For OpenAI-compatible gateways, here is an example tool calling request that must be handled by the gateway to support LLM-as-a-Judge in Langfuse:
 

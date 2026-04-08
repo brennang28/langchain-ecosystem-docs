@@ -20,16 +20,11 @@ You can e.g. set `flushAt=1` to send every event immediately, or `flushInterval=
 
 ### Manual flushing
 
-<Callout type="info">
-  In short-lived environments like serverless functions (e.g., Vercel Functions, AWS Lambda), you should explicitly flush the traces before the process exits or the runtime environment is frozen. If you do not flush the client, you may lose events.
-</Callout>
+
+> ℹ️ **Note:** In short-lived environments like serverless functions (e.g., Vercel Functions, AWS Lambda), you should explicitly flush the traces before the process exits or the runtime environment is frozen. If you do not flush the client, you may lose events.
+
 
 If you want to send a batch immediately, you can call the `flush` method on the client. In case of network issues, flush will log an error and retry the batch, it will never throw an exception.
-
-<LangTabs items={["Python SDK","JS/TS SDK","OpenAI SDK (Python)","Langchain","Langchain (JS)"]}>
-
-<Tab>
-{/* Python SDK */}
 
 ```python
 from langfuse import get_client
@@ -54,18 +49,12 @@ langfuse = get_client()
 langfuse.shutdown()
 ```
 
-</Tab>
-<Tab>
-{/* JS/TS */}
 
 The `LangfuseSpanProcessor` buffers events and sends them in batches, so a final flush ensures no data is lost.
 
 You can export the processor from your OTEL SDK setup file.
 
-```ts filename="instrumentation.ts" /langfuseSpanProcessor/ /forceFlush/
-import { NodeSDK } from "@opentelemetry/sdk-node";
-import { LangfuseSpanProcessor } from "@langfuse/otel";
-
+```ts /langfuseSpanProcessor/ /forceFlush/
 // Export the processor to be able to flush it
 export const langfuseSpanProcessor = new LangfuseSpanProcessor();
 
@@ -78,9 +67,7 @@ sdk.start();
 
 Then, in your serverless function handler, call `forceFlush()` before the function exits.
 
-```ts filename="handler.ts"
-import { langfuseSpanProcessor } from "./instrumentation";
-
+```ts
 export async function handler(event, context) {
   // ... your application logic ...
 
@@ -89,9 +76,6 @@ export async function handler(event, context) {
 }
 ```
 
-</Tab>
-<Tab>
-{/* OpenAI SDK (Python) */}
 
 ```python
 from langfuse import get_client
@@ -103,9 +87,6 @@ langfuse = get_client()
 langfuse.flush()
 ```
 
-</Tab>
-<Tab>
-{/* Langchain (Python) */}
 
 ```python
 from langfuse import get_client
@@ -119,9 +100,6 @@ langfuse_handler.client.flush()
 
 ```
 
-</Tab>
-<Tab>
-{/* Langchain (JS) */}
 
 ```javascript
 await langfuseHandler.flushAsync();
@@ -133,5 +111,4 @@ If you exit the application, use `shutdownAsync` method to make sure all request
 await langfuseHandler.shutdownAsync();
 ```
 
-</Tab>
-</LangTabs>
+

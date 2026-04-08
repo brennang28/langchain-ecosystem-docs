@@ -8,36 +8,15 @@ The Langfuse Docs MCP server exposes the Langfuse docs to AI agents.
 
 Core use case: Use Cursor (or other AI Coding Agent) to automatically integrate Langfuse Tracing into your codebase, see [get started](/docs/get-started) for detailed instructions and an example prompt.
 
-<Callout type="info">
 
-This is the public MCP server for the Langfuse documentation. There is also an authenticated MCP server to integrate with the rest of the Langfuse data platform ([docs](/docs/api-and-data-platform/features/mcp-server)).
+> ℹ️ **Note:** This is the public MCP server for the Langfuse documentation. There is also an authenticated MCP server to integrate with the rest of the Langfuse data platform ([docs](/docs/api-and-data-platform/features/mcp-server)).
 
-</Callout>
 
 ## Install
 
 
-
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-
-<Tabs items={["Cursor", "Copilot (in VSCode)", "Claude Code", "Windsurf", "Other MCP Clients"]}>
-
-<Tab>
-
 Add Langfuse Docs MCP to Cursor via the one-click install:
 
-<div className="flex gap-2 mt-3 mb-6">
-  <Button asChild>
-    <Link
-      href="https://cursor.com/en/install-mcp?name=langfuse-docs&config=eyJ1cmwiOiJodHRwczovL2xhbmdmdXNlLmNvbS9hcGkvbWNwIn0%3D"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      Install MCP Server in Cursor
-    </Link>
-  </Button>
-</div>
 
 <details>
 <summary>Manual configuration</summary>
@@ -56,23 +35,9 @@ Add the following to your `mcp.json`:
 
 </details>
 
-</Tab>
-
-<Tab>
 
 Add Langfuse Docs MCP to Copilot in VSCode via the one-click install:
 
-<div className="flex gap-2 mt-3 mb-6">
-  <Button asChild>
-    <Link
-      href="vscode:mcp/install?%7B%22name%22%3A%22langfuse-docs%22%2C%22url%22%3A%22https%3A%2F%2Flangfuse.com%2Fapi%2Fmcp%22%7D"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      Install MCP Server in VS Code
-    </Link>
-  </Button>
-</div>
 
 <details>
 <summary>Manual configuration</summary>
@@ -88,9 +53,6 @@ Add Langfuse Docs MCP to Copilot in VSCode via the following steps:
 
 </details>
 
-</Tab>
-
-<Tab>
 
 Add Langfuse Docs MCP to Claude Code via the CLI:
 
@@ -134,9 +96,6 @@ Once added, start a Claude Code session (`claude`) and type `/mcp` to confirm th
 
 </details>
 
-</Tab>
-
-<Tab>
 
 Add Langfuse Docs MCP to Windsurf via the following steps:
 
@@ -156,9 +115,6 @@ Add Langfuse Docs MCP to Windsurf via the following steps:
    }
    ```
 
-</Tab>
-
-<Tab>
 
 Langfuse uses the `streamableHttp` protocol to communicate with the MCP server. This is supported by most clients.
 
@@ -184,11 +140,6 @@ If you use a client that does not support `streamableHttp` (e.g. Windsurf), you 
   }
 }
 ```
-
-</Tab>
-
-</Tabs>
-
 
 
 ## About

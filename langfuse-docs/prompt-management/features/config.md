@@ -13,16 +13,12 @@ The prompt `config` in Langfuse is an **optional arbitrary JSON object** attache
 
 Because the config is **versioned together with the prompt**, you can manage all parameters in one place. This makes it easy to switch models, update schemas, or tune behavior without touching your application code.
 
-<Frame fullWidth>
-  ![Prompt config](/images/docs/prompt-management-config.png)
-</Frame>
+
+![Prompt config](/images/docs/prompt-management-config.png)
 
 ## Setting the config
 
 Setting the config can be done both via the Langfuse prompt UI and via the SDKs.
-
-<Tabs items={["UI", "Python SDK", "JS/TS SDK"]}>
-<Tab>
 
 To add or edit a config for your prompt:
 
@@ -31,15 +27,6 @@ To add or edit a config for your prompt:
 3. In the prompt editor, find the **Config** field (JSON editor)
 4. Enter your config as a valid JSON object
 5. Save the prompt — the config is now versioned with this prompt version
-
-<Video
-  src="https://static.langfuse.com/docs-videos/2025-12-16-prompt-config.mp4"
-  aspectRatio={16 / 9}
-  gifStyle
-/>
-
-</Tab>
-<Tab>
 
 Pass the `config` parameter when creating or updating a prompt:
 
@@ -68,14 +55,10 @@ langfuse.create_prompt(
                     
 ```
 
-</Tab>
-<Tab>
 
 Pass the `config` parameter when creating or updating a prompt:
 
 ```typescript
-import { LangfuseClient } from "@langfuse/client";
-
 const langfuse = new LangfuseClient();
 
 // example config with a model and temperature
@@ -94,8 +77,6 @@ await langfuse.prompt.create({
 });
 ```
 
-</Tab>
-</Tabs>
 
 You can test your prompt with its config directly in the [Playground](/docs/prompt-management/features/playground).
 
@@ -106,9 +87,6 @@ The example below retrieves the AI model and temperature from the prompt config.
 
 After fetching a prompt, access the config via the `config` property and pass the values to your LLM call.
 
-
-<Tabs items={["Python SDK", "JS/TS SDK"]}>
-<Tab>
 
 This example uses the [Langfuse OpenAI integration](/docs/integrations/openai/python/get-started) for tracing, but this is optional.
 You can use any method to call your LLM (e.g., OpenAI SDK directly, other providers, etc.).
@@ -138,18 +116,12 @@ client.chat.completions.create(
 )
 ```
 
-</Tab>
-<Tab>
 
 This example uses the [Langfuse OpenAI integration](/docs/integrations/openai/js/get-started) for tracing, but this is optional.
 You can use any method to call your LLM (e.g., OpenAI SDK directly, other providers, etc.) and still use the config.
 
 ```typescript
-import { LangfuseClient } from "@langfuse/client";
-
 // Initialize OpenAI client for this example.
-import OpenAI from "openai";
-import { observeOpenAI } from "@langfuse/openai";
 const client = observeOpenAI(new OpenAI());
 
 const langfuse = new LangfuseClient();
@@ -170,8 +142,6 @@ client.chat.completions.create({
 });
 ```
 
-</Tab>
-</Tabs>
 
 ## Example use cases
 
@@ -179,9 +149,9 @@ client.chat.completions.create({
 
 When you need your LLM to return data in a specific JSON format, store the schema in your prompt config. This keeps the schema versioned alongside your prompt and lets you update it without code changes.
 
-<Callout type="info">
-**Best practice:** Use `response_format` with `type: "json_schema"` and `strict: true` to enforce the schema. This ensures the model's output exactly matches your expected structure. If you're using Pydantic models, convert them with `type_to_response_format_param` — see the [OpenAI Structured Outputs guide](/docs/integrations/openai/python/structured-outputs).
-</Callout>
+
+> ℹ️ **Note:** **Best practice:** Use `response_format` with `type: "json_schema"` and `strict: true` to enforce the schema. This ensures the model's output exactly matches your expected structure. If you're using Pydantic models, convert them with `type_to_response_format_param` — see the [OpenAI Structured Outputs guide](/docs/integrations/openai/python/structured-outputs).
+
 
 ```python
 from langfuse import get_client
@@ -237,9 +207,9 @@ content = res.choices[0].message.content
 
 For agents and tool-using applications, store your function definitions in the prompt config. This allows you to version and update your available tools alongside your prompts.
 
-<Callout type="info">
-**Best practice:** Store `tools` (function definitions with JSON Schema parameters) and `tool_choice` in your config. This keeps your function signatures versioned and lets you add, modify, or remove tools without deploying code changes.
-</Callout>
+
+> ℹ️ **Note:** **Best practice:** Store `tools` (function definitions with JSON Schema parameters) and `tool_choice` in your config. This keeps your function signatures versioned and lets you add, modify, or remove tools without deploying code changes.
+
 
 ```python
 from langfuse import get_client
@@ -293,6 +263,6 @@ res = client.chat.completions.create(
 )
 ```
 
-<Callout type="info">
-For complete end-to-end examples, see the [OpenAI Functions cookbook](/guides/cookbook/prompt_management_openai_functions) and the [Structured Outputs cookbook](/guides/cookbook/integration_openai_structured_output).
-</Callout>
+
+> ℹ️ **Note:** For complete end-to-end examples, see the [OpenAI Functions cookbook](/guides/cookbook/prompt_management_openai_functions) and the [Structured Outputs cookbook](/guides/cookbook/integration_openai_structured_output).
+

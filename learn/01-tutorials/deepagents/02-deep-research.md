@@ -37,19 +37,17 @@ API keys for:
 
 ## Setup
 
-<Steps>
-  <Step title="Create project directory">
-    ```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     mkdir deep-research-agent
     cd deep-research-agent
     ```
-  </Step>
+  
 
-  <Step title="Install dependencies">
-    <Tabs>
-      <Tab title="Claude">
-        <CodeGroup>
-          ```bash pip wrap theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**Claude:**
+
+
+```bash pip wrap theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
           pip install deepagents tavily-python httpx markdownify langchain-anthropic langchain-core
           ```
 
@@ -58,12 +56,11 @@ API keys for:
           uv add deepagents tavily-python httpx markdownify langchain-anthropic langchain-core
           uv sync
           ```
-        </CodeGroup>
-      </Tab>
+        
+**Gemini:**
 
-      <Tab title="Gemini">
-        <CodeGroup>
-          ```bash pip wrap theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```bash pip wrap theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
           pip install deepagents tavily-python httpx markdownify langchain-google-genai langchain-core
           ```
 
@@ -72,39 +69,31 @@ API keys for:
           uv add deepagents tavily-python httpx markdownify langchain-google-genai langchain-core
           uv sync
           ```
-        </CodeGroup>
-      </Tab>
-    </Tabs>
-  </Step>
+        
 
-  <Step title="Set API keys">
-    <Tabs>
-      <Tab title="Claude">
-        ```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**Claude:**
+
+```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
         export ANTHROPIC_API_KEY="your_anthropic_api_key"
         export TAVILY_API_KEY="your_tavily_api_key"
         export LANGSMITH_API_KEY="your_langsmith_api_key"   # Optional
         ```
-      </Tab>
+      
+**Gemini:**
 
-      <Tab title="Gemini">
-        ```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
         export GOOGLE_API_KEY="your_google_api_key"
         export TAVILY_API_KEY="your_tavily_api_key"
         export LANGSMITH_API_KEY="your_langsmith_api_key"   # Optional
         ```
-      </Tab>
-    </Tabs>
-  </Step>
-</Steps>
+      
 
 ## Build the agent
 
 Create `agent.py` in your project directory:
 
-<Steps>
-  <Step title="Add tools">
-    Add the custom search tool. The `tavily_search` tool uses Tavily for URL discovery, then fetches full webpage content so the agent can analyze complete sources instead of summaries.
+
+Add the custom search tool. The `tavily_search` tool uses Tavily for URL discovery, then fetches full webpage content so the agent can analyze complete sources instead of summaries.
 
     ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     import os
@@ -167,10 +156,9 @@ Create `agent.py` in your project directory:
             result_texts
         )
     ```
-  </Step>
+  
 
-  <Step title="Add prompts">
-    Add the orchestrator workflow and sub-agent prompt templates to `agent.py`:
+Add the orchestrator workflow and sub-agent prompt templates to `agent.py`:
 
     ```python expandable wrap theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     RESEARCH_WORKFLOW_INSTRUCTIONS = """# Research Workflow
@@ -324,14 +312,13 @@ Create `agent.py` in your project directory:
     - Stop when you have sufficient information to answer comprehensively
     - Bias towards focused research over exhaustive exploration"""
     ```
-  </Step>
+  
 
-  <Step title="Create the agent">
-    Add the model initialization and agent creation to `agent.py`. Choose your provider:
+Add the model initialization and agent creation to `agent.py`. Choose your provider:
 
-    <Tabs>
-      <Tab title="Claude">
-        ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+    **Claude:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
         from datetime import datetime
 
         from deepagents import create_deep_agent
@@ -369,10 +356,10 @@ Create `agent.py` in your project directory:
             subagents=[research_sub_agent],
         )
         ```
-      </Tab>
+      
+**Gemini:**
 
-      <Tab title="Gemini">
-        ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
         from datetime import datetime
 
         from langchain_google_genai import ChatGoogleGenerativeAI
@@ -410,10 +397,7 @@ Create `agent.py` in your project directory:
             subagents=[research_sub_agent],
         )
         ```
-      </Tab>
-    </Tabs>
-  </Step>
-</Steps>
+      
 
 ## Run the agent
 
@@ -421,9 +405,10 @@ You can run the agent synchronously, meaning it will wait for the full result an
 
 Add the code from the respective tab at the bottom of `agent.py`:
 
-<Tabs>
-  <Tab title="Run synchronously" value="sync">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+**Run synchronously:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langchain.messages import HumanMessage
 
     if __name__ == "__main__":
@@ -441,10 +426,11 @@ Add the code from the respective tab at the bottom of `agent.py`:
             if hasattr(msg, "content") and msg.content:
                 print(msg.content)
     ```
-  </Tab>
+  
 
-  <Tab title="Stream updates" value="stream">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**Stream updates:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langchain.messages import HumanMessage
     from langgraph.types import Overwrite
 
@@ -465,9 +451,7 @@ Add the code from the respective tab at the bottom of `agent.py`:
                     if hasattr(msg, "content") and msg.content:
                         print(msg.content)
     ```
-  </Tab>
-</Tabs>
-
+  
 Run the agent from the project root:
 
 ```sh  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
@@ -494,12 +478,15 @@ For more information on the concepts in this tutorial, check out the following r
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/deep-research.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/deep-research.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

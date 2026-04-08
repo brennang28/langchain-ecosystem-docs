@@ -10,7 +10,6 @@ Score Analytics provides a lightweight, zero-configuration way to analyze your e
 
 <iframe
   width="100%"
-  className="aspect-[16/9] rounded-lg border mt-6 w-full"
   src="https://www.youtube-nocookie.com/embed/HSpayZnwHdw?si=CsVDZbQAlOhZbj-M"
   title="YouTube video player"
   frameborder="0"
@@ -33,7 +32,6 @@ For advanced analyses requiring custom metrics or complex comparisons, use the [
 
 ## Getting Started
 
-<Steps>
 
 ### Prerequisites
 
@@ -57,9 +55,8 @@ Ensure you have [score data](/docs/evaluation/overview) in your Langfuse project
 5. **Explore** the Distribution chart to see how score values are spread
 6. **Examine** the Trend Over Time chart to track temporal patterns
 
-<Frame fullWidth>
-  ![Single Score Analysis](/images/docs/score-analytics-boolean-single.png)
-</Frame>
+
+![Single Score Analysis](/images/docs/score-analytics-boolean-single.png)
 
 ### Compare Two Scores
 
@@ -76,11 +73,8 @@ Ensure you have [score data](/docs/evaluation/overview) in your Langfuse project
 4. **Compare** distributions in the matched vs all tabs
 5. **Track** how both scores trend together over time
 
-<Frame fullWidth>
-  ![Boolean Score Comparison](/images/docs/score-analytics-boolean-compare.png)
-</Frame>
 
-</Steps>
+![Boolean Score Comparison](/images/docs/score-analytics-boolean-compare.png)
 
 ## Key Features
 
@@ -132,37 +126,37 @@ Score Analytics provides industry-standard statistical metrics with interpretati
 
 **Correlation Metrics** (for numeric scores)
 
-<Callout type="info">
-**Pearson Correlation**: Measures linear relationship between scores. Values range from -1 (perfect negative) to 1 (perfect positive).
-- 0.9-1.0: Very Strong correlation
-- 0.7-0.9: Strong correlation
-- 0.5-0.7: Moderate correlation
-- Below 0.5: Weak correlation
 
-**Spearman Correlation**: Measures monotonic relationship (rank-based). More robust to outliers than Pearson.
-</Callout>
+> ℹ️ **Note:** **Pearson Correlation**: Measures linear relationship between scores. Values range from -1 (perfect negative) to 1 (perfect positive).
+> - 0.9-1.0: Very Strong correlation
+> - 0.7-0.9: Strong correlation
+> - 0.5-0.7: Moderate correlation
+> - Below 0.5: Weak correlation
+> 
+> **Spearman Correlation**: Measures monotonic relationship (rank-based). More robust to outliers than Pearson.
+
 
 **Error Metrics** (for numeric scores)
 
-<Callout type="info">
-**MAE (Mean Absolute Error)**: Average absolute difference between scores. Lower is better.
 
-**RMSE (Root Mean Square Error)**: Square root of average squared differences. Penalizes larger errors more than MAE.
-</Callout>
+> ℹ️ **Note:** **MAE (Mean Absolute Error)**: Average absolute difference between scores. Lower is better.
+> 
+> **RMSE (Root Mean Square Error)**: Square root of average squared differences. Penalizes larger errors more than MAE.
+
 
 **Agreement Metrics** (for categorical/boolean scores)
 
-<Callout type="info">
-**Cohen's Kappa**: Measures agreement adjusted for chance. Values range from -1 to 1.
-- 0.81-1.0: Almost Perfect agreement
-- 0.61-0.80: Substantial agreement
-- 0.41-0.60: Moderate agreement
-- Below 0.41: Fair to Slight agreement
 
-**F1 Score**: Harmonic mean of precision and recall. Values range from 0 to 1, with 1 being perfect.
+> ℹ️ **Note:** **Cohen's Kappa**: Measures agreement adjusted for chance. Values range from -1 to 1.
+> - 0.81-1.0: Almost Perfect agreement
+> - 0.61-0.80: Substantial agreement
+> - 0.41-0.60: Moderate agreement
+> - Below 0.41: Fair to Slight agreement
+> 
+> **F1 Score**: Harmonic mean of precision and recall. Values range from 0 to 1, with 1 being perfect.
+> 
+> **Overall Agreement**: Simple percentage of matching classifications. Not adjusted for chance agreement.
 
-**Overall Agreement**: Simple percentage of matching classifications. Not adjusted for chance agreement.
-</Callout>
 
 ## Example Use Cases
 
@@ -220,14 +214,14 @@ Score Analytics provides industry-standard statistical metrics with interpretati
 
 ## Current Limitations
 
-<Callout type="warning">
-**Beta Feature**: Score Analytics is currently in beta. Please report any issues or feedback.
 
-**Current Constraints**:
-- **Two scores maximum**: Currently supports comparing up to two scores at a time. For multi-way comparisons, perform pairwise analyses.
-- **Same data type only**: You can only compare scores of the same data type (numeric with numeric, categorical with categorical, boolean with boolean).
-- **Sampling**: For performance optimization, queries expecting >100k scores (for either score1 or score2) automatically apply random sampling. This sampling approximates true random sampling and maintains statistical properties of your data. A visible indicator will show when sampling is active, and you can use time range or object type filters to narrow your analysis if you need the complete dataset.
-</Callout>
+> ⚠️ **Note:** **Beta Feature**: Score Analytics is currently in beta. Please report any issues or feedback.
+> 
+> **Current Constraints**:
+> - **Two scores maximum**: Currently supports comparing up to two scores at a time. For multi-way comparisons, perform pairwise analyses.
+> - **Same data type only**: You can only compare scores of the same data type (numeric with numeric, categorical with categorical, boolean with boolean).
+> - **Sampling**: For performance optimization, queries expecting >100k scores (for either score1 or score2) automatically apply random sampling. This sampling approximates true random sampling and maintains statistical properties of your data. A visible indicator will show when sampling is active, and you can use time range or object type filters to narrow your analysis if you need the complete dataset.
+
 
 ## Tips and Best Practices
 
@@ -255,6 +249,3 @@ Score Analytics provides industry-standard statistical metrics with interpretati
 
 ## GitHub Discussions
 
-import { GhDiscussionsPreview } from "@/components/gh-discussions/GhDiscussionsPreview";
-
-<GhDiscussionsPreview labels={["feat-scores"]} />

@@ -16,28 +16,24 @@ There are a few approaches to testing your agents:
 
 Agentic applications tend to lean more on integration because they chain multiple components together and must deal with flakiness due to the nondeterministic nature of LLMs.
 
-<CardGroup cols={1}>
-  <Card title="Unit testing" icon="flask" href="/oss/python/langchain/test/unit-testing" arrow>
-    Mock chat models and use in-memory persistence to test agent logic without API calls.
-  </Card>
-
-  <Card title="Integration testing" icon="plug" href="/oss/python/langchain/test/integration-testing" arrow>
-    Test your agent with real LLM APIs. Organize tests, manage keys, handle flakiness, and control costs.
-  </Card>
-
-  <Card title="Evals" icon="scale" href="/oss/python/langchain/test/evals" arrow>
-    Evaluate agent trajectories with deterministic matching or LLM-as-judge evaluators.
-  </Card>
-</CardGroup>
+Mock chat models and use in-memory persistence to test agent logic without API calls.
+  
+Test your agent with real LLM APIs. Organize tests, manage keys, handle flakiness, and control costs.
+  
+Evaluate agent trajectories with deterministic matching or LLM-as-judge evaluators.
+  
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/test/index.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/test/index.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

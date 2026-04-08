@@ -49,9 +49,9 @@ When you call [`interrupt`](https://reference.langchain.com/python/langgraph/typ
 
 After an interrupt pauses execution, you resume the graph by invoking it again with a `Command` that contains the resume value. The resume value is passed back to the `interrupt` call, allowing the node to continue execution with the external input.
 
-<Tabs>
-  <Tab title="v2 (LangGraph >= 1.1)">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**v2 (LangGraph >= 1.1):**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langgraph.types import Command
 
     # Initial run - hits the interrupt and pauses
@@ -68,10 +68,10 @@ After an interrupt pauses execution, you resume the graph by invoking it again w
     # The resume payload becomes the return value of interrupt() inside the node
     graph.invoke(Command(resume=True), config=config, version="v2")
     ```
-  </Tab>
+  
+**v1 (default):**
 
-  <Tab title="v1 (default)">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langgraph.types import Command
 
     config = {"configurable": {"thread_id": "thread-1"}}
@@ -84,9 +84,7 @@ After an interrupt pauses execution, you resume the graph by invoking it again w
     # Resume with the human's response
     graph.invoke(Command(resume=True), config=config)
     ```
-  </Tab>
-</Tabs>
-
+  
 **Key points about resuming:**
 
 * You must use the **same thread ID** when resuming that was used when the interrupt occurred
@@ -94,19 +92,21 @@ After an interrupt pauses execution, you resume the graph by invoking it again w
 * The node restarts from the beginning of the node where the [`interrupt`](https://reference.langchain.com/python/langgraph/types/interrupt) was called when resumed, so any code before the [`interrupt`](https://reference.langchain.com/python/langgraph/types/interrupt) runs again
 * You can pass any JSON-serializable value as the resume value
 
-<Warning>
-  `Command(resume=...)` is the **only** `Command` pattern intended as input to `invoke()`/`stream()`. The other `Command` parameters (`update`, `goto`, `graph`) are designed for [returning from node functions](/oss/python/langgraph/graph-api#command). Do not pass `Command(update=...)` as input to continue multi-turn conversations—pass a plain input dict instead.
-</Warning>
+
+> ⚠️ **Warning**
+>
+> `Command(resume=...)` is the **only** `Command` pattern intended as input to `invoke()`/`stream()`. The other `Command` parameters (`update`, `goto`, `graph`) are designed for [returning from node functions](/oss/python/langgraph/graph-api#command). Do not pass `Command(update=...)` as input to continue multi-turn conversations—pass a plain input dict instead.
+
 
 ## Common patterns
 
 The key thing that interrupts unlock is the ability to pause execution and wait for external input. This is useful for a variety of use cases, including:
 
-* <Icon icon="circle-check" /> [Approval workflows](#approve-or-reject): Pause before executing critical actions (API calls, database changes, financial transactions)
-* <Icon icon="link" /> [Handling multiple interrupts](#handling-multiple-interrupts): Pair interrupt IDs with resume values when resuming multiple interrupts in a single invocation
-* <Icon icon="pencil" /> [Review and edit](#review-and-edit-state): Let humans review and modify LLM outputs or tool calls before continuing
-* <Icon icon="tool" /> [Interrupting tool calls](#interrupts-in-tools): Pause before executing tool calls to review and edit the tool call before execution
-* <Icon icon="shield-check" /> [Validating human input](#validating-human-input): Pause before proceeding to the next step to validate human input
+* [Approval workflows](#approve-or-reject): Pause before executing critical actions (API calls, database changes, financial transactions)
+* [Handling multiple interrupts](#handling-multiple-interrupts): Pair interrupt IDs with resume values when resuming multiple interrupts in a single invocation
+* [Review and edit](#review-and-edit-state): Let humans review and modify LLM outputs or tool calls before continuing
+* [Interrupting tool calls](#interrupts-in-tools): Pause before executing tool calls to review and edit the tool call before execution
+* [Validating human input](#validating-human-input): Pause before proceeding to the next step to validate human input
 
 ### Stream with human-in-the-loop (HITL) interrupts
 
@@ -251,8 +251,11 @@ graph.invoke(Command(resume=True), config=config)
 graph.invoke(Command(resume=False), config=config)
 ```
 
-<Accordion title="Full example">
-  ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+<details>
+<summary>Full example</summary>
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   from typing import Literal, Optional, TypedDict
 
   from langgraph.checkpoint.memory import MemorySaver
@@ -307,7 +310,9 @@ graph.invoke(Command(resume=False), config=config)
   resumed = graph.invoke(Command(resume=True), config=config)
   print(resumed["status"])  # -> "approved"
   ```
-</Accordion>
+
+</details>
+
 
 ### Review and edit state
 
@@ -336,8 +341,11 @@ graph.invoke(
 )
 ```
 
-<Accordion title="Full example">
-  ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+<details>
+<summary>Full example</summary>
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   import sqlite3
   from typing import TypedDict
 
@@ -378,7 +386,9 @@ graph.invoke(
   )
   print(final_state["generated_text"])  # -> "Improved draft after review"
   ```
-</Accordion>
+
+</details>
+
 
 ### Interrupts in tools
 
@@ -414,8 +424,11 @@ def send_email(to: str, subject: str, body: str):
 
 This approach is useful when you want the approval logic to live with the tool itself, making it reusable across different parts of your graph. The LLM can call the tool naturally, and the interrupt will pause execution whenever the tool is invoked, allowing you to approve, edit, or cancel the action.
 
-<Accordion title="Full example">
-  ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+<details>
+<summary>Full example</summary>
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   import sqlite3
   from typing import TypedDict
 
@@ -490,7 +503,9 @@ This approach is useful when you want the approval logic to live with the tool i
   )
   print(resumed["messages"][-1])  # -> Tool result returned by send_email
   ```
-</Accordion>
+
+</details>
+
 
 ### Validating human input
 
@@ -518,8 +533,11 @@ def get_age_node(state: State):
 
 Each time you resume the graph with invalid input, it will ask again with a clearer message. Once valid input is provided, the node completes and the graph continues.
 
-<Accordion title="Full example">
-  ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+<details>
+<summary>Full example</summary>
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   import sqlite3
   from typing import TypedDict
 
@@ -564,7 +582,9 @@ Each time you resume the graph with invalid input, it will ask again with a clea
   final = graph.invoke(Command(resume=30), config=config)
   print(final["age"])  # -> 30
   ```
-</Accordion>
+
+</details>
+
 
 ## Rules of interrupts
 
@@ -579,8 +599,8 @@ The way that [`interrupt`](https://reference.langchain.com/python/langgraph/type
 * ✅ Separate [`interrupt`](https://reference.langchain.com/python/langgraph/types/interrupt) calls from error-prone code
 * ✅ Use specific exception types in try/except blocks
 
-<CodeGroup>
-  ```python Separating logic theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```python Separating logic theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   def node_a(state: State):
       # ✅ Good: interrupting first, then handling
       # error conditions separately
@@ -603,7 +623,6 @@ The way that [`interrupt`](https://reference.langchain.com/python/langgraph/type
           print(e)
       return state
   ```
-</CodeGroup>
 
 * 🔴 Do not wrap [`interrupt`](https://reference.langchain.com/python/langgraph/types/interrupt) calls in bare try/except blocks
 
@@ -643,8 +662,8 @@ def node_a(state: State):
 * 🔴 Do not conditionally skip [`interrupt`](https://reference.langchain.com/python/langgraph/types/interrupt) calls within a node
 * 🔴 Do not loop [`interrupt`](https://reference.langchain.com/python/langgraph/types/interrupt) calls using logic that isn't deterministic across executions
 
-<CodeGroup>
-  ```python Skipping interrupts theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```python Skipping interrupts theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   def node_a(state: State):
       # ❌ Bad: conditionally skipping interrupts changes the order
       name = interrupt("What's your name?")
@@ -670,7 +689,6 @@ def node_a(state: State):
 
       return {"results": results}
   ```
-</CodeGroup>
 
 ### Do not return complex values in `interrupt` calls
 
@@ -679,8 +697,8 @@ Depending on which checkpointer is used, complex values may not be serializable 
 * ✅ Pass simple, JSON-serializable types to [`interrupt`](https://reference.langchain.com/python/langgraph/types/interrupt)
 * ✅ Pass dictionaries/objects with simple values
 
-<CodeGroup>
-  ```python Simple values theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```python Simple values theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   def node_a(state: State):
       # ✅ Good: passing simple types that are serializable
       name = interrupt("What's your name?")
@@ -701,12 +719,11 @@ Depending on which checkpointer is used, complex values may not be serializable 
 
       return {"user": response}
   ```
-</CodeGroup>
 
 * 🔴 Do not pass functions, class instances, or other complex objects to [`interrupt`](https://reference.langchain.com/python/langgraph/types/interrupt)
 
-<CodeGroup>
-  ```python Functions theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```python Functions theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   def validate_input(value):
       return len(value) > 0
 
@@ -736,7 +753,6 @@ Depending on which checkpointer is used, complex values may not be serializable 
       })
       return {"result": response}
   ```
-</CodeGroup>
 
 ### Side effects called before `interrupt` must be idempotent
 
@@ -748,8 +764,8 @@ As an example, you might have an API call to update a record inside of a node. I
 * ✅ Place side effects after [`interrupt`](https://reference.langchain.com/python/langgraph/types/interrupt) calls
 * ✅ Separate side effects into separate nodes when possible
 
-<CodeGroup>
-  ```python Idempotent operations theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```python Idempotent operations theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   def node_a(state: State):
       # ✅ Good: using upsert operation which is idempotent
       # Running this multiple times will have the same result
@@ -796,13 +812,12 @@ As an example, you might have an API call to update a record inside of a node. I
 
       return state
   ```
-</CodeGroup>
 
 * 🔴 Do not perform non-idempotent operations before [`interrupt`](https://reference.langchain.com/python/langgraph/types/interrupt)
 * 🔴 Do not create new records without checking if they exist
 
-<CodeGroup>
-  ```python Creating records theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```python Creating records theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   def node_a(state: State):
       # ❌ Bad: creating a new record before interrupt
       # This will create duplicate records on each resume
@@ -827,7 +842,6 @@ As an example, you might have an API call to update a record inside of a node. I
 
       return {"approved": approved}
   ```
-</CodeGroup>
 
 ## Using with subgraphs called as functions
 
@@ -851,13 +865,15 @@ def node_in_subgraph(state: State):
 
 To debug and test a graph, you can use static interrupts as breakpoints to step through the graph execution one node at a time. Static interrupts are triggered at defined points either before or after a node executes. You can set these by specifying `interrupt_before` and `interrupt_after` when compiling the graph.
 
-<Note>
-  Static interrupts are **not** recommended for human-in-the-loop workflows. Use the [`interrupt`](https://reference.langchain.com/python/langgraph/types/interrupt) function instead.
-</Note>
 
-<Tabs>
-  <Tab title="At compile time">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+> ℹ️ **Note**
+>
+> Static interrupts are **not** recommended for human-in-the-loop workflows. Use the [`interrupt`](https://reference.langchain.com/python/langgraph/types/interrupt) function instead.
+
+
+**At compile time:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     graph = builder.compile(
         interrupt_before=["node_a"],  # [!code highlight]
         interrupt_after=["node_b", "node_c"],  # [!code highlight]
@@ -884,10 +900,10 @@ To debug and test a graph, you can use static interrupts as breakpoints to step 
     4. A checkpointer is required to enable breakpoints.
     5. The graph is run until the first breakpoint is hit.
     6. The graph is resumed by passing in `None` for the input. This will run the graph until the next breakpoint is hit.
-  </Tab>
+  
+**At run time:**
 
-  <Tab title="At run time">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     config = {
         "configurable": {
             "thread_id": "some_thread"
@@ -911,12 +927,12 @@ To debug and test a graph, you can use static interrupts as breakpoints to step 
     3. `interrupt_after` specifies the nodes where execution should pause after the node is executed.
     4. The graph is run until the first breakpoint is hit.
     5. The graph is resumed by passing in `None` for the input. This will run the graph until the next breakpoint is hit.
-  </Tab>
-</Tabs>
+  
 
-<Tip>
-  To debug your interrupts, use [LangSmith](/langsmith/home).
-</Tip>
+> 💡 **Tip**
+>
+> To debug your interrupts, use [LangSmith](/langsmith/home).
+
 
 ### Using LangSmith Studio
 
@@ -926,12 +942,15 @@ You can use [LangSmith Studio](/langsmith/studio) to set static interrupts in yo
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/interrupts.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/interrupts.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

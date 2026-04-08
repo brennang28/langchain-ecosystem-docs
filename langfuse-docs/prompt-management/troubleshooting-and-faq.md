@@ -12,19 +12,5 @@ If you don't find a solution to your issue here, try using [Ask AI](/docs/ask-ai
 
 ## FAQ
 
-import { FaqPreview } from "@/components/faq/FaqPreview";
-
-<FaqPreview tags={["prompt-management"]} />
-
 ## GitHub Discussions
 
-import { GhDiscussionsPreview } from "@/components/gh-discussions/GhDiscussionsPreview";
-
-<GhDiscussionsPreview
-  labels={[
-    "feat-prompt-management",
-    "feat-playground",
-    "feat-prompt-experiments",
-    "feat-llm-connections",
-  ]}
-/>

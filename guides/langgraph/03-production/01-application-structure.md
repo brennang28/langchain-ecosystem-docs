@@ -8,9 +8,11 @@ A LangGraph application consists of one or more graphs, a configuration file (`l
 
 This guide shows a typical structure of an application and shows you how to provide the required configuration to deploy an application with [LangSmith Deployment](/langsmith/deployment).
 
-<Info>
-  LangSmith Deployment is a managed hosting platform for deploying and scaling LangGraph agents. It handles the infrastructure, scaling, and operational concerns so you can deploy your stateful, long-running agents directly from your repository. Learn more in the [Deployment documentation](/langsmith/deployment).
-</Info>
+
+> ℹ️ **Info**
+>
+> LangSmith Deployment is a managed hosting platform for deploying and scaling LangGraph agents. It handles the infrastructure, scaling, and operational concerns so you can deploy your stateful, long-running agents directly from your repository. Learn more in the [Deployment documentation](/langsmith/deployment).
+
 
 ## Key concepts
 
@@ -25,9 +27,9 @@ To deploy using the LangSmith, the following information should be provided:
 
 Below are examples of directory structures for applications:
 
-<Tabs>
-  <Tab title="Python (requirements.txt)">
-    ```plaintext  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**Python (requirements.txt):**
+
+```plaintext  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     my-app/
     ├── my_agent # all project code lies within here
     │   ├── utils # utilities for your graph
@@ -41,10 +43,10 @@ Below are examples of directory structures for applications:
     ├── requirements.txt # package dependencies
     └── langgraph.json # configuration file for LangGraph
     ```
-  </Tab>
+  
+**Python (pyproject.toml):**
 
-  <Tab title="Python (pyproject.toml)">
-    ```plaintext  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```plaintext  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     my-app/
     ├── my_agent # all project code lies within here
     │   ├── utils # utilities for your graph
@@ -58,12 +60,12 @@ Below are examples of directory structures for applications:
     ├── langgraph.json  # configuration file for LangGraph
     └── pyproject.toml # dependencies for your project
     ```
-  </Tab>
-</Tabs>
+  
 
-<Note>
-  The directory structure of a LangGraph application can vary depending on the programming language and the package manager used.
-</Note>
+> ℹ️ **Note**
+>
+> The directory structure of a LangGraph application can vary depending on the programming language and the package manager used.
+
 
 <a id="configuration-file-concepts" />
 
@@ -73,9 +75,11 @@ The `langgraph.json` file is a JSON file that specifies the dependencies, graphs
 
 See the [LangGraph configuration file reference](/langsmith/cli#configuration-file) for details on all supported keys in the JSON file.
 
-<Tip>
-  The [LangGraph CLI](/langsmith/cli) defaults to using the configuration file `langgraph.json` in the current directory.
-</Tip>
+
+> 💡 **Tip**
+>
+> The [LangGraph CLI](/langsmith/cli) defaults to using the configuration file `langgraph.json` in the current directory.
+
 
 ### Examples
 
@@ -119,12 +123,15 @@ For a production deployment, you will typically want to configure the environmen
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/application-structure.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/application-structure.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

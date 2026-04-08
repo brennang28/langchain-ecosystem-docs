@@ -10,9 +10,8 @@
 
 ## Quickstart
 
-<Steps>
-  <Step title="Create a config file" icon="file">
-    Create a `.mcp.json` file at your project root. The format follows the [Claude Desktop convention](https://modelcontextprotocol.io/quickstart/user):
+
+Create a `.mcp.json` file at your project root. The format follows the [Claude Desktop convention](https://modelcontextprotocol.io/quickstart/user):
 
     ```json title=".mcp.json" theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     {
@@ -24,10 +23,9 @@
         }
     }
     ```
-  </Step>
+  
 
-  <Step title="Launch the CLI" icon="terminal">
-    ```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     deepagents
     ```
 
@@ -38,9 +36,7 @@
     ```
 
     The agent can now use those tools for the duration of the session. Sessions are kept alive—stdio servers are not restarted between tool calls.
-  </Step>
-</Steps>
-
+  
 ## Auto-discovery
 
 The CLI automatically searches for `.mcp.json` files in standard locations. No flags are needed—just place a config file and it gets picked up.
@@ -66,9 +62,11 @@ When multiple config files exist, their `mcpServers` entries are merged. If the 
 | `--mcp-config PATH` | Add an explicit config as the highest-precedence source (merged on top of auto-discovered configs) |
 | `--no-mcp`          | Disable MCP entirely—no servers are loaded                                                         |
 
-<Note>
-  `--mcp-config` and `--no-mcp` are mutually exclusive.
-</Note>
+
+> ℹ️ **Note**
+>
+> `--mcp-config` and `--no-mcp` are mutually exclusive.
+
 
 ### Claude Code compatibility
 
@@ -99,17 +97,15 @@ stdio servers are spawned as child processes. The CLI communicates with them ove
 }
 ```
 
-<ResponseField name="command" type="string" required>
-  The executable to run.
-</ResponseField>
 
-<ResponseField name="args" type="string[]">
-  Arguments passed to the command.
-</ResponseField>
+- **`command`** (`string`): The executable to run.
 
-<ResponseField name="env" type="object">
-  Environment variables set for the subprocess. Use this to pass API keys and other credentials without exposing them in shell history.
-</ResponseField>
+
+- **`args`** (`string[]`): Arguments passed to the command.
+
+
+- **`env`** (`object`): Environment variables set for the subprocess. Use this to pass API keys and other credentials without exposing them in shell history.
+
 
 ### SSE and HTTP servers
 
@@ -127,17 +123,15 @@ For remote MCP servers, set `type` to `"sse"` or `"http"` and provide a `url`:
 }
 ```
 
-<ResponseField name="type" type="string" required>
-  Transport type: `"sse"` for Server-Sent Events or `"http"` for streamable HTTP.
-</ResponseField>
 
-<ResponseField name="url" type="string" required>
-  The server endpoint URL.
-</ResponseField>
+- **`type`** (`string`): Transport type: `"sse"` for Server-Sent Events or `"http"` for streamable HTTP.
 
-<ResponseField name="headers" type="object">
-  HTTP headers sent with every request. Commonly used for authentication.
-</ResponseField>
+
+- **`url`** (`string`): The server endpoint URL.
+
+
+- **`headers`** (`object`): HTTP headers sent with every request. Commonly used for authentication.
+
 
 ### Server types summary
 
@@ -147,9 +141,11 @@ For remote MCP servers, set `type` to `"sse"` or `"http"` and provide a `url`:
 | sse             | `type: "sse"`, `url`  | `headers`       |
 | http            | `type: "http"`, `url` | `headers`       |
 
-<Note>
-  The `type` field can also be written as `transport` for compatibility with other MCP clients.
-</Note>
+
+> ℹ️ **Note**
+>
+> The `type` field can also be written as `transport` for compatibility with other MCP clients.
+
 
 ## Multiple servers
 
@@ -212,9 +208,11 @@ Trust decisions are stored in `~/.deepagents/config.toml`:
 
 Each key is an absolute project root path. The value is a SHA-256 digest of the concatenated project-level config contents. To revoke trust, delete the entry or modify the project's `.mcp.json` (which invalidates the fingerprint automatically).
 
-<Warning>
-  A trusted stdio MCP server has the same permissions as your user account. Only approve servers from repositories you trust. Review the commands shown in the approval prompt before accepting.
-</Warning>
+
+> ⚠️ **Warning**
+>
+> A trusted stdio MCP server has the same permissions as your user account. Only approve servers from repositories you trust. Review the commands shown in the approval prompt before accepting.
+
 
 ## System prompt awareness
 
@@ -222,25 +220,38 @@ Connected MCP servers and their tools are automatically listed in the agent's sy
 
 ## Troubleshooting
 
-<AccordionGroup>
-  <Accordion title="Server fails to start (stdio)">
-    Verify the command works outside the CLI:
+
+<details>
+<summary>Server fails to start (stdio)</summary>
+
+Verify the command works outside the CLI:
 
     ```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     npx -y @modelcontextprotocol/server-filesystem /tmp
     ```
 
     Common causes: the package isn't installed, `npx` isn't on `PATH`, or required environment variables are missing.
-  </Accordion>
 
-  <Accordion title="Connection refused (SSE/HTTP)">
-    Check that the remote server is running and the URL is correct. If the server requires authentication, make sure `headers` includes the correct credentials.
-  </Accordion>
+</details>
 
-  <Accordion title="Tools not appearing">
-    The CLI prints the number of tools loaded at startup (e.g., `✓ Loaded 3 MCP tools`). If you see `0`, the server started successfully but didn't advertise any tools—check the server's own logs or documentation.
-  </Accordion>
-</AccordionGroup>
+
+  
+<details>
+<summary>Connection refused (SSE/HTTP)</summary>
+
+Check that the remote server is running and the URL is correct. If the server requires authentication, make sure `headers` includes the correct credentials.
+
+</details>
+
+
+  
+<details>
+<summary>Tools not appearing</summary>
+
+The CLI prints the number of tools loaded at startup (e.g., `✓ Loaded 3 MCP tools`). If you see `0`, the server started successfully but didn't advertise any tools—check the server's own logs or documentation.
+
+</details>
+
 
 ## Further reading
 
@@ -249,12 +260,15 @@ Connected MCP servers and their tools are automatically listed in the agent's sy
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/cli/mcp-tools.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/cli/mcp-tools.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

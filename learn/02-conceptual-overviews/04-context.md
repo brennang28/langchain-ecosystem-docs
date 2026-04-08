@@ -13,14 +13,16 @@
    * **Runtime context**: Data scoped to a single run or invocation
    * **Cross-conversation context**: Data that persists across multiple conversations or sessions
 
-<Tip>
-  Runtime context refers to local context: data and dependencies your code needs to run. It does **not** refer to:
 
-  * The LLM context, which is the data passed into the LLM's prompt.
-  * The "context window", which is the maximum number of tokens that can be passed to the LLM.
+> 💡 **Tip**
+>
+> Runtime context refers to local context: data and dependencies your code needs to run. It does **not** refer to:
+> 
+>   * The LLM context, which is the data passed into the LLM's prompt.
+>   * The "context window", which is the maximum number of tokens that can be passed to the LLM.
+> 
+>   Runtime context is a form of dependency injection and can be used to optimize the LLM context. It lets to provide dependencies (like database connections, user IDs, or API clients) to your tools and nodes at runtime rather than hardcoding them. For example, you can use user metadata in the runtime context to fetch user preferences and feed them into the context window.
 
-  Runtime context is a form of dependency injection and can be used to optimize the LLM context. It lets to provide dependencies (like database connections, user IDs, or API clients) to your tools and nodes at runtime rather than hardcoding them. For example, you can use user metadata in the runtime context to fetch user preferences and feed them into the context window.
-</Tip>
 
 LangGraph provides three ways to manage context, which combines the mutability and lifetime dimensions:
 
@@ -45,9 +47,9 @@ graph.invoke(
 )
 ```
 
-<Tabs>
-  <Tab title="Agent prompt">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**Agent prompt:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from dataclasses import dataclass
     from langchain.agents import create_agent
     from langchain.agents.middleware import dynamic_prompt, ModelRequest
@@ -76,10 +78,10 @@ graph.invoke(
     ```
 
     See [Agents](/oss/python/langchain/agents) for details.
-  </Tab>
+  
+**Workflow node:**
 
-  <Tab title="Workflow node">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langgraph.runtime import Runtime
 
     def node(state: State, runtime: Runtime[ContextSchema]):  # [!code highlight]
@@ -88,10 +90,10 @@ graph.invoke(
     ```
 
     * See [the Graph API](/oss/python/langgraph/graph-api#add-runtime-configuration) for details.
-  </Tab>
+  
+**In a tool:**
 
-  <Tab title="In a tool">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langchain.tools import tool, ToolRuntime
 
     @tool
@@ -103,13 +105,13 @@ graph.invoke(
     ```
 
     See the [tool calling guide](/oss/python/langchain/tools#configuration) for details.
-  </Tab>
-</Tabs>
+  
 
-<Tip>
-  The `Runtime` object can be used to access static context and other utilities like the active store and stream writer.
-  See the [`Runtime`](https://reference.langchain.com/python/langgraph/runtime/Runtime) documentation for details.
-</Tip>
+> 💡 **Tip**
+>
+> The `Runtime` object can be used to access static context and other utilities like the active store and stream writer.
+>   See the [`Runtime`](https://reference.langchain.com/python/langgraph/runtime/Runtime) documentation for details.
+
 
 <a id="state" />
 
@@ -117,9 +119,9 @@ graph.invoke(
 
 **Dynamic runtime context** represents mutable data that can evolve during a single run and is managed through the LangGraph state object. This includes conversation history, intermediate results, and values derived from tools or LLM outputs. In LangGraph, the state object acts as [short-term memory](/oss/python/concepts/memory) during a run.
 
-<Tabs>
-  <Tab title="In an agent">
-    Example shows how to incorporate state into an agent **prompt**.
+**In an agent:**
+
+Example shows how to incorporate state into an agent **prompt**.
 
     State can also be accessed by the agent's **tools**, which can read or update the state as needed. See [tool calling guide](/oss/python/langchain/tools#short-term-memory) for details.
 
@@ -149,10 +151,10 @@ graph.invoke(
         "user_name": "John Smith"
     })
     ```
-  </Tab>
+  
+**In a workflow:**
 
-  <Tab title="In a workflow">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from typing_extensions import TypedDict
     from langchain.messages import AnyMessage
     from langgraph.graph import StateGraph
@@ -173,13 +175,13 @@ graph.invoke(
     builder.set_entry_point("node")
     graph = builder.compile()
     ```
-  </Tab>
-</Tabs>
+  
 
-<Tip>
-  **Turning on memory**
-  Please see the [memory guide](/oss/python/langgraph/add-memory) for more details on how to enable memory. This is a powerful feature that allows you to persist the agent's state across multiple invocations. Otherwise, the state is scoped only to a single run.
-</Tip>
+> 💡 **Tip**
+>
+> **Turning on memory**
+>   Please see the [memory guide](/oss/python/langgraph/add-memory) for more details on how to enable memory. This is a powerful feature that allows you to persist the agent's state across multiple invocations. Otherwise, the state is scoped only to a single run.
+
 
 <a id="store" />
 
@@ -195,12 +197,15 @@ graph.invoke(
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/concepts/context.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/concepts/context.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

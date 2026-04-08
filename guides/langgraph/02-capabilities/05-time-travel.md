@@ -19,9 +19,11 @@ Both work by resuming from a prior checkpoint. Nodes before the checkpoint are n
 
 Invoke the graph with a prior checkpoint's config to replay from that point.
 
-<Warning>
-  Replay re-executes nodes—it doesn't just read from cache. LLM calls, API requests, and [interrupts](/oss/python/langgraph/interrupts) fire again and may return different results. Replaying from the final checkpoint (no `next` nodes) is a no-op.
-</Warning>
+
+> ⚠️ **Warning**
+>
+> Replay re-executes nodes—it doesn't just read from cache. LLM calls, API requests, and [interrupts](/oss/python/langgraph/interrupts) fire again and may return different results. Replaying from the final checkpoint (no `next` nodes) is a no-op.
+
 
 <img src="https://mintcdn.com/langchain-5e9cc07a/dL5Sn6Cmy9pwtY0V/oss/images/re_play.png?fit=max&auto=format&n=dL5Sn6Cmy9pwtY0V&q=85&s=d7b34b85c106e55d181ae1f4afb50251" alt="Replay" width="2276" height="986" data-path="oss/images/re_play.png" />
 
@@ -79,9 +81,11 @@ Fork creates a new branch from a past checkpoint with modified state. Call [`upd
 
 <img src="https://mintcdn.com/langchain-5e9cc07a/-_xGPoyjhyiDWTPJ/oss/images/checkpoints_full_story.jpg?fit=max&auto=format&n=-_xGPoyjhyiDWTPJ&q=85&s=a52016b2c44b57bd395d6e1eac47aa36" alt="Fork" width="3705" height="2598" data-path="oss/images/checkpoints_full_story.jpg" />
 
-<Warning>
-  `update_state` does **not** roll back a thread. It creates a new checkpoint that branches from the specified point. The original execution history remains intact.
-</Warning>
+
+> ⚠️ **Warning**
+>
+> `update_state` does **not** roll back a thread. It creates a new checkpoint that branches from the specified point. The original execution history remains intact.
+
 
 ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 # Find checkpoint before write_joke
@@ -203,9 +207,9 @@ result = graph.invoke(None, fork_config)
 
 Time travel with [subgraphs](/oss/python/langgraph/use-subgraphs) depends on whether the subgraph has its own checkpointer. This determines the granularity of checkpoints you can time travel from.
 
-<Tabs>
-  <Tab title="Inherited checkpointer (default)">
-    By default, a subgraph inherits the parent's checkpointer. The parent treats the entire subgraph as a **single super-step** — there is only one parent-level checkpoint for the whole subgraph execution. Time traveling from before the subgraph re-executes it from scratch.
+**Inherited checkpointer (default):**
+
+By default, a subgraph inherits the parent's checkpointer. The parent treats the entire subgraph as a **single super-step** — there is only one parent-level checkpoint for the whole subgraph execution. Time traveling from before the subgraph re-executes it from scratch.
 
     You cannot time travel to a point *between* nodes in a default subgraph — you can only time travel from the parent level.
 
@@ -243,10 +247,10 @@ Time travel with [subgraphs](/oss/python/langgraph/use-subgraphs) depends on whe
     # The entire subgraph re-executes from scratch
     # You cannot time travel to a point between step_a and step_b
     ```
-  </Tab>
+  
+**Subgraph checkpointer:**
 
-  <Tab title="Subgraph checkpointer">
-    Set `checkpointer=True` on the subgraph to give it its own checkpoint history. This creates checkpoints at each step **within** the subgraph, allowing you to time travel from a specific point inside it — for example, between two interrupts.
+Set `checkpointer=True` on the subgraph to give it its own checkpoint history. This creates checkpoints at each step **within** the subgraph, allowing you to time travel from a specific point inside it — for example, between two interrupts.
 
     Use [`get_state`](https://reference.langchain.com/python/langgraph/graphs/#langgraph.graph.state.CompiledStateGraph.get_state) with `subgraphs=True` to access the subgraph's own checkpoint config, then fork from it:
 
@@ -285,19 +289,20 @@ Time travel with [subgraphs](/oss/python/langgraph/use-subgraphs) depends on whe
     result = graph.invoke(None, fork_config)
     # step_b re-executes, step_a's result is preserved
     ```
-  </Tab>
-</Tabs>
-
+  
 See [subgraph persistence](/oss/python/langgraph/use-subgraphs#subgraph-persistence) for more on configuring subgraph checkpointers.
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/use-time-travel.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/use-time-travel.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

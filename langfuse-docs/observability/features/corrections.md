@@ -8,9 +8,8 @@ sidebarTitle: Corrections
 
 Corrections allow you to capture improved versions of LLM outputs directly in trace and observation views. Domain experts can document what the model should have generated, creating a foundation for fine-tuning datasets and continuous improvement.
 
-<Frame>
-  ![Corrected output with diff view](/images/docs/corrections-diff-view.png)
-</Frame>
+
+![Corrected output with diff view](/images/docs/corrections-diff-view.png)
 
 ## Why Use Corrections?
 
@@ -25,10 +24,6 @@ Add corrected outputs to any trace or observation through the UI or API. Correct
 
 ## Adding Corrections
 
-<LangTabs items={["Langfuse UI", "API/SDK"]}>
-
-<Tab>
-
 ### Via the UI
 
 Navigate to any trace or observation detail page:
@@ -39,22 +34,15 @@ Navigate to any trace or observation detail page:
 4. Toggle between **JSON validation mode** and **plain text mode** to match your data format
 5. View the **diff** to compare original vs corrected output
 
-<Frame fullWidth>
-  ![Adding a correction in the UI](/images/docs/corrections-add-ui.png)
-</Frame>
+
+![Adding a correction in the UI](/images/docs/corrections-add-ui.png)
 
 The editor auto-saves as you type and provides real-time validation feedback in JSON mode.
 
-</Tab>
-
-<Tab>
 
 ### Via API/SDK
 
 Corrections are created as scores with `dataType: "CORRECTION"` and `name: "output"`.
-
-<Tabs items={["Python", "TypeScript", "HTTP"]}>
-<Tab>
 
 ```python
 from langfuse import Langfuse
@@ -79,12 +67,8 @@ langfuse.create_score(
 )
 ```
 
-</Tab>
-<Tab>
 
 ```typescript
-import { Langfuse } from "langfuse";
-
 const langfuse = new Langfuse();
 
 // Add correction to a trace
@@ -105,8 +89,6 @@ langfuse.score.create({
 });
 ```
 
-</Tab>
-<Tab>
 
 ```bash
 curl -X POST https://cloud.langfuse.com/api/public/scores \
@@ -121,34 +103,20 @@ curl -X POST https://cloud.langfuse.com/api/public/scores \
   }'
 ```
 
-</Tab>
-</Tabs>
-
-</Tab>
-
-</LangTabs>
 
 ## Fetching Corrections
 
 Corrections are stored as scores and can be fetched programmatically to build datasets or analyze model performance.
 
-<Tabs items={["Python", "TypeScript", "HTTP"]}>
-<Tab>
+Coming soon: Fetch corrections via the SDK.
+
 
 Coming soon: Fetch corrections via the SDK.
 
-</Tab>
-<Tab>
-
-Coming soon: Fetch corrections via the SDK.
-
-</Tab>
-<Tab>
 
 ```bash
 curl -X GET "https://cloud.langfuse.com/api/public/scores?dataType=CORRECTION" \
   -H "Authorization: Basic <base64_encoded_credentials>"
 ```
 
-</Tab>
-</Tabs>
+

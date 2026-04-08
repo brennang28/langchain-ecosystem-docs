@@ -8,9 +8,11 @@
 
 Memory lets your agent learn and improve across conversations. Deep Agents makes memory first class with filesystem-backed memory: the agent reads and writes memory as files, and you control where those files are stored using [backends](/oss/python/deepagents/backends).
 
-<Note>
-  This page covers **long-term memory**: memory that persists across conversations. For short-term memory (conversation history and scratch files within a single session), see the [context engineering](/oss/python/deepagents/context-engineering) guide. Short-term memory is managed automatically as part of the agent's [state](/oss/python/langgraph/graph-api#state).
-</Note>
+
+> ℹ️ **Note**
+>
+> This page covers **long-term memory**: memory that persists across conversations. For short-term memory (conversation history and scratch files within a single session), see the [context engineering](/oss/python/deepagents/context-engineering) guide. Short-term memory is managed automatically as part of the agent's [state](/oss/python/langgraph/graph-api#state).
+
 
 ## How memory works
 
@@ -30,9 +32,11 @@ Give the agent its own persistent identity that evolves over time. Agent-scoped 
 
 The key is the backend namespace: setting it to `(assistant_id,)` means every conversation for this agent reads and writes to the same memory file.
 
-<Note>
-  Accessing `ctx.runtime.server_info` requires `deepagents>=0.5.0`. On older versions, read the assistant ID from `get_config()["metadata"]["assistant_id"]` instead.
-</Note>
+
+> ℹ️ **Note**
+>
+> Accessing `ctx.runtime.server_info` requires `deepagents>=0.5.0`. On older versions, read the assistant ID from `get_config()["metadata"]["assistant_id"]` instead.
+
 
 ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 from deepagents import create_deep_agent
@@ -59,8 +63,11 @@ agent = create_deep_agent(
 )
 ```
 
-<Accordion title="Full example: seed memory and invoke">
-  Populate the store with initial memories, then invoke the agent across two threads to see it remember and update what it learns.
+
+<details>
+<summary>Full example: seed memory and invoke</summary>
+
+Populate the store with initial memories, then invoke the agent across two threads to see it remember and update what it learns.
 
   ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   from langchain_core.utils.uuid import uuid7
@@ -128,7 +135,9 @@ agent = create_deep_agent(
       config=config2,
   )
   ```
-</Accordion>
+
+</details>
+
 
 ### User-scoped memory
 
@@ -157,8 +166,11 @@ agent = create_deep_agent(
 )
 ```
 
-<Accordion title="Full example: isolated memory across users">
-  Seed per-user memories and invoke the agent as two different users. Each user sees only their own preferences.
+
+<details>
+<summary>Full example: isolated memory across users</summary>
+
+Seed per-user memories and invoke the agent as two different users. Each user sees only their own preferences.
 
   ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   from langchain_core.utils.uuid import uuid7
@@ -244,7 +256,9 @@ agent = create_deep_agent(
       context=Context(user_id="user-bob"),
   )
   ```
-</Accordion>
+
+</details>
+
 
 ## Advanced usage
 
@@ -458,13 +472,16 @@ cron_job = await client.crons.create(
 )
 ```
 
-<Note>
-  All cron schedules are interpreted in **UTC**. See [cron jobs](/langsmith/cron-jobs) for details on managing and deleting cron jobs.
-</Note>
 
-<Warning>
-  The cron interval must match the lookback window inside the consolidation agent. The example above runs every 6 hours (`0 */6 * * *`) and the agent's `search_recent_conversations` tool looks back `timedelta(hours=6)` — keep these in sync. If the cron runs more often than the lookback, you'll reprocess the same conversations; if it runs less often, you'll drop memories that fall outside the window.
-</Warning>
+> ℹ️ **Note**
+>
+> All cron schedules are interpreted in **UTC**. See [cron jobs](/langsmith/cron-jobs) for details on managing and deleting cron jobs.
+
+
+> ⚠️ **Warning**
+>
+> The cron interval must match the lookback window inside the consolidation agent. The example above runs every 6 hours (`0 */6 * * *`) and the agent's `search_recent_conversations` tool looks back `timedelta(hours=6)` — keep these in sync. If the cron runs more often than the lookback, you'll reprocess the same conversations; if it runs less often, you'll drop memories that fall outside the window.
+
 
 For more on deploying agents with background processes, see [going to production](/oss/python/deepagents/going-to-production).
 
@@ -506,18 +523,23 @@ StoreBackend(
 
 Use `assistant_id` alone if you only need per-agent isolation without per-user scoping.
 
-<Tip>
-  Use [LangSmith tracing](/langsmith/trace-with-langgraph) to audit what your agent writes to memory. Every file write appears as a tool call in the trace.
-</Tip>
+
+> 💡 **Tip**
+>
+> Use [LangSmith tracing](/langsmith/trace-with-langgraph) to audit what your agent writes to memory. Every file write appears as a tool call in the trace.
+
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/memory.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/memory.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

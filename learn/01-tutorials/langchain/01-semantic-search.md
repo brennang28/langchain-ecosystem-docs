@@ -25,8 +25,8 @@ This guide focuses on retrieval of text data. We will cover the following concep
 
 This tutorial requires the `langchain-community` and `pypdf` packages:
 
-<CodeGroup>
-  ```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   pip install langchain-community pypdf
   ```
 
@@ -37,7 +37,6 @@ This tutorial requires the `langchain-community` and `pypdf` packages:
   ```bash uv theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   uv add langchain-community pypdf
   ```
-</CodeGroup>
 
 For more details, see our [Installation guide](/oss/python/langchain/install).
 
@@ -173,9 +172,9 @@ Vector search is a common way to store and search over unstructured data (such a
 
 LangChain supports embeddings from [dozens of providers](/oss/python/integrations/embeddings/). These models specify how text should be converted into a numeric vector. Let's select a model:
 
-<Tabs>
-  <Tab title="OpenAI">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**OpenAI:**
+
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain-openai"
     ```
 
@@ -190,10 +189,10 @@ LangChain supports embeddings from [dozens of providers](/oss/python/integration
 
     embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
     ```
-  </Tab>
+  
+**Azure:**
 
-  <Tab title="Azure">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain-openai"
     ```
 
@@ -212,10 +211,10 @@ LangChain supports embeddings from [dozens of providers](/oss/python/integration
         openai_api_version=os.environ["AZURE_OPENAI_API_VERSION"],
     )
     ```
-  </Tab>
+  
+**Google Gemini:**
 
-  <Tab title="Google Gemini">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-google-genai
     ```
 
@@ -230,10 +229,10 @@ LangChain supports embeddings from [dozens of providers](/oss/python/integration
 
     embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
     ```
-  </Tab>
+  
+**Google Vertex:**
 
-  <Tab title="Google Vertex">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-google-vertexai
     ```
 
@@ -242,10 +241,10 @@ LangChain supports embeddings from [dozens of providers](/oss/python/integration
 
     embeddings = VertexAIEmbeddings(model="text-embedding-005")
     ```
-  </Tab>
+  
+**AWS:**
 
-  <Tab title="AWS">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-aws
     ```
 
@@ -254,10 +253,10 @@ LangChain supports embeddings from [dozens of providers](/oss/python/integration
 
     embeddings = BedrockEmbeddings(model_id="amazon.titan-embed-text-v2:0")
     ```
-  </Tab>
+  
+**HuggingFace:**
 
-  <Tab title="HuggingFace">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-huggingface
     ```
 
@@ -266,10 +265,10 @@ LangChain supports embeddings from [dozens of providers](/oss/python/integration
 
     embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2")
     ```
-  </Tab>
+  
+**Ollama:**
 
-  <Tab title="Ollama">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-ollama
     ```
 
@@ -278,10 +277,10 @@ LangChain supports embeddings from [dozens of providers](/oss/python/integration
 
     embeddings = OllamaEmbeddings(model="llama3")
     ```
-  </Tab>
+  
+**Cohere:**
 
-  <Tab title="Cohere">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-cohere
     ```
 
@@ -296,10 +295,10 @@ LangChain supports embeddings from [dozens of providers](/oss/python/integration
 
     embeddings = CohereEmbeddings(model="embed-english-v3.0")
     ```
-  </Tab>
+  
+**MistralAI:**
 
-  <Tab title="MistralAI">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-mistralai
     ```
 
@@ -314,10 +313,10 @@ LangChain supports embeddings from [dozens of providers](/oss/python/integration
 
     embeddings = MistralAIEmbeddings(model="mistral-embed")
     ```
-  </Tab>
+  
+**Nomic:**
 
-  <Tab title="Nomic">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-nomic
     ```
 
@@ -332,10 +331,10 @@ LangChain supports embeddings from [dozens of providers](/oss/python/integration
 
     embeddings = NomicEmbeddings(model="nomic-embed-text-v1.5")
     ```
-  </Tab>
+  
+**NVIDIA:**
 
-  <Tab title="NVIDIA">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-nvidia-ai-endpoints
     ```
 
@@ -350,10 +349,10 @@ LangChain supports embeddings from [dozens of providers](/oss/python/integration
 
     embeddings = NVIDIAEmbeddings(model="NV-Embed-QA")
     ```
-  </Tab>
+  
+**Voyage AI:**
 
-  <Tab title="Voyage AI">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-voyageai
     ```
 
@@ -368,10 +367,10 @@ LangChain supports embeddings from [dozens of providers](/oss/python/integration
 
     embeddings = VoyageAIEmbeddings(model="voyage-3")
     ```
-  </Tab>
+  
+**IBM watsonx:**
 
-  <Tab title="IBM watsonx">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-ibm
     ```
 
@@ -390,10 +389,10 @@ LangChain supports embeddings from [dozens of providers](/oss/python/integration
         project_id="<WATSONX PROJECT_ID>",
     )
     ```
-  </Tab>
+  
+**Fake:**
 
-  <Tab title="Fake">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-core
     ```
 
@@ -402,10 +401,10 @@ LangChain supports embeddings from [dozens of providers](/oss/python/integration
 
     embeddings = DeterministicFakeEmbedding(size=4096)
     ```
-  </Tab>
+  
+**Isaacus:**
 
-  <Tab title="Isaacus">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-isaacus
     ```
 
@@ -420,9 +419,7 @@ LangChain supports embeddings from [dozens of providers](/oss/python/integration
 
     embeddings = IsaacusEmbeddings(model="kanon-2-embedder")
     ```
-  </Tab>
-</Tabs>
-
+  
 ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 vector_1 = embeddings.embed_query(all_splits[0].page_content)
 vector_2 = embeddings.embed_query(all_splits[1].page_content)
@@ -446,9 +443,9 @@ LangChain [VectorStore](https://reference.langchain.com/python/langchain-core/ve
 
 LangChain includes a suite of [integrations](/oss/python/integrations/vectorstores) with different vector store technologies. Some vector stores are hosted by a provider (e.g., various cloud providers) and require specific credentials to use; some (such as [Postgres](/oss/python/integrations/vectorstores/pgvector)) run in separate infrastructure that can be run locally or via a third-party; others can run in-memory for lightweight workloads. Let's select a vector store:
 
-<Tabs>
-  <Tab title="In-memory">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**In-memory:**
+
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain-core"
     ```
 
@@ -457,10 +454,10 @@ LangChain includes a suite of [integrations](/oss/python/integrations/vectorstor
 
     vector_store = InMemoryVectorStore(embeddings)
     ```
-  </Tab>
+  
+**Amazon OpenSearch:**
 
-  <Tab title="Amazon OpenSearch">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU  boto3
     ```
 
@@ -486,10 +483,10 @@ LangChain includes a suite of [integrations](/oss/python/integrations/vectorstor
         index_name="test-index",
     )
     ```
-  </Tab>
+  
+**AstraDB:**
 
-  <Tab title="AstraDB">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -U "langchain-astradb"
     ```
 
@@ -504,10 +501,10 @@ LangChain includes a suite of [integrations](/oss/python/integrations/vectorstor
         namespace=ASTRA_DB_NAMESPACE,
     )
     ```
-  </Tab>
+  
+**Chroma:**
 
-  <Tab title="Chroma">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-chroma
     ```
 
@@ -520,10 +517,10 @@ LangChain includes a suite of [integrations](/oss/python/integrations/vectorstor
         persist_directory="./chroma_langchain_db",  # Where to save data locally, remove if not necessary
     )
     ```
-  </Tab>
+  
+**FAISS:**
 
-  <Tab title="FAISS">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-community faiss-cpu
     ```
 
@@ -542,10 +539,10 @@ LangChain includes a suite of [integrations](/oss/python/integrations/vectorstor
         index_to_docstore_id={},
     )
     ```
-  </Tab>
+  
+**Milvus:**
 
-  <Tab title="Milvus">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-milvus
     ```
 
@@ -560,10 +557,10 @@ LangChain includes a suite of [integrations](/oss/python/integrations/vectorstor
         index_params={"index_type": "FLAT", "metric_type": "L2"},
     )
     ```
-  </Tab>
+  
+**MongoDB:**
 
-  <Tab title="MongoDB">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-mongodb
     ```
 
@@ -577,10 +574,10 @@ LangChain includes a suite of [integrations](/oss/python/integrations/vectorstor
         relevance_score_fn="cosine",
     )
     ```
-  </Tab>
+  
+**PGVector:**
 
-  <Tab title="PGVector">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-postgres
     ```
 
@@ -593,10 +590,10 @@ LangChain includes a suite of [integrations](/oss/python/integrations/vectorstor
         connection="postgresql+psycopg://...",
     )
     ```
-  </Tab>
+  
+**PGVectorStore:**
 
-  <Tab title="PGVectorStore">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-postgres
     ```
 
@@ -613,10 +610,10 @@ LangChain includes a suite of [integrations](/oss/python/integrations/vectorstor
         embedding_service=embeddings
     )
     ```
-  </Tab>
+  
+**Pinecone:**
 
-  <Tab title="Pinecone">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-pinecone
     ```
 
@@ -629,10 +626,10 @@ LangChain includes a suite of [integrations](/oss/python/integrations/vectorstor
 
     vector_store = PineconeVectorStore(embedding=embeddings, index=index)
     ```
-  </Tab>
+  
+**Qdrant:**
 
-  <Tab title="Qdrant">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install -qU langchain-qdrant
     ```
 
@@ -656,9 +653,7 @@ LangChain includes a suite of [integrations](/oss/python/integrations/vectorstor
         embedding=embeddings,
     )
     ```
-  </Tab>
-</Tabs>
-
+  
 Having instantiated our vector store, we can now index the documents.
 
 ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
@@ -860,12 +855,15 @@ For more on RAG, see:
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/knowledge-base.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/knowledge-base.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

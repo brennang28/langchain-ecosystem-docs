@@ -89,33 +89,35 @@ even after that subagent's execution is complete. Those files will continue to b
 
 [`FilesystemBackend`](https://reference.langchain.com/python/deepagents/backends/filesystem/FilesystemBackend) reads and writes real files under a configurable root directory.
 
-<Warning>
-  This backend grants agents direct filesystem read/write access.
-  Use with caution and only in appropriate environments.
 
-  **Appropriate use cases:**
+> ⚠️ **Warning**
+>
+> This backend grants agents direct filesystem read/write access.
+>   Use with caution and only in appropriate environments.
+> 
+>   **Appropriate use cases:**
+> 
+>   * Local development CLIs (coding assistants, development tools)
+>   * CI/CD pipelines (see security considerations below)
+> 
+>   **Inappropriate use cases:**
+> 
+>   * Web servers or HTTP APIs - use `StateBackend`, `StoreBackend`, or a [sandbox backend](/oss/python/deepagents/sandboxes) instead
+> 
+>   **Security risks:**
+> 
+>   * Agents can read any accessible file, including secrets (API keys, credentials, `.env` files)
+>   * Combined with network tools, secrets may be exfiltrated via SSRF attacks
+>   * File modifications are permanent and irreversible
+> 
+>   **Recommended safeguards:**
+> 
+>   1. Enable [Human-in-the-Loop (HITL) middleware](/oss/python/deepagents/human-in-the-loop) to review sensitive operations.
+>   2. Exclude secrets from accessible filesystem paths (especially in CI/CD).
+>   3. Use a [sandbox backend](/oss/python/deepagents/sandboxes) for production environments requiring filesystem interaction.
+>   4. **Always** use `virtual_mode=True` with `root_dir` to enable path-based access restrictions (blocks `..`, `~`, and absolute paths outside root).
+>      Note that the default (`virtual_mode=False`) provides no security even with `root_dir` set.
 
-  * Local development CLIs (coding assistants, development tools)
-  * CI/CD pipelines (see security considerations below)
-
-  **Inappropriate use cases:**
-
-  * Web servers or HTTP APIs - use `StateBackend`, `StoreBackend`, or a [sandbox backend](/oss/python/deepagents/sandboxes) instead
-
-  **Security risks:**
-
-  * Agents can read any accessible file, including secrets (API keys, credentials, `.env` files)
-  * Combined with network tools, secrets may be exfiltrated via SSRF attacks
-  * File modifications are permanent and irreversible
-
-  **Recommended safeguards:**
-
-  1. Enable [Human-in-the-Loop (HITL) middleware](/oss/python/deepagents/human-in-the-loop) to review sensitive operations.
-  2. Exclude secrets from accessible filesystem paths (especially in CI/CD).
-  3. Use a [sandbox backend](/oss/python/deepagents/sandboxes) for production environments requiring filesystem interaction.
-  4. **Always** use `virtual_mode=True` with `root_dir` to enable path-based access restrictions (blocks `..`, `~`, and absolute paths outside root).
-     Note that the default (`virtual_mode=False`) provides no security even with `root_dir` set.
-</Warning>
 
 ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 from deepagents.backends import FilesystemBackend
@@ -139,38 +141,40 @@ agent = create_deep_agent(
 
 ### LocalShellBackend (local shell)
 
-<Warning>
-  This backend grants agents direct filesystem read/write access **and** unrestricted shell execution on your host.
-  Use with extreme caution and only in appropriate environments.
 
-  **Appropriate use cases:**
+> ⚠️ **Warning**
+>
+> This backend grants agents direct filesystem read/write access **and** unrestricted shell execution on your host.
+>   Use with extreme caution and only in appropriate environments.
+> 
+>   **Appropriate use cases:**
+> 
+>   * Local development CLIs (coding assistants, development tools)
+>   * Personal development environments where you trust the agent's code
+>   * CI/CD pipelines with proper secret management
+> 
+>   **Inappropriate use cases:**
+> 
+>   * Production environments (such as web servers, APIs, multi-tenant systems)
+>   * Processing untrusted user input or executing untrusted code
+> 
+>   **Security risks:**
+> 
+>   * Agents can execute **arbitrary shell commands** with your user's permissions
+>   * Agents can read any accessible file, including secrets (API keys, credentials, `.env` files)
+>   * Secrets may be exposed
+>   * File modifications and command execution are **permanent and irreversible**
+>   * Commands run directly on your host system
+>   * Commands can consume unlimited CPU, memory, disk
+> 
+>   **Recommended safeguards:**
+> 
+>   1. Enable [Human-in-the-Loop (HITL) middleware](/oss/python/deepagents/human-in-the-loop) to review and approve operations before execution. This is **strongly recommended**.
+>   2. Run in dedicated development environments only. Never use on shared or production systems.
+>   3. Use a [sandbox backend](/oss/python/deepagents/sandboxes) for production environments requiring shell execution.
+> 
+>   **Note:** `virtual_mode=True` provides no security with shell access enabled, since commands can access any path on the system.
 
-  * Local development CLIs (coding assistants, development tools)
-  * Personal development environments where you trust the agent's code
-  * CI/CD pipelines with proper secret management
-
-  **Inappropriate use cases:**
-
-  * Production environments (such as web servers, APIs, multi-tenant systems)
-  * Processing untrusted user input or executing untrusted code
-
-  **Security risks:**
-
-  * Agents can execute **arbitrary shell commands** with your user's permissions
-  * Agents can read any accessible file, including secrets (API keys, credentials, `.env` files)
-  * Secrets may be exposed
-  * File modifications and command execution are **permanent and irreversible**
-  * Commands run directly on your host system
-  * Commands can consume unlimited CPU, memory, disk
-
-  **Recommended safeguards:**
-
-  1. Enable [Human-in-the-Loop (HITL) middleware](/oss/python/deepagents/human-in-the-loop) to review and approve operations before execution. This is **strongly recommended**.
-  2. Run in dedicated development environments only. Never use on shared or production systems.
-  3. Use a [sandbox backend](/oss/python/deepagents/sandboxes) for production environments requiring shell execution.
-
-  **Note:** `virtual_mode=True` provides no security with shell access enabled, since commands can access any path on the system.
-</Warning>
 
 ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 from deepagents.backends import LocalShellBackend
@@ -206,13 +210,16 @@ agent = create_deep_agent(
 )
 ```
 
-<Note>
-  When deploying to [LangSmith Deployment](/langsmith/deployment), omit the `store` parameter. The platform automatically provisions a store for your agent.
-</Note>
 
-<Tip>
-  The `namespace` parameter controls data isolation. For multi-user deployments, always set a [namespace factory](/oss/python/deepagents/backends#namespace-factories) to isolate data per user or tenant.
-</Tip>
+> ℹ️ **Note**
+>
+> When deploying to [LangSmith Deployment](/langsmith/deployment), omit the `store` parameter. The platform automatically provisions a store for your agent.
+
+
+> 💡 **Tip**
+>
+> The `namespace` parameter controls data isolation. For multi-user deployments, always set a [namespace factory](/oss/python/deepagents/backends#namespace-factories) to isolate data per user or tenant.
+
 
 **How it works:**
 
@@ -243,9 +250,11 @@ The `BackendContext` provides:
 
 * `ctx.state` — Current agent state
 
-<Note>
-  `ctx.runtime.server_info` and `ctx.runtime.execution_info` require `deepagents>=0.5.0`.
-</Note>
+
+> ℹ️ **Note**
+>
+> `ctx.runtime.server_info` and `ctx.runtime.execution_info` require `deepagents>=0.5.0`.
+
 
 **Common namespace patterns:**
 
@@ -276,13 +285,16 @@ You can combine multiple components to create more specific scopes — for examp
 
 Namespace components must contain only alphanumeric characters, hyphens, underscores, dots, `@`, `+`, colons, and tildes. Wildcards (`*`, `?`) are rejected to prevent glob injection.
 
-<Warning>
-  The `namespace` parameter will be **required** in v0.5.0. Always set it explicitly for new code.
-</Warning>
 
-<Note>
-  When no namespace factory is provided, the legacy default uses the `assistant_id` from LangGraph config metadata. This means all users of the same [assistant](/langsmith/assistants) share the same storage. For multi-user [going to production](/oss/python/deepagents/going-to-production), always provide a namespace factory.
-</Note>
+> ⚠️ **Warning**
+>
+> The `namespace` parameter will be **required** in v0.5.0. Always set it explicitly for new code.
+
+
+> ℹ️ **Note**
+>
+> When no namespace factory is provided, the legacy default uses the `assistant_id` from LangGraph config metadata. This means all users of the same [assistant](/langsmith/assistants) share the same storage. For multi-user [going to production](/oss/python/deepagents/going-to-production), always provide a namespace factory.
+
 
 ### CompositeBackend (router)
 
@@ -474,9 +486,11 @@ class PolicyWrapper(BackendProtocol):
 
 ## Migrate from backend factories
 
-<Warning>
-  The backend factory pattern is **deprecated**. Pass pre-constructed backend instances directly instead of factory functions.
-</Warning>
+
+> ⚠️ **Warning**
+>
+> The backend factory pattern is **deprecated**. Pass pre-constructed backend instances directly instead of factory functions.
+
 
 Previously, backends like `StateBackend` and `StoreBackend` required a factory function that received a runtime object, because they needed runtime context (state, store) to operate. Backends now resolve this context internally via LangGraph's `get_config()`, `get_store()`, and `get_runtime()` helpers, so you can pass instances directly.
 
@@ -500,9 +514,11 @@ Previously, backends like `StateBackend` and `StoreBackend` required a factory f
 | `files_update` field on `WriteResult` and `EditResult`    | State writes are now handled internally by the backend       |
 | `Command` wrapping in middleware write/edit tools         | Tools return plain strings; no `Command(update=...)` needed  |
 
-<Note>
-  The factory pattern still works at runtime and emits a deprecation warning. Update your code to use direct instances before the next major version.
-</Note>
+
+> ℹ️ **Note**
+>
+> The factory pattern still works at runtime and emits a deprecation warning. Update your code to use direct instances before the next major version.
+
 
 ### Migration example
 
@@ -561,12 +577,15 @@ Supporting types:
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/backends.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/backends.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

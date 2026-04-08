@@ -687,7 +687,7 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
         backgroundColor: isSelected ? isDark ? "#1A2740" : "#E5F4FF" : "transparent",
         color: isSelected ? isDark ? "#C8DDF0" : "#030710" : "#6B8299"
       });
-      btn.innerHTML = `<span>${SDK_LOGOS[value]}</span>${label}`;
+      btn.innerHTML = `<span>${SDK_LOGOS[value]}${label}`;
       btn.addEventListener("mouseenter", () => {
         if (!isSelected) {
           btn.style.backgroundColor = isDark ? "#1A2740" : "#F2FAFF";
@@ -743,22 +743,18 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
   const tabInactiveClass = `${tabBase} lc-tab-inactive`;
   const tabTraceActiveClass = `${tabBase} lc-tab-trace`;
   const tabTraceLoadingClass = `${tabBase} lc-tab-trace-loading`;
-  const toolbar = showCodeTab && <div className="lc-toolbar flex items-stretch justify-between px-3 py-2 border-b lc-border lc-bg-wash">
-      <div className="inline-flex items-stretch gap-0.5 rounded-lg border lc-border lc-bg-surface" style={{
-    padding: 3
-  }}>
+  const toolbar = showCodeTab && 
+      
         <button type="button" aria-label="Preview" onClick={() => switchView("preview")} className={activeView === "preview" ? tabActiveClass : tabInactiveClass}>
           <span dangerouslySetInnerHTML={{
     __html: VIEW_EYE_SVG
   }} />
-          <span className="lc-tab-label">Preview</span>
-        </button>
+          Preview</button>
         <button type="button" aria-label="Code" onClick={() => switchView("code")} className={activeView === "code" ? tabActiveClass : tabInactiveClass}>
           <span dangerouslySetInnerHTML={{
     __html: VIEW_CODE_SVG
   }} />
-          <span className="lc-tab-label">Code</span>
-        </button>
+          Code</button>
         {(traceUrl || traceLoading) && !useLocalPreview && <a href={traceUrl ?? "#"} target="_blank" rel="noopener noreferrer" aria-label="Trace" onClick={e => {
     if (!traceUrl) e.preventDefault(); else cachedRef.current?.host.trackEvent("trace_tab_clicked", {
       pattern
@@ -767,16 +763,9 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
             <span dangerouslySetInnerHTML={{
     __html: traceUrl ? TRACE_ICON_SVG : TRACE_SPINNER_SVG
   }} />
-            <span className="lc-tab-label">Trace</span>
-            {traceUrl && <span className="ml-0.5" dangerouslySetInnerHTML={{
-    __html: EXTERNAL_LINK_SVG
-  }} />}
+            Trace{traceUrl && }
           </a>}
-      </div>
-
-      {activeView === "code" && <div className="lc-lang-switcher inline-flex items-stretch gap-0.5 rounded-lg border lc-border lc-bg-surface" style={{
-    padding: 3
-  }}>
+      {activeView === "code" && 
           <button type="button" aria-label="TypeScript" onClick={() => setAgentLang("js")} className={agentLang === "js" ? tabActiveClass : tabInactiveClass} title="TypeScript / JavaScript">
             <span dangerouslySetInnerHTML={{
     __html: LANG_TS_SVG
@@ -787,10 +776,10 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
     __html: LANG_PYTHON_SVG
   }} />
           </button>
-        </div>}
+        }
 
-      <div className="inline-flex items-center gap-1.5">
-        <button type="button" aria-label={expanded ? "Collapse" : "Expand"} onClick={() => setExpanded(v => !v)} className="lc-expand-btn" title={expanded ? "Collapse" : "Expand"}>
+      
+        <button type="button" aria-label={expanded ? "Collapse" : "Expand"} onClick={() => setExpanded(v => !v)} title={expanded ? "Collapse" : "Expand"}>
           <span dangerouslySetInnerHTML={{
     __html: expanded ? CLOSE_SVG : EXPAND_SVG
   }} />
@@ -815,14 +804,14 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
       sdk,
       lang: agentLang
     });
-  }} className="lc-expand-btn">
+  }}>
           <span dangerouslySetInnerHTML={{
     __html: DOWNLOAD_SVG
   }} />
         </button>
 
         {}
-        <button ref={sdkButtonRef} type="button" onClick={() => setSdkDropdownOpen(o => !o)} className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border lc-sdk-btn font-medium cursor-pointer transition-colors">
+        <button ref={sdkButtonRef} type="button" onClick={() => setSdkDropdownOpen(o => !o)}>
           <span dangerouslySetInnerHTML={{
     __html: SDK_LOGOS[sdk]
   }} />
@@ -831,36 +820,34 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
     __html: CHEVRON_DOWN_SVG
   }} />
         </button>
-      </div>
-    </div>;
-  const slot = <div ref={slotRef} className="relative w-full" style={expanded ? {
+      ;
+  const slot = <div ref={slotRef} style={expanded ? {
     flex: 1,
     minHeight: 0
   } : {
     height: heightStyle
   }}>
-      {!ready && !error && <div className="absolute inset-0 flex items-center justify-center z-10 lc-bg-wash">
-          <div className="size-6 border-2 lc-spinner rounded-full animate-spin" />
-        </div>}
+      {!ready && !error && 
+          
+        }
 
-      {error && <div className="absolute top-3 inset-x-3 z-10 px-4 py-3 rounded-2xl border lc-error text-sm">
+      {error && 
           <strong>Preview Error</strong>
-          <p className="mt-1 opacity-80" style={{
+          <p style={{
     fontSize: 13
   }}>
             {error}
           </p>
-          <button type="button" onClick={handleReset} className="mt-2 px-3 py-1 text-xs rounded-lg border lc-error-btn cursor-pointer">
+          <button type="button" onClick={handleReset}>
             Retry
           </button>
-        </div>}
-    </div>;
+        }
+    ;
   return <div data-lc-pe ref={placeholderRef} className={`${effectiveTheme === "dark" ? "dark" : ""} ${className ?? ""}`}>
-      <div ref={cardRef} className="rounded-2xl border lc-border overflow-hidden lc-bg-surface">
+      <div ref={cardRef}>
         {toolbar}
         {slot}
-      </div>
-    </div>;
+      ;
 };
 
 Agents can invoke external tools like weather APIs, calculators, web search,
@@ -868,8 +855,6 @@ database queries, and more. The results are in raw JSON. This pattern shows you
 how to render
 structured, type-safe UI cards for every tool call your agent makes, complete
 with loading states and error handling.
-
-<PatternEmbed pattern="tool-calling" />
 
 ## How tool calling works
 
@@ -893,15 +878,13 @@ agent streams.
 Define a TypeScript interface matching your agent's state schema and pass it as a type parameter to `useStream` for type-safe access to state values. In the examples below, replace `typeof myAgent` with your interface name:
 
 ```ts  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-import type { BaseMessage } from "@langchain/core/messages";
-
 interface AgentState {
   messages: BaseMessage[];
 }
 ```
 
-<CodeGroup>
-  ```tsx React theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```tsx React theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   import { useStream } from "@langchain/react";
 
   const AGENT_URL = "http://localhost:2024";
@@ -913,12 +896,9 @@ interface AgentState {
     });
 
     return (
-      <div>
-        {stream.messages.map((msg) => (
-          <Message key={msg.id} message={msg} toolCalls={stream.toolCalls} />
-        ))}
-      </div>
-    );
+      {stream.messages.map((msg) => (
+          ))}
+      );
   }
   ```
 
@@ -935,15 +915,7 @@ interface AgentState {
   </script>
 
   <template>
-    <div>
-      <Message
-        v-for="msg in stream.messages.value"
-        :key="msg.id"
-        :message="msg"
-        :tool-calls="stream.toolCalls.value"
-      />
-    </div>
-  </template>
+    </template>
   ```
 
   ```svelte Svelte theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
@@ -958,11 +930,8 @@ interface AgentState {
     });
   </script>
 
-  <div>
-    {#each $messages as msg (msg.id)}
-      <Message message={msg} toolCalls={$toolCalls} />
-    {/each}
-  </div>
+  {#each $messages as msg (msg.id)}
+      {/each}
   ```
 
   ```ts Angular theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
@@ -986,7 +955,6 @@ interface AgentState {
     });
   }
   ```
-</CodeGroup>
 
 ## The ToolCallWithResult type
 
@@ -1031,13 +999,10 @@ function Message({
   );
 
   return (
-    <div>
-      <p>{message.content}</p>
+    <p>{message.content}</p>
       {messageToolCalls.map((tc) => (
-        <ToolCard key={tc.call.id} toolCall={tc} />
-      ))}
-    </div>
-  );
+        ))}
+    );
 }
 ```
 
@@ -1049,24 +1014,23 @@ Rather than dumping raw JSON, build dedicated UI components for each tool. Use
 ```tsx  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 function ToolCard({ toolCall }: { toolCall: ToolCallWithResult }) {
   if (toolCall.state === "pending") {
-    return <LoadingCard name={toolCall.call.name} />;
+    return ;
   }
 
   if (toolCall.state === "error") {
-    return <ErrorCard name={toolCall.call.name} error={toolCall.result} />;
+    return ;
   }
 
   switch (toolCall.call.name) {
     case "get_weather":
-      return <WeatherCard args={toolCall.call.args} result={toolCall.result} />;
+      return ;
     case "calculator":
       return (
-        <CalculatorCard args={toolCall.call.args} result={toolCall.result} />
-      );
+        );
     case "web_search":
-      return <SearchCard args={toolCall.call.args} result={toolCall.result} />;
+      return ;
     default:
-      return <GenericToolCard toolCall={toolCall} />;
+      return ;
   }
 }
 ```
@@ -1084,15 +1048,11 @@ function WeatherCard({
   const data = JSON.parse(result.content as string);
 
   return (
-    <div className="rounded-lg border p-4">
-      <div className="flex items-center gap-2">
-        <CloudIcon />
-        <h3 className="font-semibold">{args.location}</h3>
-      </div>
-      <div className="mt-2 text-3xl font-bold">{data.temperature}°F</div>
-      <p className="text-muted-foreground">{data.condition}</p>
-    </div>
-  );
+    
+      
+        <h3>{args.location}</h3>
+      {data.temperature}°F<p>{data.condition}</p>
+    );
 }
 ```
 
@@ -1103,22 +1063,18 @@ Always handle the pending and error states to give users clear feedback:
 ```tsx  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 function LoadingCard({ name }: { name: string }) {
   return (
-    <div className="flex items-center gap-2 rounded-lg border p-4 animate-pulse">
-      <Spinner />
-      <span>Running {name}...</span>
-    </div>
-  );
+    
+      <span>Running {name}...);
 }
 
 function ErrorCard({ name, error }: { name: string; error?: ToolMessage }) {
   return (
-    <div className="rounded-lg border border-red-300 bg-red-50 p-4">
-      <h3 className="font-semibold text-red-700">Error in {name}</h3>
-      <p className="text-sm text-red-600">
+    
+      <h3>Error in {name}</h3>
+      <p>
         {error?.content ?? "Tool execution failed"}
       </p>
-    </div>
-  );
+    );
 }
 ```
 
@@ -1128,9 +1084,6 @@ If your tools are defined with structured schemas, you can use the
 `ToolCallFromTool` utility type to get fully typed `args`:
 
 ```ts  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-import { tool } from "@langchain/core/tools";
-import { z } from "zod";
-
 const getWeather = tool(async ({ location }) => { /* ... */ }, {
   name: "get_weather",
   description: "Get the current weather for a location",
@@ -1143,10 +1096,12 @@ type WeatherToolCall = ToolCallFromTool<typeof getWeather>;
 // WeatherToolCall.call.args is now { location: string }
 ```
 
-<Tip>
-  Using `ToolCallFromTool` gives you compile-time safety. If the tool schema
-  changes, your UI components will flag type errors immediately.
-</Tip>
+
+> 💡 **Tip**
+>
+> Using `ToolCallFromTool` gives you compile-time safety. If the tool schema
+>   changes, your UI components will flag type errors immediately.
+
 
 ## Rendering tool calls inline with streaming text
 
@@ -1160,11 +1115,13 @@ This means users see:
 2. A loading card the moment a tool call is emitted
 3. The card updates to show the result once the tool completes
 
-<Note>
-  Tool calls update in place. The same `call.id` transitions from `"pending"` to
-  `"completed"` (or `"error"`), so your UI re-renders the same component
-  with new state.
-</Note>
+
+> ℹ️ **Note**
+>
+> Tool calls update in place. The same `call.id` transitions from `"pending"` to
+>   `"completed"` (or `"error"`), so your UI re-renders the same component
+>   with new state.
+
 
 ## Handling multiple concurrent tool calls
 
@@ -1178,15 +1135,12 @@ function ToolCallList({ toolCalls }: { toolCalls: ToolCallWithResult[] }) {
   const completed = toolCalls.filter((tc) => tc.state === "completed");
 
   return (
-    <div className="space-y-2">
+    
       {completed.map((tc) => (
-        <ToolCard key={tc.call.id} toolCall={tc} />
-      ))}
+        ))}
       {pending.map((tc) => (
-        <LoadingCard key={tc.call.id} name={tc.call.name} />
-      ))}
-    </div>
-  );
+        ))}
+    );
 }
 ```
 
@@ -1207,12 +1161,15 @@ Follow these guidelines when building tool call UIs:
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/frontend/tool-calling.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/frontend/tool-calling.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

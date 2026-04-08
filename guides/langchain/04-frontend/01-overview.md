@@ -36,8 +36,8 @@ graph LR
 
 On the backend, `createAgent` produces a compiled LangGraph graph that exposes a streaming API. On the frontend, the `useStream` hook connects to that API and provides reactive state — messages, tool calls, interrupts, history, and more — that you render with any framework.
 
-<CodeGroup>
-  ```python agent.py theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```python agent.py theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   from langchain import create_agent
   from langgraph.checkpoint.memory import MemorySaver
 
@@ -65,15 +65,11 @@ On the backend, `createAgent` produces a compiled LangGraph graph that exposes a
     });
 
     return (
-      <div>
-        {stream.messages.map((msg) => (
-          <Message key={msg.id} message={msg} />
-        ))}
-      </div>
-    );
+      {stream.messages.map((msg) => (
+          ))}
+      );
   }
   ```
-</CodeGroup>
 
 `useStream` is available for React, Vue, Svelte, and Angular:
 
@@ -88,86 +84,58 @@ import { useStream } from "@langchain/angular";  // Angular
 
 ### Render messages and output
 
-<CardGroup cols={3}>
-  <Card title="Markdown messages" icon="markdown" href="/oss/python/langchain/frontend/markdown-messages">
-    Parse and render streamed markdown with proper formatting and code highlighting.
-  </Card>
-
-  <Card title="Structured output" icon="layout-grid" href="/oss/python/langchain/frontend/structured-output">
-    Render typed agent responses as custom UI components instead of plain text.
-  </Card>
-
-  <Card title="Reasoning tokens" icon="brain" href="/oss/python/langchain/frontend/reasoning-tokens">
-    Display model thinking processes in collapsible blocks.
-  </Card>
-
-  <Card title="Generative UI" icon="wand" href="/oss/python/langchain/frontend/generative-ui">
-    Render AI-generated user interfaces from natural language prompts using json-render.
-  </Card>
-</CardGroup>
+Parse and render streamed markdown with proper formatting and code highlighting.
+  
+Render typed agent responses as custom UI components instead of plain text.
+  
+Display model thinking processes in collapsible blocks.
+  
+Render AI-generated user interfaces from natural language prompts using json-render.
+  
 
 ### Display agent actions
 
-<CardGroup cols={3}>
-  <Card title="Tool calling" icon="tool" href="/oss/python/langchain/frontend/tool-calling">
-    Show tool calls as rich, type-safe UI cards with loading and error states.
-  </Card>
-
-  <Card title="Human-in-the-loop" icon="user-check" href="/oss/python/langchain/frontend/human-in-the-loop">
-    Pause the agent for human review with approve, reject, and edit workflows.
-  </Card>
-</CardGroup>
+Show tool calls as rich, type-safe UI cards with loading and error states.
+  
+Pause the agent for human review with approve, reject, and edit workflows.
+  
 
 ### Manage conversations
 
-<CardGroup cols={3}>
-  <Card title="Branching chat" icon="git-branch" href="/oss/python/langchain/frontend/branching-chat">
-    Edit messages, regenerate responses, and navigate conversation branches.
-  </Card>
-
-  <Card title="Message queues" icon="list-check" href="/oss/python/langchain/frontend/message-queues">
-    Queue multiple messages while the agent processes them sequentially.
-  </Card>
-</CardGroup>
+Edit messages, regenerate responses, and navigate conversation branches.
+  
+Queue multiple messages while the agent processes them sequentially.
+  
 
 ### Advanced streaming
 
-<CardGroup cols={3}>
-  <Card title="Join & rejoin streams" icon="plug-connected" href="/oss/python/langchain/frontend/join-rejoin">
-    Disconnect from and reconnect to running agent streams without losing progress.
-  </Card>
-
-  <Card title="Time travel" icon="clock" href="/oss/python/langchain/frontend/time-travel">
-    Inspect, navigate, and resume from any checkpoint in the conversation history.
-  </Card>
-</CardGroup>
+Disconnect from and reconnect to running agent streams without losing progress.
+  
+Inspect, navigate, and resume from any checkpoint in the conversation history.
+  
 
 ## Integrations
 
 `useStream` is UI-agnostic. Use it to any component library or generative UI framework.
 
-<CardGroup cols={3}>
-  <Card title="AI Elements" icon="package" href="/oss/python/langchain/frontend/integrations/ai-elements">
-    Composable shadcn/ui components for AI chat: `Conversation`, `Message`, `Tool`, `Reasoning`.
-  </Card>
-
-  <Card title="assistant-ui" icon="package" href="/oss/python/langchain/frontend/integrations/assistant-ui">
-    Headless React framework with built-in thread management, branching, and attachment support.
-  </Card>
-
-  <Card title="OpenUI" icon="package" href="/oss/python/langchain/frontend/integrations/openui">
-    Generative UI library for data-rich reports and dashboards using the openui-lang component DSL.
-  </Card>
-</CardGroup>
+Composable shadcn/ui components for AI chat: `Conversation`, `Message`, `Tool`, `Reasoning`.
+  
+Headless React framework with built-in thread management, branching, and attachment support.
+  
+Generative UI library for data-rich reports and dashboards using the openui-lang component DSL.
+  
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/frontend/overview.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/frontend/overview.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

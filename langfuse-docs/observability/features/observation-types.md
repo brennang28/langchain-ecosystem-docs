@@ -11,40 +11,26 @@ Langfuse supports different observation types to provide more context to your sp
 ## Available Types
 
 
-import {
-  CircleDot,
-  MoveHorizontal,
-  Fan,
-  Bot,
-  Wrench,
-  Link,
-  Search,
-  WandSparkles,
-  Layers3,
-  ShieldCheck,
-} from "lucide-react";
-
-- <CircleDot size={16} className="text-muted-green inline mr-1" /> `event` is the
+- `event` is the
   basic building block. An event is used to track discrete events in a trace.
-- <MoveHorizontal size={16} className="text-muted-blue inline mr-1" /> `span` represents
+- `span` represents
   durations of units of work in a trace.
-- <Fan size={16} className="text-muted-magenta inline mr-1" /> `generation` logs
+- `generation` logs
   generations of AI models incl. prompts, [token usage and costs](/docs/observability/features/token-and-cost-tracking).
-- <Bot size={16} className="text-purple-600 inline mr-1" /> `agent` decides on the
+- `agent` decides on the
   application flow and can for example use tools with the guidance of a LLM.
-- <Wrench size={16} className="text-orange-600 inline mr-1" /> `tool` represents
+- `tool` represents
   a tool call, for example to a weather API.
-- <Link size={16} className="text-pink-600 inline mr-1" /> `chain` is a link between
+- `chain` is a link between
   different application steps, like passing context from a retriever to a LLM call.
-- <Search size={16} className="text-teal-600 inline mr-1" /> `retriever` represents
+- `retriever` represents
   data retrieval steps, such as a call to a vector store or a database.
-- <WandSparkles size={16} className="text-indigo-600 inline mr-1" /> `evaluator`
+- `evaluator`
   represents functions that assess relevance/correctness/helpfulness of a LLM's outputs.
-- <Layers3 size={16} className="text-amber-600 inline mr-1" /> `embedding` is a call
+- <Layers3 size={16} /> `embedding` is a call
   to a LLM to generate embeddings and can include model, [token usage and costs](/docs/observability/features/token-and-cost-tracking)
-- <ShieldCheck size={16} className="text-red-600 inline mr-1" /> `guardrail` is a
+- `guardrail` is a
   component that protects against malicious content or jailbreaks.
-
 
 
 ## How to Use Observation Types
@@ -53,12 +39,8 @@ The [integrations with agent frameworks](/docs/integrations) automatically set t
 
 You can also manually set the observation types for your application within the Langfuse SDK. Set the `as_type` parameter (Python) or `asType` parameter (TypeScript) to the desired observation type when creating an observation.
 
-<LangTabs items={["Python SDK","JavaScript/TypeScript SDK"]}>
-<Tab>
+> ℹ️ **Note:** Observation types require Python SDK `version>=3.3.1`.
 
-<Callout type="info">
-  Observation types require Python SDK `version>=3.3.1`.
-</Callout>
 
 Using `@observe` decorator:
 
@@ -102,21 +84,12 @@ transformed_text = transform_text(["text to transform"])
 transform_span.update(output=transformed_text)
 ```
 
-</Tab>
-<Tab>
-<Callout type="info">
 
-Observation types are available since Typescript SDK `version>=4.0.0`.
-
-</Callout>
-<Tabs items={["Context Managers", "Observe Wrapper", "Manual Observations"]}>
-<Tab>
+> ℹ️ **Note:** Observation types are available since Typescript SDK `version>=4.0.0`.
 
 Use `startActiveObservation` with the `asType` option to specify observation types in context managers:
 
 ```typescript /asType: "agent"/ /asType: "tool"/ /asType: "chain"/ /asType: "generation"/ /asType: "embedding"/ /asType: "retriever"/ /asType: "evaluator"/ /asType: "guardrail"/
-import { startActiveObservation } from "@langfuse/tracing";
-
 // Agent workflow
 await startActiveObservation(
   "agent-workflow",
@@ -232,14 +205,10 @@ await startActiveObservation(
 );
 ```
 
-</Tab>
-<Tab>
 
 Use the `observe` wrapper with the `asType` option to automatically trace functions:
 
 ```typescript /asType: "agent"/ /asType: "tool"/ /asType: "evaluator"/
-import { observe, updateActiveObservation } from "@langfuse/tracing";
-
 // Agent function
 const runAgentWorkflow = observe(
   async (query: string) => {
@@ -369,14 +338,10 @@ const contentModerationCheck = observe(
 );
 ```
 
-</Tab>
-<Tab>
 
 Use `startObservation` with the `asType` option for manual observation management:
 
 ```typescript /asType: "agent"/ /asType: "tool"/ /asType: "generation"/
-import { startObservation } from "@langfuse/tracing";
-
 // Agent observation
 const agentSpan = startObservation(
   "multi-step-agent",
@@ -500,8 +465,4 @@ guardrailObs.update({
 guardrailObs.end();
 ```
 
-</Tab>
-</Tabs>
-</Tab>
 
-</LangTabs>

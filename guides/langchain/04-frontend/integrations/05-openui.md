@@ -165,13 +165,9 @@ export const ExampleEmbed = ({example, theme, minHeight = 500, maxHeight = 700})
     position: "relative",
     fontFamily: "inherit"
   }}>
-      <div className="lc-border lc-bg-surface" style={{
-    border: "1px solid",
-    borderRadius: "16px",
-    overflow: "hidden"
-  }}>
+      
         {}
-        <div ref={slotRef} className="lc-bg-wash" style={{
+        <div ref={slotRef} style={{
     height: iframeHeight,
     position: "relative"
   }}>
@@ -182,25 +178,15 @@ export const ExampleEmbed = ({example, theme, minHeight = 500, maxHeight = 700})
     alignItems: "center",
     justifyContent: "center"
   }}>
-              <div className="lc-spinner" style={{
-    width: 24,
-    height: 24,
-    border: "3px solid",
-    borderRadius: "50%",
-    animation: "spin 0.8s linear infinite"
-  }} />
+              
               <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
-            </div>}
-        </div>
-      </div>
-    </div>;
+            }
+        ;
 };
 
 [OpenUI](https://github.com/openuidev) is a generative UI library that lets a language model produce complete, interactive UIs in a declarative format called **openui-lang**. Instead of returning a chat message, the agent returns a component tree with cards, charts, tables, tabs, and forms that the `Renderer` turns into a real React UI.
 
 This integration is well-suited for data-rich outputs like reports, dashboards, and data explorers, where the model is both the data analyst and the UI designer.
-
-<ExampleEmbed example="openui" minHeight={700} />
 
 ## How it works
 
@@ -235,9 +221,11 @@ graph LR
 npm install @langchain/react @openuidev/react-ui @openuidev/react-headless @openuidev/react-lang
 ```
 
-<Tip>
-  OpenUI requires React 19+ and [`zustand`](https://www.npmjs.com/package/zustand). The frontend code is React-only; the LangGraph agent backend can be written in TypeScript or Python.
-</Tip>
+
+> 💡 **Tip**
+>
+> OpenUI requires React 19+ and [`zustand`](https://www.npmjs.com/package/zustand). The frontend code is React-only; the LangGraph agent backend can be written in TypeScript or Python.
+
 
 ## Import the component styles
 
@@ -253,8 +241,6 @@ Import OpenUI's bundled styles in your CSS entry point or directly in your root 
 OpenUI ships a `openuiLibrary.prompt()` function that generates the complete openui-lang reference, with all component signatures, syntax rules, streaming tips, and examples. Call it once at module load time:
 
 ```ts  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-import { openuiLibrary, openuiPromptOptions } from "@openuidev/react-ui/genui-lib";
-
 // Generate the full openui-lang system prompt. Call this once at startup,
 // not inside a component, to avoid recomputing it on every render.
 const SYSTEM_PROMPT = openuiLibrary.prompt({
@@ -287,9 +273,6 @@ const SYSTEM_PROMPT = openuiLibrary.prompt({
 Send the system prompt as the first message of every new thread. Check `stream.messages.length === 0` to detect a fresh thread and prepend a `system` message:
 
 ```tsx  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-import { useCallback } from "react";
-import { useStream } from "@langchain/react";
-
 const SYSTEM_PROMPT = openuiLibrary.prompt({ ... });
 
 export function App() {
@@ -326,10 +309,6 @@ export function App() {
 Pass the AI message's text content directly to `Renderer` along with `openuiLibrary`:
 
 ```tsx  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-import { Renderer } from "@openuidev/react-lang";
-import { openuiLibrary } from "@openuidev/react-ui/genui-lib";
-import { AIMessage } from "langchain";
-
 function MessageList({ messages, isLoading }) {
   const lastAiIdx = messages.reduce(
     (acc, msg, i) => (AIMessage.isInstance(msg) ? i : acc),
@@ -340,13 +319,7 @@ function MessageList({ messages, isLoading }) {
     if (AIMessage.isInstance(msg)) {
       const text = typeof msg.content === "string" ? msg.content : "";
       return (
-        <Renderer
-          key={msg.id ?? i}
-          response={text}
-          library={openuiLibrary}
-          isStreaming={isLoading && i === lastAiIdx}
-        />
-      );
+        );
     }
     // ... human message bubble
   });
@@ -391,23 +364,9 @@ Wiring `useStream` to `Renderer` directly causes results in re-rendering on ever
 | **No `root` yet / fallback** | `buildProgressiveRoot` — synthesise a `root = Stack([…])` from top-level variables when the model hasn't written one |
 | **Snake\_case identifiers**  | `sanitizeIdentifiers` — the parser only accepts camelCase; convert any `snake_case` names the model emits            |
 
-Copy the full block into your project and pass `stable` to `<Renderer>`:
+Copy the full block into your project and pass `stable` to ``:
 
 ````tsx expandable theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import {
-  type ActionEvent,
-  BuiltinActionType,
-  Renderer,
-} from "@openuidev/react-lang";
-import { openuiLibrary } from "@openuidev/react-ui/genui-lib";
-
 /** Strip any markdown code fence the model may have emitted. */
 function stripCodeFence(text: string): string {
   return text
@@ -629,13 +588,7 @@ function AIMessageView({
   if (!processed) return null;
 
   return (
-    <Renderer
-      response={processed}
-      library={openuiLibrary}
-      isStreaming={isStreaming}
-      onAction={handleAction}
-    />
-  );
+    );
 }
 
 export function MessageList({ messages, isLoading, onSubmit }) {
@@ -647,12 +600,10 @@ export function MessageList({ messages, isLoading, onSubmit }) {
   return messages.map((msg, i) => {
     if (msg.getType() === "human") {
       return (
-        <div key={msg.id ?? i} className="flex justify-end">
-          <div className="user-bubble">
+        <div key={msg.id ?? i}>
+          
             {typeof msg.content === "string" ? msg.content : ""}
-          </div>
-        </div>
-      );
+          );
     }
 
     if (msg.getType() === "ai") {
@@ -662,13 +613,7 @@ export function MessageList({ messages, isLoading, onSubmit }) {
       if (!raw) return null;
       return (
         <div key={msg.id ?? i}>
-          <AIMessageView
-            raw={raw}
-            isStreaming={isLoading && i === lastAiIdx}
-            onSubmit={onSubmit}
-          />
-        </div>
-      );
+          );
     }
 
     return null;
@@ -701,12 +646,15 @@ root = Stack([..., followUpCard])
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/frontend/integrations/openui.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/frontend/integrations/openui.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

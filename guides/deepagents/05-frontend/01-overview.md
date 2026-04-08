@@ -60,8 +60,6 @@ agent = create_deep_agent(
 On the frontend, connect with `useStream` the same way as with `createAgent`. Deep agent patterns use additional `useStream` features like `stream.subagents`, `stream.values.todos`, and `filterSubagentMessages` to render subagent-specific UIs.
 
 ```ts  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-import { useStream } from "@langchain/react";
-
 function App() {
   const stream = useStream<typeof agent>({
     apiUrl: "http://localhost:2024",
@@ -76,19 +74,12 @@ function App() {
 
 ## Patterns
 
-<CardGroup cols={3}>
-  <Card title="Subagent streaming" icon="arrows-split" href="/oss/python/deepagents/frontend/subagent-streaming">
-    Display specialist subagents with streaming content, progress tracking, and collapsible cards.
-  </Card>
-
-  <Card title="Todo list" icon="list-check" href="/oss/python/deepagents/frontend/todo-list">
-    Track agent progress with a real-time todo list synced from agent state.
-  </Card>
-
-  <Card title="Sandbox" icon="code" href="/oss/python/deepagents/frontend/sandbox">
-    Build an IDE-like UI with a file browser, code viewer, and diff panel backed by a sandbox.
-  </Card>
-</CardGroup>
+Display specialist subagents with streaming content, progress tracking, and collapsible cards.
+  
+Track agent progress with a real-time todo list synced from agent state.
+  
+Build an IDE-like UI with a file browser, code viewer, and diff panel backed by a sandbox.
+  
 
 ## Related patterns
 
@@ -99,12 +90,15 @@ agents too. Deep Agents are built on the same LangGraph runtime, so
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/frontend/overview.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/frontend/overview.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

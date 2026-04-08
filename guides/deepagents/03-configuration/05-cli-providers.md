@@ -71,15 +71,18 @@ Using a provider not listed here? See [Arbitrary providers](/oss/python/deepagen
 | OpenRouter           | [`langchain-openrouter`](/oss/python/integrations/chat/openrouter)                         | `OPENROUTER_API_KEY`                                | ✅              |
 | LiteLLM              | [`langchain-litellm`](/oss/python/integrations/chat/litellm)                               | Per-provider (see [docs](https://docs.litellm.ai/)) | ❌              |
 
-<Tip>
-  You can scope any credential to the CLI by adding a `DEEPAGENTS_CLI_` prefix. For example, `DEEPAGENTS_CLI_OPENAI_API_KEY` takes priority over `OPENAI_API_KEY` within the CLI without affecting other tools. See [`DEEPAGENTS_CLI_` prefix](/oss/python/deepagents/cli/configuration#deepagents_cli_-prefix) for details.
-</Tip>
 
-<Tip>
-  A **[model profile](/oss/python/langchain/models#model-profiles)** is a bundle of metadata (model name, default parameters, capabilities, etc.) that ships with a provider package, largely powered by the [models.dev](https://models.dev/) project.
+> 💡 **Tip**
+>
+> You can scope any credential to the CLI by adding a `DEEPAGENTS_CLI_` prefix. For example, `DEEPAGENTS_CLI_OPENAI_API_KEY` takes priority over `OPENAI_API_KEY` within the CLI without affecting other tools. See [`DEEPAGENTS_CLI_` prefix](/oss/python/deepagents/cli/configuration#deepagents_cli_-prefix) for details.
 
-  Providers that include model profiles have their models listed automatically in the interactive `/model` switcher, subject to the [filtering criteria](#which-models-appear-in-the-switcher) (notably, `tool_calling` must be enabled). Providers without model profiles require you to specify the model name directly or add models via `config.toml`.
-</Tip>
+
+> 💡 **Tip**
+>
+> A **[model profile](/oss/python/langchain/models#model-profiles)** is a bundle of metadata (model name, default parameters, capabilities, etc.) that ships with a provider package, largely powered by the [models.dev](https://models.dev/) project.
+> 
+>   Providers that include model profiles have their models listed automatically in the interactive `/model` switcher, subject to the [filtering criteria](#which-models-appear-in-the-switcher) (notably, `tool_calling` must be enabled). Providers without model profiles require you to specify the model name directly or add models via `config.toml`.
+
 
 ### Model routers and proxies
 
@@ -110,9 +113,11 @@ To switch models in the CLI, either:
 
 1. **Use the interactive model switcher** with the `/model` command. This displays available models sourced from each installed LangChain provider package's [model profiles](/oss/python/langchain/models#model-profiles).
 
-   <Note>
-     Not all models appear here. If yours is missing, pass the model name directly (e.g. `/model gpt-5.4`). See [Which models appear in the switcher](#which-models-appear-in-the-switcher) for details.
-   </Note>
+   
+> ℹ️ **Note**
+>
+> Not all models appear here. If yours is missing, pass the model name directly (e.g. `/model gpt-5.4`). See [Which models appear in the switcher](#which-models-appear-in-the-switcher) for details.
+
 2. **Specify a model name directly** as an argument, e.g. `/model gpt-5.4`. You can use any model supported by the chosen provider, regardless of whether it appears in the list from option 1. The model name will be passed to the API request.
 3. **Specify the model at launch** via `--model`, e.g.
 
@@ -124,8 +129,11 @@ To switch models in the CLI, either:
 
 The `/model` selector dynamically builds its list from installed provider packages. Expand below for the full criteria and troubleshooting.
 
-<Accordion title="How the switcher builds its model list" icon="list-search">
-  The interactive `/model` selector builds its list dynamically—it is not a hardcoded list baked into the CLI. A model appears in the switcher when **all** of the following are true:
+
+<details>
+<summary>How the switcher builds its model list</summary>
+
+The interactive `/model` selector builds its list dynamically—it is not a hardcoded list baked into the CLI. A model appears in the switcher when **all** of the following are true:
 
   1. **The provider package is installed.** Each provider (e.g. `langchain-anthropic`, `langchain-openai`) must be installed alongside `deepagents-cli`—either as an [install extra](/oss/python/deepagents/cli/providers#quick-start) (e.g. `uv tool install 'deepagents-cli[ollama]'`) or added later with `uv tool install deepagents-cli --with <package>`. If a package is missing, its entire provider section is absent from the switcher.
   2. **The model has a profile with `tool_calling` enabled.** The CLI requires tool-calling support, so models without `tool_calling: true` in their profile are excluded. This is the most common reason a model is missing from the list. For providers that don't bundle profiles (see the [Provider reference](#provider-reference) table), you can define one in `config.toml`:
@@ -142,9 +150,11 @@ The `/model` selector dynamically builds its list from installed provider packag
 
   Models defined in `config.toml` under [`[models.providers.<name>].models`](/oss/python/deepagents/cli/configuration#adding-models-to-the-interactive-switcher) bypass the profile filter—they always appear in the switcher regardless of profile metadata. This is the recommended way to add models that are missing from the list.
 
-  <Tip>
-    Credential status does **not** affect whether a model is listed. The switcher shows all qualifying models and displays a credential indicator next to each provider header: a checkmark for confirmed credentials, a warning for missing credentials, or a question mark when credential status is unknown. You can still select a model with missing credentials—the provider will report an authentication error at request time.
-  </Tip>
+  
+> 💡 **Tip**
+>
+> Credential status does **not** affect whether a model is listed. The switcher shows all qualifying models and displays a credential indicator next to each provider header: a checkmark for confirmed credentials, a warning for missing credentials, or a question mark when credential status is unknown. You can still select a model with missing credentials—the provider will report an authentication error at request time.
+
 
   #### Troubleshooting missing models
 
@@ -154,7 +164,9 @@ The `/model` selector dynamically builds its list from installed provider packag
   | Provider shown but specific model missing | Model profile has `tool_calling: false` or no profile exists | Add the model to `[models.providers.<name>].models` in `config.toml`, or use `/model <provider>:<model>` directly |
   | Provider shows ⚠ "missing credentials"    | API key env var not set                                      | Set the credential env var from the [Provider reference](#provider-reference) table                               |
   | Provider shows ? "credentials unknown"    | Provider uses non-standard auth that the CLI can't verify    | Credentials may still work—try switching to the model. If auth fails, check the provider's docs                   |
-</Accordion>
+
+</details>
+
 
 ### Setting a default model
 
@@ -208,12 +220,15 @@ For detailed configuration of provider params, profile overrides, custom base UR
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/cli/providers.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/cli/providers.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

@@ -4,8 +4,6 @@ description: Tags help to filter and organize traces and observations in Langfus
 sidebarTitle: Tags
 ---
 
-import { PropagationRestrictionsCallout } from "@/components/PropagationRestrictionsCallout";
-
 # Tags
 
 Tags allow you to categorize and filter observations and traces in Langfuse.
@@ -16,8 +14,6 @@ Tags are strings (max 200 characters each) and an observation may have multiple 
 
 Use `propagate_attributes()` to apply tags to a group of observations within a context.
 
-<LangTabs items={["Python SDK", "JS/TS SDK", "OpenAI (Python)", "OpenAI (JS/TS)", "Langchain (Python)", "Langchain (JS/TS)", "Flowise"]}>
-<Tab>
 When using the `@observe()` decorator:
 
 ```python /propagate_attributes/
@@ -54,14 +50,12 @@ with langfuse.start_as_current_observation(as_type="span", name="my-operation") 
             pass
 ```
 
-</Tab>
-<Tab title="JS/TS SDK">
+
+**JS/TS SDK:**
 
 When using the context manager:
 
 ```ts /propagateAttributes/
-import { startActiveObservation, propagateAttributes } from "@langfuse/tracing";
-
 await startActiveObservation("context-manager", async (span) => {
   span.update({
     input: { query: "What is the capital of France?" },
@@ -83,8 +77,6 @@ await startActiveObservation("context-manager", async (span) => {
 When using the `observe` wrapper:
 
 ```ts /propagateAttributes/
-import { observe, propagateAttributes } from "@langfuse/tracing";
-
 const processData = observe(
   async (data: string) => {
     // Apply tags to all child observations
@@ -105,8 +97,8 @@ const result = await processData("input");
 
 See [JS/TS SDK docs](/docs/sdk/typescript/guide) for more details.
 
-</Tab>
-<Tab title="OpenAI (Python v2)">
+
+**OpenAI (Python v2):**
 
 ```python /propagate_attributes/
 from langfuse import get_client, propagate_attributes
@@ -146,14 +138,10 @@ completion = openai.chat.completions.create(
 )
 ```
 
-</Tab>
-<Tab title="OpenAI (JS/TS)">
+
+**OpenAI (JS/TS):**
 
 ```ts /propagateAttributes/
-import OpenAI from "openai";
-import { observeOpenAI } from "@langfuse/openai";
-import { startActiveObservation, propagateAttributes } from "@langfuse/tracing";
-
 await startActiveObservation("openai-call", async () => {
   // Apply tags to all observations
   await propagateAttributes(
@@ -171,8 +159,6 @@ await startActiveObservation("openai-call", async () => {
 });
 ```
 
-</Tab>
-<Tab>
 
 ```python /propagate_attributes/
 from langfuse import get_client, propagate_attributes
@@ -208,13 +194,10 @@ chain.invoke(
 )
 ```
 
-</Tab>
-<Tab title="Langchain (JS/TS)">
+
+**Langchain (JS/TS):**
 
 ```ts /propagateAttributes/
-import { startActiveObservation, propagateAttributes } from "@langfuse/tracing";
-import { CallbackHandler } from "langfuse-langchain";
-
 const langfuseHandler = new CallbackHandler();
 
 // Apply tags to all child observations
@@ -252,7 +235,6 @@ await chain.invoke({ input: "<user_input>" }, { callbacks: [langfuseHandler], ta
 When using the integration with the JS SDK (see [interop docs](/integrations/frameworks/langchain#interoperability)), set tags via `langfuse.trace()`:
 
 ```ts
-import { CallbackHandler, Langfuse } from "langfuse-langchain";
 const langfuse = new Langfuse();
 
 const trace = langfuse.trace({
@@ -264,14 +246,6 @@ const langfuseHandler = new CallbackHandler({ root: trace });
 await chain.invoke({ input: "<user_input>" }, { callbacks: [langfuseHandler] });
 ```
 
-</Tab>
-
-</LangTabs>
-
-<PropagationRestrictionsCallout attributes={["tags"]} />
 
 ## GitHub Discussions
 
-import { GhDiscussionsPreview } from "@/components/gh-discussions/GhDiscussionsPreview";
-
-<GhDiscussionsPreview labels={["feat-tags"]} />

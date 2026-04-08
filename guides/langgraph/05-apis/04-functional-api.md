@@ -15,9 +15,11 @@ The Functional API uses two key building blocks:
 
 This provides a minimal abstraction for building workflows with state management and streaming.
 
-<Tip>
-  For information on how to use the functional API, see [Use Functional API](/oss/python/langgraph/use-functional-api).
-</Tip>
+
+> 💡 **Tip**
+>
+> For information on how to use the functional API, see [Use Functional API](/oss/python/langgraph/use-functional-api).
+
 
 ## Functional API vs. Graph API
 
@@ -65,8 +67,11 @@ def workflow(topic: str) -> dict:
     }
 ```
 
-<Accordion title="Detailed Explanation">
-  This workflow will write an essay about the topic "cat" and then pause to get a review from a human. The workflow can be interrupted for an indefinite amount of time until a review is provided.
+
+<details>
+<summary>Detailed Explanation</summary>
+
+This workflow will write an essay about the topic "cat" and then pause to get a review from a human. The workflow can be interrupted for an indefinite amount of time until a review is provided.
 
   When the workflow is resumed, it executes from the very start, but because the result of the `writeEssay` task was already saved, the task result will be loaded from the checkpoint instead of being recomputed.
 
@@ -141,7 +146,9 @@ def workflow(topic: str) -> dict:
   ```
 
   The workflow has been completed and the review has been added to the essay.
-</Accordion>
+
+</details>
+
 
 ## Entrypoint
 
@@ -157,9 +164,9 @@ Decorating a function with an `entrypoint` produces a [`Pregel`](https://referen
 
 You will usually want to pass a **checkpointer** to the `@entrypoint` decorator to enable persistence and use features like **human-in-the-loop**.
 
-<Tabs>
-  <Tab title="Sync">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**Sync:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langgraph.func import entrypoint
 
     @entrypoint(checkpointer=checkpointer)
@@ -169,10 +176,10 @@ You will usually want to pass a **checkpointer** to the `@entrypoint` decorator 
         ...
         return result
     ```
-  </Tab>
+  
+**Async:**
 
-  <Tab title="Async">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langgraph.func import entrypoint
 
     @entrypoint(checkpointer=checkpointer)
@@ -182,13 +189,13 @@ You will usually want to pass a **checkpointer** to the `@entrypoint` decorator 
         ...
         return result
     ```
-  </Tab>
-</Tabs>
+  
 
-<Warning>
-  **Serialization**
-  The **inputs** and **outputs** of entrypoints must be JSON-serializable to support checkpointing. Please see the [serialization](#serialization) section for more details.
-</Warning>
+> ⚠️ **Warning**
+>
+> **Serialization**
+>   The **inputs** and **outputs** of entrypoints must be JSON-serializable to support checkpointing. Please see the [serialization](#serialization) section for more details.
+
 
 ### Injectable parameters
 
@@ -201,12 +208,16 @@ When declaring an `entrypoint`, you can request access to additional parameters 
 | **writer**   | Use to access the StreamWriter when working with Async Python \< 3.11. See [streaming with functional API for details](/oss/python/langgraph/use-functional-api#streaming). |
 | **config**   | For accessing run time configuration. See [RunnableConfig](https://python.langchain.com/docs/concepts/runnables/#runnableconfig) for information.                           |
 
-<Warning>
-  Declare the parameters with the appropriate name and type annotation.
-</Warning>
 
-<Accordion title="Requesting Injectable Parameters">
-  ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+> ⚠️ **Warning**
+>
+> Declare the parameters with the appropriate name and type annotation.
+
+
+<details>
+<summary>Requesting Injectable Parameters</summary>
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   from langchain_core.runnables import RunnableConfig
   from langgraph.func import entrypoint
   from langgraph.store.base import BaseStore
@@ -230,15 +241,17 @@ When declaring an `entrypoint`, you can request access to additional parameters 
       config: RunnableConfig  # For accessing the configuration passed to the entrypoint
   ) -> ...:
   ```
-</Accordion>
+
+</details>
+
 
 ### Executing
 
 Using the [`@entrypoint`](#entrypoint) yields a [`Pregel`](https://reference.langchain.com/python/langgraph/pregel/#langgraph.pregel.Pregel.stream) object that can be executed using the `invoke`, `ainvoke`, `stream`, and `astream` methods.
 
-<Tabs>
-  <Tab title="Invoke">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**Invoke:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     config = {
         "configurable": {
             "thread_id": "some_thread_id"
@@ -246,10 +259,10 @@ Using the [`@entrypoint`](#entrypoint) yields a [`Pregel`](https://reference.lan
     }
     my_workflow.invoke(some_input, config)  # Wait for the result synchronously
     ```
-  </Tab>
+  
+**Async Invoke:**
 
-  <Tab title="Async Invoke">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     config = {
         "configurable": {
             "thread_id": "some_thread_id"
@@ -257,10 +270,10 @@ Using the [`@entrypoint`](#entrypoint) yields a [`Pregel`](https://reference.lan
     }
     await my_workflow.ainvoke(some_input, config)  # Await result asynchronously
     ```
-  </Tab>
+  
+**Stream:**
 
-  <Tab title="Stream">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     config = {
         "configurable": {
             "thread_id": "some_thread_id"
@@ -270,10 +283,10 @@ Using the [`@entrypoint`](#entrypoint) yields a [`Pregel`](https://reference.lan
     for chunk in my_workflow.stream(some_input, config):
         print(chunk)
     ```
-  </Tab>
+  
+**Async Stream:**
 
-  <Tab title="Async Stream">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     config = {
         "configurable": {
             "thread_id": "some_thread_id"
@@ -283,16 +296,14 @@ Using the [`@entrypoint`](#entrypoint) yields a [`Pregel`](https://reference.lan
     async for chunk in my_workflow.astream(some_input, config):
         print(chunk)
     ```
-  </Tab>
-</Tabs>
-
+  
 ### Resuming
 
 Resuming an execution after an [interrupt](https://reference.langchain.com/python/langgraph/types/interrupt) can be done by passing a **resume** value to the [`Command`](https://reference.langchain.com/python/langgraph/types/Command) primitive.
 
-<Tabs>
-  <Tab title="Invoke">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**Invoke:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langgraph.types import Command
 
     config = {
@@ -303,10 +314,10 @@ Resuming an execution after an [interrupt](https://reference.langchain.com/pytho
 
     my_workflow.invoke(Command(resume=some_resume_value), config)
     ```
-  </Tab>
+  
+**Async Invoke:**
 
-  <Tab title="Async Invoke">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langgraph.types import Command
 
     config = {
@@ -317,10 +328,10 @@ Resuming an execution after an [interrupt](https://reference.langchain.com/pytho
 
     await my_workflow.ainvoke(Command(resume=some_resume_value), config)
     ```
-  </Tab>
+  
+**Stream:**
 
-  <Tab title="Stream">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langgraph.types import Command
 
     config = {
@@ -332,10 +343,10 @@ Resuming an execution after an [interrupt](https://reference.langchain.com/pytho
     for chunk in my_workflow.stream(Command(resume=some_resume_value), config):
         print(chunk)
     ```
-  </Tab>
+  
+**Async Stream:**
 
-  <Tab title="Async Stream">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langgraph.types import Command
 
     config = {
@@ -347,18 +358,16 @@ Resuming an execution after an [interrupt](https://reference.langchain.com/pytho
     async for chunk in my_workflow.astream(Command(resume=some_resume_value), config):
         print(chunk)
     ```
-  </Tab>
-</Tabs>
-
+  
 **Resuming after an error**
 
 To resume after an error, run the `entrypoint` with a `None` and the same **thread id** (config).
 
 This assumes that the underlying **error** has been resolved and execution can proceed successfully.
 
-<Tabs>
-  <Tab title="Invoke">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**Invoke:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 
     config = {
         "configurable": {
@@ -368,10 +377,10 @@ This assumes that the underlying **error** has been resolved and execution can p
 
     my_workflow.invoke(None, config)
     ```
-  </Tab>
+  
+**Async Invoke:**
 
-  <Tab title="Async Invoke">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 
     config = {
         "configurable": {
@@ -381,10 +390,10 @@ This assumes that the underlying **error** has been resolved and execution can p
 
     await my_workflow.ainvoke(None, config)
     ```
-  </Tab>
+  
+**Stream:**
 
-  <Tab title="Stream">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 
     config = {
         "configurable": {
@@ -395,10 +404,10 @@ This assumes that the underlying **error** has been resolved and execution can p
     for chunk in my_workflow.stream(None, config):
         print(chunk)
     ```
-  </Tab>
+  
+**Async Stream:**
 
-  <Tab title="Async Stream">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 
     config = {
         "configurable": {
@@ -409,9 +418,7 @@ This assumes that the underlying **error** has been resolved and execution can p
     async for chunk in my_workflow.astream(None, config):
         print(chunk)
     ```
-  </Tab>
-</Tabs>
-
+  
 ### Short-term memory
 
 When an `entrypoint` is defined with a `checkpointer`, it stores information between successive invocations on the same **thread id** in [checkpoints](/oss/python/langgraph/persistence#checkpoints).
@@ -482,10 +489,12 @@ def slow_computation(input_value):
     return result
 ```
 
-<Warning>
-  **Serialization**
-  The **outputs** of tasks must be JSON-serializable to support checkpointing.
-</Warning>
+
+> ⚠️ **Warning**
+>
+> **Serialization**
+>   The **outputs** of tasks must be JSON-serializable to support checkpointing.
+
 
 ### Execution
 
@@ -497,25 +506,23 @@ When you call a **task**, it returns *immediately* with a future object. A futur
 
 To obtain the result of a **task**, you can either wait for it synchronously (using `result()`) or await it asynchronously (using `await`).
 
-<Tabs>
-  <Tab title="Synchronous Invocation">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**Synchronous Invocation:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     @entrypoint(checkpointer=checkpointer)
     def my_workflow(some_input: int) -> int:
         future = slow_computation(some_input)
         return future.result()  # Wait for the result synchronously
     ```
-  </Tab>
+  
+**Asynchronous Invocation:**
 
-  <Tab title="Asynchronous Invocation">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     @entrypoint(checkpointer=checkpointer)
     async def my_workflow(some_input: int) -> int:
         return await slow_computation(some_input)  # Await result asynchronously
     ```
-  </Tab>
-</Tabs>
-
+  
 ## When to use a task
 
 **Tasks** are useful in the following scenarios:
@@ -557,9 +564,9 @@ Idempotency ensures that running the same operation multiple times produces the 
 
 Encapsulate side effects (e.g., writing to a file, sending an email) in tasks to ensure they are not executed multiple times when resuming a workflow.
 
-<Tabs>
-  <Tab title="Incorrect">
-    In this example, a side effect (writing to a file) is directly included in the workflow, so it will be executed a second time when resuming the workflow.
+**Incorrect:**
+
+In this example, a side effect (writing to a file) is directly included in the workflow, so it will be executed a second time when resuming the workflow.
 
     ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     @entrypoint(checkpointer=checkpointer)
@@ -571,10 +578,10 @@ Encapsulate side effects (e.g., writing to a file, sending an email) in tasks to
         value = interrupt("question")
         return value
     ```
-  </Tab>
+  
+**Correct:**
 
-  <Tab title="Correct">
-    In this example, the side effect is encapsulated in a task, ensuring consistent execution upon resumption.
+In this example, the side effect is encapsulated in a task, ensuring consistent execution upon resumption.
 
     ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langgraph.func import task
@@ -591,9 +598,7 @@ Encapsulate side effects (e.g., writing to a file, sending an email) in tasks to
         value = interrupt("question")
         return value
     ```
-  </Tab>
-</Tabs>
-
+  
 ### Non-deterministic control flow
 
 Operations that might give different results each time (like getting current time or random numbers) should be encapsulated in tasks to ensure that on resume, the same result is returned.
@@ -607,9 +612,9 @@ If order of execution is not maintained when resuming, one [`interrupt`](https:/
 
 Please read the section on [determinism](#determinism) for more details.
 
-<Tabs>
-  <Tab title="Incorrect">
-    In this example, the workflow uses the current time to determine which task to execute. This is non-deterministic because the result of the workflow depends on the time at which it is executed.
+**Incorrect:**
+
+In this example, the workflow uses the current time to determine which task to execute. This is non-deterministic because the result of the workflow depends on the time at which it is executed.
 
     ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langgraph.func import entrypoint
@@ -633,10 +638,10 @@ Please read the section on [determinism](#determinism) for more details.
             "value": value
         }
     ```
-  </Tab>
+  
+**Correct:**
 
-  <Tab title="Correct">
-    In this example, the workflow uses the input `t0` to determine which task to execute. This is deterministic because the result of the workflow depends only on the input.
+In this example, the workflow uses the input `t0` to determine which task to execute. This is deterministic because the result of the workflow depends only on the input.
 
     ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     import time
@@ -666,9 +671,7 @@ Please read the section on [determinism](#determinism) for more details.
             "value": value
         }
     ```
-  </Tab>
-</Tabs>
-
+  
 ## Learn more
 
 * [How to use the Functional API](/oss/python/langgraph/use-functional-api)
@@ -677,12 +680,15 @@ Please read the section on [determinism](#determinism) for more details.
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/functional-api.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/functional-api.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

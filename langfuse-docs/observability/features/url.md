@@ -12,8 +12,6 @@ Each trace has a unique URL that you can use to share it with others or to acces
 
 Sometimes, it is useful to get the trace URL directly in the SDK. E.g. to add it to your logs or interactively look at it when running experiments in notebooks.
 
-<LangTabs items={["Python SDK", "JS/TS SDK", "Langchain (JS/TS)"]}>
-<Tab>
 When using the `@observe()` decorator:
 
 ```python
@@ -49,13 +47,10 @@ with langfuse.start_as_current_observation(as_type="span", name="process-request
     trace_url = langfuse.get_trace_url(trace_id=trace_id)
 ```
 
-</Tab>
-<Tab title="JS/TS SDK">
+
+**JS/TS SDK:**
 
 ```ts
-import { LangfuseClient } from "@langfuse/client";
-import { startObservation } from "@langfuse/tracing";
-
 const langfuse = new LangfuseClient();
 
 const rootSpan = startObservation("my-trace");
@@ -64,14 +59,13 @@ const traceUrl = await langfuse.getTraceUrl(rootSpan.traceId);
 console.log("Trace URL: ", traceUrl);
 ```
 
-</Tab>
-<Tab title="Langchain (JS/TS)">
+
+**Langchain (JS/TS):**
 
 Use the interoperability of the Langfuse SDK with the Langchain integration to get the URL of a trace ([interop docs](/integrations/frameworks/langchain#interoperability)).
 
 ```ts
 // Initialize Langfuse Client
-import { CallbackHandler, Langfuse } from "langfuse-langchain";
 const langfuse = new Langfuse();
 
 // Create a Langfuse trace for an execution of your application
@@ -90,8 +84,6 @@ langfuseHandler.getTraceUrl();
 handler.getTraceUrl();
 ```
 
-</Tab>
-</LangTabs>
 
 ## Share trace via url
 
@@ -101,17 +93,7 @@ You can make a trace `public` to share it via a public link. This allows others 
 
 _Example: https://cloud.langfuse.com/project/clkpwwm0m000gmm094odg11gi/traces/2d6b96f2-0a4d-4366-99a5-1ad558c66e99_
 
-<LangTabs items={["Langfuse UI", "Python SDK", "JS/TS SDK"]}>
-<Tab>
-
-<Video
-  src="https://static.langfuse.com/docs-videos/share-trace.mp4"
-  aspectRatio={1652 / 1080}
-  gifStyle
-/>
-
-</Tab>
-<Tab title="Python SDK (v3)">
+**Python SDK (v3):**
 
 When using the `@observe()` decorator:
 
@@ -143,12 +125,8 @@ with langfuse.start_as_current_observation(as_type="span", name="process-request
     print(f"Share this trace at: {trace_url}")
 ```
 
-</Tab>
-<Tab>
 
 ```ts /setTraceAsPublic/
-import { startObservation } from "@langfuse/tracing";
-
 const rootSpan = startObservation("my-trace");
 
 rootSpan.setTraceAsPublic();
@@ -156,5 +134,4 @@ rootSpan.setTraceAsPublic();
 rootSpan.end();
 ```
 
-</Tab>
-</LangTabs>
+

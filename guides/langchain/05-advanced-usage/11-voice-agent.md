@@ -189,8 +189,11 @@ async def stt_stream(
 
 The application implements an AssemblyAI client to manage the WebSocket connection and message parsing. See below for implementations; similar adapters can be constructed for other STT providers.
 
-<Accordion title="AssemblyAI Client">
-  ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+<details>
+<summary>AssemblyAI Client</summary>
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   class AssemblyAISTT:
       def __init__(self, api_key: str | None = None, sample_rate: int = 16000):
           self.api_key = api_key or os.getenv("ASSEMBLYAI_API_KEY")
@@ -225,7 +228,9 @@ The application implements an AssemblyAI client to manage the WebSocket connecti
               )
           return self._ws
   ```
-</Accordion>
+
+</details>
+
 
 ## 2. LangChain agent
 
@@ -352,8 +357,11 @@ async def tts_stream(
 
 The application implements an Cartesia client to manage the WebSocket connection and audio streaming. See below for implementations; similar adapters can be constructed for other TTS providers.
 
-<Accordion title="Cartesia Client">
-  ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+<details>
+<summary>Cartesia Client</summary>
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   import base64
   import json
   import websockets
@@ -426,7 +434,9 @@ The application implements an Cartesia client to manage the WebSocket connection
 
           return self._ws
   ```
-</Accordion>
+
+</details>
+
 
 ### LangSmith
 
@@ -490,12 +500,15 @@ For more on building agents with LangChain, see the [Agents guide](/oss/python/l
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/voice-agent.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/voice-agent.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

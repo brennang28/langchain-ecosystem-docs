@@ -687,7 +687,7 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
         backgroundColor: isSelected ? isDark ? "#1A2740" : "#E5F4FF" : "transparent",
         color: isSelected ? isDark ? "#C8DDF0" : "#030710" : "#6B8299"
       });
-      btn.innerHTML = `<span>${SDK_LOGOS[value]}</span>${label}`;
+      btn.innerHTML = `<span>${SDK_LOGOS[value]}${label}`;
       btn.addEventListener("mouseenter", () => {
         if (!isSelected) {
           btn.style.backgroundColor = isDark ? "#1A2740" : "#F2FAFF";
@@ -743,22 +743,18 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
   const tabInactiveClass = `${tabBase} lc-tab-inactive`;
   const tabTraceActiveClass = `${tabBase} lc-tab-trace`;
   const tabTraceLoadingClass = `${tabBase} lc-tab-trace-loading`;
-  const toolbar = showCodeTab && <div className="lc-toolbar flex items-stretch justify-between px-3 py-2 border-b lc-border lc-bg-wash">
-      <div className="inline-flex items-stretch gap-0.5 rounded-lg border lc-border lc-bg-surface" style={{
-    padding: 3
-  }}>
+  const toolbar = showCodeTab && 
+      
         <button type="button" aria-label="Preview" onClick={() => switchView("preview")} className={activeView === "preview" ? tabActiveClass : tabInactiveClass}>
           <span dangerouslySetInnerHTML={{
     __html: VIEW_EYE_SVG
   }} />
-          <span className="lc-tab-label">Preview</span>
-        </button>
+          Preview</button>
         <button type="button" aria-label="Code" onClick={() => switchView("code")} className={activeView === "code" ? tabActiveClass : tabInactiveClass}>
           <span dangerouslySetInnerHTML={{
     __html: VIEW_CODE_SVG
   }} />
-          <span className="lc-tab-label">Code</span>
-        </button>
+          Code</button>
         {(traceUrl || traceLoading) && !useLocalPreview && <a href={traceUrl ?? "#"} target="_blank" rel="noopener noreferrer" aria-label="Trace" onClick={e => {
     if (!traceUrl) e.preventDefault(); else cachedRef.current?.host.trackEvent("trace_tab_clicked", {
       pattern
@@ -767,16 +763,9 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
             <span dangerouslySetInnerHTML={{
     __html: traceUrl ? TRACE_ICON_SVG : TRACE_SPINNER_SVG
   }} />
-            <span className="lc-tab-label">Trace</span>
-            {traceUrl && <span className="ml-0.5" dangerouslySetInnerHTML={{
-    __html: EXTERNAL_LINK_SVG
-  }} />}
+            Trace{traceUrl && }
           </a>}
-      </div>
-
-      {activeView === "code" && <div className="lc-lang-switcher inline-flex items-stretch gap-0.5 rounded-lg border lc-border lc-bg-surface" style={{
-    padding: 3
-  }}>
+      {activeView === "code" && 
           <button type="button" aria-label="TypeScript" onClick={() => setAgentLang("js")} className={agentLang === "js" ? tabActiveClass : tabInactiveClass} title="TypeScript / JavaScript">
             <span dangerouslySetInnerHTML={{
     __html: LANG_TS_SVG
@@ -787,10 +776,10 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
     __html: LANG_PYTHON_SVG
   }} />
           </button>
-        </div>}
+        }
 
-      <div className="inline-flex items-center gap-1.5">
-        <button type="button" aria-label={expanded ? "Collapse" : "Expand"} onClick={() => setExpanded(v => !v)} className="lc-expand-btn" title={expanded ? "Collapse" : "Expand"}>
+      
+        <button type="button" aria-label={expanded ? "Collapse" : "Expand"} onClick={() => setExpanded(v => !v)} title={expanded ? "Collapse" : "Expand"}>
           <span dangerouslySetInnerHTML={{
     __html: expanded ? CLOSE_SVG : EXPAND_SVG
   }} />
@@ -815,14 +804,14 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
       sdk,
       lang: agentLang
     });
-  }} className="lc-expand-btn">
+  }}>
           <span dangerouslySetInnerHTML={{
     __html: DOWNLOAD_SVG
   }} />
         </button>
 
         {}
-        <button ref={sdkButtonRef} type="button" onClick={() => setSdkDropdownOpen(o => !o)} className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border lc-sdk-btn font-medium cursor-pointer transition-colors">
+        <button ref={sdkButtonRef} type="button" onClick={() => setSdkDropdownOpen(o => !o)}>
           <span dangerouslySetInnerHTML={{
     __html: SDK_LOGOS[sdk]
   }} />
@@ -831,36 +820,34 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
     __html: CHEVRON_DOWN_SVG
   }} />
         </button>
-      </div>
-    </div>;
-  const slot = <div ref={slotRef} className="relative w-full" style={expanded ? {
+      ;
+  const slot = <div ref={slotRef} style={expanded ? {
     flex: 1,
     minHeight: 0
   } : {
     height: heightStyle
   }}>
-      {!ready && !error && <div className="absolute inset-0 flex items-center justify-center z-10 lc-bg-wash">
-          <div className="size-6 border-2 lc-spinner rounded-full animate-spin" />
-        </div>}
+      {!ready && !error && 
+          
+        }
 
-      {error && <div className="absolute top-3 inset-x-3 z-10 px-4 py-3 rounded-2xl border lc-error text-sm">
+      {error && 
           <strong>Preview Error</strong>
-          <p className="mt-1 opacity-80" style={{
+          <p style={{
     fontSize: 13
   }}>
             {error}
           </p>
-          <button type="button" onClick={handleReset} className="mt-2 px-3 py-1 text-xs rounded-lg border lc-error-btn cursor-pointer">
+          <button type="button" onClick={handleReset}>
             Retry
           </button>
-        </div>}
-    </div>;
+        }
+    ;
   return <div data-lc-pe ref={placeholderRef} className={`${effectiveTheme === "dark" ? "dark" : ""} ${className ?? ""}`}>
-      <div ref={cardRef} className="rounded-2xl border lc-border overflow-hidden lc-bg-surface">
+      <div ref={cardRef}>
         {toolbar}
         {slot}
-      </div>
-    </div>;
+      ;
 };
 
 When a coordinator agent spawns specialist subagents (a researcher, an
@@ -869,8 +856,6 @@ from each subagent's streaming output. Set `filterSubagentMessages: true` in
 `useStream` to cleanly split these two streams, then use
 `getSubagentsByMessage` to attach each subagent's progress card to the
 coordinator message that triggered it.
-
-<PatternEmbed pattern="deep-agent-subagent-cards" />
 
 ## Why filter subagent messages
 
@@ -897,15 +882,13 @@ subagent output independently.
 Define a TypeScript interface matching your agent's state schema and pass it as a type parameter to `useStream` for type-safe access to state values. In the examples below, replace `typeof myAgent` with your interface name:
 
 ```ts  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-import type { BaseMessage } from "@langchain/core/messages";
-
 interface AgentState {
   messages: BaseMessage[];
 }
 ```
 
-<CodeGroup>
-  ```tsx React theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```tsx React theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   import { useStream } from "@langchain/react";
 
   const AGENT_URL = "http://localhost:2024";
@@ -918,16 +901,9 @@ interface AgentState {
     });
 
     return (
-      <div>
-        {stream.messages.map((msg) => (
-          <MessageWithSubagents
-            key={msg.id}
-            message={msg}
-            subagents={stream.getSubagentsByMessage(msg.id)}
-          />
-        ))}
-      </div>
-    );
+      {stream.messages.map((msg) => (
+          ))}
+      );
   }
   ```
 
@@ -945,15 +921,7 @@ interface AgentState {
   </script>
 
   <template>
-    <div>
-      <MessageWithSubagents
-        v-for="msg in stream.messages.value"
-        :key="msg.id"
-        :message="msg"
-        :subagents="stream.getSubagentsByMessage(msg.id)"
-      />
-    </div>
-  </template>
+    </template>
   ```
 
   ```svelte Svelte theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
@@ -969,14 +937,8 @@ interface AgentState {
     });
   </script>
 
-  <div>
-    {#each $messages as msg (msg.id)}
-      <MessageWithSubagents
-        message={msg}
-        subagents={getSubagentsByMessage(msg.id)}
-      />
-    {/each}
-  </div>
+  {#each $messages as msg (msg.id)}
+      {/each}
   ```
 
   ```ts Angular theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
@@ -1004,7 +966,6 @@ interface AgentState {
     });
   }
   ```
-</CodeGroup>
 
 ## Submitting with subgraph streaming
 
@@ -1019,11 +980,13 @@ stream.submit(
 );
 ```
 
-<Note>
-  DeepAgents sets a default recursion limit of 10,000, which is sufficient for
-  most multi-expert setups. You can override this via `config.recursion_limit` if
-  needed.
-</Note>
+
+> ℹ️ **Note**
+>
+> DeepAgents sets a default recursion limit of 10,000, which is sufficient for
+>   most multi-expert setups. You can override this via `config.recursion_limit` if
+>   needed.
+
 
 ## The SubagentStreamInterface
 
@@ -1081,8 +1044,6 @@ Each subagent card shows the specialist's name, task description, streaming
 content or final result, and timing information:
 
 ```tsx  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-import { AIMessage } from "@langchain/core/messages";
-
 function SubagentCard({
   subagent,
 }: {
@@ -1108,38 +1069,26 @@ function SubagentCard({
   const elapsed = getElapsedTime(subagent.startedAt, subagent.completedAt);
 
   return (
-    <div className="rounded-lg border bg-white shadow-sm">
+    
       <button
         onClick={() => setExpanded(!expanded)}
-        className="flex w-full items-center justify-between p-4"
       >
-        <div className="flex items-center gap-3">
-          <StatusIcon status={subagent.status} />
-          <div>
-            <h4 className="font-semibold capitalize">{title}</h4>
-            <p className="text-xs text-gray-500">{description}</p>
-          </div>
-        </div>
-        <div className="flex items-center gap-2">
+        
+          <h4>{title}</h4>
+            <p>{description}</p>
           {elapsed && (
-            <span className="text-xs text-gray-400">{elapsed}</span>
-          )}
-          <StatusBadge status={subagent.status} />
-        </div>
-      </button>
+            {elapsed})}
+          </button>
 
       {expanded && displayContent && (
-        <div className="border-t px-4 py-3">
-          <div className="prose prose-sm max-w-none line-clamp-6">
+        
+          
             {displayContent}
             {subagent.status === "running" && (
-              <span className="inline-block h-4 w-1 animate-pulse bg-blue-500" />
+              
             )}
-          </div>
-        </div>
-      )}
-    </div>
-  );
+          )}
+    );
 }
 
 function getElapsedTime(
@@ -1162,13 +1111,13 @@ Consistent visual indicators help users parse subagent status at a glance:
 function StatusIcon({ status }: { status: SubagentStreamInterface["status"] }) {
   switch (status) {
     case "pending":
-      return <span className="text-gray-400">○</span>;
+      return ○;
     case "running":
-      return <span className="animate-spin text-blue-500">◉</span>;
+      return ◉;
     case "complete":
-      return <span className="text-green-500">✓</span>;
+      return ✓;
     case "error":
-      return <span className="text-red-500">✕</span>;
+      return ✕;
   }
 }
 
@@ -1183,8 +1132,7 @@ function StatusBadge({ status }: { status: SubagentStreamInterface["status"] }) 
   return (
     <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${styles[status]}`}>
       {status}
-    </span>
-  );
+    );
 }
 ```
 
@@ -1203,21 +1151,11 @@ function SubagentProgress({
   const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
 
   return (
-    <div className="space-y-1">
-      <div className="flex items-center justify-between text-xs text-gray-500">
-        <span>Subagent progress</span>
-        <span>
+    
+      
+        <span>Subagent progress<span>
           {completed}/{total} complete
-        </span>
-      </div>
-      <div className="h-2 overflow-hidden rounded-full bg-gray-200">
-        <div
-          className="h-full rounded-full bg-blue-500 transition-all duration-300"
-          style={{ width: `${percentage}%` }}
-        />
-      </div>
-    </div>
-  );
+        );
 }
 ```
 
@@ -1235,27 +1173,22 @@ function MessageWithSubagents({
   subagents: SubagentStreamInterface[];
 }) {
   if (message.type === "human") {
-    return <HumanMessage content={message.content} />;
+    return ;
   }
 
   return (
-    <div className="space-y-3">
+    
       {message.content && (
-        <div className="prose prose-sm max-w-none">
+        
           {message.content}
-        </div>
-      )}
+        )}
 
       {subagents.length > 0 && (
-        <div className="ml-4 space-y-3 border-l-2 border-blue-200 pl-4">
-          <SubagentProgress subagents={subagents} />
+        
           {subagents.map((subagent) => (
-            <SubagentCard key={subagent.id} subagent={subagent} />
-          ))}
-        </div>
-      )}
-    </div>
-  );
+            ))}
+        )}
+    );
 }
 ```
 
@@ -1279,20 +1212,20 @@ function SynthesisIndicator({
   if (!allComplete || !isLoading) return null;
 
   return (
-    <div className="flex items-center gap-2 rounded-lg bg-purple-50 px-4 py-2 text-sm text-purple-700">
-      <span className="animate-spin">⟳</span>
-      Synthesizing results from {subagents.length} subagent
+    
+      ⟳Synthesizing results from {subagents.length} subagent
       {subagents.length !== 1 ? "s" : ""}...
-    </div>
-  );
+    );
 }
 ```
 
-<Tip>
-  The synthesis phase can take several seconds for complex multi-expert
-  workflows. A clear "Synthesizing results..." indicator prevents users from
-  thinking the agent has stalled.
-</Tip>
+
+> 💡 **Tip**
+>
+> The synthesis phase can take several seconds for complex multi-expert
+>   workflows. A clear "Synthesizing results..." indicator prevents users from
+>   thinking the agent has stalled.
+
 
 ## Debug unfiltered output
 
@@ -1349,12 +1282,15 @@ them.
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/frontend/subagent-streaming.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/frontend/subagent-streaming.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

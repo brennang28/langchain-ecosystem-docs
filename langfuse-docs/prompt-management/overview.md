@@ -9,15 +9,10 @@ description: Manage and version your prompts in Langfuse (open source). When ret
 Prompt management is a systematic approach to storing, versioning, and retrieving prompts for your LLM application. Instead of hardcoding prompts in your application code, you manage them centrally in Langfuse.
 
 
-<Frame fullWidth>
-  <img src="/images/docs/prompt-management.png" alt="Prompt Management in Langfuse showing version control, playground, and deployment labels" />
-</Frame>
+<img src="/images/docs/prompt-management.png" alt="Prompt Management in Langfuse showing version control, playground, and deployment labels" />
 
-<Callout type="info" emoji="🎥">
+> ℹ️ **Note:** [**Watch this walkthrough**](/watch-demo?tab=prompt) of Langfuse Prompt Management and how to integrate it with your application.
 
-[**Watch this walkthrough**](/watch-demo?tab=prompt) of Langfuse Prompt Management and how to integrate it with your application.
-
-</Callout>
 
 ### Decouple Prompt Updates from Code Deployment
 
@@ -30,7 +25,6 @@ When prompts live in Langfuse, non-technical team members update them directly i
 ### No latency, no availability risk
 
 **Langfuse Prompt Management adds no latency to your application**. Prompts are cached client-side by the SDK, so retrieving them is as fast as reading from memory. See [the caching docs page](/docs/prompt-management/features/caching) for more details.
-
 
 
 ## Getting started

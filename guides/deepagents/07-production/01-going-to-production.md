@@ -116,9 +116,11 @@ async def github_action(runtime: ToolRuntime):
 
 LLM-based applications are heavily I/O-bound: calling language models, databases, and external services. Async programming lets these operations run concurrently instead of blocking, improving throughput and responsiveness.
 
-<Note>
-  LangChain follows the convention of prefixing `a` to async method names (e.g., `ainvoke`, `abefore_agent`, `astream`). Sync and async variants live in the same class or namespace.
-</Note>
+
+> ℹ️ **Note**
+>
+> LangChain follows the convention of prefixing `a` to async method names (e.g., `ainvoke`, `abefore_agent`, `astream`). Sync and async variants live in the same class or namespace.
+
 
 When building for production:
 
@@ -136,9 +138,11 @@ Checkpointing also enables:
 * **[Time travel](/oss/python/langgraph/use-time-travel).** Every checkpointed step is a snapshot you can rewind to, letting you replay from an earlier state if something goes wrong.
 * **Safe handling of sensitive operations.** For workflows involving payments or other irreversible actions, checkpoints provide an audit trail and a recovery point to inspect the exact state that led to an action.
 
-<Tip>
-  [LangSmith Deployments](/langsmith/deployment) configure a persistent checkpointer automatically. If you are self-hosting, see [persistence](/oss/python/langgraph/persistence) for setup instructions.
-</Tip>
+
+> 💡 **Tip**
+>
+> [LangSmith Deployments](/langsmith/deployment) configure a persistent checkpointer automatically. If you are self-hosting, see [persistence](/oss/python/langgraph/persistence) for setup instructions.
+
 
 ## Memory
 
@@ -154,21 +158,25 @@ Memory is always persistent across conversations. The main question is how it's 
 | **Assistant**                  | `(assistant_id)` | Shared instructions for one assistant           | "Cap posts at 280 characters"     |
 | **Global**                     | `(org_id)`       | Read-only policies for all users and assistants | "Never disclose internal pricing" |
 
-<Warning>
-  Shared memory (assistant, user, or organization scope) is a vector for prompt injection. If one user can write to memory that another user's conversation reads, a malicious user could inject instructions into that shared state. Enforce read-only access where appropriate. For example, make organization-wide policies writable only through application code, not by the agent itself.
-</Warning>
+
+> ⚠️ **Warning**
+>
+> Shared memory (assistant, user, or organization scope) is a vector for prompt injection. If one user can write to memory that another user's conversation reads, a malicious user could inject instructions into that shared state. Enforce read-only access where appropriate. For example, make organization-wide policies writable only through application code, not by the agent itself.
+
 
 ### Configuration
 
 In Deep Agents, memory is stored as files in a virtual filesystem. By default, files only last for a single conversation. To persist them, route a path like `/memories/` to a [StoreBackend](https://reference.langchain.com/python/deepagents/backends/store/StoreBackend) that writes to the LangGraph [Store](/langsmith/custom-store). Use a [CompositeBackend](https://reference.langchain.com/python/deepagents/backends/composite/CompositeBackend) to give the agent both ephemeral scratch space and persistent [long-term memory](/oss/python/deepagents/memory).
 
-<Note>
-  The `ctx.runtime.server_info` and `ctx.runtime.execution_info` namespace patterns shown below require `deepagents>=0.5.0`.
-</Note>
 
-<Tabs>
-  <Tab title="User (recommended)">
-    Namespace by `user_id`. Each user gets their own private memory. This is the recommended default since most applications deploy a single assistant.
+> ℹ️ **Note**
+>
+> The `ctx.runtime.server_info` and `ctx.runtime.execution_info` namespace patterns shown below require `deepagents>=0.5.0`.
+
+
+**User (recommended):**
+
+Namespace by `user_id`. Each user gets their own private memory. This is the recommended default since most applications deploy a single assistant.
 
     ```python agent.py theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from deepagents import create_deep_agent
@@ -193,10 +201,10 @@ In Deep Agents, memory is stored as files in a virtual filesystem. By default, f
         should persist, update that file.""",
     )
     ```
-  </Tab>
+  
+**Assistant:**
 
-  <Tab title="Assistant">
-    Namespace by `assistant_id`. Memory is shared across all users of the same assistant, so any user can read or update it. Use this for shared instructions or knowledge that applies to everyone using a given assistant (e.g., "always reply in formal tone").
+Namespace by `assistant_id`. Memory is shared across all users of the same assistant, so any user can read or update it. Use this for shared instructions or knowledge that applies to everyone using a given assistant (e.g., "always reply in formal tone").
 
     ```python agent.py theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from deepagents import create_deep_agent
@@ -215,10 +223,10 @@ In Deep Agents, memory is stored as files in a virtual filesystem. By default, f
         ),
     )
     ```
-  </Tab>
+  
+**User:**
 
-  <Tab title="User">
-    Namespace by `user_id` alone. Memory follows the user across all assistants. Use this for a global user profile (name, timezone, communication preferences) that should apply regardless of which assistant the user is talking to.
+Namespace by `user_id` alone. Memory follows the user across all assistants. Use this for a global user profile (name, timezone, communication preferences) that should apply regardless of which assistant the user is talking to.
 
     ```python agent.py theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from deepagents import create_deep_agent
@@ -235,10 +243,10 @@ In Deep Agents, memory is stored as files in a virtual filesystem. By default, f
         ),
     )
     ```
-  </Tab>
+  
+**Organization:**
 
-  <Tab title="Organization">
-    Namespace by `org_id`. Memory is shared across all users and all assistants. Typically used for organization-wide policies (compliance rules, brand guidelines) that should be read-only for the agent. Write access should be restricted to application code to prevent prompt injection.
+Namespace by `org_id`. Memory is shared across all users and all assistants. Typically used for organization-wide policies (compliance rules, brand guidelines) that should be read-only for the agent. Write access should be restricted to application code to prevent prompt injection.
 
     ```python agent.py theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from deepagents import create_deep_agent
@@ -255,9 +263,7 @@ In Deep Agents, memory is stored as files in a virtual filesystem. By default, f
         ),
     )
     ```
-  </Tab>
-</Tabs>
-
+  
 You can also read and write to the store from your application code using the [Store API](/langsmith/custom-store). See [accessing memories from external code](/oss/python/deepagents/memory#accessing-memories-from-external-code) for examples.
 
 For the full namespace factory API, see [namespace factories](/oss/python/deepagents/backends#namespace-factories). For memory patterns like self-improving instructions and knowledge bases, see [long-term memory](/oss/python/deepagents/memory).
@@ -279,9 +285,11 @@ Choose a backend based on what needs to persist:
 
 For the full list of backends and how to build custom ones, see [backends](/oss/python/deepagents/backends).
 
-<Warning>
-  `FilesystemBackend` and `LocalShellBackend` access the host directly. Don't use them in deployed agents.
-</Warning>
+
+> ⚠️ **Warning**
+>
+> `FilesystemBackend` and `LocalShellBackend` access the host directly. Don't use them in deployed agents.
+
 
 ### Sandboxes
 
@@ -296,13 +304,15 @@ The key decision is how long a sandbox lives. Does each conversation get a fresh
 | **Thread-scoped**    | [Thread](/langsmith/use-threads) metadata | Fresh per conversation, cleaned up on TTL | A data analysis bot where each conversation starts clean             |
 | **Assistant-scoped** | [Assistant](/langsmith/assistants) config | Shared across all conversations           | A coding assistant that maintains a cloned repo across conversations |
 
-<Note>
-  The examples below use an async [graph factory](/langsmith/graph-rebuild) instead of a static graph because the sandbox needs the `thread_id` or `assistant_id` from the runtime to look up or create the correct sandbox. A graph factory receives the runtime on each run, so it can resolve the sandbox before building the agent. The factory is async because sandbox creation is an I/O-bound operation that requires runtime information like `thread_id` or `assistant_id` that is only available at invocation time.
-</Note>
 
-<Tabs>
-  <Tab title="Thread-scoped (most common)">
-    Each conversation gets its own sandbox. The [graph factory](/langsmith/graph-rebuild) reads `thread_id` from the runtime, so each [thread](/langsmith/use-threads) automatically gets its own isolated environment. The provider's label-based lookup handles deduplication across runs. Cleaned up when the sandbox [TTL](/langsmith/configure-ttl) expires.
+> ℹ️ **Note**
+>
+> The examples below use an async [graph factory](/langsmith/graph-rebuild) instead of a static graph because the sandbox needs the `thread_id` or `assistant_id` from the runtime to look up or create the correct sandbox. A graph factory receives the runtime on each run, so it can resolve the sandbox before building the agent. The factory is async because sandbox creation is an I/O-bound operation that requires runtime information like `thread_id` or `assistant_id` that is only available at invocation time.
+
+
+**Thread-scoped (most common):**
+
+Each conversation gets its own sandbox. The [graph factory](/langsmith/graph-rebuild) reads `thread_id` from the runtime, so each [thread](/langsmith/use-threads) automatically gets its own isolated environment. The provider's label-based lookup handles deduplication across runs. Cleaned up when the sandbox [TTL](/langsmith/configure-ttl) expires.
 
     ```python agent.py theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from daytona import CreateSandboxFromSnapshotParams, Daytona
@@ -326,10 +336,10 @@ The key decision is how long a sandbox lives. Does each conversation get a fresh
             )
         return create_deep_agent(backend=DaytonaSandbox(sandbox=sandbox))
     ```
-  </Tab>
+  
+**Assistant-scoped:**
 
-  <Tab title="Assistant-scoped">
-    All conversations share one sandbox. The [graph factory](/langsmith/graph-rebuild) reads the [assistant](/langsmith/assistants) ID from `runtime.server_info`, so every thread on the same assistant returns to the same environment. Files, installed packages, and cloned repositories persist across conversations.
+All conversations share one sandbox. The [graph factory](/langsmith/graph-rebuild) reads the [assistant](/langsmith/assistants) ID from `runtime.server_info`, so every thread on the same assistant returns to the same environment. Files, installed packages, and cloned repositories persist across conversations.
 
     ```python agent.py theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from daytona import CreateSandboxFromSnapshotParams, Daytona
@@ -351,19 +361,19 @@ The key decision is how long a sandbox lives. Does each conversation get a fresh
         return create_deep_agent(backend=DaytonaSandbox(sandbox=sandbox))
     ```
 
-    <Warning>
-      Assistant-scoped sandboxes accumulate files, installed packages, and other in-sandbox state over time. Configure a TTL with your sandbox provider, use snapshots to reset periodically, or implement cleanup logic to prevent the sandbox's disk and memory from growing unbounded.
-    </Warning>
-  </Tab>
-</Tabs>
+    
+> ⚠️ **Warning**
+>
+> Assistant-scoped sandboxes accumulate files, installed packages, and other in-sandbox state over time. Configure a TTL with your sandbox provider, use snapshots to reset periodically, or implement cleanup logic to prevent the sandbox's disk and memory from growing unbounded.
 
+  
 Because the `agent` variable is an async function (not a compiled graph), the server treats it as a [graph factory](/langsmith/graph-rebuild) and calls it on each run, injecting the config. The factory looks up or creates the sandbox via the provider's label-based search and returns a fresh agent graph wired to that sandbox.
 
 Once deployed with `langgraph deploy`, invoke the agent from your application code using the SDK. The client-side code is the same regardless of scope. The scoping is handled entirely in the agent factory above, but the behavior differs:
 
-<Tabs>
-  <Tab title="Thread-scoped">
-    Each thread gets its own sandbox. Follow-up messages within the same thread reuse the same sandbox, but a new thread always starts fresh with no leftover files or installed packages from previous conversations.
+**Thread-scoped:**
+
+Each thread gets its own sandbox. Follow-up messages within the same thread reuse the same sandbox, but a new thread always starts fresh with no leftover files or installed packages from previous conversations.
 
     ```python client.py theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langgraph_sdk import get_client
@@ -399,10 +409,10 @@ Once deployed with `langgraph deploy`, invoke the agent from your application co
     ):
         print(chunk.data)
     ```
-  </Tab>
+  
+**Assistant-scoped:**
 
-  <Tab title="Assistant-scoped">
-    All threads share one sandbox. This is useful when the sandbox has state that's expensive to recreate, such as a cloned repo, installed dependencies, or build artifacts. Any conversation on the same assistant picks up where the last one left off without repeating setup.
+All threads share one sandbox. This is useful when the sandbox has state that's expensive to recreate, such as a cloned repo, installed dependencies, or build artifacts. Any conversation on the same assistant picks up where the last one left off without repeating setup.
 
     ```python client.py theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langgraph_sdk import get_client
@@ -429,9 +439,7 @@ Once deployed with `langgraph deploy`, invoke the agent from your application co
     ):
         print(chunk.data)
     ```
-  </Tab>
-</Tabs>
-
+  
 #### File transfers
 
 Sandboxes are isolated containers, so your application code can't directly access files inside them. Use `upload_files()` and `download_files()` to move data across the sandbox boundary:
@@ -441,8 +449,11 @@ Sandboxes are isolated containers, so your application code can't directly acces
 
 For provider-specific file transfer examples, see [working with files](/oss/python/deepagents/sandboxes#working-with-files). For provider setup, security, and lifecycle patterns, see the full [sandboxes guide](/oss/python/deepagents/sandboxes).
 
-<Accordion title="Example: syncing skills and memories with custom middleware">
-  [Skill](/oss/python/deepagents/skills) scripts that the agent needs to execute must be uploaded into the sandbox before the agent runs. You may also want to sync [memories](/oss/python/deepagents/memory) so the agent can read and update them inside the container. Use [custom middleware](/oss/python/langchain/middleware/custom) with `before_agent` and `after_agent` hooks to move files across the sandbox boundary:
+
+<details>
+<summary>Example: syncing skills and memories with custom middleware</summary>
+
+[Skill](/oss/python/deepagents/skills) scripts that the agent needs to execute must be uploaded into the sandbox before the agent runs. You may also want to sync [memories](/oss/python/deepagents/memory) so the agent can read and update them inside the container. Use [custom middleware](/oss/python/langchain/middleware/custom) with `before_agent` and `after_agent` hooks to move files across the sandbox boundary:
 
   ```python agent.py theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   from deepagents import create_deep_agent
@@ -515,7 +526,9 @@ For provider-specific file transfer examples, see [working with files](/oss/pyth
       middleware=[SandboxSyncMiddleware(backend)],
   )
   ```
-</Accordion>
+
+</details>
+
 
 #### Managing secrets
 
@@ -550,9 +563,11 @@ The `${SECRET_KEY}` references resolve against secrets stored in your LangSmith 
 
 **Workspace secrets.** For API keys that don't need proxy-based injection (e.g., keys used by the agent server itself, not sandbox code), store them as [workspace secrets](/langsmith/set-up-hierarchy#configure-workspace-settings) in LangSmith. These are available as environment variables at runtime for all agents in the workspace.
 
-<Warning>
-  Avoid passing secrets into sandboxes via environment variables or file uploads. Agents can read any accessible file or environment variable inside the sandbox, including credentials. The auth proxy keeps secrets out of the sandbox entirely.
-</Warning>
+
+> ⚠️ **Warning**
+>
+> Avoid passing secrets into sandboxes via environment variables or file uploads. Agents can read any accessible file or environment variable inside the sandbox, including credentials. The auth proxy keeps secrets out of the sandbox entirely.
+
 
 ## Guardrails
 
@@ -641,8 +656,6 @@ Deep Agents use [`useStream`](/oss/python/langchain/frontend/overview) to connec
 Locally, `useStream` points at `http://localhost:2024`. In production, point it at your [LangSmith Deployment](/langsmith/deployment) and configure reconnection so users don't lose progress if their connection drops.
 
 ```tsx  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-import { useStream } from "@langchain/react";
-
 function App() {
   const stream = useStream<typeof agent>({
     apiUrl: "https://your-deployment.langsmith.dev",
@@ -671,12 +684,15 @@ For UI patterns specific to deep agents, such as subagent cards, todo lists, and
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/going-to-production.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/going-to-production.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

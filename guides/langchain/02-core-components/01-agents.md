@@ -41,11 +41,13 @@ graph TD
   class TOOL greenHighlight;
 ```
 
-<Info>
-  [`create_agent`](https://reference.langchain.com/python/langchain/agents/factory/create_agent) builds a **graph**-based agent runtime using [LangGraph](/oss/python/langgraph/overview). A graph consists of nodes (steps) and edges (connections) that define how your agent processes information. The agent moves through this graph, executing nodes like the model node (which calls the model), the tools node (which executes tools), or middleware.
 
-  Learn more about the [Graph API](/oss/python/langgraph/graph-api).
-</Info>
+> ℹ️ **Info**
+>
+> [`create_agent`](https://reference.langchain.com/python/langchain/agents/factory/create_agent) builds a **graph**-based agent runtime using [LangGraph](/oss/python/langgraph/overview). A graph consists of nodes (steps) and edges (connections) that define how your agent processes information. The agent moves through this graph, executing nodes like the model node (which calls the model), the tools node (which executes tools), or middleware.
+> 
+>   Learn more about the [Graph API](/oss/python/langgraph/graph-api).
+
 
 ## Core components
 
@@ -57,7 +59,7 @@ The [model](/oss/python/langchain/models) is the reasoning engine of your agent.
 
 Static models are configured once when creating the agent and remain unchanged throughout execution. This is the most common and straightforward approach.
 
-To initialize a static model from a <Tooltip tip="A string that follows the format `provider:model` (e.g. openai:gpt-5)" cta="See mappings" href="https://reference.langchain.com/python/langchain/models/#langchain.chat_models.init_chat_model(model)">model identifier string</Tooltip>:
+To initialize a static model from a model identifier string:
 
 ```python wrap theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 from langchain.agents import create_agent
@@ -65,9 +67,11 @@ from langchain.agents import create_agent
 agent = create_agent("openai:gpt-5", tools=tools)
 ```
 
-<Tip>
-  Model identifier strings support automatic inference (e.g., `"gpt-5"` will be inferred as `"openai:gpt-5"`). Refer to the [reference](https://reference.langchain.com/python/langchain/chat_models/base/init_chat_model) to see a full list of model identifier string mappings.
-</Tip>
+
+> 💡 **Tip**
+>
+> Model identifier strings support automatic inference (e.g., `"gpt-5"` will be inferred as `"openai:gpt-5"`). Refer to the [reference](https://reference.langchain.com/python/langchain/chat_models/base/init_chat_model) to see a full list of model identifier string mappings.
+
 
 For more control over the model configuration, initialize a model instance directly using the provider package. In this example, we use [`ChatOpenAI`](https://reference.langchain.com/python/langchain-openai/chat_models/base/ChatOpenAI). See [Chat models](/oss/python/integrations/chat) for other available chat model classes.
 
@@ -89,7 +93,7 @@ Model instances give you complete control over configuration. Use them when you 
 
 #### Dynamic model
 
-Dynamic models are selected at <Tooltip tip="The execution environment of your agent, containing immutable configuration and contextual data that persists throughout the agent's execution (e.g., user IDs, session details, or application-specific configuration).">runtime</Tooltip> based on the current <Tooltip tip="The data that flows through your agent's execution, including messages, custom fields, and any information that needs to be tracked and potentially modified during processing (e.g., user preferences or tool usage stats).">state</Tooltip> and context. This enables sophisticated routing logic and cost optimization.
+Dynamic models are selected at runtimebased on the current stateand context. This enables sophisticated routing logic and cost optimization.
 
 To use a dynamic model, create middleware using the [`@wrap_model_call`](https://reference.langchain.com/python/langchain/agents/middleware/types/wrap_model_call) decorator that modifies the model in the request:
 
@@ -122,13 +126,16 @@ agent = create_agent(
 )
 ```
 
-<Warning>
-  Pre-bound models (models with [`bind_tools`](https://reference.langchain.com/python/langchain-core/language_models/chat_models/BaseChatModel/bind_tools) already called) are not supported when using structured output. If you need dynamic model selection with structured output, ensure the models passed to the middleware are not pre-bound.
-</Warning>
 
-<Tip>
-  For model configuration details, see [Models](/oss/python/langchain/models). For dynamic model selection patterns, see [Dynamic model in middleware](/oss/python/langchain/middleware#dynamic-model).
-</Tip>
+> ⚠️ **Warning**
+>
+> Pre-bound models (models with [`bind_tools`](https://reference.langchain.com/python/langchain-core/language_models/chat_models/BaseChatModel/bind_tools) already called) are not supported when using structured output. If you need dynamic model selection with structured output, ensure the models passed to the middleware are not pre-bound.
+
+
+> 💡 **Tip**
+>
+> For model configuration details, see [Models](/oss/python/langchain/models). For dynamic model selection patterns, see [Dynamic model in middleware](/oss/python/langchain/middleware#dynamic-model).
+
 
 ### Tools
 
@@ -148,11 +155,13 @@ Static tools are defined when creating the agent and remain unchanged throughout
 
 To define an agent with static tools, pass a list of the tools to the agent.
 
-<Tip>
-  Tools can be specified as plain Python functions or <Tooltip tip="A method that can suspend execution and resume at a later time">coroutines</Tooltip>.
 
-  The [tool decorator](/oss/python/langchain/tools#create-tools) can be used to customize tool names, descriptions, argument schemas, and other properties.
-</Tip>
+> 💡 **Tip**
+>
+> Tools can be specified as plain Python functions or coroutines.
+> 
+>   The [tool decorator](/oss/python/langchain/tools#create-tools) can be used to customize tool names, descriptions, argument schemas, and other properties.
+
 
 ```python wrap theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 from langchain.tools import tool
@@ -180,13 +189,13 @@ With dynamic tools, the set of tools available to the agent is modified at runti
 
 There are two approaches depending on whether tools are known ahead of time:
 
-<Tabs>
-  <Tab title="Filtering pre-registered tools">
-    When all possible tools are known at agent creation time, you can pre-register them and dynamically filter which ones are exposed to the model based on state, permissions, or context.
+**Filtering pre-registered tools:**
 
-    <Tabs>
-      <Tab title="State">
-        Enable advanced tools only after certain conversation milestones:
+When all possible tools are known at agent creation time, you can pre-register them and dynamically filter which ones are exposed to the model based on state, permissions, or context.
+
+    **State:**
+
+Enable advanced tools only after certain conversation milestones:
 
         ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
         from langchain.agents import create_agent
@@ -221,10 +230,10 @@ There are two approaches depending on whether tools are known ahead of time:
             middleware=[state_based_tools]
         )
         ```
-      </Tab>
+      
+**Store:**
 
-      <Tab title="Store">
-        Filter tools based on user preferences or feature flags in Store:
+Filter tools based on user preferences or feature flags in Store:
 
         ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
         from dataclasses import dataclass
@@ -265,10 +274,10 @@ There are two approaches depending on whether tools are known ahead of time:
             store=InMemoryStore()
         )
         ```
-      </Tab>
+      
+**Runtime Context:**
 
-      <Tab title="Runtime Context">
-        Filter tools based on user permissions from Runtime Context:
+Filter tools based on user permissions from Runtime Context:
 
         ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
         from dataclasses import dataclass
@@ -314,20 +323,18 @@ There are two approaches depending on whether tools are known ahead of time:
             context_schema=Context
         )
         ```
-      </Tab>
-    </Tabs>
-
-    This approach is best when:
+      
+This approach is best when:
 
     * All possible tools are known at compile/startup time
     * You want to filter based on permissions, feature flags, or conversation state
     * Tools are static but their availability is dynamic
 
     See [Dynamically selecting tools](/oss/python/langchain/middleware/custom#dynamically-selecting-tools) for more examples.
-  </Tab>
+  
+**Runtime tool registration:**
 
-  <Tab title="Runtime tool registration">
-    When tools are discovered or created at runtime (e.g., loaded from an MCP server, generated based on user data, or fetched from a remote registry), you need to both register the tools and handle their execution dynamically.
+When tools are discovered or created at runtime (e.g., loaded from an MCP server, generated based on user data, or fetched from a remote registry), you need to both register the tools and handle their execution dynamically.
 
     This requires two middleware hooks:
 
@@ -379,15 +386,17 @@ There are two approaches depending on whether tools are known ahead of time:
     * Tools are generated dynamically based on user data or configuration
     * You're integrating with external tool registries
 
-    <Note>
-      The `wrap_tool_call` hook is required for runtime-registered tools because the agent needs to know how to execute tools that weren't in the original tool list. Without it, the agent won't know how to invoke the dynamically added tool.
-    </Note>
-  </Tab>
-</Tabs>
+    
+> ℹ️ **Note**
+>
+> The `wrap_tool_call` hook is required for runtime-registered tools because the agent needs to know how to execute tools that weren't in the original tool list. Without it, the agent won't know how to invoke the dynamically added tool.
 
-<Tip>
-  To learn more about tools, see [Tools](/oss/python/langchain/tools).
-</Tip>
+  
+
+> 💡 **Tip**
+>
+> To learn more about tools, see [Tools](/oss/python/langchain/tools).
+
 
 #### Tool error handling
 
@@ -435,8 +444,11 @@ The agent will return a [`ToolMessage`](https://reference.langchain.com/python/l
 
 Agents follow the ReAct ("Reasoning + Acting") pattern, alternating between brief reasoning steps with targeted tool calls and feeding the resulting observations into subsequent decisions until they can deliver a final answer.
 
-<Accordion title="Example of ReAct loop">
-  **Prompt:** Identify the current most popular wireless headphones and verify availability.
+
+<details>
+<summary>Example of ReAct loop</summary>
+
+**Prompt:** Identify the current most popular wireless headphones and verify availability.
 
   ```
   ================================ Human Message =================================
@@ -488,7 +500,9 @@ Agents follow the ReAct ("Reasoning + Acting") pattern, alternating between brie
 
   I found wireless headphones (model WH-1000XM5) with 10 units in stock...
   ```
-</Accordion>
+
+</details>
+
 
 ### System prompt
 
@@ -577,9 +591,11 @@ result = agent.invoke(
 )
 ```
 
-<Tip>
-  For more details on message types and formatting, see [Messages](/oss/python/langchain/messages). For comprehensive middleware documentation, see [Middleware](/oss/python/langchain/middleware).
-</Tip>
+
+> 💡 **Tip**
+>
+> For more details on message types and formatting, see [Messages](/oss/python/langchain/messages). For comprehensive middleware documentation, see [Middleware](/oss/python/langchain/middleware).
+
 
 ### Name
 
@@ -593,9 +609,11 @@ agent = create_agent(
 )
 ```
 
-<Warning>
-  Prefer `snake_case` for agent names (e.g., `research_assistant` instead of `Research Assistant`). Some model providers reject names containing spaces or special characters with errors. Using alphanumeric characters, underscores, and hyphens only ensures compatibility across all providers. The same applies to [tool names](/oss/python/langchain/tools).
-</Warning>
+
+> ⚠️ **Warning**
+>
+> Prefer `snake_case` for agent names (e.g., `research_assistant` instead of `Research Assistant`). Some model providers reject names containing spaces or special characters with errors. Using alphanumeric characters, underscores, and hyphens only ensures compatibility across all providers. The same applies to [tool names](/oss/python/langchain/tools).
+
 
 ## Invocation
 
@@ -611,9 +629,11 @@ For streaming steps and / or tokens from the agent, refer to the [streaming](/os
 
 Otherwise, the agent follows the LangGraph [Graph API](/oss/python/langgraph/use-graph-api) and supports all associated methods, such as `stream` and `invoke`.
 
-<Tip>
-  Use [LangSmith](/langsmith/home) to trace, debug, and evaluate your agents.
-</Tip>
+
+> 💡 **Tip**
+>
+> Use [LangSmith](/langsmith/home) to trace, debug, and evaluate your agents.
+
 
 ## Advanced concepts
 
@@ -663,13 +683,16 @@ agent = create_agent(
 )
 ```
 
-<Note>
-  As of `langchain 1.0`, simply passing a schema (e.g., `response_format=ContactInfo`) will default to `ProviderStrategy` if the model supports native structured output. It will fall back to `ToolStrategy` otherwise.
-</Note>
 
-<Tip>
-  To learn about structured output, see [Structured output](/oss/python/langchain/structured-output).
-</Tip>
+> ℹ️ **Note**
+>
+> As of `langchain 1.0`, simply passing a schema (e.g., `response_format=ContactInfo`) will default to `ProviderStrategy` if the model supports native structured output. It will fall back to `ToolStrategy` otherwise.
+
+
+> 💡 **Tip**
+>
+> To learn about structured output, see [Structured output](/oss/python/langchain/structured-output).
+
 
 ### Memory
 
@@ -740,19 +763,23 @@ result = agent.invoke({
 })
 ```
 
-<Note>
-  As of `langchain 1.0`, custom state schemas **must** be `TypedDict` types. Pydantic models and dataclasses are no longer supported. See the [v1 migration guide](/oss/python/migrate/langchain-v1#state-type-restrictions) for more details.
-</Note>
 
-<Note>
-  Defining custom state via middleware is preferred over defining it via [`state_schema`](https://reference.langchain.com/python/langchain/middleware/#langchain.agents.middleware.AgentMiddleware.state_schema) on [`create_agent`](https://reference.langchain.com/python/langchain/agents/factory/create_agent) because it allows you to keep state extensions conceptually scoped to the relevant middleware and tools.
+> ℹ️ **Note**
+>
+> As of `langchain 1.0`, custom state schemas **must** be `TypedDict` types. Pydantic models and dataclasses are no longer supported. See the [v1 migration guide](/oss/python/migrate/langchain-v1#state-type-restrictions) for more details.
 
-  [`state_schema`](https://reference.langchain.com/python/langchain/middleware/#langchain.agents.middleware.AgentMiddleware.state_schema) is still supported for backwards compatibility on [`create_agent`](https://reference.langchain.com/python/langchain/agents/factory/create_agent).
-</Note>
 
-<Tip>
-  To learn more about memory, see [Memory](/oss/python/concepts/memory). For information on implementing long-term memory that persists across sessions, see [Long-term memory](/oss/python/langchain/long-term-memory).
-</Tip>
+> ℹ️ **Note**
+>
+> Defining custom state via middleware is preferred over defining it via [`state_schema`](https://reference.langchain.com/python/langchain/middleware/#langchain.agents.middleware.AgentMiddleware.state_schema) on [`create_agent`](https://reference.langchain.com/python/langchain/agents/factory/create_agent) because it allows you to keep state extensions conceptually scoped to the relevant middleware and tools.
+> 
+>   [`state_schema`](https://reference.langchain.com/python/langchain/middleware/#langchain.agents.middleware.AgentMiddleware.state_schema) is still supported for backwards compatibility on [`create_agent`](https://reference.langchain.com/python/langchain/agents/factory/create_agent).
+
+
+> 💡 **Tip**
+>
+> To learn more about memory, see [Memory](/oss/python/concepts/memory). For information on implementing long-term memory that persists across sessions, see [Long-term memory](/oss/python/langchain/long-term-memory).
+
 
 ### Streaming
 
@@ -775,9 +802,11 @@ for chunk in agent.stream({
         print(f"Calling tools: {[tc['name'] for tc in latest_message.tool_calls]}")
 ```
 
-<Tip>
-  For more details on streaming, see [Streaming](/oss/python/langchain/streaming).
-</Tip>
+
+> 💡 **Tip**
+>
+> For more details on streaming, see [Streaming](/oss/python/langchain/streaming).
+
 
 ### Middleware
 
@@ -791,18 +820,23 @@ for chunk in agent.stream({
 
 Middleware integrates seamlessly into the agent's execution, allowing you to intercept and modify data flow at key points without changing the core agent logic.
 
-<Tip>
-  For comprehensive middleware documentation including decorators like [`@before_model`](https://reference.langchain.com/python/langchain/agents/middleware/types/before_model), [`@after_model`](https://reference.langchain.com/python/langchain/agents/middleware/types/after_model), and [`@wrap_tool_call`](https://reference.langchain.com/python/langchain/agents/middleware/types/wrap_tool_call), see [Middleware](/oss/python/langchain/middleware).
-</Tip>
+
+> 💡 **Tip**
+>
+> For comprehensive middleware documentation including decorators like [`@before_model`](https://reference.langchain.com/python/langchain/agents/middleware/types/before_model), [`@after_model`](https://reference.langchain.com/python/langchain/agents/middleware/types/after_model), and [`@wrap_tool_call`](https://reference.langchain.com/python/langchain/agents/middleware/types/wrap_tool_call), see [Middleware](/oss/python/langchain/middleware).
+
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/agents.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/agents.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

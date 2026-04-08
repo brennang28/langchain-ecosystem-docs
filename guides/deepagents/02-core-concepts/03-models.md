@@ -20,8 +20,8 @@ Under the hood, this calls [`init_chat_model`](https://reference.langchain.com/p
 
 To configure model-specific parameters, use [`init_chat_model`](https://reference.langchain.com/python/langchain/chat_models/base/init_chat_model) or instantiate a provider model class directly:
 
-<CodeGroup>
-  ```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```python init_chat_model theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   from langchain.chat_models import init_chat_model
   from deepagents import create_deep_agent
 
@@ -42,11 +42,11 @@ To configure model-specific parameters, use [`init_chat_model`](https://referenc
   )
   agent = create_deep_agent(model=model)
   ```
-</CodeGroup>
 
-<Note>
-  Available parameters vary by provider. See the [chat model integrations](/oss/python/integrations/chat) page for provider-specific configuration options.
-</Note>
+> ℹ️ **Note**
+>
+> Available parameters vary by provider. See the [chat model integrations](/oss/python/integrations/chat) page for provider-specific configuration options.
+
 
 ## Select a model at runtime
 
@@ -88,9 +88,11 @@ result = agent.invoke(
 )
 ```
 
-<Tip>
-  For more dynamic model patterns (foe example routing based on conversation complexity or cost optimization), see [Dynamic model](/oss/python/langchain/agents#dynamic-model) in the LangChain agents guide.
-</Tip>
+
+> 💡 **Tip**
+>
+> For more dynamic model patterns (foe example routing based on conversation complexity or cost optimization), see [Dynamic model](/oss/python/langchain/agents#dynamic-model) in the LangChain agents guide.
+
 
 ## Supported models
 
@@ -115,12 +117,15 @@ Open-weight models are available through providers like [Baseten](/oss/python/in
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/models.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/models.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

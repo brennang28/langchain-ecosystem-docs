@@ -7,12 +7,6 @@ description: Manage your annotation tasks with ease using our new workflow tooli
 
 Annotation Queues are a manual [evaluation method](/docs/evaluation/core-concepts#evaluation-methods) which is build for domain experts to add [scores](/docs/evaluation/evaluation-methods/data-model) and comments to traces, observations or sessions.
 
-<Video
-  src="https://static.langfuse.com/docs-videos/2025-12-19-annotation-queues.mp4"
-  aspectRatio={16 / 9}
-  gifStyle
-/>
-
 ## Why use Annotation Queues?
 
 - Manually explore application results and add scores and comments to them
@@ -22,7 +16,6 @@ Annotation Queues are a manual [evaluation method](/docs/evaluation/core-concept
 
 ## Set up step-by-step
 
-<Steps>
 
 ### Create a new Annotation Queue
 
@@ -31,16 +24,14 @@ Annotation Queues are a manual [evaluation method](/docs/evaluation/core-concept
 - Set the `Queue name` and `Description` (optional).
 - Assign users to the queue (optional).
 
-<Callout type="info">
-An Annotation Queue requires a score config that defines the scoring dimensions for the annotation tasks. See [how to create and manage Score Configs](/faq/all/manage-score-configs#create-a-score-config) for details.
-</Callout>
+
+> ℹ️ **Note:** An Annotation Queue requires a score config that defines the scoring dimensions for the annotation tasks. See [how to create and manage Score Configs](/faq/all/manage-score-configs#create-a-score-config) for details.
+
 
 ### Add Traces, Observations or Sessions to the Queue
 
 Once you have created annotation queues, you can assign traces, observations or sessions to them.
 
-<Tabs items={["Bulk Selection", "Single Item"]}>
-<Tab>
 To add multiple traces, sessions or observations to a queue:
 
 1. Select Traces, Observations or Sessions via the checkboxes. 
@@ -48,23 +39,16 @@ To add multiple traces, sessions or observations to a queue:
 3. Click on `Add to queue` to add the selected traces, sessions or observations to the queue.
 4. Select the queue you want to add the traces, sessions or observations to.
 
-<Frame fullWidth>
-  ![Annotate](/images/docs/add_multiple_items_to_queue.png)
-</Frame>
 
-</Tab>
-<Tab>
+![Annotate](/images/docs/add_multiple_items_to_queue.png)
 
 To add single traces, sessions or observations:
 
 1. Click on the `Annotate` dropdown
 2. Select the queue you want to add the trace, session or observation to
 
-<Frame fullWidth>![Annotate](/images/docs/add_to_queue.png)</Frame>
 
-</Tab>
-</Tabs>
-
+![Annotate](/images/docs/add_to_queue.png)
 ### Process Annotation Queue
 
 You will see an annotation task for each item in the queue.
@@ -72,7 +56,6 @@ You will see an annotation task for each item in the queue.
 1. On the `Annotate` Card add scores on the defined dimensions
 2. Click on `Complete + next` to move to the next annotation task or finish the queue
 
-</Steps>
 
 ## Manage Annotation Queues via API
 

@@ -15,9 +15,9 @@ Long-term memory is built on [LangGraph stores](/oss/python/langgraph/persistenc
 
 To add long-term memory to an agent, create a store and pass it to [`create_agent`](https://reference.langchain.com/python/langchain/agents/factory/create_agent):
 
-<Tabs>
-  <Tab title="InMemoryStore">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**InMemoryStore:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from langchain.agents import create_agent
     from langchain_core.runnables import Runnable
     from langgraph.store.memory import InMemoryStore
@@ -31,10 +31,10 @@ To add long-term memory to an agent, create a store and pass it to [`create_agen
         store=store,
     )
     ```
-  </Tab>
+  
+**PostgreSQL:**
 
-  <Tab title="PostgreSQL">
-    ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     pip install langgraph-checkpoint-postgres
     ```
 
@@ -53,14 +53,14 @@ To add long-term memory to an agent, create a store and pass it to [`create_agen
             store=store,
         )
     ```
-  </Tab>
-</Tabs>
-
+  
 Tools can then read from and write to the store using the `runtime.store` parameter. See [Read long-term memory in tools](#read-long-term-memory-in-tools) and [Write long-term memory from tools](#write-long-term-memory-from-tools) for examples.
 
-<Tip>
-  For a deeper dive into memory types (semantic, episodic, procedural) and strategies for writing memories, see the [Memory conceptual guide](/oss/python/concepts/memory#long-term-memory).
-</Tip>
+
+> 💡 **Tip**
+>
+> For a deeper dive into memory types (semantic, episodic, procedural) and strategies for writing memories, see the [Memory conceptual guide](/oss/python/concepts/memory#long-term-memory).
+
 
 ## Memory storage
 
@@ -70,9 +70,9 @@ Each memory is organized under a custom `namespace` (similar to a folder) and a 
 
 This structure enables hierarchical organization of memories. Cross-namespace searching is then supported through content filters.
 
-<Tabs>
-  <Tab title="InMemoryStore">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**InMemoryStore:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from collections.abc import Sequence
 
     from langgraph.store.base import IndexConfig
@@ -107,10 +107,10 @@ This structure enables hierarchical organization of memories. Cross-namespace se
         namespace, filter={"my-key": "my-value"}, query="language preferences"
     )
     ```
-  </Tab>
+  
+**PostgreSQL:**
 
-  <Tab title="PostgreSQL">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from collections.abc import Sequence
 
     from langgraph.store.base import IndexConfig
@@ -148,16 +148,14 @@ This structure enables hierarchical organization of memories. Cross-namespace se
             namespace, filter={"my-key": "my-value"}, query="language preferences"
         )
     ```
-  </Tab>
-</Tabs>
-
+  
 For more information about the memory store, see the [Persistence](/oss/python/langgraph/persistence#memory-store) guide.
 
 ## Read long-term memory in tools
 
-<Tabs>
-  <Tab title="InMemoryStore">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**InMemoryStore:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from dataclasses import dataclass
 
     from langchain.agents import create_agent
@@ -212,10 +210,10 @@ For more information about the memory store, see the [Persistence](/oss/python/l
         context=Context(user_id="user_123"),
     )
     ```
-  </Tab>
+  
+**PostgreSQL:**
 
-  <Tab title="PostgreSQL">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from dataclasses import dataclass
 
     from langchain.agents import create_agent
@@ -254,16 +252,14 @@ For more information about the memory store, see the [Persistence](/oss/python/l
             context=Context(user_id="user_123"),
         )
     ```
-  </Tab>
-</Tabs>
-
+  
 <a id="write-long-term" />
 
 ## Write long-term memory from tools
 
-<Tabs>
-  <Tab title="InMemoryStore">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**InMemoryStore:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from dataclasses import dataclass
 
     from langchain.agents import create_agent
@@ -316,10 +312,10 @@ For more information about the memory store, see the [Persistence](/oss/python/l
     # You can access the store directly to get the value
     item = store.get(("users",), "user_123")
     ```
-  </Tab>
+  
+**PostgreSQL:**
 
-  <Tab title="PostgreSQL">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from dataclasses import dataclass
 
     from langchain.agents import create_agent
@@ -362,17 +358,18 @@ For more information about the memory store, see the [Persistence](/oss/python/l
             context=Context(user_id="user_123"),
         )
     ```
-  </Tab>
-</Tabs>
-
+  
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/long-term-memory.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/long-term-memory.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

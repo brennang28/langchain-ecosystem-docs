@@ -6,16 +6,6 @@ sidebarTitle: Export to Blob Storage
 
 # Export via Blob Storage Integration
 
-<AvailabilityBanner
-  availability={{
-    hobby: "not-available",
-    core: "not-available",
-    pro: "team-add-on",
-    enterprise: "full",
-    selfHosted: "full",
-  }}
-/>
-
 You can create schedule exports to a Blob Storage, e.g. S3, GCS, or Azure Blob Storage, for `traces`, `observations`, enriched observations, and `scores`.
 
 Those exports can run on an `hourly`, `daily`, or `weekly` schedule.
@@ -31,9 +21,8 @@ Within an hour an initial export should start and continue based on the schedule
 The export supports CSV, JSON, and JSONL file formats.
 Read [our blob storage documentation](/self-hosting/deployment/infrastructure/blobstorage) for more information on how to get credentials for your specific vendor.
 
-<Frame className="my-10" fullWidth>
-  ![Blob Storage Integration Setup](/images/docs/blob-storage.png)
-</Frame>
+
+![Blob Storage Integration Setup](/images/docs/blob-storage.png)
 
 ## Export source (Langfuse v4)
 
@@ -47,11 +36,11 @@ Available options:
 - `Traces and observations (legacy) and enriched observations`
 - `Enriched observations (recommended)`
 
-<Callout type="warning">
-  `Traces and observations (legacy)` sources may be deprecated in the future.
-  All new export jobs should use `Enriched observations (recommended)`, and
-  existing legacy jobs are strongly recommended to upgrade.
-</Callout>
+
+> ⚠️ **Note:** `Traces and observations (legacy)` sources may be deprecated in the future.
+>   All new export jobs should use `Enriched observations (recommended)`, and
+>   existing legacy jobs are strongly recommended to upgrade.
+
 
 ### Upgrade path for existing configurations
 

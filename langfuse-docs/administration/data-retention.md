@@ -6,16 +6,6 @@ sidebarTitle: Data Retention
 
 # Data Retention
 
-<AvailabilityBanner
-  availability={{
-    hobby: "not-available",
-    core: "not-available",
-    pro: "full",
-    enterprise: "full",
-    selfHosted: "ee",
-  }}
-/>
-
 With Langfuse's Data Retention feature, you can control how long your event data (Traces, Observations, Scores, and Media Assets) is stored in Langfuse.
 
 ## Configuration
@@ -23,14 +13,12 @@ With Langfuse's Data Retention feature, you can control how long your event data
 Data retention is configured on a project level, and we accept a number of days with a minimum of 3 days.
 Project owners and administrators can change the data retention setting within the Project Settings view.
 
-<Callout type="info">
-  By default, Langfuse stores event data (Traces, Observations, Scores, and
-  Media Assets) indefinitely.
-</Callout>
 
-<Frame className="my-10" fullWidth>
-  ![Configure data retention in Langfuse](/images/docs/data-retention.png)
-</Frame>
+> ℹ️ **Note:** By default, Langfuse stores event data (Traces, Observations, Scores, and
+>   Media Assets) indefinitely.
+
+
+![Configure data retention in Langfuse](/images/docs/data-retention.png)
 
 Data retention can also be configured via the [projects API](/docs/administration/scim-and-org-api).
 

@@ -10,17 +10,12 @@ By default, Langfuse supports email/password and social logins (Sign in with Goo
 
 For increased security, you can also configure Enterprise SSO (e.g. Okta, Authentik, GitHub Enterprise, OneLogin, Azure AD, Keycloak, JumpCloud etc.) via OIDC.
 
-<Callout type="info">
 
-For more details on authorization, please refer to the [RBAC docs](/docs/administration/rbac).
+> ℹ️ **Note:** For more details on authorization, please refer to the [RBAC docs](/docs/administration/rbac).
 
-</Callout>
 
-<Callout type="info">
+> ℹ️ **Note:** For self-hosted instances, please refer to the [Self-hosted Authentication and SSO guide](/self-hosting/security/authentication-and-sso).
 
-For self-hosted instances, please refer to the [Self-hosted Authentication and SSO guide](/self-hosting/security/authentication-and-sso).
-
-</Callout>
 
 ## Email/Password authentication
 
@@ -40,24 +35,12 @@ For security reasons, Langfuse does not support switching between social logins 
 
 ## Enterprise SSO & SSO Enforcement [#sso]
 
-<AvailabilityBanner
-  availability={{
-    hobby: "not-available",
-    core: "not-available",
-    pro: "team-add-on",
-    enterprise: "full",
-    selfHosted: "full",
-  }}
-/>
-
 Langfuse supports **Enterprise SSO** (e.g. Okta, Authentik, OneLogin, Azure AD, Keycloak, WorkOS, JumpCloud etc.) via OIDC. Please reach out to [support](/support) to enable this feature.
 
-<Callout type="info">
 
-  Langfuse supports multiple domains per customer organization, but each domain must be exclusively owned by your organization.
-  Shared domains (e.g., from subcontractors or consultancies) are not supported.
+> ℹ️ **Note:** Langfuse supports multiple domains per customer organization, but each domain must be exclusively owned by your organization.
+>   Shared domains (e.g., from subcontractors or consultancies) are not supported.
 
-</Callout>
 
 Details:
 
@@ -65,15 +48,11 @@ Details:
 - **Authorization:** Enterprise SSO does not automatically provision [roles](/docs/administration/rbac) for new users upon signup. Users must be invited to an organization, either through the UI (settings > members) or the [SCIM API](/docs/administration/scim-and-org-api).
 - **Signing in:** To sign in with an Enterprise SSO provider, please (1) enter your email address, and (2) press "Continue". You will be redirected to the Enterprise SSO provider to authenticate.
 
-<Frame className="max-w-lg">
-  ![SSO Sign-in Flow](/images/security/sso-signin.png)
-</Frame>
 
-<Callout type="info">
+![SSO Sign-in Flow](/images/security/sso-signin.png)
 
-  Langfuse supports authentication via **OIDC only**. SAML is not supported.
+> ℹ️ **Note:** Langfuse supports authentication via **OIDC only**. SAML is not supported.
 
-</Callout>
 
 ### Vendor Guides
 
@@ -126,14 +105,6 @@ Usually, sharing via password managers works best.
 Langfuse supports **IdP-initiated SSO** (Identity Provider-initiated Single Sign-On), where users can start the SSO flow directly from Okta instead of starting from Langfuse.
 
 _Example of IdP-initiated SSO authentication flow (Okta):_
-
-<Video
-  src="https://static.langfuse.com/docs-videos/idp-initiated-sign-in.mp4"
-  aspectRatio={1812 / 1080}
-  title="IdP-Initiated SSO Authentication Flow"
-  className="max-w-xl"
-  gifStyle
-/>
 
 To enable IdP-initiated SSO, configure Okta to redirect users to:
 

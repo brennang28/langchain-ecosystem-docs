@@ -30,8 +30,8 @@ def test_agent_with_real_model():
 
 Configure pytest to recognize the marker and exclude integration tests from default runs:
 
-<CodeGroup>
-  ```ini pytest.ini theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```ini pytest.ini theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   [pytest]
   markers =
       integration: tests that call real LLM APIs
@@ -45,7 +45,6 @@ Configure pytest to recognize the marker and exclude integration tests from defa
   ]
   addopts = "-m 'not integration'"
   ```
-</CodeGroup>
 
 Run integration tests explicitly:
 
@@ -81,9 +80,11 @@ from dotenv import load_dotenv
 load_dotenv()
 ```
 
-<Warning>
-  Add `.env` to your `.gitignore` to avoid committing credentials. In CI, inject secrets through your provider's secrets management (e.g., GitHub Actions secrets).
-</Warning>
+
+> ⚠️ **Warning**
+>
+> Add `.env` to your `.gitignore` to avoid committing credentials. In CI, inject secrets through your provider's secrets management (e.g., GitHub Actions secrets).
+
 
 ## Assert on structure, not content
 
@@ -109,9 +110,11 @@ def test_agent_calls_weather_tool():
     assert len(messages[-1].content) > 0
 ```
 
-<Tip>
-  For more rigorous trajectory assertions, use the [AgentEvals](/oss/python/langchain/test/evals) evaluators which support fuzzy matching modes like `unordered` and `superset`.
-</Tip>
+
+> 💡 **Tip**
+>
+> For more rigorous trajectory assertions, use the [AgentEvals](/oss/python/langchain/test/evals) evaluators which support fuzzy matching modes like `unordered` and `superset`.
+
 
 ## Reduce cost and latency
 
@@ -157,8 +160,8 @@ def vcr_config():
 
 Configure your project to recognize the `vcr` marker:
 
-<CodeGroup>
-  ```ini pytest.ini theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```ini pytest.ini theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   [pytest]
   markers =
       vcr: record/replay HTTP via VCR
@@ -172,11 +175,11 @@ Configure your project to recognize the `vcr` marker:
   ]
   addopts = "--record-mode=once"
   ```
-</CodeGroup>
 
-<Info>
-  The `--record-mode=once` option records HTTP interactions on the first run and replays them on subsequent runs.
-</Info>
+> ℹ️ **Info**
+>
+> The `--record-mode=once` option records HTTP interactions on the first run and replays them on subsequent runs.
+
 
 Decorate your tests with the `vcr` marker:
 
@@ -197,9 +200,11 @@ def test_agent_trajectory():
 
 The first run makes real network calls and generates a cassette file in `tests/cassettes/`. Subsequent runs replay the recorded responses.
 
-<Warning>
-  When you modify prompts, add new tools, or change expected trajectories, your saved cassettes will become outdated and your existing tests **will fail**. Delete the corresponding cassette files and rerun the tests to record fresh interactions.
-</Warning>
+
+> ⚠️ **Warning**
+>
+> When you modify prompts, add new tools, or change expected trajectories, your saved cassettes will become outdated and your existing tests **will fail**. Delete the corresponding cassette files and rerun the tests to record fresh interactions.
+
 
 ## Next steps
 
@@ -207,12 +212,15 @@ Learn how to evaluate agent trajectories with deterministic matching or LLM-as-j
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/test/integration-testing.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/test/integration-testing.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

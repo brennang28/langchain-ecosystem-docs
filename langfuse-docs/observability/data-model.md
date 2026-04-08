@@ -56,13 +56,9 @@ flowchart LR
 
 Observations can be nested. The example below shows a trace with a nested observation.
 
-<div className="grid grid-cols-2 mt-6 gap-2 md:gap-4">
-
-<div className="border rounded py-4 px-4 flex flex-col items-center justify-center bg-card">
 
 Hierarchical structure of observations in Langfuse
 
-<div className="flex-1 flex items-center justify-center ">
 
 ```mermaid
 classDiagram
@@ -70,27 +66,16 @@ classDiagram
     Observation o-- Observation: Nesting
 ```
 
-</div>
-
-</div>
-
-<div className="border rounded py-4 px-4 text-center block dark:hidden bg-card">
 
 Example trace in Langfuse UI
 
 ![Trace in Langfuse UI](/images/docs/tracing-observation-tree-light.png)
 
-</div>
-
-<div className="border rounded py-4 px-4 text-center bg-card hidden dark:block">
 
 Example trace in Langfuse UI
 
 ![Trace in Langfuse UI](/images/docs/tracing-observation-tree-dark.png)
 
-</div>
-
-</div>
 
 ### Traces
 
@@ -105,32 +90,21 @@ Optionally, traces can be grouped into [sessions](/docs/observability/features/s
 Sessions are used to group traces that are part of the same user interaction.
 A common example is a thread in a chat interface.
 
-<div className="grid grid-cols-2 mt-6 gap-2 md:gap-4">
-
-<div className="border rounded py-4 text-center px-4 flex flex-col bg-card">
 
 Optionally, sessions aggregate traces
 
-<div className="flex-1 flex items-center justify-center">
 
 ```mermaid
 classDiagram
     Session "1" o-- "n" Trace
 ```
 
-</div>
-
-</div>
-
-<div className="border rounded py-4 px-4 text-center block bg-card">
 
 Example session in Langfuse UI
 
-<Frame fullWidth>![Session view](/images/docs/session.png)</Frame>
 
-</div>
+![Session view](/images/docs/session.png)
 
-</div>
 
 Using sessions is recommended for applications with multi-turn conversations or workflows. Please refer to the [Sessions](/docs/observability/features/sessions) documentation to add sessions to your traces.
 
@@ -151,15 +125,14 @@ There are different types of attributes you can add:
 
 ## Underlying data model
 
-<Callout type="info">
-This data model is live on Langfuse Cloud. For OSS deployments, this will be Langfuse V4. See the [changelog post](/changelog/2026-03-10-simplify-for-scale) for more details.
-</Callout>
+
+> ℹ️ **Note:** This data model is live on Langfuse Cloud. For OSS deployments, this will be Langfuse V4. See the [changelog post](/changelog/2026-03-10-simplify-for-scale) for more details.
+
 
 To improve query performance at scale, Langfuse introduces an **observation-centric data model**. In this model, context attributes (`user_id`, `session_id`, `metadata`, `tags`) that previously lived only on the trace are propagated to every observation. This eliminates expensive joins between trace and observation tables, enabling single-table queries.
 
-<Frame fullWidth>
-  ![Observation-centric data model](/images/changelog/2026-03-10-v4-preview/data-model.png)
-</Frame>
+
+![Observation-centric data model](/images/changelog/2026-03-10-v4-preview/data-model.png)
 
 ### What changes
 [Guide](/docs/v4) how to adopt the new data model.

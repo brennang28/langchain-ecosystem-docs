@@ -165,13 +165,9 @@ export const ExampleEmbed = ({example, theme, minHeight = 500, maxHeight = 700})
     position: "relative",
     fontFamily: "inherit"
   }}>
-      <div className="lc-border lc-bg-surface" style={{
-    border: "1px solid",
-    borderRadius: "16px",
-    overflow: "hidden"
-  }}>
+      
         {}
-        <div ref={slotRef} className="lc-bg-wash" style={{
+        <div ref={slotRef} style={{
     height: iframeHeight,
     position: "relative"
   }}>
@@ -182,27 +178,19 @@ export const ExampleEmbed = ({example, theme, minHeight = 500, maxHeight = 700})
     alignItems: "center",
     justifyContent: "center"
   }}>
-              <div className="lc-spinner" style={{
-    width: 24,
-    height: 24,
-    border: "3px solid",
-    borderRadius: "50%",
-    animation: "spin 0.8s linear infinite"
-  }} />
+              
               <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
-            </div>}
-        </div>
-      </div>
-    </div>;
+            }
+        ;
 };
 
 [assistant-ui](https://www.assistant-ui.com/) is a headless React UI framework for AI chat. It provides a full runtime layer—thread management, message branching, attachment handling—that connects to `useStream` via the `useExternalStoreRuntime` adapter.
 
-<ExampleEmbed example="assistant-ui" minHeight={700} />
 
-<Tip>
-  Clone and run the [full assistant-ui example](https://github.com/langchain-ai/langgraphjs/tree/main/examples/assistant-ui-claude) to see a Claude-style chat interface wired to a LangChain agent with `useExternalStoreRuntime`.
-</Tip>
+> 💡 **Tip**
+>
+> Clone and run the [full assistant-ui example](https://github.com/langchain-ai/langgraphjs/tree/main/examples/assistant-ui-claude) to see a Claude-style chat interface wired to a LangChain agent with `useExternalStoreRuntime`.
+
 
 ## How it works
 
@@ -221,16 +209,6 @@ bun add @assistant-ui/react @assistant-ui/react-markdown
 The `useExternalStoreRuntime` adapter bridges `stream.messages` into the assistant-ui runtime. Pass it to `AssistantRuntimeProvider` and render any thread component:
 
 ```tsx  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-import { useCallback, useMemo } from "react";
-import {
-  AssistantRuntimeProvider,
-  useExternalStoreRuntime,
-  type AppendMessage,
-  type ThreadMessageLike,
-} from "@assistant-ui/react";
-import { useStream } from "@langchain/react";
-import { Thread } from "@assistant-ui/react";
-
 export function Chat() {
   const stream = useStream({
     apiUrl: "http://localhost:2024",
@@ -263,8 +241,7 @@ export function Chat() {
 
   return (
     <AssistantRuntimeProvider runtime={runtime}>
-      <Thread />
-    </AssistantRuntimeProvider>
+      </AssistantRuntimeProvider>
   );
 }
 ```
@@ -274,9 +251,6 @@ export function Chat() {
 `toThreadMessages` maps LangChain `BaseMessage[]` to the `ThreadMessageLike[]` format assistant-ui expects. Handle each message type — human, AI, and tool — and convert content blocks, tool calls, and reasoning tokens:
 
 ```tsx expandable theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-import { AIMessage, HumanMessage, ToolMessage } from "@langchain/core/messages";
-import type { ThreadMessageLike } from "@assistant-ui/react";
-
 export function toThreadMessages(messages: BaseMessage[]): ThreadMessageLike[] {
   const result: ThreadMessageLike[] = [];
 
@@ -330,23 +304,13 @@ export function toThreadMessages(messages: BaseMessage[]): ThreadMessageLike[] {
 
 ## Customising the thread UI
 
-`<Thread />` ships a complete default thread UI including message list, composer, and scroll management. Customise individual parts by overriding component slots:
+`` ships a complete default thread UI including message list, composer, and scroll management. Customise individual parts by overriding component slots:
 
 ```tsx  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-import { Thread, ThreadMessages, Composer } from "@assistant-ui/react";
-
 function CustomThread() {
   return (
     <Thread.Root>
-      <ThreadMessages
-        components={{
-          UserMessage: MyUserMessage,
-          AssistantMessage: MyAssistantMessage,
-          ToolFallback: MyToolCard,
-        }}
-      />
-      <Composer />
-    </Thread.Root>
+      </Thread.Root>
   );
 }
 ```
@@ -360,12 +324,15 @@ function CustomThread() {
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/frontend/integrations/assistant-ui.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/frontend/integrations/assistant-ui.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

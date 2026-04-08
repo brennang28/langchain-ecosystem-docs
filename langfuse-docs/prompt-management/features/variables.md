@@ -4,8 +4,6 @@ sidebarTitle: Variables
 description: Insert dynamic text into prompts using variables that are resolved at runtime.
 ---
 
-import { FaqPreview } from "@/components/faq/FaqPreview";
-
 # Variables in Prompts
 
 Variables are placeholders for dynamic strings in your prompts. They allow you to create flexible prompt templates that can be customized at runtime without changing the prompt definition itself.
@@ -14,25 +12,16 @@ All prompts support variables using the `{{variable}}` syntax. When you fetch a 
 
 ## Get started
 
-<Steps>
 
 ## Create prompt with variables
 
-<LangTabs items={["Langfuse UI", "Python SDK", "JS/TS SDK"]}>
-
-<Tab>
-
 When creating a prompt in the Langfuse UI, simply use double curly braces `{{variable_name}}` to define a variable anywhere in your prompt text.
 
-<Frame fullWidth>
-  ![Prompt with variables in the Langfuse UI](/images/docs/playground-variables.png)
-</Frame>
+
+![Prompt with variables in the Langfuse UI](/images/docs/playground-variables.png)
 
 Variables work in both **text prompts** and **chat prompts**. You can use them in any message content.
 
-</Tab>
-
-<Tab>
 
 ```python
 from langfuse import get_client
@@ -65,13 +54,8 @@ langfuse.create_prompt(
 )
 ```
 
-</Tab>
-
-<Tab>
 
 ```typescript
-import { LangfuseClient } from "@langfuse/client";
-
 const langfuse = new LangfuseClient();
 
 // Text prompt with variables
@@ -100,17 +84,10 @@ await langfuse.prompt.create({
 });
 ```
 
-</Tab>
-
-</LangTabs>
 
 ## Compile variables at runtime
 
 In your application, use the `.compile()` method to replace variables with actual values. Pass the variables as keyword arguments (Python) or an object (JavaScript/TypeScript).
-
-<LangTabs items={["Python SDK", "JS/TS SDK", "LangChain (Python)", "LangChain (JS/TS)"]}>
-
-<Tab>
 
 ```python
 from langfuse import get_client
@@ -135,13 +112,8 @@ response = openai.chat.completions.create(
 )
 ```
 
-</Tab>
-
-<Tab>
 
 ```typescript
-import { LangfuseClient } from "@langfuse/client";
-
 const langfuse = new LangfuseClient();
 
 // Get the prompt
@@ -164,9 +136,6 @@ const response = await openai.chat.completions.create({
 });
 ```
 
-</Tab>
-
-<Tab>
 
 ```python
 from langfuse import get_client
@@ -195,14 +164,8 @@ compiled_messages = langchain_chat_prompt.format_messages(
 )
 ```
 
-</Tab>
-
-<Tab>
 
 ```typescript
-import { LangfuseClient } from "@langfuse/client";
-import { PromptTemplate, ChatPromptTemplate } from "@langchain/core/prompts";
-
 const langfuse = new LangfuseClient();
 
 // For text prompts
@@ -235,12 +198,6 @@ const compiledMessages = await langchainChatPrompt.formatMessages({
 });
 ```
 
-</Tab>
-
-</LangTabs>
-
-</Steps>
-
 
 Not exactly what you need? Consider these similar features:
 - [Prompt references](/docs/prompt-management/features/composability) for reusing sub-prompts
@@ -248,4 +205,3 @@ Not exactly what you need? Consider these similar features:
 
 Or related FAQ pages:
 
-<FaqPreview tags={["prompt-management"]} />

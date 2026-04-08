@@ -14,8 +14,8 @@ Before you begin, ensure you have the following:
 
 ## 1. Install the LangGraph CLI
 
-<CodeGroup>
-  ```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   # Python >= 3.11 is required.
   pip install -U "langgraph-cli[inmem]"
   ```
@@ -24,7 +24,6 @@ Before you begin, ensure you have the following:
   # Python >= 3.11 is required.
   uv add "langgraph-cli[inmem]"
   ```
-</CodeGroup>
 
 ## 2. Create a LangGraph app
 
@@ -34,17 +33,19 @@ Create a new app from the [`new-langgraph-project-python` template](https://gith
 langgraph new path/to/your/app --template new-langgraph-project-python
 ```
 
-<Tip>
-  **Additional templates**
-  If you use `langgraph new` without specifying a template, you will be presented with an interactive menu that will allow you to choose from a list of available templates.
-</Tip>
+
+> 💡 **Tip**
+>
+> **Additional templates**
+>   If you use `langgraph new` without specifying a template, you will be presented with an interactive menu that will allow you to choose from a list of available templates.
+
 
 ## 3. Install dependencies
 
 In the root of your new LangGraph app, install the dependencies in `edit` mode so your local changes are used by the server:
 
-<CodeGroup>
-  ```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   cd path/to/your/app
   pip install -e .
   ```
@@ -53,7 +54,6 @@ In the root of your new LangGraph app, install the dependencies in `edit` mode s
   cd path/to/your/app
   uv sync
   ```
-</CodeGroup>
 
 ## 4. Create a `.env` file
 
@@ -106,19 +106,24 @@ For an Agent Server running on a custom host/port, update the `baseUrl` query pa
 https://smith.langchain.com/studio/?baseUrl=http://myhost:3000
 ```
 
-<Accordion title="Safari compatibility">
-  Use the `--tunnel` flag with your command to create a secure tunnel, as Safari has limitations when connecting to localhost servers:
+
+<details>
+<summary>Safari compatibility</summary>
+
+Use the `--tunnel` flag with your command to create a secure tunnel, as Safari has limitations when connecting to localhost servers:
 
   ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   langgraph dev --tunnel
   ```
-</Accordion>
+
+</details>
+
 
 ## 7. Test the API
 
-<Tabs>
-  <Tab title="Python SDK (async)">
-    1. Install the LangGraph Python SDK:
+**Python SDK (async):**
+
+1. Install the LangGraph Python SDK:
        ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
        pip install langgraph-sdk
        ```
@@ -146,10 +151,10 @@ https://smith.langchain.com/studio/?baseUrl=http://myhost:3000
 
        asyncio.run(main())
        ```
-  </Tab>
+  
+**Python SDK (sync):**
 
-  <Tab title="Python SDK (sync)">
-    1. Install the LangGraph Python SDK:
+1. Install the LangGraph Python SDK:
        ```shell  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
        pip install langgraph-sdk
        ```
@@ -174,10 +179,10 @@ https://smith.langchain.com/studio/?baseUrl=http://myhost:3000
            print(chunk.data)
            print("\n\n")
        ```
-  </Tab>
+  
+**Rest API:**
 
-  <Tab title="Rest API">
-    ```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     curl -s --request POST \
         --url "http://localhost:2024/runs/stream" \
         --header 'Content-Type: application/json' \
@@ -194,9 +199,7 @@ https://smith.langchain.com/studio/?baseUrl=http://myhost:3000
             \"stream_mode\": \"messages-tuple\"
         }"
     ```
-  </Tab>
-</Tabs>
-
+  
 ## Next steps
 
 Now that you have a LangGraph app running locally, take your journey further by exploring deployment and advanced features:
@@ -209,12 +212,15 @@ Now that you have a LangGraph app running locally, take your journey further by 
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/local-server.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/local-server.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

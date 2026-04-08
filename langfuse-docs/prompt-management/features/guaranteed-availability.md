@@ -6,11 +6,9 @@ description: Ensure 100% availability of prompts by pre-fetching them on applica
 
 # Guaranteed Availability
 
-<Callout>
 
-Implementing this is usually not necessary as it adds complexity to your application. The Langfuse Prompt Management is highly available due to multiple [caching layers](/docs/prompt-management/features/caching) and we closely monitor its performance ([status page](https://status.langfuse.com)). However, if you require 100% availability, you can use the following options.
+> ℹ️ **Note:** Implementing this is usually not necessary as it adds complexity to your application. The Langfuse Prompt Management is highly available due to multiple [caching layers](/docs/prompt-management/features/caching) and we closely monitor its performance ([status page](https://status.langfuse.com)). However, if you require 100% availability, you can use the following options.
 
-</Callout>
 
 The Langfuse API has high uptime and prompts are [cached locally](/docs/prompt-management/features/caching) in the SDKs to prevent network issues from affecting your application.
 
@@ -27,9 +25,6 @@ To guarantee 100% availability, there are two options:
 ## Option 1: Pre-fetch prompts
 
 Pre-fetch prompts on application startup and exit the application if the prompt is not available.
-
-<LangTabs items={["Python (Flask)", "JS/TS (Express)"]}>
-<Tab>
 
 ```python
 from flask import Flask, jsonify
@@ -60,13 +55,8 @@ if __name__ == '__main__':
     app.run(debug=True)
 ```
 
-</Tab>
-<Tab>
 
 ```ts
-import express from "express";
-import { LangfuseClient } from "@langfuse/client";
-
 // Initialize the Express app and Langfuse client
 const app = express();
 const langfuse = new LangfuseClient();
@@ -96,15 +86,10 @@ app.listen(3000, () => {
 });
 ```
 
-</Tab>
-</LangTabs>
 
 ## Option 2: Fallback [#fallback]
 
 Provide a fallback prompt that will be used in these cases:
-
-<LangTabs items={["Python SDK", "JS/TS SDK"]}>
-<Tab>
 
 ```python /fallback="Do you like {{movie}}?"/ /fallback=[{"role": "system", "content": "You are an expert on {{movie}}"}]/
 from langfuse import Langfuse
@@ -127,12 +112,8 @@ chat_prompt = langfuse.get_prompt(
 prompt.is_fallback
 ```
 
-</Tab>
-<Tab>
 
 ```ts /fallback: "Do you like {{movie}}?"/ /fallback: [{ role: "system", content: "You are an expert on {{movie}}" }]/
-import { LangfuseClient } from "@langfuse/client";
-
 const langfuse = new LangfuseClient();
 
 // Get `text` prompt with fallback
@@ -150,5 +131,4 @@ const chatPrompt = await langfuse.prompt.get("movie-critic-chat", {
 prompt.isFallback;
 ```
 
-</Tab>
-</LangTabs>
+

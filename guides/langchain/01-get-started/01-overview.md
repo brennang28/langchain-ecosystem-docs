@@ -10,21 +10,23 @@ LangChain is the easy way to start building completely custom agents and applica
 With under 10 lines of code, you can connect to OpenAI, Anthropic, Google, and [more](/oss/python/integrations/providers/overview).
 LangChain provides a prebuilt agent architecture and model integrations to help you get started quickly and seamlessly incorporate LLMs into your agents and applications.
 
-<Tip>
-  **LangChain vs. LangGraph vs. Deep Agents**
 
-  If you are looking to build an agent, we recommend you start with [Deep Agents](/oss/python/deepagents/overview/) which comes "batteries-included", with modern features like automatic compression of long conversations, a virtual filesystem, and subagent-spawning for managing and isolating context.
+> 💡 **Tip**
+>
+> **LangChain vs. LangGraph vs. Deep Agents**
+> 
+>   If you are looking to build an agent, we recommend you start with [Deep Agents](/oss/python/deepagents/overview/) which comes "batteries-included", with modern features like automatic compression of long conversations, a virtual filesystem, and subagent-spawning for managing and isolating context.
+> 
+>   Deep Agents are implementations of LangChain [agents](/oss/python/langchain/agents). If you don't need these capabilities or would like to customize your own for your agents and autonomous applications, start with LangChain.
+> 
+>   Use [LangGraph](/oss/python/langgraph/overview), our low-level agent orchestration framework and runtime, when you have more advanced needs that require a combination of deterministic and agentic workflows and heavy customization.
 
-  Deep Agents are implementations of LangChain [agents](/oss/python/langchain/agents). If you don't need these capabilities or would like to customize your own for your agents and autonomous applications, start with LangChain.
-
-  Use [LangGraph](/oss/python/langgraph/overview), our low-level agent orchestration framework and runtime, when you have more advanced needs that require a combination of deterministic and agentic workflows and heavy customization.
-</Tip>
 
 LangChain [agents](/oss/python/langchain/agents) are built on top of LangGraph in order to provide durable execution, streaming, human-in-the-loop, persistence, and more. You do not need to know LangGraph for basic LangChain agent usage.
 
 We recommend you use LangChain if you want to quickly build agents and autonomous applications.
 
-## <Icon icon="wand" /> Create an agent
+## Create an agent
 
 ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 # pip install -qU langchain "langchain[anthropic]"
@@ -48,38 +50,35 @@ agent.invoke(
 
 See the [Installation instructions](/oss/python/langchain/install) and [Quickstart guide](/oss/python/langchain/quickstart) to get started building your own agents and applications with LangChain.
 
-<Tip>
-  Use [LangSmith](/langsmith/home) to trace requests, debug agent behavior, and evaluate outputs. Set `LANGSMITH_TRACING=true` and your API key to get started.
-</Tip>
 
-## <Icon icon="star" size={20} /> Core benefits
+> 💡 **Tip**
+>
+> Use [LangSmith](/langsmith/home) to trace requests, debug agent behavior, and evaluate outputs. Set `LANGSMITH_TRACING=true` and your API key to get started.
 
-<Columns cols={2}>
-  <Card title="Standard model interface" icon="refresh" href="/oss/python/langchain/models" arrow cta="Learn more">
-    Different providers have unique APIs for interacting with models, including the format of responses. LangChain standardizes how you interact with models so that you can seamlessly swap providers and avoid lock-in.
-  </Card>
 
-  <Card title="Easy to use, highly flexible agent" icon="wand" href="/oss/python/langchain/agents" arrow cta="Learn more">
-    LangChain's agent abstraction is designed to be easy to get started with, letting you build a simple agent in under 10 lines of code. But it also provides enough flexibility to allow you to do all the context engineering your heart desires.
-  </Card>
+## Core benefits
 
-  <Card title="Built on top of LangGraph" icon="https://mintcdn.com/langchain-5e9cc07a/nQm-sjd_MByLhgeW/images/brand/langgraph-icon.png?fit=max&auto=format&n=nQm-sjd_MByLhgeW&q=85&s=b997e1a7487d507a36556eedbfd99f81" href="/oss/python/langgraph/overview" arrow cta="Learn more" width="195" height="195" data-path="images/brand/langgraph-icon.png">
-    LangChain's agents are built on top of LangGraph. This allows us to take advantage of LangGraph's durable execution, human-in-the-loop support, persistence, and more.
-  </Card>
 
-  <Card title="Debug with LangSmith" icon="https://mintcdn.com/langchain-5e9cc07a/nQm-sjd_MByLhgeW/images/brand/observability-icon-dark.png?fit=max&auto=format&n=nQm-sjd_MByLhgeW&q=85&s=ccbc183bca2a5e4ca78d30149e3836cc" href="/langsmith/observability" arrow cta="Learn more" width="200" height="200" data-path="images/brand/observability-icon-dark.png">
-    Gain deep visibility into complex agent behavior with visualization tools that trace execution paths, capture state transitions, and provide detailed runtime metrics.
-  </Card>
-</Columns>
+Different providers have unique APIs for interacting with models, including the format of responses. LangChain standardizes how you interact with models so that you can seamlessly swap providers and avoid lock-in.
+  
+LangChain's agent abstraction is designed to be easy to get started with, letting you build a simple agent in under 10 lines of code. But it also provides enough flexibility to allow you to do all the context engineering your heart desires.
+  
+LangChain's agents are built on top of LangGraph. This allows us to take advantage of LangGraph's durable execution, human-in-the-loop support, persistence, and more.
+  
+Gain deep visibility into complex agent behavior with visualization tools that trace execution paths, capture state transitions, and provide detailed runtime metrics.
+  
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/overview.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/overview.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

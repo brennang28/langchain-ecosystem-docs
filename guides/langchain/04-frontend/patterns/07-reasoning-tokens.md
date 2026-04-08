@@ -687,7 +687,7 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
         backgroundColor: isSelected ? isDark ? "#1A2740" : "#E5F4FF" : "transparent",
         color: isSelected ? isDark ? "#C8DDF0" : "#030710" : "#6B8299"
       });
-      btn.innerHTML = `<span>${SDK_LOGOS[value]}</span>${label}`;
+      btn.innerHTML = `<span>${SDK_LOGOS[value]}${label}`;
       btn.addEventListener("mouseenter", () => {
         if (!isSelected) {
           btn.style.backgroundColor = isDark ? "#1A2740" : "#F2FAFF";
@@ -743,22 +743,18 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
   const tabInactiveClass = `${tabBase} lc-tab-inactive`;
   const tabTraceActiveClass = `${tabBase} lc-tab-trace`;
   const tabTraceLoadingClass = `${tabBase} lc-tab-trace-loading`;
-  const toolbar = showCodeTab && <div className="lc-toolbar flex items-stretch justify-between px-3 py-2 border-b lc-border lc-bg-wash">
-      <div className="inline-flex items-stretch gap-0.5 rounded-lg border lc-border lc-bg-surface" style={{
-    padding: 3
-  }}>
+  const toolbar = showCodeTab && 
+      
         <button type="button" aria-label="Preview" onClick={() => switchView("preview")} className={activeView === "preview" ? tabActiveClass : tabInactiveClass}>
           <span dangerouslySetInnerHTML={{
     __html: VIEW_EYE_SVG
   }} />
-          <span className="lc-tab-label">Preview</span>
-        </button>
+          Preview</button>
         <button type="button" aria-label="Code" onClick={() => switchView("code")} className={activeView === "code" ? tabActiveClass : tabInactiveClass}>
           <span dangerouslySetInnerHTML={{
     __html: VIEW_CODE_SVG
   }} />
-          <span className="lc-tab-label">Code</span>
-        </button>
+          Code</button>
         {(traceUrl || traceLoading) && !useLocalPreview && <a href={traceUrl ?? "#"} target="_blank" rel="noopener noreferrer" aria-label="Trace" onClick={e => {
     if (!traceUrl) e.preventDefault(); else cachedRef.current?.host.trackEvent("trace_tab_clicked", {
       pattern
@@ -767,16 +763,9 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
             <span dangerouslySetInnerHTML={{
     __html: traceUrl ? TRACE_ICON_SVG : TRACE_SPINNER_SVG
   }} />
-            <span className="lc-tab-label">Trace</span>
-            {traceUrl && <span className="ml-0.5" dangerouslySetInnerHTML={{
-    __html: EXTERNAL_LINK_SVG
-  }} />}
+            Trace{traceUrl && }
           </a>}
-      </div>
-
-      {activeView === "code" && <div className="lc-lang-switcher inline-flex items-stretch gap-0.5 rounded-lg border lc-border lc-bg-surface" style={{
-    padding: 3
-  }}>
+      {activeView === "code" && 
           <button type="button" aria-label="TypeScript" onClick={() => setAgentLang("js")} className={agentLang === "js" ? tabActiveClass : tabInactiveClass} title="TypeScript / JavaScript">
             <span dangerouslySetInnerHTML={{
     __html: LANG_TS_SVG
@@ -787,10 +776,10 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
     __html: LANG_PYTHON_SVG
   }} />
           </button>
-        </div>}
+        }
 
-      <div className="inline-flex items-center gap-1.5">
-        <button type="button" aria-label={expanded ? "Collapse" : "Expand"} onClick={() => setExpanded(v => !v)} className="lc-expand-btn" title={expanded ? "Collapse" : "Expand"}>
+      
+        <button type="button" aria-label={expanded ? "Collapse" : "Expand"} onClick={() => setExpanded(v => !v)} title={expanded ? "Collapse" : "Expand"}>
           <span dangerouslySetInnerHTML={{
     __html: expanded ? CLOSE_SVG : EXPAND_SVG
   }} />
@@ -815,14 +804,14 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
       sdk,
       lang: agentLang
     });
-  }} className="lc-expand-btn">
+  }}>
           <span dangerouslySetInnerHTML={{
     __html: DOWNLOAD_SVG
   }} />
         </button>
 
         {}
-        <button ref={sdkButtonRef} type="button" onClick={() => setSdkDropdownOpen(o => !o)} className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border lc-sdk-btn font-medium cursor-pointer transition-colors">
+        <button ref={sdkButtonRef} type="button" onClick={() => setSdkDropdownOpen(o => !o)}>
           <span dangerouslySetInnerHTML={{
     __html: SDK_LOGOS[sdk]
   }} />
@@ -831,41 +820,37 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
     __html: CHEVRON_DOWN_SVG
   }} />
         </button>
-      </div>
-    </div>;
-  const slot = <div ref={slotRef} className="relative w-full" style={expanded ? {
+      ;
+  const slot = <div ref={slotRef} style={expanded ? {
     flex: 1,
     minHeight: 0
   } : {
     height: heightStyle
   }}>
-      {!ready && !error && <div className="absolute inset-0 flex items-center justify-center z-10 lc-bg-wash">
-          <div className="size-6 border-2 lc-spinner rounded-full animate-spin" />
-        </div>}
+      {!ready && !error && 
+          
+        }
 
-      {error && <div className="absolute top-3 inset-x-3 z-10 px-4 py-3 rounded-2xl border lc-error text-sm">
+      {error && 
           <strong>Preview Error</strong>
-          <p className="mt-1 opacity-80" style={{
+          <p style={{
     fontSize: 13
   }}>
             {error}
           </p>
-          <button type="button" onClick={handleReset} className="mt-2 px-3 py-1 text-xs rounded-lg border lc-error-btn cursor-pointer">
+          <button type="button" onClick={handleReset}>
             Retry
           </button>
-        </div>}
-    </div>;
+        }
+    ;
   return <div data-lc-pe ref={placeholderRef} className={`${effectiveTheme === "dark" ? "dark" : ""} ${className ?? ""}`}>
-      <div ref={cardRef} className="rounded-2xl border lc-border overflow-hidden lc-bg-surface">
+      <div ref={cardRef}>
         {toolbar}
         {slot}
-      </div>
-    </div>;
+      ;
 };
 
 Reasoning tokens expose the internal thought process of advanced models like OpenAI's o1/o3 and Anthropic's Claude with extended thinking. These models produce structured content blocks that separate reasoning from the final answer, letting you build UIs that show *how* the model arrived at its response.
-
-<PatternEmbed pattern="reasoning-tokens" />
 
 ## What are reasoning tokens?
 
@@ -884,9 +869,11 @@ These are delivered as typed content blocks within an `AIMessage`, accessible vi
 { type: "text", text: "The answer is 42." }
 ```
 
-<Note>
-  Not all models produce reasoning tokens. This pattern applies specifically to models that support extended thinking or chain-of-thought output. Standard chat models return only text blocks.
-</Note>
+
+> ℹ️ **Note**
+>
+> Not all models produce reasoning tokens. This pattern applies specifically to models that support extended thinking or chain-of-thought output. Standard chat models return only text blocks.
+
 
 ## Use cases
 
@@ -901,8 +888,6 @@ These are delivered as typed content blocks within an `AIMessage`, accessible vi
 The `contentBlocks` array on an `AIMessage` contains all blocks in the order they were generated. Filter them by `type` to separate reasoning from text:
 
 ```ts  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-import { AIMessage } from "@langchain/core/messages";
-
 function extractBlocks(msg: AIMessage) {
   const reasoningBlocks = msg.contentBlocks
     .filter((b) => b.type === "reasoning")
@@ -926,15 +911,13 @@ A single message may contain multiple reasoning blocks (e.g., if the model pause
 Define a TypeScript interface matching your agent's state schema and pass it as a type parameter to `useStream` for type-safe access to state values. In the examples below, replace `typeof myAgent` with your interface name:
 
 ```ts  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-import type { BaseMessage } from "@langchain/core/messages";
-
 interface AgentState {
   messages: BaseMessage[];
 }
 ```
 
-<CodeGroup>
-  ```tsx React theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```tsx React theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   import { useStream } from "@langchain/react";
   import { AIMessage, HumanMessage } from "@langchain/core/messages";
 
@@ -945,24 +928,18 @@ interface AgentState {
     });
 
     return (
-      <div className="messages">
+      
         {stream.messages.map((msg, i) => {
           if (HumanMessage.isInstance(msg)) {
-            return <HumanBubble key={i} text={msg.content} />;
+            return ;
           }
           if (AIMessage.isInstance(msg)) {
             return (
-              <AIResponse
-                key={i}
-                message={msg}
-                isStreaming={stream.isLoading && i === stream.messages.length - 1}
-              />
-            );
+              );
           }
           return null;
         })}
-      </div>
-    );
+      );
   }
   ```
 
@@ -980,15 +957,8 @@ interface AgentState {
   <template>
     <div class="messages">
       <template v-for="(msg, i) in stream.messages" :key="i">
-        <HumanBubble v-if="HumanMessage.isInstance(msg)" :text="msg.content" />
-        <AIResponse
-          v-else-if="AIMessage.isInstance(msg)"
-          :message="msg"
-          :isStreaming="stream.isLoading && i === stream.messages.length - 1"
-        />
-      </template>
-    </div>
-  </template>
+        </template>
+    </template>
   ```
 
   ```svelte Svelte theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
@@ -1005,15 +975,9 @@ interface AgentState {
   <div class="messages">
     {#each $messages as msg, i}
       {#if HumanMessage.isInstance(msg)}
-        <HumanBubble text={msg.content} />
-      {:else if AIMessage.isInstance(msg)}
-        <AIResponse
-          message={msg}
-          isStreaming={$isLoading && i === $messages.length - 1}
-        />
-      {/if}
+        {:else if AIMessage.isInstance(msg)}
+        {/if}
     {/each}
-  </div>
   ```
 
   ```ts Angular theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
@@ -1035,8 +999,7 @@ interface AgentState {
             />
           }
         }
-      </div>
-    `,
+      `,
   })
   export class ChatComponent {
     stream = useStream<typeof myAgent>({
@@ -1048,15 +1011,12 @@ interface AgentState {
     isAI = AIMessage.isInstance;
   }
   ```
-</CodeGroup>
 
 ## Building a ThinkingBubble component
 
 The `ThinkingBubble` presents reasoning tokens in a visually distinct, collapsible container. Users can expand it to see the full thought process or collapse it to focus on the final answer.
 
 ```tsx  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-import { useState } from "react";
-
 function ThinkingBubble({
   reasoning,
   isStreaming,
@@ -1074,35 +1034,27 @@ function ThinkingBubble({
       : reasoning;
 
   return (
-    <div className="thinking-bubble">
+    
       <button
-        className="thinking-header"
         onClick={() => setIsExpanded(!isExpanded)}
       >
-        <span className="thinking-icon">
+        
           {isStreaming ? (
-            <span className="thinking-spinner" />
+            
           ) : (
             "💭"
           )}
-        </span>
-        <span className="thinking-label">
-          {isStreaming ? "Thinking..." : `Thought process (${charCount} chars)`}
-        </span>
-        <span className={`chevron ${isExpanded ? "expanded" : ""}`}>▶</span>
-      </button>
+        {isStreaming ? "Thinking..." : `Thought process (${charCount} chars)`}
+        <span className={`chevron ${isExpanded ? "expanded" : ""}`}>▶</button>
 
       {isExpanded && (
-        <div className="thinking-content">
+        
           <pre>{reasoning}</pre>
-        </div>
-      )}
+        )}
 
       {!isExpanded && !isStreaming && (
-        <div className="thinking-preview">{preview}</div>
-      )}
-    </div>
-  );
+        {preview})}
+    );
 }
 ```
 
@@ -1179,9 +1131,11 @@ While the model is still generating reasoning tokens, show an animated indicator
 }
 ```
 
-<Tip>
-  During streaming, keep the ThinkingBubble collapsed by default and show only the spinner. Expanding mid-stream can cause layout jitter as new tokens arrive. Let users expand after the reasoning phase completes.
-</Tip>
+
+> 💡 **Tip**
+>
+> During streaming, keep the ThinkingBubble collapsed by default and show only the spinner. Expanding mid-stream can cause layout jitter as new tokens arrive. Let users expand after the reasoning phase completes.
+
 
 ## Rendering the complete AI response
 
@@ -1212,21 +1166,15 @@ function AIResponse({
   const isTextPhase = isStreaming && hasText;
 
   return (
-    <div className="ai-response">
+    
       {hasReasoning && (
-        <ThinkingBubble
-          reasoning={reasoningBlocks}
-          isStreaming={isReasoningPhase}
-        />
-      )}
+        )}
       {hasText && (
-        <div className="ai-text-bubble">
+        
           <p>{textBlocks}</p>
-          {isTextPhase && <span className="cursor-blink">▊</span>}
-        </div>
-      )}
-    </div>
-  );
+          {isTextPhase && ▊}
+        )}
+    );
 }
 ```
 
@@ -1270,12 +1218,15 @@ message.contentBlocks.forEach((block) => {
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/frontend/reasoning-tokens.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/frontend/reasoning-tokens.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

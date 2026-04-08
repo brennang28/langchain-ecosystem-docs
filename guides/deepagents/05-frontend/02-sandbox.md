@@ -687,7 +687,7 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
         backgroundColor: isSelected ? isDark ? "#1A2740" : "#E5F4FF" : "transparent",
         color: isSelected ? isDark ? "#C8DDF0" : "#030710" : "#6B8299"
       });
-      btn.innerHTML = `<span>${SDK_LOGOS[value]}</span>${label}`;
+      btn.innerHTML = `<span>${SDK_LOGOS[value]}${label}`;
       btn.addEventListener("mouseenter", () => {
         if (!isSelected) {
           btn.style.backgroundColor = isDark ? "#1A2740" : "#F2FAFF";
@@ -743,22 +743,18 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
   const tabInactiveClass = `${tabBase} lc-tab-inactive`;
   const tabTraceActiveClass = `${tabBase} lc-tab-trace`;
   const tabTraceLoadingClass = `${tabBase} lc-tab-trace-loading`;
-  const toolbar = showCodeTab && <div className="lc-toolbar flex items-stretch justify-between px-3 py-2 border-b lc-border lc-bg-wash">
-      <div className="inline-flex items-stretch gap-0.5 rounded-lg border lc-border lc-bg-surface" style={{
-    padding: 3
-  }}>
+  const toolbar = showCodeTab && 
+      
         <button type="button" aria-label="Preview" onClick={() => switchView("preview")} className={activeView === "preview" ? tabActiveClass : tabInactiveClass}>
           <span dangerouslySetInnerHTML={{
     __html: VIEW_EYE_SVG
   }} />
-          <span className="lc-tab-label">Preview</span>
-        </button>
+          Preview</button>
         <button type="button" aria-label="Code" onClick={() => switchView("code")} className={activeView === "code" ? tabActiveClass : tabInactiveClass}>
           <span dangerouslySetInnerHTML={{
     __html: VIEW_CODE_SVG
   }} />
-          <span className="lc-tab-label">Code</span>
-        </button>
+          Code</button>
         {(traceUrl || traceLoading) && !useLocalPreview && <a href={traceUrl ?? "#"} target="_blank" rel="noopener noreferrer" aria-label="Trace" onClick={e => {
     if (!traceUrl) e.preventDefault(); else cachedRef.current?.host.trackEvent("trace_tab_clicked", {
       pattern
@@ -767,16 +763,9 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
             <span dangerouslySetInnerHTML={{
     __html: traceUrl ? TRACE_ICON_SVG : TRACE_SPINNER_SVG
   }} />
-            <span className="lc-tab-label">Trace</span>
-            {traceUrl && <span className="ml-0.5" dangerouslySetInnerHTML={{
-    __html: EXTERNAL_LINK_SVG
-  }} />}
+            Trace{traceUrl && }
           </a>}
-      </div>
-
-      {activeView === "code" && <div className="lc-lang-switcher inline-flex items-stretch gap-0.5 rounded-lg border lc-border lc-bg-surface" style={{
-    padding: 3
-  }}>
+      {activeView === "code" && 
           <button type="button" aria-label="TypeScript" onClick={() => setAgentLang("js")} className={agentLang === "js" ? tabActiveClass : tabInactiveClass} title="TypeScript / JavaScript">
             <span dangerouslySetInnerHTML={{
     __html: LANG_TS_SVG
@@ -787,10 +776,10 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
     __html: LANG_PYTHON_SVG
   }} />
           </button>
-        </div>}
+        }
 
-      <div className="inline-flex items-center gap-1.5">
-        <button type="button" aria-label={expanded ? "Collapse" : "Expand"} onClick={() => setExpanded(v => !v)} className="lc-expand-btn" title={expanded ? "Collapse" : "Expand"}>
+      
+        <button type="button" aria-label={expanded ? "Collapse" : "Expand"} onClick={() => setExpanded(v => !v)} title={expanded ? "Collapse" : "Expand"}>
           <span dangerouslySetInnerHTML={{
     __html: expanded ? CLOSE_SVG : EXPAND_SVG
   }} />
@@ -815,14 +804,14 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
       sdk,
       lang: agentLang
     });
-  }} className="lc-expand-btn">
+  }}>
           <span dangerouslySetInnerHTML={{
     __html: DOWNLOAD_SVG
   }} />
         </button>
 
         {}
-        <button ref={sdkButtonRef} type="button" onClick={() => setSdkDropdownOpen(o => !o)} className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border lc-sdk-btn font-medium cursor-pointer transition-colors">
+        <button ref={sdkButtonRef} type="button" onClick={() => setSdkDropdownOpen(o => !o)}>
           <span dangerouslySetInnerHTML={{
     __html: SDK_LOGOS[sdk]
   }} />
@@ -831,36 +820,34 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
     __html: CHEVRON_DOWN_SVG
   }} />
         </button>
-      </div>
-    </div>;
-  const slot = <div ref={slotRef} className="relative w-full" style={expanded ? {
+      ;
+  const slot = <div ref={slotRef} style={expanded ? {
     flex: 1,
     minHeight: 0
   } : {
     height: heightStyle
   }}>
-      {!ready && !error && <div className="absolute inset-0 flex items-center justify-center z-10 lc-bg-wash">
-          <div className="size-6 border-2 lc-spinner rounded-full animate-spin" />
-        </div>}
+      {!ready && !error && 
+          
+        }
 
-      {error && <div className="absolute top-3 inset-x-3 z-10 px-4 py-3 rounded-2xl border lc-error text-sm">
+      {error && 
           <strong>Preview Error</strong>
-          <p className="mt-1 opacity-80" style={{
+          <p style={{
     fontSize: 13
   }}>
             {error}
           </p>
-          <button type="button" onClick={handleReset} className="mt-2 px-3 py-1 text-xs rounded-lg border lc-error-btn cursor-pointer">
+          <button type="button" onClick={handleReset}>
             Retry
           </button>
-        </div>}
-    </div>;
+        }
+    ;
   return <div data-lc-pe ref={placeholderRef} className={`${effectiveTheme === "dark" ? "dark" : ""} ${className ?? ""}`}>
-      <div ref={cardRef} className="rounded-2xl border lc-border overflow-hidden lc-bg-surface">
+      <div ref={cardRef}>
         {toolbar}
         {slot}
-      </div>
-    </div>;
+      ;
 };
 
 Coding agents need more than a chat window. They need a file browser, a code
@@ -869,8 +856,6 @@ agent to a [sandbox](/oss/python/deepagents/sandboxes) so it can read,
 write, and execute code in an isolated environment, then exposes the sandbox
 filesystem through a custom API server so the frontend can display files in
 real time as the agent works.
-
-<PatternEmbed pattern="deep-agent-ide" minHeight={700} />
 
 ## Architecture
 
@@ -1057,13 +1042,15 @@ agent = create_deep_agent(
 Before the agent runs, populate the sandbox with your project files using
 `uploadFiles`:
 
-<Info>
-  For **LangSmith** sandboxes, the container image and resource limits come from a
-  [sandbox template](/langsmith/sandbox-templates). Pass `templateName` when creating
-  the sandbox (see `get_or_create_sandbox_for_thread` above). `upload_files` seeds or updates
 
-  project files at runtime on top of that image.
-</Info>
+> ℹ️ **Info**
+>
+> For **LangSmith** sandboxes, the container image and resource limits come from a
+>   [sandbox template](/langsmith/sandbox-templates). Pass `templateName` when creating
+>   the sandbox (see `get_or_create_sandbox_for_thread` above). `upload_files` seeds or updates
+> 
+>   project files at runtime on top of that image.
+
 
 ```ts  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 const SEED_FILES: Record<string, string> = {
@@ -1077,10 +1064,12 @@ await sandbox.uploadFiles(
 );
 ```
 
-<Tip>
-  Run `sandbox.execute("cd /app && npm install")` after uploading `package.json` to install
-  dependencies before the agent starts.
-</Tip>
+
+> 💡 **Tip**
+>
+> Run `sandbox.execute("cd /app && npm install")` after uploading `package.json` to install
+>   dependencies before the agent starts.
+
 
 ## Adding the file browsing API
 
@@ -1135,13 +1124,15 @@ async def read_file(
     return {"path": path, "content": results[0].content.decode()}
 ```
 
-<Note>
-  Both the agent's backend and the API server call the same
-  `get_or_create_sandbox_for_thread` function. This ensures they always resolve
 
-  to the same sandbox for a given thread. The sandbox ID in thread metadata
-  is the single source of truth — no in-memory caches needed.
-</Note>
+> ℹ️ **Note**
+>
+> Both the agent's backend and the API server call the same
+>   `get_or_create_sandbox_for_thread` function. This ensures they always resolve
+> 
+>   to the same sandbox for a given thread. The sandbox ID in thread metadata
+>   is the single source of truth — no in-memory caches needed.
+
 
 ### Configure `langgraph.json`
 
@@ -1163,11 +1154,13 @@ the LangGraph platform to serve your custom routes alongside the default ones:
 Your custom routes are available at the same host as the LangGraph API. For
 local development with `langgraph dev`, that's `http://localhost:2024`.
 
-<Note>
-  Custom routes defined in `http.app` take priority over default LangGraph routes. This means you
-  can shadow built-in endpoints if needed, but be careful not to accidentally override routes like
-  `/threads` or `/runs`.
-</Note>
+
+> ℹ️ **Note**
+>
+> Custom routes defined in `http.app` take priority over default LangGraph routes. This means you
+>   can shadow built-in endpoints if needed, but be careful not to accidentally override routes like
+>   `/threads` or `/runs`.
+
 
 ## Building the frontend
 
@@ -1257,8 +1250,8 @@ from file-mutating tools. When a `write_file` or `edit_file` tool call
 completes, refresh that specific file. When `execute` completes, refresh
 everything (since a shell command could modify any file):
 
-<CodeGroup>
-  ```tsx React theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```tsx React theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   import { useStream } from "@langchain/react";
   import { ToolMessage, AIMessage } from "langchain";
 
@@ -1450,7 +1443,6 @@ everything (since a shell command could modify any file):
     }
   }
   ```
-</CodeGroup>
 
 ### Detecting changed files
 
@@ -1479,17 +1471,14 @@ Use a framework-appropriate diff library to render unified diffs:
 
 | Framework | Library                                                                    | Component                                                       |
 | --------- | -------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| React     | [`@pierre/diffs`](https://diffs.com)                                       | `<FileDiff>` with `parseDiffFromFile`                           |
-| Vue       | [`@git-diff-view/vue`](https://github.com/MrWangJustToDo/git-diff-view)    | `<DiffView>` with `generateDiffFile` from `@git-diff-view/file` |
-| Svelte    | [`@git-diff-view/svelte`](https://github.com/MrWangJustToDo/git-diff-view) | `<DiffView>` with `generateDiffFile` from `@git-diff-view/file` |
+| React     | [`@pierre/diffs`](https://diffs.com)                                       | `` with `parseDiffFromFile`                           |
+| Vue       | [`@git-diff-view/vue`](https://github.com/MrWangJustToDo/git-diff-view)    | `` with `generateDiffFile` from `@git-diff-view/file` |
+| Svelte    | [`@git-diff-view/svelte`](https://github.com/MrWangJustToDo/git-diff-view) | `` with `generateDiffFile` from `@git-diff-view/file` |
 | Angular   | [`ngx-diff`](https://github.com/rars/ngx-diff)                             | `<ngx-unified-diff>` with `[before]` and `[after]`              |
 
 Example with `@pierre/diffs` (React):
 
 ```tsx  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-import { FileDiff } from "@pierre/diffs/react";
-import { parseDiffFromFile } from "@pierre/diffs";
-
 function DiffPanel({ original, current, fileName }) {
   const diff = parseDiffFromFile(
     { name: fileName, contents: original },
@@ -1497,11 +1486,7 @@ function DiffPanel({ original, current, fileName }) {
   );
 
   return (
-    <FileDiff
-      fileDiff={diff}
-      options={{ theme: "github-dark", diffStyle: "unified", diffIndicators: "bars" }}
-    />
-  );
+    );
 }
 ```
 
@@ -1521,17 +1506,13 @@ function ChangedFilesSummary({ changedFiles, files, originalFiles, onSelect }) {
   });
 
   return (
-    <div>
-      <h3>{stats.length} Files Changed</h3>
+    <h3>{stats.length} Files Changed</h3>
       {stats.map((file) => (
         <button key={file.path} onClick={() => onSelect(file.path)}>
           {file.path}
-          <span className="text-green-400">+{file.additions}</span>
-          <span className="text-red-400">-{file.deletions}</span>
-        </button>
+          +{file.additions}-{file.deletions}</button>
       ))}
-    </div>
-  );
+    );
 }
 ```
 
@@ -1546,19 +1527,9 @@ The IDE layout arranges three panels side by side:
 | Chat        | Fixed (320px) | Interact with the agent                     |
 
 ```tsx  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-<div className="flex h-screen">
-  <div className="w-52 shrink-0">
-    <FileTree />
-    <ChangedFilesSummary />
-  </div>
 
-  <CodePanel /* flex-1 */ />
-
-  <div className="w-80 shrink-0">
-    <ChatPanel />
-  </div>
-</div>
-```
+  
+    ```
 
 The file tree shows VS Code-style icons (using
 [`@iconify-json/vscode-icons`](https://www.npmjs.com/package/@iconify-json/vscode-icons))
@@ -1604,12 +1575,15 @@ A sandbox is the right choice when:
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/frontend/sandbox.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/frontend/sandbox.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

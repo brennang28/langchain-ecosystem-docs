@@ -61,9 +61,11 @@ For most use cases, define subagents as dictionaries matching the [`SubAgent`](h
 | `interrupt_on`  | `dict[str, bool]`        | Optional. Configure [human-in-the-loop](/oss/python/deepagents/human-in-the-loop) for specific tools. Subagent value overrides main agent. Requires checkpointer.<br />Inherits from main agent by default. Subagent value overrides the default.                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | `skills`        | `list[str]`              | Optional. [Skills](/oss/python/deepagents/skills) source paths. When specified, the subagent will load skills from these directories (e.g., `["/skills/research/", "/skills/web-search/"]`). This allows subagents to have different skill sets than the main agent.<br />Does not inherit from main agent. Only the general-purpose subagent inherits the main agent's skills. When a subagent has skills, it runs its own independent [`SkillsMiddleware`](https://reference.langchain.com/python/deepagents/middleware/skills/SkillsMiddleware) instance. Skill state is fully isolated—a subagent's loaded skills are not visible to the parent, and vice versa. |
 
-<Tip>
-  **CLI users:** You can also define subagents as `AGENTS.md` files on disk instead of in code. The `name`, `description`, and `model` fields map to YAML frontmatter, and the markdown body becomes the `system_prompt`. See [Custom subagents](/oss/python/deepagents/cli/overview#subagents) for the file format.
-</Tip>
+
+> 💡 **Tip**
+>
+> **CLI users:** You can also define subagents as `AGENTS.md` files on disk instead of in code. The `name`, `description`, and `model` fields map to YAML frontmatter, and the markdown body becomes the `system_prompt`. See [Custom subagents](/oss/python/deepagents/cli/overview#subagents) for the file format.
+
 
 ### CompiledSubAgent
 
@@ -248,9 +250,7 @@ When you provide a subagent with the general-purpose name, the default general-p
 
 The general-purpose subagent is ideal for context isolation without specialized behavior. The main agent can delegate a complex multi-step task to this subagent and get a concise result back without bloat from intermediate tool calls.
 
-<Card title="Example">
-  Instead of the main agent making 10 web searches and filling its context with results, it delegates to the general-purpose subagent: `task(name="general-purpose", task="Research quantum computing trends")`. The subagent performs all the searches internally and returns only a summary.
-</Card>
+Instead of the main agent making 10 web searches and filling its context with results, it delegates to the general-purpose subagent: `task(name="general-purpose", task="Research quantum computing trends")`. The subagent performs all the searches internally and returns only a summary.
 
 ### Skills inheritance
 
@@ -259,9 +259,11 @@ When configuring [skills](/oss/python/deepagents/skills) with `create_deep_agent
 * **General-purpose subagent**: Automatically inherits skills from the main agent
 * **Custom subagents**: Do NOT inherit skills by default—use the `skills` parameter to give them their own skills
 
-<Note>
-  Only subagents configured with skills get a `SkillsMiddleware` instance—custom subagents without a `skills` parameter do not. When present, skill state is fully isolated in both directions: the parent's skills are not visible to the child, and the child's skills are not propagated back to the parent.
-</Note>
+
+> ℹ️ **Note**
+>
+> Only subagents configured with skills get a `SkillsMiddleware` instance—custom subagents without a `skills` parameter do not. When present, skill state is fully isolated in both directions: the parent's skills are not visible to the child, and the child's skills are not propagated back to the parent.
+
 
 ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 from deepagents import create_deep_agent
@@ -616,12 +618,15 @@ subagents = [
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/subagents.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/subagents.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

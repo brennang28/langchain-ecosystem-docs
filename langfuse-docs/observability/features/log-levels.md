@@ -10,12 +10,9 @@ Traces can have a lot of observations ([data model](/docs/tracing#introduction-t
 
 In addition to the level, you can also include a `statusMessage` to provide additional context.
 
-<Frame fullWidth>
-  ![Trace log level and statusMessage](/images/docs/trace-log-level.png)
-</Frame>
 
-<LangTabs items={["Python SDK", "JS/TS SDK", "OpenAI SDK", "Langchain"]}>
-<Tab>
+![Trace log level and statusMessage](/images/docs/trace-log-level.png)
+
 When using the [`@observe()` decorator](/docs/sdk/python/decorators):
 
 ```python
@@ -85,14 +82,12 @@ with langfuse.start_as_current_observation(
         )
 ```
 
-</Tab>
-<Tab title="JS/TS SDK">
+
+**JS/TS SDK:**
 
 When using the context manager:
 
 ```ts
-import { startActiveObservation, startObservation } from "@langfuse/tracing";
-
 await startActiveObservation("context-manager", async (span) => {
   span.update({
     input: { query: "What is the capital of France?" },
@@ -108,8 +103,6 @@ await startActiveObservation("context-manager", async (span) => {
 When using the `observe` wrapper:
 
 ```ts
-import { observe, updateActiveObservation } from "@langfuse/tracing";
-
 // An existing function
 async function fetchData(source: string) {
   updateActiveObservation({
@@ -132,8 +125,6 @@ const result = await tracedFetchData("API");
 When creating observations manually:
 
 ```ts
-import { startObservation } from "@langfuse/tracing";
-
 const span = startObservation("manual-observation", {
   input: { query: "What is the capital of France?" },
 });
@@ -148,32 +139,20 @@ span.update({ output: "Paris" }).end();
 
 See [JS/TS SDK docs](/docs/sdk/typescript/guide) for more details.
 
-</Tab>
-<Tab title="OpenAI SDK">
+
+**OpenAI SDK:**
 
 When using the [OpenAI SDK Integration](/integrations/model-providers/openai-py), `level` and `statusMessage` are automatically set based on the OpenAI API response. See [example](/integrations/model-providers/openai-py).
 
-</Tab>
-<Tab title="Langchain">
+
+**Langchain:**
 
 When using the [LangChain Integration](/integrations/frameworks/langchain), `level` and `statusMessage` are automatically set for each step in the LangChain pipeline.
 
-</Tab>
-
-</LangTabs>
 
 ## Filter Trace by Log Level
 
 When viewing a single trace, you can filter the observations by log level.
 
-<Video
-  src="https://static.langfuse.com/docs-videos/250210-trace-log-level-filter.mp4"
-  aspectRatio={16 / 9}
-  gifStyle
-/>
-
 ## GitHub Discussions
 
-import { GhDiscussionsPreview } from "@/components/gh-discussions/GhDiscussionsPreview";
-
-<GhDiscussionsPreview labels={["feat-log-levels"]} />

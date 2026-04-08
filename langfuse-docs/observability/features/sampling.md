@@ -12,8 +12,6 @@ You can configure the sample rate by setting the `LANGFUSE_SAMPLE_RATE` environm
 
 The default value is 1, meaning that all traces are collected. A value of 0.2 means that only 20% of the traces are collected. The SDK samples on the trace level meaning that if a trace is sampled, all observations and scores within that trace will be sampled as well.
 
-<LangTabs items={["Python SDK", "JS/TS SDK", "OpenAI (JS/TS)", "Langchain (JS/TS)", "Vercel AI SDK (JS/TS)"]}>
-<Tab>
 With the Python SDK, you can configure sampling when initializing the client:
 
 ```python
@@ -46,18 +44,14 @@ def process_data():
 
 If a trace is not sampled, none of its observations (spans or generations) or associated scores will be sent to Langfuse, which can significantly reduce data volume for high-traffic applications.
 
-</Tab>
-<Tab title="JS/TS SDK">
+
+**JS/TS SDK:**
 
 Langfuse respects OpenTelemetry's sampling decisions. You can configure a sampler in your OTEL SDK to control which traces are sent to Langfuse. This is useful for managing costs and reducing noise in high-volume applications.
 
 Here is an example of how to configure a `TraceIdRatioBasedSampler` to send only 20% of traces:
 
-```ts filename="instrumentation.ts" /new TraceIdRatioBasedSampler(0.2)/
-import { NodeSDK } from "@opentelemetry/sdk-node";
-import { LangfuseSpanProcessor } from "@langfuse/otel";
-import { TraceIdRatioBasedSampler } from "@opentelemetry/sdk-trace-base";
-
+```ts /new TraceIdRatioBasedSampler(0.2)/
 const sdk = new NodeSDK({
   // Sample 20% of all traces
   sampler: new TraceIdRatioBasedSampler(0.2),
@@ -67,18 +61,14 @@ const sdk = new NodeSDK({
 
 See [JS/TS SDK docs](/docs/sdk/typescript/guide#sampling) for more details.
 
-</Tab>
-<Tab title="OpenAI (JS/TS)">
+
+**OpenAI (JS/TS):**
 
 Langfuse respects OpenTelemetry's sampling decisions. You can configure a sampler in your OTEL SDK to control which traces are sent to Langfuse. This is useful for managing costs and reducing noise in high-volume applications.
 
 Here is an example of how to configure a `TraceIdRatioBasedSampler` to send only 20% of traces:
 
-```ts filename="instrumentation.ts" /new TraceIdRatioBasedSampler(0.2)/
-import { NodeSDK } from "@opentelemetry/sdk-node";
-import { LangfuseSpanProcessor } from "@langfuse/otel";
-import { TraceIdRatioBasedSampler } from "@opentelemetry/sdk-trace-base";
-
+```ts /new TraceIdRatioBasedSampler(0.2)/
 const sdk = new NodeSDK({
   // Sample 20% of all traces
   sampler: new TraceIdRatioBasedSampler(0.2),
@@ -89,24 +79,15 @@ const sdk = new NodeSDK({
 Initialize the OpenAI integration as usual:
 
 ```ts
-import OpenAI from "openai";
-import { observeOpenAI } from "@langfuse/openai";
-
 const openai = observeOpenAI(new OpenAI());
 ```
 
 See [OpenAI Integration (JS/TS)](/integrations/model-providers/openai-js) for more details.
 
-</Tab>
-<Tab>
 
 Langfuse respects OpenTelemetry's sampling decisions for Langchain (JS/TS) as well. Configure sampling in your OTEL SDK first, then initialize the callback handler.
 
-```ts filename="instrumentation.ts" /new TraceIdRatioBasedSampler(0.2)/
-import { NodeSDK } from "@opentelemetry/sdk-node";
-import { LangfuseSpanProcessor } from "@langfuse/otel";
-import { TraceIdRatioBasedSampler } from "@opentelemetry/sdk-trace-base";
-
+```ts /new TraceIdRatioBasedSampler(0.2)/
 const sdk = new NodeSDK({
   // Sample 20% of all traces
   sampler: new TraceIdRatioBasedSampler(0.2),
@@ -117,23 +98,17 @@ const sdk = new NodeSDK({
 After setting up tracing and sampling, initialize the Langchain callback handler as usual:
 
 ```ts
-import { CallbackHandler } from "langfuse-langchain";
-
 const handler = new CallbackHandler();
 ```
 
 See [Langchain Integration (JS/TS)](/integrations/frameworks/langchain) for more details.
 
-</Tab>
 
-<Tab title="Vercel AI SDK (JS/TS)">
+**Vercel AI SDK (JS/TS):**
 
 When using the [Vercel AI SDK Integration](/integrations/frameworks/vercel-ai-sdk)
 
-```ts filename="instrumentation.ts" {/sampleRate: 0.5/}
-import { registerOTel } from "@vercel/otel";
-import { LangfuseExporter } from "langfuse-vercel";
-
+```ts {/sampleRate: 0.5/}
 export function register() {
   registerOTel({
     serviceName: "langfuse-vercel-ai-nextjs-example",
@@ -142,12 +117,6 @@ export function register() {
 }
 ```
 
-</Tab>
-
-</LangTabs>
 
 ## GitHub Discussions
 
-import { GhDiscussionsPreview } from "@/components/gh-discussions/GhDiscussionsPreview";
-
-<GhDiscussionsPreview labels={["feat-sampling"]} />

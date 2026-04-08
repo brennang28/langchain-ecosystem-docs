@@ -4,8 +4,6 @@ description: Track LLM chat conversations or threads across multiple observation
 sidebarTitle: Sessions
 ---
 
-import { PropagationRestrictionsCallout } from "@/components/PropagationRestrictionsCallout";
-
 # Sessions
 
 Many interactions with LLM applications span multiple traces and observations. `Sessions` in Langfuse are a special way to group these observations across traces together and see a simple **session replay** of the entire interaction. Get started by propagating the `sessionId` attribute across observations.
@@ -17,9 +15,9 @@ graph LR
 
 Propagate a `sessionId` across observations that span multiple traces. The `sessionId` can be any US-ASCII character string less than 200 characters that you use to identify the session. All observations with the same `sessionId` will be grouped together including their enclosing traces. If a session ID exceeds 200 characters, it will be dropped.
 
-<LangTabs items={["Python SDK", "JS/TS SDK", "OpenAI (Python)", "Langchain (Python)", "Langchain (JS/TS)", "Flowise"]}>
 
-<Tab title="Python SDK (v3)">
+**Python SDK (v3):**
+
 When using the `@observe()` decorator:
 
 ```python /propagate_attributes(session_id="your-session-id")/
@@ -58,14 +56,12 @@ with langfuse.start_as_current_observation(
             pass
 ```
 
-</Tab>
-<Tab title="JS/TS SDK">
+
+**JS/TS SDK:**
 
 When using the context manager:
 
 ```ts /propagateAttributes/
-import { startActiveObservation, propagateAttributes } from "@langfuse/tracing";
-
 await startActiveObservation("context-manager", async (span) => {
   span.update({
     input: { query: "What is the capital of France?" },
@@ -87,8 +83,6 @@ await startActiveObservation("context-manager", async (span) => {
 When using the `observe` wrapper:
 
 ```ts /propagateAttributes/
-import { observe, propagateAttributes } from "@langfuse/tracing";
-
 const processChatMessage = observe(
   async (message: string) => {
     // Propagate sessionId to all child observations
@@ -106,8 +100,6 @@ const result = await processChatMessage("Hello!");
 
 See [JS/TS SDK docs](/docs/sdk/typescript/guide) for more details.
 
-</Tab>
-<Tab>
 
 ```python /propagate_attributes(session_id="your-session-id")/
 from langfuse import get_client, propagate_attributes
@@ -129,8 +121,6 @@ with langfuse.start_as_current_observation(as_type="span", name="openai-call"):
         )
 ```
 
-</Tab>
-<Tab>
 
 ```python /propagate_attributes(session_id="your-session-id")/
 from langfuse import get_client, propagate_attributes
@@ -149,15 +139,12 @@ with langfuse.start_as_current_observation(as_type="span", name="langchain-call"
         )
 ```
 
-</Tab>
-<Tab title="Langchain (JS/TS)">
+
+**Langchain (JS/TS):**
 
 Use `propagateAttributes()` with the CallbackHandler:
 
 ```ts /propagateAttributes/
-import { startActiveObservation, propagateAttributes } from "@langfuse/tracing";
-import { CallbackHandler } from "langfuse-langchain";
-
 const langfuseHandler = new CallbackHandler();
 
 await startActiveObservation("langchain-call", async () => {
@@ -177,16 +164,11 @@ await startActiveObservation("langchain-call", async () => {
 });
 ```
 
-</Tab>
 
-<Tab title="Flowise">
+**Flowise:**
+
 The [Flowise Integration](/docs/flowise) automatically maps the Flowise chatId to the Langfuse sessionId. Flowise 1.4.10 or higher is required.
 
-</Tab>
-
-</LangTabs>
-
-<PropagationRestrictionsCallout attributes={["sessionId"]} />
 
 ## Example
 
@@ -194,8 +176,8 @@ Try this feature using the public [example project](/docs/demo).
 
 _Example session spanning multiple traces_
 
-<Frame fullWidth>![Session view](/images/docs/session.png)</Frame>
 
+![Session view](/images/docs/session.png)
 ## Other features
 
 - Publish a session to share with others as a public link ([example](https://cloud.langfuse.com/project/clkpwwm0m000gmm094odg11gi/sessions/lf.docs.conversation.TL4KDlo))
@@ -210,6 +192,3 @@ _Example session spanning multiple traces_
 
 ## GitHub Discussions
 
-import { GhDiscussionsPreview } from "@/components/gh-discussions/GhDiscussionsPreview";
-
-<GhDiscussionsPreview labels={["feat-sessions"]} />

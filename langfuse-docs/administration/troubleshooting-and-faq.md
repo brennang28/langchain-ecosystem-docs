@@ -12,6 +12,3 @@ If you don't find a solution to your issue here, try using [Ask AI](/docs/ask-ai
 
 ## FAQ
 
-import { FaqPreview } from "@/components/faq/FaqPreview";
-
-<FaqPreview tags={["administration"]} />

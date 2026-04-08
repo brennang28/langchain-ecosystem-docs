@@ -11,7 +11,6 @@ This page discusses prompt management concepts and best practices. If you haven'
 Ready to start? Check out the [Get Started guide](/docs/prompt-management/get-started) to create your first prompt.
 
 
-
 ## The Prompt Object
 
 Langfuse considers a prompt to be a combination of both the instructions for the LLM (this can be a single string or an array of messages) and, optionally, [additional configuration](/docs/prompt-management/features/config) that influences the behavior.
@@ -19,7 +18,6 @@ Langfuse considers a prompt to be a combination of both the instructions for the
 The prompt object also has a couple of attributes for managing different versions, variants, and deployments. This page will guide you through the most important principles of how to use prompts productively.
 
 For detailed information about all prompt object fields and methods, see the [SDK reference documentation](https://langfuse-js-git-main-langfuse.vercel.app/interfaces/_langfuse_core.Prompt.Chat.html).
-
 
 
 ### Chat vs Text Prompts [#text-vs-chat-prompts]
@@ -30,11 +28,8 @@ Langfuse supports two prompt types. The `type` field determines the format and c
 
 **Chat prompts** are arrays of messages with specific roles (system, user, assistant), useful when you want to manage complete conversation structures, include example exchanges, or handle chat history.
 
-<div className="grid grid-cols-1 md:grid-cols-2 mt-6 gap-4">
 
-<div className="[&_pre]:break-words [&_pre]:whitespace-pre-wrap">
-
-```json filename="Text prompt example"
+```json
 {
   "name": "movie-critic",
   "type": "text",
@@ -43,11 +38,8 @@ Langfuse supports two prompt types. The `type` field determines the format and c
 }
 ```
 
-</div>
 
-<div className="[&_pre]:break-words [&_pre]:whitespace-pre-wrap">
-
-```json filename="Chat prompt example"
+```json
 {
   "name": "movie-critic-chat",
   "type": "chat",
@@ -65,13 +57,8 @@ Langfuse supports two prompt types. The `type` field determines the format and c
 }
 ```
 
-</div>
 
-</div>
-
-<Callout type="info">
-**When to use chat prompts:** Most applications start with a text prompt. As you build more complex logic that requires managing multiple messages, role-based structures, or chat history, it makes sense to switch to chat prompts. This allows you to manage the complete conversation structure in your prompt management system.
-</Callout>
+> ℹ️ **Note:** **When to use chat prompts:** Most applications start with a text prompt. As you build more complex logic that requires managing multiple messages, role-based structures, or chat history, it makes sense to switch to chat prompts. This allows you to manage the complete conversation structure in your prompt management system.
 
 
 ### Dynamic rendering of prompts [#dynamic-rendering-of-prompts]

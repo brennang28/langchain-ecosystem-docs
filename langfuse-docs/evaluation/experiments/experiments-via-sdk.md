@@ -34,10 +34,6 @@ The experiment runner SDK supports both datasets hosted on Langfuse and datasets
 
 Start with the simplest possible experiment to test your task function on local data. If you already have a dataset in Langfuse, [see here](#usage-with-langfuse-datasets).
 
-<LangTabs items={["Python SDK", "JS/TS SDK"]}>
-<Tab>
-{/* PYTHON SDK */}
-
 ```python
 from langfuse import get_client
 from langfuse.openai import OpenAI
@@ -72,23 +68,10 @@ result = langfuse.run_experiment(
 print(result.format())
 ```
 
-</Tab>
-<Tab>
-{/* JS/TS SDK */}
+
 Make sure that OpenTelemetry is properly set up for traces to be delivered to Langfuse. See the [tracing setup documentation](/docs/observability/sdk/overview#initialize-tracing) for configuration details. Always flush the span processor at the end of execution to ensure all traces are sent.
 
 ```typescript
-import { OpenAI } from "openai";
-import { NodeSDK } from "@opentelemetry/sdk-node";
-
-import {
-  LangfuseClient,
-  ExperimentTask,
-  ExperimentItem,
-} from "@langfuse/client";
-import { observeOpenAI } from "@langfuse/openai";
-import { LangfuseSpanProcessor } from "@langfuse/otel";
-
 // Initialize OpenTelemetry
 const otelSdk = new NodeSDK({ spanProcessors: [new LangfuseSpanProcessor()] });
 otelSdk.start();
@@ -136,18 +119,12 @@ await otelSdk.shutdown();
 
 **Note for JS/TS SDK**: OpenTelemetry must be properly set up for traces to be delivered to Langfuse. See the [tracing setup documentation](/docs/observability/sdk/overview#initialize-tracing) for configuration details. Always flush the span processor at the end of execution to ensure all traces are sent.
 
-</Tab>
-</LangTabs>
 
 When running experiments on local data, only traces are created in Langfuse - no dataset runs are generated. Each task execution creates an individual trace for observability and debugging.
 
 ### Usage with Langfuse Datasets
 
 Run experiments directly on datasets stored in Langfuse for automatic tracing and comparison.
-
-<LangTabs items={["Python SDK", "JS/TS SDK"]}>
-<Tab>
-{/* PYTHON SDK */}
 
 ```python
 from langfuse import get_client
@@ -179,10 +156,6 @@ result = dataset.run_experiment(
 print(result.format())
 ```
 
-</Tab>
-
-<Tab>
-{/* JS/TS SDK */}
 
 ```typescript
 // Get dataset from Langfuse
@@ -202,8 +175,6 @@ console.log(await result.format());
 await otelSdk.shutdown();
 ```
 
-</Tab>
-</LangTabs>
 
 When using Langfuse datasets, dataset runs are automatically created in Langfuse and are available for comparison in the UI. This enables tracking experiment performance over time and comparing different approaches on the same dataset.
 
@@ -216,10 +187,6 @@ Enhance your experiments with evaluators and advanced configuration options.
 #### Evaluators
 
 Evaluators assess the quality of task outputs at the item level. They receive the input, metadata, output, and expected output for each item and return evaluation metrics that are reported as scores on the traces in Langfuse.
-
-<LangTabs items={["Python SDK", "JS/TS SDK"]}>
-<Tab>
-{/* PYTHON SDK */}
 
 ```python
 from langfuse import Evaluation
@@ -245,9 +212,6 @@ result = langfuse.run_experiment(
 print(result.format())
 ```
 
-</Tab>
-<Tab>
-{/* JS/TS SDK */}
 
 ```typescript
 // Define evaluation functions
@@ -288,16 +252,10 @@ const result = await langfuse.experiment.run({
 console.log(await result.format());
 ```
 
-</Tab>
-</LangTabs>
 
 #### Run-level Evaluators
 
 Run-level evaluators assess the full experiment results and compute aggregate metrics. When run on Langfuse datasets, these scores are attached to the full dataset run for tracking overall experiment performance.
-
-<LangTabs items={["Python SDK", "JS/TS SDK"]}>
-<Tab>
-{/* PYTHON SDK */}
 
 ```python
 from langfuse import Evaluation
@@ -328,9 +286,6 @@ result = langfuse.run_experiment(
 print(result.format())
 ```
 
-</Tab>
-<Tab>
-{/* JS/TS SDK */}
 
 ```typescript
 const averageAccuracy = async ({ itemResults }) => {
@@ -364,16 +319,10 @@ const result = await langfuse.experiment.run({
 console.log(await result.format());
 ```
 
-</Tab>
-</LangTabs>
 
 #### Async Tasks and Evaluators
 
 Both task functions and evaluators can be asynchronous.
-
-<LangTabs items={["Python SDK", "JS/TS SDK"]}>
-<Tab>
-{/* PYTHON SDK */}
 
 ```python
 import asyncio
@@ -400,13 +349,8 @@ result = langfuse.run_experiment(
 print(result.format())
 ```
 
-</Tab>
-<Tab>
-{/* JS/TS SDK */}
 
 ```typescript
-import OpenAI from "openai";
-
 const asyncLlmTask = async (item) => {
   // Async task using OpenAI
   const client = new OpenAI();
@@ -429,16 +373,10 @@ const result = await langfuse.experiment.run({
 console.log(await result.format());
 ```
 
-</Tab>
-</LangTabs>
 
 #### Configuration Options
 
 Customize experiment behavior with various configuration options.
-
-<LangTabs items={["Python SDK", "JS/TS SDK"]}>
-<Tab>
-{/* PYTHON SDK */}
 
 ```python
 result = langfuse.run_experiment(
@@ -460,9 +398,6 @@ result = langfuse.run_experiment(
 print(result.format())
 ```
 
-</Tab>
-<Tab>
-{/* JS/TS SDK */}
 
 ```typescript
 const result = await langfuse.experiment.run({
@@ -485,16 +420,10 @@ const result = await langfuse.experiment.run({
 console.log(await result.format());
 ```
 
-</Tab>
-</LangTabs>
 
 #### Testing in CI Environments
 
 Integrate the experiment runner with testing frameworks like Pytest and Vitest to run automated evaluations in your CI pipeline. Use evaluators to create assertions that can fail tests based on evaluation results.
-
-<LangTabs items={["Python SDK", "JS/TS SDK"]}>
-<Tab>
-{/* PYTHON SDK */}
 
 ```python
 # test_geography_experiment.py
@@ -589,19 +518,9 @@ def test_geography_accuracy_fails(langfuse_client):
         assert avg_accuracy >= 0.8, f"Expected test to fail with low accuracy: {avg_accuracy:.2f}"
 ```
 
-</Tab>
-<Tab>
-{/* JS/TS SDK */}
 
 ```typescript
 // test/geography-experiment.test.ts
-import { describe, it, expect, beforeAll, afterAll } from "vitest";
-import { OpenAI } from "openai";
-import { NodeSDK } from "@opentelemetry/sdk-node";
-import { LangfuseClient, ExperimentItem } from "@langfuse/client";
-import { observeOpenAI } from "@langfuse/openai";
-import { LangfuseSpanProcessor } from "@langfuse/otel";
-
 // Test data for European capitals
 const testData: ExperimentItem[] = [
   { input: "What is the capital of France?", expectedOutput: "Paris" },
@@ -711,18 +630,12 @@ describe("Geography Experiment Tests", () => {
 });
 ```
 
-</Tab>
-</LangTabs>
 
 These examples show how to use the experiment runner's evaluation results to create meaningful test assertions in your CI pipeline. Tests can fail when accuracy drops below acceptable thresholds, ensuring model quality standards are maintained automatically.
 
 ### Autoevals Integration
 
 Access pre-built evaluation functions through the [autoevals library](https://github.com/braintrustdata/autoevals) integration.
-
-<LangTabs items={["Python SDK", "JS/TS SDK"]}>
-<Tab>
-{/* PYTHON SDK */}
 
 The Python SDK supports AutoEvals evaluators through direct integration:
 
@@ -742,16 +655,10 @@ result = langfuse.run_experiment(
 print(result.format())
 ```
 
-</Tab>
-<Tab>
-{/* JS/TS SDK */}
 
 The JS SDK provides seamless integration with the AutoEvals library for pre-built evaluation functions:
 
 ```typescript
-import { Factuality, Levenshtein } from "autoevals";
-import { createEvaluatorFromAutoevals } from "@langfuse/client";
-
 // Convert AutoEvals evaluators to Langfuse-compatible format
 const factualityEvaluator = createEvaluatorFromAutoevals(Factuality());
 const levenshteinEvaluator = createEvaluatorFromAutoevals(Levenshtein());
@@ -776,22 +683,15 @@ const result = await langfuse.experiment.run({
 console.log(await result.format());
 ```
 
-</Tab>
-</LangTabs>
 
 ## Low-level SDK methods
 
 If you need more control over the dataset run, you can use the low-level SDK methods in order to loop through the dataset items and execute your application logic.
 
-<Steps>
 
 ### Load the dataset
 
 Use the Python or JS/TS SDK to load the dataset.
-
-<LangTabs items={["Python SDK", "JS/TS SDK"]}>
-<Tab>
-{/* PYTHON SDK */}
 
 ```python
 from langfuse import get_client
@@ -799,39 +699,28 @@ from langfuse import get_client
 dataset = get_client().get_dataset("<dataset_name>")
 ```
 
-</Tab>
-<Tab>
-{/* JS/TS SDK */}
 
 ```ts
-import { LangfuseClient } from "@langfuse/client";
-
 const langfuse = new LangfuseClient();
 
 const dataset = await langfuse.dataset.get("<dataset_name>");
 ```
 
-</Tab>
-</LangTabs>
 
 ### Instrument your application
 
 First we create our application runner helper function. This function will be called for every dataset item in the next step. If you use Langfuse for production observability, you do not need to change your application code.
 
-<Callout type="info" emoji="ℹ️">
-  For a dataset run, it is important that your application creates Langfuse
-  traces for each execution so they can be linked to the dataset item. Please
-  refer to the [integrations](/docs/integrations/overview) page for details on
-  how to instrument the framework you are using.
-</Callout>
 
-<LangTabs items={["Python SDK", "JS/TS SDK", "Langchain (Python)", "Langchain (JS/TS)", "Vercel AI SDK", "Other frameworks"]}>
-<Tab>
-{/* PYTHON SDK*/}
+> ℹ️ **Note:** For a dataset run, it is important that your application creates Langfuse
+>   traces for each execution so they can be linked to the dataset item. Please
+>   refer to the [integrations](/docs/integrations/overview) page for details on
+>   how to instrument the framework you are using.
+
 
 Assume you already have a Langfuse-instrumented LLM-app:
 
-```python filename="app.py"
+```python
 from langfuse import get_client, observe
 from langfuse.openai import OpenAI
 
@@ -850,22 +739,12 @@ def my_llm_function(question: str):
 
 _See [Python SDK](/docs/sdk/python/sdk-v3) docs for more details._
 
-</Tab>
-
-<Tab>
-{/* JS/TS SDK */}
 
 Please make sure you have [the Langfuse SDK](/docs/observability/sdk/overview#initialize-tracing) set up for tracing of your application. If you use Langfuse for [observability](/docs/observability/overview), this is the same setup.
 
 Example:
 
-```ts filename="app.ts"
-import { OpenAI } from "openai"
-
-import { LangfuseClient } from "@langfuse/client";
-import { startActiveObservation } from "@langfuse/tracing";
-import { observeOpenAI } from "@langfuse/openai";
-
+```ts
 const myLLMApplication = async (input: string) => {
   return startActiveObservation("my-llm-application", async (span) => {
     const output = await observeOpenAI(new OpenAI()).chat.completions.create({
@@ -882,11 +761,8 @@ const myLLMApplication = async (input: string) => {
 };
 ```
 
-</Tab>
-<Tab>
-{/* LANGCHAIN (PYTHON) */}
 
-```python filename="app.py" /config={"callbacks": [langfuse_handler]}/
+```python /config={"callbacks": [langfuse_handler]}/
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 
@@ -902,14 +778,8 @@ def my_langchain_chain(question, langfuse_handler):
   return response
 ```
 
-</Tab>
 
-<Tab>
-{/* LANGCHAIN (JS/TS) */}
-
-```ts filename="app.ts" /callbacks: [langfuseHandler]/
-import { CallbackHandler } from "@langfuse/langchain";
-
+```ts /callbacks: [langfuseHandler]/
 const myLLMApplication = async (input: string) => {
   return startActiveObservation('my_llm_application', async (span) => {
     // ... your Langchain code ...
@@ -925,14 +795,10 @@ const myLLMApplication = async (input: string) => {
 }
 ```
 
-</Tab>
-
-<Tab>
-{/* Vercel AI SDK */}
 
 Please refer to the [Vercel AI SDK](/integrations/frameworks/vercel-ai-sdk) docs for details on how to use the Vercel AI SDK with Langfuse.
 
-```ts filename="app.ts"
+```ts
 const runMyLLMApplication = async (input: string, traceId: string) => {
   return startActiveObservation("my_llm_application", async (span) => {
     const output = await generateText({
@@ -954,128 +820,86 @@ const runMyLLMApplication = async (input: string, traceId: string) => {
 };
 ```
 
-</Tab>
-
-<Tab>
-{/* OTHER FRAMEWORKS */}
 
 Please refer to the [integrations](/docs/integrations/overview) page for details on how to instrument the framework you are using.
 
-<Cards num={2}>
-  <Card
-    icon={
-      <div className="w-6 h-6 dark:bg-white rounded-sm p-0.5 flex items-center justify-center">
-        <img
+
+<img
           src="/images/integrations/vercel_ai_sdk_icon.png"
-          className="w-full h-full object-contain"
-        />
-      </div>
-    }
+          />
+      
+}
     title="Vercel AI SDK"
     href="/integrations/frameworks/vercel-ai-sdk"
     arrow
   />
-  <Card
-    icon={
-      <div className="w-6 h-6 dark:bg-white rounded-sm p-0.5 flex items-center justify-center">
-        <img
+  <img
           src="/images/integrations/llamaindex_icon.png"
-          className="w-full h-full object-contain"
-        />
-      </div>
-    }
+          />
+      
+}
     title="Llamaindex"
     href="/integrations/frameworks/llamaindex"
     arrow
   />
-  <Card
-    icon={
-      <div className="w-6 h-6 dark:bg-white rounded-sm p-0.5 flex items-center justify-center">
-        <img
+  <img
           src="/images/integrations/crewai_icon.svg"
-          className="w-full h-full object-contain"
-        />
-      </div>
-    }
+          />
+      
+}
     title="CrewAI"
     href="/integrations/frameworks/crewai"
     arrow
   />
-  <Card
-    icon={
-      <div className="w-6 h-6 dark:bg-white rounded-sm p-0.5 flex items-center justify-center">
-        <img
+  <img
           src="/images/integrations/ollama_icon.svg"
-          className="w-full h-full object-contain"
-        />
-      </div>
-    }
+          />
+      
+}
     title="Ollama"
     href="/integrations/model-providers/ollama"
     arrow
   />
-  <Card
-    icon={
-      <div className="w-6 h-6 dark:bg-white rounded-sm p-0.5 flex items-center justify-center">
-        <img
+  <img
           src="/images/integrations/litellm_icon.png"
-          className="w-full h-full object-contain"
-        />
-      </div>
-    }
+          />
+      
+}
     title="LiteLLM"
     href="/integrations/gateways/litellm"
     arrow
   />
-  <Card
-    icon={
-      <div className="w-6 h-6 dark:bg-white rounded-sm p-0.5 flex items-center justify-center">
-        <img
+  <img
           src="/images/integrations/autogen_icon.svg"
-          className="w-full h-full object-contain"
-        />
-      </div>
-    }
+          />
+      
+}
     title="AutoGen"
     href="/integrations/frameworks/autogen"
     arrow
   />
-  <Card
-    icon={
-      <div className="w-6 h-6 dark:bg-white rounded-sm p-0.5 flex items-center justify-center">
-        <img
+  <img
           src="/images/integrations/google_adk_icon.png"
-          className="w-full h-full object-contain"
-        />
-      </div>
-    }
+          />
+      
+}
     title="Google ADK"
     href="/integrations/frameworks/google-adk"
     arrow
   />
-  <Card title="All integrations" href="/integrations" arrow />
-</Cards>
-
-</Tab>
-
-</LangTabs>
-
-### Run experiment on dataset
+  ### Run experiment on dataset
 
 When running an experiment on a dataset, the application that shall be tested is executed for each item in the dataset. The execution trace is then linked to the dataset item. This allows you to compare different runs of the same application on the same dataset.
 
 Each experiment is identified by a unique `run_name`. If you reuse the same `run_name`, the new run will not appear separately in the Langfuse dataset run UI. As a good practice, include a timestamp in your `run_name` to ensure uniqueness (the [Experiment Runner SDK](#experiment-runner-sdk) does this automatically).
 
-<LangTabs items={["Python SDK", "JS/TS SDK", "Langchain (Python)", "Langchain (JS/TS)", "Vercel AI SDK", "Other frameworks"]}>
-<Tab>
-
 You may then execute that LLM-app for each dataset item to create a dataset run:
 
-<Callout type="warning">
-In Python SDK v4, `item.run()` has been removed. Use `dataset.run_experiment()` instead, which handles attribute propagation automatically. See [Python v3 → v4 migration](/docs/observability/sdk/upgrade-path/python-v3-to-v4).
-</Callout>
 
-```python filename="execute_dataset.py" /for item in dataset.items:/
+> ⚠️ **Note:** In Python SDK v4, `item.run()` has been removed. Use `dataset.run_experiment()` instead, which handles attribute propagation automatically. See [Python v3 → v4 migration](/docs/observability/sdk/upgrade-path/python-v3-to-v4).
+
+
+```python /for item in dataset.items:/
 from datetime import datetime
 from langfuse import get_client
 from .app import my_llm_application
@@ -1110,13 +934,8 @@ get_client().flush()
 
 _See [Python SDK](/docs/sdk/python/sdk-v3) docs for details on the new OpenTelemetry-based SDK._
 
-</Tab>
-
-<Tab>
 
 ```ts /for (const item of dataset.items)/
-import { LangfuseClient } from "@langfuse/client";
-
 const langfuse = new LangfuseClient();
 
 // Include a timestamp to ensure the run_name is unique
@@ -1146,12 +965,9 @@ for (const item of dataset.items) {
 await langfuse.flush();
 ```
 
-</Tab>
-<Tab>
 
-<Callout type="warning">
-In Python SDK v4, `item.run()` has been removed. Use `dataset.run_experiment()` instead, which handles attribute propagation automatically. See [Python v3 → v4 migration](/docs/observability/sdk/upgrade-path/python-v3-to-v4).
-</Callout>
+> ⚠️ **Note:** In Python SDK v4, `item.run()` has been removed. Use `dataset.run_experiment()` instead, which handles attribute propagation automatically. See [Python v3 → v4 migration](/docs/observability/sdk/upgrade-path/python-v3-to-v4).
+
 
 ```python /for item in dataset.items:/
 from datetime import datetime
@@ -1193,13 +1009,8 @@ for item in dataset.items:
 get_client().flush()
 ```
 
-</Tab>
-
-<Tab>
 
 ```typescript /item.link/ /langfuseHandler/ /for (const item of dataset.items)/
-import { LangfuseClient } from "@langfuse/client";
-import { CallbackHandler } from "@langfuse/langchain";
 ...
 
 const langfuse = new LangfuseClient()
@@ -1228,12 +1039,8 @@ for (const item of dataset.items) {
 await langfuse.flush();
 ```
 
-</Tab>
-<Tab>
 
 ```typescript /for (const item of dataset.items)/
-import { LangfuseClient } from "@langfuse/client";
-
 const langfuse = new LangfuseClient();
 
 // Include a timestamp to ensure the run_name is unique
@@ -1262,28 +1069,17 @@ for (const item of dataset.items) {
 await langfuse.flush();
 ```
 
-</Tab>
-<Tab>
-{/* OTHER FRAMEWORKS */}
 
 Please refer to the [integrations](/docs/integrations/overview) page for details on how to instrument the framework you are using.
 
-</Tab>
-</LangTabs>
 
 If you want to learn more about how adding evaluation scores from the code works, please refer to the docs:
 
-import { SquarePercent } from "lucide-react";
-
-<Cards num={1}>
-
-  <Card
-    icon={<SquarePercent size="24" />}
+}
     title="Add custom scores"
     href="/docs/evaluation/evaluation-methods/custom-scores"
     arrow
   />
-</Cards>
 
 ### Optionally: Run Evals in Langfuse
 
@@ -1291,28 +1087,15 @@ In the code above, we show how to add scores to the dataset run from your experi
 
 Alternatively, you can run evals in Langfuse. This is useful if you want to use the [LLM-as-a-judge](/docs/evaluation/evaluation-methods/llm-as-a-judge) feature to evaluate the outputs of the dataset runs. We have recorded a [10 min walkthrough](/guides/videos/llm-as-a-judge-eval-on-dataset-experiments) on how this works end-to-end.
 
-import { Lightbulb } from "lucide-react";
-
-<Cards num={1}>
-
-  <Card
-    icon={<Lightbulb size="24" />}
+}
     title="Set up LLM-as-a-judge"
     href="/docs/evaluation/evaluation-methods/llm-as-a-judge"
     arrow
   />
-</Cards>
 
 ### Compare dataset runs
 
 After each experiment run on a dataset, you can check the aggregated score in the dataset runs table and compare results side-by-side.
-
-<Video
-  src="https://static.langfuse.com/docs-videos/datasets-compare.mp4"
-  aspectRatio={16 / 9}
-  gifStyle
-/>
-</Steps>
 
 ## Optional: Trigger SDK Experiment from UI
 
@@ -1320,44 +1103,38 @@ When setting up Experiments via SDK, it can be useful to allow triggering the ex
 
 You need to set up a webhook to receive the trigger request from Langfuse.
 
-<Steps>
 
 ### Navigate to the dataset
 
 - **Navigate to** `Your Project` > `Datasets`
 - **Click on** the dataset you want to set up a remote experiment trigger for
 
-<Frame className="max-w-lg">![New Experiment Button](/images/docs/navigate-to-dataset.png)</Frame>
 
+![New Experiment Button](/images/docs/navigate-to-dataset.png)
 ### Open the setup page
 
 **Click on** `Start Experiment` to open the setup page
 
-<Frame className="max-w-lg">![New Experiment Button](/images/docs/trigger-process.png)</Frame>
 
+![New Experiment Button](/images/docs/trigger-process.png)
 **Click on** `⚡` below `Custom Experiment`
 
-<Frame className="max-w-lg">
-  ![New Experiment Button](/images/docs/trigger-remote-experiment-1.png)
-</Frame>
+
+![New Experiment Button](/images/docs/trigger-remote-experiment-1.png)
 
 ### Configure the webhook [#configure-webhook]
 
 **Enter** the URL of your external evaluation service that will receive the webhook when experiments are triggered.
 **Specify** a default config that will be sent to your webhook. Users can modify this when triggering experiments.
 
-<Frame className="max-w-lg">
-  ![New Experiment Button](/images/docs/trigger-remote-experiment-2.png)
-</Frame>
+
+![New Experiment Button](/images/docs/trigger-remote-experiment-2.png)
 
 ### Trigger experiments
 
 Once configured, team members can trigger remote experiments via the `Run` button under the **Custom Experiment** option. Langfuse will send the dataset metadata (ID and name) along with any custom configuration to your webhook.
 
-<Frame className="max-w-lg">
-  ![New Experiment Button](/images/docs/trigger-remote-experiment-3.png)
-</Frame>
 
-</Steps>
+![New Experiment Button](/images/docs/trigger-remote-experiment-3.png)
 
 **Typical workflow**: Your webhook receives the request, fetches the dataset from Langfuse, runs your application against the dataset items, evaluates the results, and ingests the scores back into Langfuse as a new Experiment run.

@@ -12,8 +12,8 @@ By default, Langfuse assigns random 32 hexchar trace IDs and 16 hexchar observat
 
 ## Creating and accessing Trace IDs
 
-<LangTabs items={["Python SDK", "JS/TS SDK"]}>
-<Tab title="Python SDK">
+
+**Python SDK:**
 
 Use [`create_trace_id()`](https://python.reference.langfuse.com/langfuse#Langfuse.create_trace_id) to generate a trace ID. If a `seed` is provided, the ID is deterministic. Use the same seed to get the same ID. This is useful for correlating external IDs with Langfuse traces.
 
@@ -38,13 +38,12 @@ with langfuse.start_as_current_observation(as_type="span", name="my-op") as curr
     observation_id = langfuse.get_current_observation_id()
     print(trace_id, observation_id)
 ```
-</Tab>
-<Tab title="JS/TS SDK">
+
+**JS/TS SDK:**
+
 Use [`createTraceId`](https://langfuse-js-git-main-langfuse.vercel.app/functions/_langfuse_tracing.createTraceId.html) to generate a deterministic trace ID from a seed.
 
 ```ts /createTraceId/ /getActiveTraceId/
-import { createTraceId, startObservation } from "@langfuse/tracing";
-
 const externalId = "support-ticket-54321";
 const langfuseTraceId = await createTraceId(externalId);
 ```
@@ -52,22 +51,18 @@ const langfuseTraceId = await createTraceId(externalId);
 Use [`getActiveTraceId`](https://langfuse-js-git-main-langfuse.vercel.app/functions/_langfuse_tracing.getActiveTraceId.html) to get the active trace ID and [`getActiveSpanId`](https://langfuse-js-git-main-langfuse.vercel.app/functions/_langfuse_tracing.getActiveSpanId.html) to get the current observation ID.
 
 ```ts /getActiveTraceId/
-import { startObservation, getActiveTraceId } from "@langfuse/tracing";
-
 await startObservation("run", async (span) => {
   const traceId = getActiveTraceId();
   console.log(`Current trace ID: ${traceId}`);
 });
 ```
-</Tab>
-</LangTabs>
 
 ## Setting a custom Trace ID
 
 You can set a custom trace ID when wrapping your application code with the Langfuse SDK.
 
-<LangTabs items={["Python SDK", "JS/TS SDK"]}>
-<Tab title="Python SDK">
+
+**Python SDK:**
 
 **Using the Context Manager**
 
@@ -106,8 +101,8 @@ process_user_request(
 )
 ```
 
-</Tab>
-<Tab title="JS/TS SDK">
+
+**JS/TS SDK:**
 
 **Deterministic trace IDs**
 
@@ -116,8 +111,6 @@ When starting a new trace with a predetermined `traceId`, you must also provide 
 You can create valid, deterministic trace IDs from a seed string using `createTraceId`. This is useful for correlating Langfuse traces with IDs from external systems, like a support ticket ID.
 
 ```typescript
-import { createTraceId, startObservation } from "@langfuse/tracing";
-
 const externalId = "support-ticket-54321";
 
 // Generate a valid, deterministic traceId from the external ID
@@ -146,5 +139,4 @@ Setting a parentSpanContext will detach the created span from the active span co
 
 Learn more in the [Langfuse SDK instrumentation docs](/docs/observability/sdk/instrumentation#trace-ids).
 
-</Tab>
-</LangTabs>
+

@@ -21,27 +21,12 @@ Learn more on how to get started and how this works under the hood below.
 _Examples_
 
 
-
-<Tabs items={["Images", "Audio", "Attachments"]}>
-  <Tab>
-    <Frame className="mt-0">
-      ![Trace in Langfuse UI](/images/docs/multi-modal-trace-image.jpg)
-    </Frame>
-  </Tab>
-  <Tab>
-    <Frame className="mt-0">
-      ![Trace in Langfuse UI](/images/docs/multi-modal-trace-audio.png)
-    </Frame>
-  </Tab>
-  <Tab>
-    <Frame className="mt-0">
-      ![Trace in Langfuse UI](/images/docs/multi-modal-trace-attachment.png)
-    </Frame>
-  </Tab>
-</Tabs>
-
-
-
+![Trace in Langfuse UI](/images/docs/multi-modal-trace-image.jpg)
+    
+![Trace in Langfuse UI](/images/docs/multi-modal-trace-audio.png)
+    
+![Trace in Langfuse UI](/images/docs/multi-modal-trace-attachment.png)
+    
 ## Availability
 
 ### Langfuse Cloud
@@ -78,15 +63,10 @@ Langfuse supports in-line rendering of media files via URLs if they follow commo
 
 Supported formats:
 
-<Tabs items={["Markdown images", "OpenAI content parts"]}>
-<Tab>
-
 ```md
 ![Alt text](https://example.com/image.jpg)
 ```
 
-</Tab>
-<Tab>
 
 ```json
 {
@@ -114,15 +94,14 @@ Supported formats:
 }
 ```
 
-</Tab>
-</Tabs>
 
 ### Custom attachments
 
 If you want to have more control or your media is not base64 encoded, you can upload arbitrary media attachments to Langfuse via the SDKs using the new `LangfuseMedia` class. Wrap media with LangfuseMedia before including it in trace inputs, outputs, or metadata. See the multi-modal documentation for examples.
 
-<LangTabs items={["Python SDK", "JS/TS SDK"]}>
-<Tab title="Python SDK">
+
+**Python SDK:**
+
 ```python
 from langfuse import get_client, observe, propagate_attributes
 from langfuse.media import LangfuseMedia
@@ -173,13 +152,8 @@ with langfuse.start_as_current_observation(as_type="span", name="analyze-documen
 
 ````
 
-</Tab>
-<Tab>
 
 ```typescript
-import fs from "fs";
-import { LangfuseMedia } from "@langfuse/core";
-
 // Wrap media in LangfuseMedia class
 const wrappedMedia = new LangfuseMedia({
   source: "bytes",
@@ -203,14 +177,11 @@ generation3.end();
 span3.end();
 ```
 
-</Tab>
-</LangTabs>
 
 ### API
 
 If you use the API directly to log traces to Langfuse, you need to follow these steps:
 
-<Steps>
 
 ### Upload media to Langfuse
 
@@ -224,7 +195,6 @@ See this [end-to-end example](/guides/cookbook/example_multi_modal_traces#custom
 
 Use the [Langfuse Media Token](#media-token) to reference the `mediaId` in the trace or observation `input`, `output`, or `metadata`.
 
-</Steps>
 
 ## How does it work?
 
@@ -269,9 +239,6 @@ Based on this token, the Langfuse UI can automatically detect the `mediaId` and 
 
 When dealing with traces, observations, or dataset items that include media references, you can convert them back to their base64 data URI format using the `resolve_media_references` utility method provided by the Langfuse client. This is particularly useful for reinserting the original content during fine-tuning, dataset runs, or replaying a generation. The utility method traverses the parsed object and returns a deep copy with all media reference strings replaced by the corresponding base64 data URI representations.
 
-<LangTabs items={["Python SDK", "Python SDK (v2)", "JS/TS SDK"]}>
-<Tab>
-
 ```python
 from langfuse import get_client
 
@@ -301,8 +268,6 @@ resolved_obj = langfuse.resolve_media_references(
 # }
 ```
 
-</Tab>
-<Tab>
 
 ```python
 from langfuse import Langfuse
@@ -333,12 +298,8 @@ resolved_trace = langfuse.resolve_media_references(
 # }
 ```
 
-</Tab>
-<Tab>
 
 ```typescript
-import { LangfuseClient } from "@langfuse/client";
-
 const langfuse = new LangfuseClient()
 
 // Example object with media references
@@ -364,11 +325,6 @@ const resolvedTrace = await langfuse.resolveMediaReferences({
 // }
 ```
 
-</Tab>
-</LangTabs>
 
 ## GitHub Discussions
 
-import { GhDiscussionsPreview } from "@/components/gh-discussions/GhDiscussionsPreview";
-
-<GhDiscussionsPreview labels={["feat-multimodal"]} />

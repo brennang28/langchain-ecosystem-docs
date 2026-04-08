@@ -4,8 +4,6 @@ description: Add custom metadata to your observations to better understand and c
 sidebarTitle: Metadata
 ---
 
-import { PropagationRestrictionsCallout } from "@/components/PropagationRestrictionsCallout";
-
 # Metadata
 
 Observations (see [Langfuse Data Model](/docs/observability/data-model)) can be enriched with metadata to help you better understand your application and to correlate observations in Langfuse.
@@ -16,8 +14,6 @@ You can filter by metadata keys in the Langfuse UI and API.
 
 Use `propagate_attributes()` to ensure metadata is automatically applied to all observations within a context. Propagated metadata are key-value pairs with values limited to max 200 characters strings. Keys are limited to alphanumeric characters only. If a metadata value exceeds 200 characters, it will be dropped.
 
-<LangTabs items={["Python SDK", "JS/TS SDK", "OpenAI (Python)", "OpenAI (JS/TS)", "Langchain (Python)", "Langchain (JS/TS)", "Flowise"]}>
-<Tab>
 When using the `@observe()` decorator:
 
 ```python /propagate_attributes/
@@ -54,14 +50,12 @@ with langfuse.start_as_current_observation(as_type="span", name="process-request
             pass
 ```
 
-</Tab>
-<Tab title="JS/TS SDK">
+
+**JS/TS SDK:**
 
 When using the context manager:
 
 ```ts /propagateAttributes/
-import { startActiveObservation, propagateAttributes } from "@langfuse/tracing";
-
 await startActiveObservation("context-manager", async (span) => {
   span.update({
     input: { query: "What is the capital of France?" },
@@ -83,8 +77,6 @@ await startActiveObservation("context-manager", async (span) => {
 When using the `observe` wrapper:
 
 ```ts /propagateAttributes/
-import { observe, propagateAttributes } from "@langfuse/tracing";
-
 const processData = observe(
   async (data: string) => {
     // Propagate metadata to all child observations
@@ -105,8 +97,8 @@ const result = await processData("input");
 
 See [JS/TS SDK docs](/docs/sdk/typescript/guide) for more details.
 
-</Tab>
-<Tab title="OpenAI (Python v2)">
+
+**OpenAI (Python v2):**
 
 ```python /propagate_attributes/
 from langfuse import get_client, propagate_attributes
@@ -130,14 +122,10 @@ with langfuse.start_as_current_observation(as_type="span", name="openai-call"):
         )
 ```
 
-</Tab>
-<Tab title="OpenAI (JS/TS)">
+
+**OpenAI (JS/TS):**
 
 ```ts /propagateAttributes/
-import OpenAI from "openai";
-import { observeOpenAI } from "@langfuse/openai";
-import { startActiveObservation, propagateAttributes } from "@langfuse/tracing";
-
 await startActiveObservation("openai-call", async () => {
   // Propagate metadata to all observations
   await propagateAttributes(
@@ -155,8 +143,6 @@ await startActiveObservation("openai-call", async () => {
 });
 ```
 
-</Tab>
-<Tab>
 
 ```python /propagate_attributes/
 from langfuse import get_client, propagate_attributes
@@ -176,13 +162,10 @@ with langfuse.start_as_current_observation(as_type="span", name="langchain-call"
         )
 ```
 
-</Tab>
-<Tab title="Langchain (JS/TS)">
+
+**Langchain (JS/TS):**
 
 ```ts /propagateAttributes/
-import { startActiveObservation, propagateAttributes } from "@langfuse/tracing";
-import { CallbackHandler } from "langfuse-langchain";
-
 const langfuseHandler = new CallbackHandler();
 
 // Propagate metadata to all child observations
@@ -199,23 +182,16 @@ await propagateAttributes(
 );
 ```
 
-</Tab>
 
-<Tab title="Flowise">
+**Flowise:**
+
 You can set the `metadata` via the override configs, see the [Flowise Integration docs](/docs/flowise) for more details.
 
-</Tab>
-
-</LangTabs>
-
-<PropagationRestrictionsCallout attributes={['metadata']}/>
 
 ## Non-Propagated Metadata
 
 You can also add metadata to specific observations only:
 
-<LangTabs items={["Python SDK", "JS/TS SDK"]}>
-<Tab>
 ```python
 # Python SDK
 from langfuse import get_client
@@ -230,17 +206,9 @@ with langfuse.start_as_current_observation(as_type="span", name="process-request
     langfuse.update_current_span(metadata={"stage": "parsing"})
 ```
 
-</Tab>
-
-<Tab>
 
 ```typescript
 // TypeScript SDK
-import {
-  startActiveObservation,
-  updateActiveObservation,
-} from "@langfuse/tracing";
-
 await startActiveObservation("process-request", async (span) => {
   // Add metadata to this specific observation only
   span.update({
@@ -254,12 +222,6 @@ await startActiveObservation("process-request", async (span) => {
 });
 ```
 
-</Tab>
-</LangTabs>
-
 
 ## GitHub Discussions
 
-import { GhDiscussionsPreview } from "@/components/gh-discussions/GhDiscussionsPreview";
-
-<GhDiscussionsPreview labels={["feat-metadata"]} />

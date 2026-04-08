@@ -9,23 +9,24 @@
 [Agent Client Protocol (ACP)](https://agentclientprotocol.com/get-started/introduction) standardizes communication between coding agents and code editors or IDEs.
 With the ACP protocol, you can make use of your custom deep agents with any ACP-compatible client, allowing your code editor to provide project context and receive rich updates.
 
-<Note>
-  ACP is designed for agent-editor integrations. If you want your agent to call tools hosted by external servers, see [Model Context Protocol (MCP)](/oss/python/langchain/mcp/).
-</Note>
+
+> ℹ️ **Note**
+>
+> ACP is designed for agent-editor integrations. If you want your agent to call tools hosted by external servers, see [Model Context Protocol (MCP)](/oss/python/langchain/mcp/).
+
 
 ## Quickstart
 
 Install the ACP integration package:
 
-<CodeGroup>
-  ```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```bash pip theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   pip install deepagents-acp
   ```
 
   ```bash uv theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   uv add deepagents-acp
   ```
-</CodeGroup>
 
 Then expose a Deep Agent over ACP.
 
@@ -57,9 +58,7 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-<Card title="Example coding agent" icon="brand-github" href="https://github.com/langchain-ai/deepagents/blob/main/libs/acp/examples/demo_agent.py">
-  The `deepagents-acp` package includes an example coding agent with filesystem and shell that you can run out of the box.
-</Card>
+The `deepagents-acp` package includes an example coding agent with filesystem and shell that you can run out of the box.
 
 ## Clients
 
@@ -118,21 +117,26 @@ toad acp "python path/to/your_server.py" .
 toad acp "uv run python path/to/your_server.py" .
 ```
 
-<Info>
-  See the upstream ACP docs for protocol details and editor support:
 
-  * Introduction: [https://agentclientprotocol.com/get-started/introduction](https://agentclientprotocol.com/get-started/introduction)
-  * Clients/editors: [https://agentclientprotocol.com/get-started/clients](https://agentclientprotocol.com/get-started/clients)
-</Info>
+> ℹ️ **Info**
+>
+> See the upstream ACP docs for protocol details and editor support:
+> 
+>   * Introduction: [https://agentclientprotocol.com/get-started/introduction](https://agentclientprotocol.com/get-started/introduction)
+>   * Clients/editors: [https://agentclientprotocol.com/get-started/clients](https://agentclientprotocol.com/get-started/clients)
+
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/acp.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/acp.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

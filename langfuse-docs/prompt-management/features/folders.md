@@ -10,18 +10,11 @@ Prompt folders help you organize your prompts into logical groups. As your promp
 
 To create a folder, add slashes (`/`) to a prompt name. The UI shows every segment ending with a `/` as a folder automatically.
 
-<Callout type="info">
 
-**Note**: accessing prompts in folders via the Python SDK requires `langfuse >= 3.0.2`.
+> ℹ️ **Note:** **Note**: accessing prompts in folders via the Python SDK requires `langfuse >= 3.0.2`.
 
-</Callout>
 
 ## Create a folder
 
 Use the Langfuse UI to create a folder by adding a slash (`/`) to a prompt name.
 
-<Video
-  src="https://static.langfuse.com/docs-videos/prompt-folders.mp4"
-  aspectRatio={16 / 9}
-  gifStyle
-/>

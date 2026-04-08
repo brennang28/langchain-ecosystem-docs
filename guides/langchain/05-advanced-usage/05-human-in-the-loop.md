@@ -25,9 +25,11 @@ The available decision types for each tool depend on the policy you configure in
 When multiple tool calls are paused at the same time, each action requires a separate decision.
 Decisions must be provided in the same order as the actions appear in the interrupt request.
 
-<Tip>
-  When **editing** tool arguments, make changes conservatively. Significant modifications to the original arguments may cause the model to re-evaluate its approach and potentially execute the tool multiple times or take unexpected actions.
-</Tip>
+
+> 💡 **Tip**
+>
+> When **editing** tool arguments, make changes conservatively. Significant modifications to the original arguments may cause the model to re-evaluate its approach and potentially execute the tool multiple times or take unexpected actions.
+
 
 ## Configuring interrupts
 
@@ -64,33 +66,39 @@ agent = create_agent(
 )
 ```
 
-<Info>
-  You must configure a checkpointer to persist the graph state across interrupts.
-  In production, use a persistent checkpointer like [`AsyncPostgresSaver`](https://reference.langchain.com/python/langgraph/checkpoints/#langgraph.checkpoint.postgres.aio.AsyncPostgresSaver). For testing or prototyping, use [`InMemorySaver`](https://reference.langchain.com/python/langgraph/checkpoints/#langgraph.checkpoint.memory.InMemorySaver).
 
-  When invoking the agent, pass a `config` that includes the **thread ID** to associate execution with a conversation thread.
-  See the [LangGraph interrupts documentation](/oss/python/langgraph/interrupts) for details.
-</Info>
+> ℹ️ **Info**
+>
+> You must configure a checkpointer to persist the graph state across interrupts.
+>   In production, use a persistent checkpointer like [`AsyncPostgresSaver`](https://reference.langchain.com/python/langgraph/checkpoints/#langgraph.checkpoint.postgres.aio.AsyncPostgresSaver). For testing or prototyping, use [`InMemorySaver`](https://reference.langchain.com/python/langgraph/checkpoints/#langgraph.checkpoint.memory.InMemorySaver).
+> 
+>   When invoking the agent, pass a `config` that includes the **thread ID** to associate execution with a conversation thread.
+>   See the [LangGraph interrupts documentation](/oss/python/langgraph/interrupts) for details.
 
-<Accordion title="Configuration options">
-  <ParamField body="interrupt_on" type="dict" required>
-    Mapping of tool names to approval configs. Values can be `True` (interrupt with default config), `False` (auto-approve), or an `InterruptOnConfig` object.
-  </ParamField>
 
-  <ParamField body="description_prefix" type="string" default="Tool execution requires approval">
-    Prefix for action request descriptions
-  </ParamField>
+<details>
+<summary>Configuration options</summary>
+
+
+- **`param`** (`dict`): Mapping of tool names to approval configs. Values can be `True` (interrupt with default config), `False` (auto-approve), or an `InterruptOnConfig` object.
+
+
+  
+- **`param`** (`string`): Prefix for action request descriptions
+
 
   **`InterruptOnConfig` options:**
 
-  <ParamField body="allowed_decisions" type="list[string]">
-    List of allowed decisions: `'approve'`, `'edit'`, or `'reject'`
-  </ParamField>
+  
+- **`param`** (`list[string]`): List of allowed decisions: `'approve'`, `'edit'`, or `'reject'`
 
-  <ParamField body="description" type="string | callable">
-    Static string or callable function for custom description
-  </ParamField>
-</Accordion>
+
+  
+- **`param`** (`string | callable`): Static string or callable function for custom description
+
+
+</details>
+
 
 ## Responding to interrupts
 
@@ -152,9 +160,9 @@ agent.invoke(
 
 ### Decision types
 
-<Tabs>
-  <Tab title="✅ approve">
-    Use `approve` to approve the tool call as-is and execute it without changes.
+**✅ approve:**
+
+Use `approve` to approve the tool call as-is and execute it without changes.
 
     ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     agent.invoke(
@@ -174,10 +182,10 @@ agent.invoke(
         version="v2",
     )
     ```
-  </Tab>
+  
+**✏️ edit:**
 
-  <Tab title="✏️ edit">
-    Use `edit` to modify the tool call before execution.
+Use `edit` to modify the tool call before execution.
     Provide the edited action with the new tool name and arguments.
 
     ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
@@ -207,13 +215,15 @@ agent.invoke(
     )
     ```
 
-    <Tip>
-      When **editing** tool arguments, make changes conservatively. Significant modifications to the original arguments may cause the model to re-evaluate its approach and potentially execute the tool multiple times or take unexpected actions.
-    </Tip>
-  </Tab>
+    
+> 💡 **Tip**
+>
+> When **editing** tool arguments, make changes conservatively. Significant modifications to the original arguments may cause the model to re-evaluate its approach and potentially execute the tool multiple times or take unexpected actions.
 
-  <Tab title="❌ reject">
-    Use `reject` to reject the tool call and provide feedback instead of execution.
+  
+**❌ reject:**
+
+Use `reject` to reject the tool call and provide feedback instead of execution.
 
     ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     agent.invoke(
@@ -262,9 +272,7 @@ agent.invoke(
         ]
     }
     ```
-  </Tab>
-</Tabs>
-
+  
 ## Streaming with human-in-the-loop
 
 You can use `stream()` instead of `invoke()` to get real-time updates while the agent runs and handles interrupts. Use `stream_mode=['updates', 'messages']` with `version="v2"` to stream both agent progress and LLM tokens in the unified v2 format.
@@ -324,12 +332,15 @@ Review the [execution lifecycle](#execution-lifecycle) above to understand how t
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/human-in-the-loop.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/human-in-the-loop.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

@@ -8,10 +8,9 @@ sidebarTitle: User Feedback
 
 User feedback measures whether your AI actually helped users. Use it to find quality issues, build better evaluation datasets, and prioritize improvements based on real user experiences. In Langfuse, feedback is captured as [scores](/docs/scores) and linked to traces.
 
-<div className="flex gap-4 flex-col md:flex-row">
-  <Frame className="flex-1">![User Feedback Example](/images/docs/observability/user-feedback-example.png)</Frame>
-  <Frame className="flex-1">![Feedback Analysis](/images/docs/observability/user-feedback-score.png)</Frame>
-</div>
+
+![User Feedback Example](/images/docs/observability/user-feedback-example.png)
+![Feedback Analysis](/images/docs/observability/user-feedback-score.png)
 
 ## Feedback Types
 
@@ -46,8 +45,6 @@ Your backend sends the trace ID so frontend can link feedback to the trace.
 
 ```typescript
 // app/api/chat/route.ts
-import { getActiveTraceId } from "@Langfuse/tracing";
-
 export const POST = observe(async (req: Request) => {
   const result = streamText({
     model: openai('gpt-4o-mini'),
@@ -64,8 +61,6 @@ export const POST = observe(async (req: Request) => {
 Use Langfuse Web SDK to send feedback as a score.
 
 ```typescript
-import { LangfuseWeb } from "langfuse";
-
 const langfuse = new LangfuseWeb({
   publicKey: process.env.NEXT_PUBLIC_LANGFUSE_PUBLIC_KEY,
   baseUrl: process.env.NEXT_PUBLIC_LANGFUSE_HOST,
@@ -80,11 +75,11 @@ function FeedbackButtons({ messageId }: { messageId: string }) {
     });
   };
   return (
-    <div>
-      <button onClick={() => handleFeedback(1)}>:+1:</button>
+    
+<button onClick={() => handleFeedback(1)}>:+1:</button>
       <button onClick={() => handleFeedback(0)}>:-1:</button>
-    </div>
-  );
+    
+);
 }
 ```
 
@@ -92,8 +87,8 @@ function FeedbackButtons({ messageId }: { messageId: string }) {
 
 Feedback appears as scores on traces. You can filter by `user-feedback < 1` to find low-rated responses.
 
-<Frame className="flex-1">![Feedback Analysis](/images/docs/observability/user-feedback-score.png)</Frame>
 
+![Feedback Analysis](/images/docs/observability/user-feedback-score.png)
 ## Server-side Feedback
 
 Record feedback from your backend when needed, such as after a user survey or follow-up interaction. You could also use this to log implicit feedback signals such as ticket closures or successful task completions.
@@ -124,8 +119,8 @@ else:
 
 Automatically evaluate every response for qualities like user sentiment, satisfaction, or engagement using LLMs as judges. This lets you gather large-scale feedback without user intervention.
 
-<Frame>![LLM-as-a-Judge evaluating tone](/images/docs/observability/llm-as-a-judge-feedback.png)</Frame>
 
+![LLM-as-a-Judge evaluating tone](/images/docs/observability/llm-as-a-judge-feedback.png)
 See [LLM-as-a-Judge Evaluators](/docs/evaluation/evaluation-methods/llm-as-a-judge) for implementation patterns and examples.
 
 ## Example App

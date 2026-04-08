@@ -10,9 +10,11 @@ Memory is a system that remembers information about previous interactions. For A
 
 Short term memory lets your application remember previous interactions within a single thread or conversation.
 
-<Note>
-  A thread organizes multiple interactions in a session, similar to the way email groups messages in a single conversation.
-</Note>
+
+> ℹ️ **Note**
+>
+> A thread organizes multiple interactions in a session, similar to the way email groups messages in a single conversation.
+
 
 Conversation history is the most common form of short-term memory. Long conversations pose a challenge to today's LLMs; a full history may not fit inside an LLM's context window, resulting in an context loss or errors.
 
@@ -20,23 +22,27 @@ Even if your model supports the full context length, most LLMs still perform poo
 
 Chat models accept context using [messages](/oss/python/langchain/messages), which include instructions (a system message) and inputs (human messages). In chat applications, messages alternate between human inputs and model responses, resulting in a list of messages that grows longer over time. Because context windows are limited, many applications can benefit from using techniques to remove or "forget" stale information.
 
-<Tip>
-  Need to remember information **across** conversations? Use [long-term memory](/oss/python/langchain/long-term-memory) to store and recall user-specific or application-level data across different threads and sessions.
-</Tip>
+
+> 💡 **Tip**
+>
+> Need to remember information **across** conversations? Use [long-term memory](/oss/python/langchain/long-term-memory) to store and recall user-specific or application-level data across different threads and sessions.
+
 
 ## Usage
 
 To add short-term memory (thread-level persistence) to an agent, you need to specify a `checkpointer` when creating an agent.
 
-<Info>
-  LangChain's agent manages short-term memory as a part of your agent's state.
 
-  By storing these in the graph's state, the agent can access the full context for a given conversation while maintaining separation between different threads.
+> ℹ️ **Info**
+>
+> LangChain's agent manages short-term memory as a part of your agent's state.
+> 
+>   By storing these in the graph's state, the agent can access the full context for a given conversation while maintaining separation between different threads.
+> 
+>   State is persisted to a database (or memory) using a checkpointer so the thread can be resumed at any time.
+> 
+>   Short-term memory updates when the agent is invoked or a step (like a tool call) is completed, and the state is read at the start of each step.
 
-  State is persisted to a database (or memory) using a checkpointer so the thread can be resumed at any time.
-
-  Short-term memory updates when the agent is invoked or a step (like a tool call) is completed, and the state is read at the start of each step.
-</Info>
 
 ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 from langchain.agents import create_agent
@@ -79,9 +85,11 @@ with PostgresSaver.from_conn_string(DB_URI) as checkpointer:
     )
 ```
 
-<Note>
-  For more checkpointer options including SQLite, Postgres, and Azure Cosmos DB, see the [list of checkpointer libraries](/oss/python/langgraph/persistence#checkpointer-libraries) in the Persistence documentation.
-</Note>
+
+> ℹ️ **Note**
+>
+> For more checkpointer options including SQLite, Postgres, and Azure Cosmos DB, see the [list of checkpointer libraries](/oss/python/langgraph/persistence#checkpointer-libraries) in the Persistence documentation.
+
 
 ## Customizing agent memory
 
@@ -119,23 +127,14 @@ result = agent.invoke(
 
 With [short-term memory](#usage) enabled, long conversations can exceed the LLM's context window. Common solutions are:
 
-<CardGroup cols={2}>
-  <Card title="Trim messages" icon="scissors" href="#trim-messages" arrow>
-    Remove first or last N messages (before calling LLM)
-  </Card>
-
-  <Card title="Delete messages" icon="trash" href="#delete-messages" arrow>
-    Delete messages from LangGraph state permanently
-  </Card>
-
-  <Card title="Summarize messages" icon="stack-2" href="#summarize-messages" arrow>
-    Summarize earlier messages in the history and replace them with a summary
-  </Card>
-
-  <Card title="Custom strategies" icon="adjustments">
-    Custom strategies (e.g., message filtering, etc.)
-  </Card>
-</CardGroup>
+Remove first or last N messages (before calling LLM)
+  
+Delete messages from LangGraph state permanently
+  
+Summarize earlier messages in the history and replace them with a summary
+  
+Custom strategies (e.g., message filtering, etc.)
+  
 
 This allows the agent to keep track of the conversation without exceeding the LLM's context window.
 
@@ -233,12 +232,14 @@ def delete_messages(state):
     return {"messages": [RemoveMessage(id=REMOVE_ALL_MESSAGES)]}  # [!code highlight]
 ```
 
-<Warning>
-  When deleting messages, **make sure** that the resulting message history is valid. Check the limitations of the LLM provider you're using. For example:
 
-  * Some providers expect message history to start with a `user` message
-  * Most providers require `assistant` messages with tool calls to be followed by corresponding `tool` result messages.
-</Warning>
+> ⚠️ **Warning**
+>
+> When deleting messages, **make sure** that the resulting message history is valid. Check the limitations of the LLM provider you're using. For example:
+> 
+>   * Some providers expect message history to start with a `user` message
+>   * Most providers require `assistant` messages with tool calls to be followed by corresponding `tool` result messages.
+
 
 ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 from langchain.messages import RemoveMessage
@@ -656,12 +657,15 @@ agent = create_agent(
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/short-term-memory.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/short-term-memory.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

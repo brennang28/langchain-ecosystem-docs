@@ -22,9 +22,6 @@ Learn more about Langfuse's data security and privacy measures concerning the st
 
 This approach ensures that you have complete control over the event input, output, and metadata traced by your application.
 
-<LangTabs items={["Python SDK", "JS/TS SDK", "Langchain (JS/TS)"]}>
-<Tab>
-
 Define a masking function. The masking function will apply to all event inputs, outputs, and metadata regardless of the Langfuse-maintained integration you are using.
 
 ```python
@@ -92,17 +89,14 @@ with langfuse.start_as_current_observation(
 # Both input and output will be masked as "REDACTED" in Langfuse
 ```
 
-</Tab>
-<Tab title="JS/TS SDK">
+
+**JS/TS SDK:**
 
 To prevent sensitive data from being sent to Langfuse, you can provide a `mask` function to the `LangfuseSpanProcessor`. This function will be applied to the `input`, `output`, and `metadata` of every observation.
 
 The function receives an object `{ data }`, where `data` is the stringified JSON of the attribute's value. It should return the masked data.
 
-```ts filename="instrumentation.ts" /mask:/
-import { NodeSDK } from "@opentelemetry/sdk-node";
-import { LangfuseSpanProcessor } from "@langfuse/otel";
-
+```ts /mask:/
 const spanProcessor = new LangfuseSpanProcessor({
   mask: ({ data }) => {
     // A simple regex to mask credit card numbers
@@ -123,14 +117,12 @@ sdk.start();
 
 See [JS/TS SDK docs](/docs/sdk/typescript/guide) for more details.
 
-</Tab>
-<Tab title="Langchain (JS/TS)">
+
+**Langchain (JS/TS):**
 
 When using the [CallbackHandler](/integrations/frameworks/langchain), you can pass `mask` to the constructor:
 
 ```typescript
-import { CallbackHandler } from "langfuse-langchain";
-
 function maskingFunction(params: { data: any }) {
   if (typeof params.data === "string" && params.data.startsWith("SECRET_")) {
     return "REDACTED";
@@ -144,9 +136,6 @@ const handler = new CallbackHandler({
 });
 ```
 
-</Tab>
-
-</LangTabs>
 
 ## Examples
 
@@ -156,11 +145,9 @@ Now, we'll show you examples how to use the masking feature. We'll use the Langf
 
 In this example, we'll demonstrate how to redact credit card numbers from strings using a [regular expression](https://docs.python.org/3/library/re.html). This helps in complying with PCI DSS by ensuring that credit card numbers are not transmitted or stored improperly.
 
-<Callout type="info">
 
-Langfuse's masking feature allows you to define a custom masking function with parameters, which you then pass to the Langfuse client constructor. This function is applied to **all event inputs, outputs, and metadata**, processing each piece of data to mask or redact sensitive information according to your specifications. By ensuring that all events are processed through your masking function before being sent, Langfuse guarantees that only the masked data is transmitted to the Langfuse server.
+> ℹ️ **Note:** Langfuse's masking feature allows you to define a custom masking function with parameters, which you then pass to the Langfuse client constructor. This function is applied to **all event inputs, outputs, and metadata**, processing each piece of data to mask or redact sensitive information according to your specifications. By ensuring that all events are processed through your masking function before being sent, Langfuse guarantees that only the masked data is transmitted to the Langfuse server.
 
-</Callout>
 
 **Steps:**
 
@@ -202,9 +189,8 @@ print(result)
 langfuse.flush()
 ```
 
-<Frame>
-  ![Redacted trace in Langfuse 1](/images/docs/masking/masking_example_1.png)
-</Frame>
+
+![Redacted trace in Langfuse 1](/images/docs/masking/masking_example_1.png)
 
 [Link to the trace in Langfuse](https://cloud.langfuse.com/project/cloramnkj0002jz088vzn1ja4/traces/540eb0a1-77dd-42e9-b27f-03cfee9feb12?timestamp=2025-01-17T09%3A13%3A18.335Z)
 
@@ -274,9 +260,8 @@ print(result)
 langfuse.flush()
 ```
 
-<Frame>
-  ![Redacted trace in Langfuse](/images/docs/masking/masking_example_2.png)
-</Frame>
+
+![Redacted trace in Langfuse](/images/docs/masking/masking_example_2.png)
 
 [Link to the trace in Langfuse 2](https://cloud.langfuse.com/project/cloramnkj0002jz088vzn1ja4/traces/4abb206f-f8fd-4492-86b9-801602513afd?timestamp=2025-01-17T09%3A30%3A04.127Z)
 
@@ -312,9 +297,8 @@ print(result)
 langfuse.flush()
 ```
 
-<Frame>
-  ![Redacted trace in Langfuse 3](/images/docs/masking/masking_example_3.png)
-</Frame>
+
+![Redacted trace in Langfuse 3](/images/docs/masking/masking_example_3.png)
 
 [Link to the trace in Langfuse](https://cloud.langfuse.com/project/cloramnkj0002jz088vzn1ja4/traces/dcc4d640-492e-47a6-b419-922c8b9e0f0f?timestamp=2025-01-17T09%3A38%3A06.814Z)
 
@@ -325,6 +309,3 @@ langfuse.flush()
 
 ## GitHub Discussions
 
-import { GhDiscussionsPreview } from "@/components/gh-discussions/GhDiscussionsPreview";
-
-<GhDiscussionsPreview labels={["feat-data-masking"]} />

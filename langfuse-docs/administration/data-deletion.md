@@ -26,20 +26,11 @@ Note that all trace deletions will delete related entities like scores and obser
 
 ### Single Trace
 
-<LangTabs items={["Langfuse UI", "API"]}>
-
-<Tab>
-
 To delete a single trace, open its detail view and hit the `Delete` button.
 Confirm that you want to delete the given trace.
 
-<Frame className="my-10" fullWidth>
-  ![Delete a single trace](/images/docs/delete-single-trace.png)
-</Frame>
 
-</Tab>
-
-<Tab>
+![Delete a single trace](/images/docs/delete-single-trace.png)
 
 ```
 DELETE /api/public/traces/{traceId}​
@@ -47,25 +38,13 @@ DELETE /api/public/traces/{traceId}​
 
 See [reference](https://api.reference.langfuse.com/#tag/trace/DELETE/api/public/traces/%7BtraceId%7D).
 
-</Tab>
-
-</LangTabs>
 
 ### Batch of Traces
 
-<LangTabs items={["Langfuse UI", "API"]}>
-
-<Tab>
-
 To delete a batch of traces, select them in the trace list and select `Delete` in the `Actions` dropdown.
 
-<Frame className="my-10" fullWidth>
-  ![Delete a batch of traces](/images/docs/delete-trace-batch.png)
-</Frame>
 
-</Tab>
-
-<Tab>
+![Delete a batch of traces](/images/docs/delete-trace-batch.png)
 
 ```
 DELETE /api/public/traces
@@ -73,27 +52,15 @@ DELETE /api/public/traces
 
 See [reference](https://api.reference.langfuse.com/#tag/trace/DELETE/api/public/traces).
 
-</Tab>
-
-</LangTabs>
 
 ### Delete by Query
-
-<LangTabs items={["Langfuse UI"]}>
-
-<Tab>
 
 To delete all traces that match a query filter, configure your desired filter in the traces list.
 Select all items on the current page and change that to all items in the top bar.
 Then select `Delete` in the `Actions` dropdown.
 
-<Frame className="my-10" fullWidth>
-  ![Delete traces by query](/images/docs/delete-filtered-traces.png)
-</Frame>
 
-</Tab>
-
-</LangTabs>
+![Delete traces by query](/images/docs/delete-filtered-traces.png)
 
 ### Limitations
 
@@ -107,57 +74,33 @@ If you need to regularly clean up old data, consider using [Data Retention](/doc
 
 ## Deleting a Project
 
-<LangTabs items={["Langfuse UI"]}>
-
-<Tab>
-
 To delete a project, navigate to the project settings and scroll to the `Danger Zone` within the `General` section.
 Confirm that you want to delete your project.
 This action immediately revokes all API keys and schedules the project for deletion.
 Within the next minutes, all related data is irreversibly removed from our system.
 
-<Callout type="warning">
-  Deleting a project is irreversible and all data will be removed. Be cautious
-  when executing this action. After confirming the deletion, it will take up to
-  5 minutes for the project to be deleted.
-</Callout>
 
-</Tab>
+> ⚠️ **Note:** Deleting a project is irreversible and all data will be removed. Be cautious
+>   when executing this action. After confirming the deletion, it will take up to
+>   5 minutes for the project to be deleted.
 
-</LangTabs>
 
 ## Deleting an Organization
-
-<LangTabs items={["Langfuse UI"]}>
-
-<Tab>
 
 If there are no projects left in an organization, you can delete the organization in the organization settings.
 Navigate to the organization settings and scroll to the `Danger Zone` within the `General` section.
 Confirm that you want to delete your organization.
 The organization and all associated user information will be removed from our system.
 
-</Tab>
-
-</LangTabs>
 
 ## Deleting a User Account (Cloud)
-
-<LangTabs items={["Langfuse UI"]}>
-
-<Tab>
 
 Users can delete their own account from the Account Settings page. Navigate to Account Settings from the user menu in the bottom right.
 
 If you are the sole owner of an organization, you must first transfer ownership to another user or delete the organization before you can delete your account.
 
-<Frame className="my-10">
-  ![Delete user account](/images/docs/delete-account-settings.png)
-</Frame>
 
-</Tab>
-
-</LangTabs>
+![Delete user account](/images/docs/delete-account-settings.png)
 
 ## Deleting a User Account (Self-Host)
 

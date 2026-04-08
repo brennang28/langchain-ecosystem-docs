@@ -5,19 +5,13 @@ description: Try Langfuse in action with a live example project for free. Intera
 
 # Example Project
 
-import { Button } from "@/components/ui/button";
-import { ToAppButton } from "@/components/ToAppButton";
-
 The Langfuse example project is a **live, shared project** that lets you explore Langfuse's features with real data before setting up your own account. Think of it as a hands-on walkthrough where you can see how teams use Langfuse for LLM observability, prompt management, and evaluation.
 
 The example project provides **view-only access**.
 
 
-<Callout type="info" emoji="🎥">
+> ℹ️ **Note:** Prefer videos? [**Watch end-to-end walkthroughs**](/watch-demo) of all Langfuse features.
 
-Prefer videos? [**Watch end-to-end walkthroughs**](/watch-demo) of all Langfuse features.
-
-</Callout>
 
 ## Getting Started with the Example Project
 
@@ -25,13 +19,6 @@ Prefer videos? [**Watch end-to-end walkthroughs**](/watch-demo) of all Langfuse 
 
 Create a free account (no credit card required) to access the example project.
 
-<div className="mt-3">
-  <ToAppButton
-    signedInText="View Example project"
-    signUpText="Create Example account"
-    dropdownText="View Example project"
-  />
-</div>
 
 ### Step 2: Understand What You're Seeing
 
@@ -52,12 +39,7 @@ When you first open the example project, you'll land on the **Traces** page. Her
 
 The demos below generate all the traces you see in the example project. Each interaction creates a new trace that you can inspect in Langfuse.
 
-import { DemoTabs } from "@/components/demoTabs";
-
-<DemoTabs className="mt-6" />
-
 _Interested in implementation details? All demo apps are fully open source. Check out the [blog post about how the Q&A chatbot was built](/blog/qa-chatbot-for-langfuse-docs)._
-
 
 
 ## Next Steps

@@ -38,11 +38,9 @@ Each node in your workflow can be a simple function, an LLM call, or an entire [
 
 For a complete example of a custom workflow, see the tutorial below.
 
-<Card title="Tutorial: Build a multi-source knowledge base with routing" icon="book" href="/oss/python/langchain/multi-agent/router-knowledge-base" arrow cta="Learn more">
-  The [router pattern](/oss/python/langchain/multi-agent/router) is an example of a custom workflow. This tutorial walks through building a router that queries GitHub, Notion, and Slack in parallel, then synthesizes results.
+The [router pattern](/oss/python/langchain/multi-agent/router) is an example of a custom workflow. This tutorial walks through building a router that queries GitHub, Notion, and Slack in parallel, then synthesizes results.
 
   >
-</Card>
 
 ## Basic implementation
 
@@ -75,8 +73,11 @@ workflow = (
 
 A common use case is combining [retrieval](/oss/python/langchain/retrieval) with an agent. This example builds a WNBA stats assistant that retrieves from a knowledge base and can fetch live news.
 
-<Accordion title="Custom RAG workflow">
-  The workflow demonstrates three types of nodes:
+
+<details>
+<summary>Custom RAG workflow</summary>
+
+The workflow demonstrates three types of nodes:
 
   * **Model node** (Rewrite): Rewrites the user query for better retrieval using [structured output](/oss/python/langchain/structured-output).
   * **Deterministic node** (Retrieve): Performs vector similarity search — no LLM involved.
@@ -96,9 +97,11 @@ A common use case is combining [retrieval](/oss/python/langchain/retrieval) with
       class B,C,D process
   ```
 
-  <Tip>
-    You can use LangGraph state to pass information between workflow steps. This allows each part of your workflow to read and update structured fields, making it easy to share data and context across nodes.
-  </Tip>
+  
+> 💡 **Tip**
+>
+> You can use LangGraph state to pass information between workflow steps. This allows each part of your workflow to read and update structured fields, making it easy to share data and context across nodes.
+
 
   ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   from typing import TypedDict
@@ -188,16 +191,21 @@ A common use case is combining [retrieval](/oss/python/langchain/retrieval) with
   result = workflow.invoke({"question": "Who won the 2024 WNBA Championship?"})
   print(result["answer"])
   ```
-</Accordion>
+
+</details>
+
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/multi-agent/custom-workflow.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/multi-agent/custom-workflow.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

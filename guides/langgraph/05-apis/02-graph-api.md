@@ -38,9 +38,11 @@ Compiling is a pretty simple step. It provides a few basic checks on the structu
 graph = graph_builder.compile(...)
 ```
 
-<Warning>
-  You **MUST** compile your graph before you can use it.
-</Warning>
+
+> ⚠️ **Warning**
+>
+> You **MUST** compile your graph before you can use it.
+
 
 ## State
 
@@ -52,9 +54,11 @@ The main documented way to specify the schema of a graph is by using a [`TypedDi
 
 By default, the graph will have the same input and output schemas. If you want to change this, you can also specify explicit input and output schemas directly. This is useful when you have a lot of keys, and some are explicitly for input and others for output. See the [guide](/oss/python/langgraph/use-graph-api#define-input-and-output-schemas) for more information.
 
-<Info>
-  The higher-level [`create_agent`](/oss/python/langchain/agents) factory in `langchain` does not support Pydantic state schemas.
-</Info>
+
+> ℹ️ **Info**
+>
+> The higher-level [`create_agent`](/oss/python/langchain/agents) factory in `langchain` does not support Pydantic state schemas.
+
 
 #### Multiple schemas
 
@@ -162,9 +166,11 @@ In this example, we've used the `Annotated` type to specify a reducer function (
 
 #### Overwrite
 
-<Tip>
-  In some cases, you may want to bypass a reducer and directly overwrite a state value. LangGraph provides the [`Overwrite`](https://reference.langchain.com/python/langgraph/types/) type for this purpose. [Learn how to use `Overwrite` here](/oss/python/langgraph/use-graph-api#bypass-reducers-with-overwrite).
-</Tip>
+
+> 💡 **Tip**
+>
+> In some cases, you may want to bypass a reducer and directly overwrite a state value. LangGraph provides the [`Overwrite`](https://reference.langchain.com/python/langgraph/types/) type for this purpose. [Learn how to use `Overwrite` here](/oss/python/langgraph/use-graph-api#bypass-reducers-with-overwrite).
+
 
 ### Working with messages in graph state
 
@@ -378,9 +384,11 @@ You can optionally provide a dictionary that maps the `routing_function`'s outpu
 graph.add_conditional_edges("node_a", routing_function, {True: "node_b", False: "node_c"})
 ```
 
-<Tip>
-  Use [`Command`](#command) instead of conditional edges if you want to combine state updates and routing in a single function.
-</Tip>
+
+> 💡 **Tip**
+>
+> Use [`Command`](#command) instead of conditional edges if you want to combine state updates and routing in a single function.
+
 
 ### Entry point
 
@@ -462,13 +470,16 @@ def my_node(state: State) -> Command[Literal["my_other_node"]]:
 
 Use [`Command`](https://reference.langchain.com/python/langgraph/types/Command) when you need to **both** update state **and** route to a different node. If you only need to route without updating state, use [conditional edges](#conditional-edges) instead.
 
-<Note>
-  When returning [`Command`](https://reference.langchain.com/python/langgraph/types/Command) in your node functions, you must add return type annotations with the list of node names the node is routing to, e.g. `Command[Literal["my_other_node"]]`. This is necessary for the graph rendering and tells LangGraph that `my_node` can navigate to `my_other_node`.
-</Note>
 
-<Warning>
-  [`Command`](https://reference.langchain.com/python/langgraph/types/Command) only adds dynamic edges—static edges defined with `add_edge` / `addEdge` still execute. For example, if `node_a` returns `Command(goto="my_other_node")` and you also have `graph.add_edge("node_a", "node_b")`, both `node_b` and `my_other_node` will run.
-</Warning>
+> ℹ️ **Note**
+>
+> When returning [`Command`](https://reference.langchain.com/python/langgraph/types/Command) in your node functions, you must add return type annotations with the list of node names the node is routing to, e.g. `Command[Literal["my_other_node"]]`. This is necessary for the graph rendering and tells LangGraph that `my_node` can navigate to `my_other_node`.
+
+
+> ⚠️ **Warning**
+>
+> [`Command`](https://reference.langchain.com/python/langgraph/types/Command) only adds dynamic edges—static edges defined with `add_edge` / `addEdge` still execute. For example, if `node_a` returns `Command(goto="my_other_node")` and you also have `graph.add_edge("node_a", "node_b")`, both `node_b` and `my_other_node` will run.
+
 
 Check out this [how-to guide](/oss/python/langgraph/use-graph-api#combine-control-flow-and-state-updates-with-command) for an end-to-end example of how to use [`Command`](https://reference.langchain.com/python/langgraph/types/Command).
 
@@ -485,32 +496,36 @@ def my_node(state: State) -> Command[Literal["other_subgraph"]]:
     )
 ```
 
-<Note>
-  Setting `graph` to `Command.PARENT` will navigate to the closest parent graph.
 
-  When you send updates from a subgraph node to a parent graph node for a key that's shared by both parent and subgraph [state schemas](#schema), you **must** define a [reducer](#reducers) for the key you're updating in the parent graph state. See this [example](/oss/python/langgraph/use-graph-api#navigate-to-a-node-in-a-parent-graph).
-</Note>
+> ℹ️ **Note**
+>
+> Setting `graph` to `Command.PARENT` will navigate to the closest parent graph.
+> 
+>   When you send updates from a subgraph node to a parent graph node for a key that's shared by both parent and subgraph [state schemas](#schema), you **must** define a [reducer](#reducers) for the key you're updating in the parent graph state. See this [example](/oss/python/langgraph/use-graph-api#navigate-to-a-node-in-a-parent-graph).
+
 
 This is particularly useful when implementing [multi-agent handoffs](/oss/python/langchain/multi-agent/handoffs). Check out [Navigate to a node in a parent graph](/oss/python/langgraph/use-graph-api#navigate-to-a-node-in-a-parent-graph) for detail.
 
 ### Input to `invoke`/`stream`
 
-<Warning>
-  `Command(resume=...)` is the **only** `Command` pattern intended as input to `invoke()`/`stream()`. Do not use `Command(update=...)` as input to continue multi-turn conversations—because passing any `Command` as input resumes from the latest checkpoint (i.e. the last step that ran, not `__start__`), the graph will appear stuck if it already finished. To continue a conversation on an existing thread, pass a plain input dict:
 
-  ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-  # WRONG - graph resumes from the latest checkpoint
-  # (last step that ran), appears stuck
-  graph.invoke(Command(update={  # [!code --]
-      "messages": [{"role": "user", "content": "follow up"}]  # [!code --]
-  }), config)  # [!code --]
+> ⚠️ **Warning**
+>
+> `Command(resume=...)` is the **only** `Command` pattern intended as input to `invoke()`/`stream()`. Do not use `Command(update=...)` as input to continue multi-turn conversations—because passing any `Command` as input resumes from the latest checkpoint (i.e. the last step that ran, not `__start__`), the graph will appear stuck if it already finished. To continue a conversation on an existing thread, pass a plain input dict:
+> 
+>   ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+>   # WRONG - graph resumes from the latest checkpoint
+>   # (last step that ran), appears stuck
+>   graph.invoke(Command(update={  # [!code --]
+>       "messages": [{"role": "user", "content": "follow up"}]  # [!code --]
+>   }), config)  # [!code --]
+> 
+>   # CORRECT - plain dict restarts from __start__
+>   graph.invoke( {  # [!code ++]
+>       "messages": [{"role": "user", "content": "follow up"}]  # [!code ++]
+>   }, config)  # [!code ++]
+>   ```
 
-  # CORRECT - plain dict restarts from __start__
-  graph.invoke( {  # [!code ++]
-      "messages": [{"role": "user", "content": "follow up"}]  # [!code ++]
-  }, config)  # [!code ++]
-  ```
-</Warning>
 
 #### `resume`
 
@@ -537,9 +552,11 @@ Check out the [interrupts conceptual guide](/oss/python/langgraph/interrupts) fo
 
 You can return [`Command`](https://reference.langchain.com/python/langgraph/types/Command) from tools to update graph state and control flow. Use `update` to modify state (e.g., saving customer information looked up during a conversation) and `goto` to route to a specific node after the tool completes.
 
-<Warning>
-  When used inside tools, `goto` adds a dynamic edge—any static edges already defined on the node that called the tool will still execute.
-</Warning>
+
+> ⚠️ **Warning**
+>
+> When used inside tools, `goto` adds a dynamic edge—any static edges already defined on the node that called the tool will still execute.
+
 
 Refer to [Use inside tools](/oss/python/langgraph/use-graph-api#use-inside-tools) for detail.
 
@@ -768,12 +785,15 @@ To trace, debug and evaluate your agents, use [LangSmith](/langsmith/home).
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/graph-api.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/graph-api.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

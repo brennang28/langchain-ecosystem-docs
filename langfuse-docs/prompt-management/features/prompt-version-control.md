@@ -14,19 +14,7 @@ Each prompt version is automatically assigned a `version ID`. Additionally, you 
 
 Labels can be used to assign prompts to environments (staging, production), tenants (tenant-1, tenant-2), or experiments (prod-a, prod-b).
 
-<LangTabs items={["Langfuse UI","Python SDK", "JS/TS SDK"]}>
-<Tab>
-
 Use the Langfuse UI to assign labels to a prompt.
-
-<Video
-  src="https://static.langfuse.com/docs-videos/deploy-prompt.mp4"
-  aspectRatio={16 / 9}
-  gifStyle
-/>
-
-</Tab>
-<Tab>
 
 Use the Python SDK to assign labels to a prompt when creating a new prompt version.
 
@@ -50,14 +38,10 @@ langfuse.update_prompt(
 )
 ```
 
-</Tab>
-<Tab>
 
 Use the JS/TS SDK to assign labels to a prompt when creating a new prompt version.
 
 ```ts {5}
-import { LangfuseClient } from "@langfuse/client";
-
 const langfuse = new LangfuseClient();
 
 await langfuse.prompt.create({
@@ -78,8 +62,6 @@ await langfuse.prompt.update({
 });
 ```
 
-</Tab>
-</LangTabs>
 
 ## Fetching by Label or Version
 
@@ -92,9 +74,6 @@ Some notes on fetching prompts:
 
 - The `latest` label points to the most recently created version.
 - When using a prompt without specifying a label, Langfuse will serve the version with the `production` label.
-
-<LangTabs items={["Python SDK", "JS/TS SDK"]}>
-<Tab>
 
 ```python
 from langfuse import get_client
@@ -112,13 +91,8 @@ prompt = langfuse.get_prompt("movie-critic", label="staging")
 prompt = langfuse.get_prompt("movie-critic", label="latest")
 ```
 
-</Tab>
-
-<Tab>
 
 ```ts
-import { LangfuseClient } from "@langfuse/client";
-
 const langfuse = new LangfuseClient();
 
 // Get specific version of a prompt (here version 1)
@@ -137,9 +111,6 @@ const prompt = await langfuse.prompt.get("movie-critic", {
 });
 ```
 
-</Tab>
-
-</LangTabs>
 
 ## Rollbacks
 
@@ -149,23 +120,7 @@ When a prompt has a `production` label, then that version will be served by defa
 
 The prompt version diff view shows you the changes you made to the prompt over time. This helps you understand how the prompt has evolved and what changes have been made to debug issues or understand the impact of changes.
 
-<Video
-  src="https://static.langfuse.com/docs-videos/prompt-changes.mp4"
-  gifStyle
-  aspectRatio={16 / 9}
-/>
-
 ## Protected prompt labels
-
-<AvailabilityBanner
-  availability={{
-    hobby: "not-available",
-    core: "not-available",
-    pro: "team-add-on",
-    enterprise: "full",
-    selfHosted: "ee",
-  }}
-/>
 
 Protected prompt labels give project admins and owners ([RBAC docs](/docs/rbac)) the ability to prevent labels from being modified or deleted, ensuring better control over prompt deployment.
 
@@ -175,12 +130,6 @@ Once a label such as `production` is marked as protected:
 - `admin` and `owner` roles can still modify or delete the label, effectively changing the `production` prompt version.
 
 Admins and owners can update a label's protection status in the project settings.
-
-<Video
-  src="https://static.langfuse.com/docs-videos/250402-protected-prompt-labels.mp4"
-  aspectRatio={16 / 9}
-  gifStyle
-/>
 
 ## Related Resources
 

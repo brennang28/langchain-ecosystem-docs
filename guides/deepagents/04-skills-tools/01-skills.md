@@ -21,9 +21,11 @@ Skills are a directory of folders, where each folder has one or more files that 
 * Additional reference info, such as docs (optional)
 * Additional assets, such as templates and other resources (optional)
 
-<Note>
-  Any additional assets (scripts, docs, templates, or other resources) must be referenced in the `SKILL.md` file with information on what the file contains and how to use it so the agent can decide when to use them.
-</Note>
+
+> ℹ️ **Note**
+>
+> Any additional assets (scripts, docs, templates, or other resources) must be referenced in the `SKILL.md` file with information on what the file contains and how to use it so the agent can decide when to use them.
+
 
 ## How skills work
 
@@ -89,14 +91,16 @@ After reading the documentation, complete the user's request.
 
 For more example skills, see [Deep Agent example skills](https://github.com/langchain-ai/deepagents/tree/main/libs/cli/examples/skills).
 
-<Warning>
-  **Important**
 
-  Refer to the full [Agent Skills Specification](https://agentskills.io/specification) for information on constraints and best practices when authoring skill files. Notably:
+> ⚠️ **Warning**
+>
+> **Important**
+> 
+>   Refer to the full [Agent Skills Specification](https://agentskills.io/specification) for information on constraints and best practices when authoring skill files. Notably:
+> 
+>   * The `description` field is truncated to 1024 characters if it exceeds that length.
+>   * In Deep Agents, `SKILL.md` files must be under 10 MB. Files exceeding this limit are skipped during skill loading.
 
-  * The `description` field is truncated to 1024 characters if it exceeds that length.
-  * In Deep Agents, `SKILL.md` files must be under 10 MB. Files exceeding this limit are skipped during skill loading.
-</Warning>
 
 ### Full example
 
@@ -151,9 +155,9 @@ After reading the documentation, complete the user's request.
 
 Pass the skills directory when creating your deep agent:
 
-<Tabs>
-  <Tab title="StateBackend">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**StateBackend:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from urllib.request import urlopen
     from deepagents import create_deep_agent
     from deepagents.backends.utils import create_file_data
@@ -188,10 +192,10 @@ Pass the skills directory when creating your deep agent:
         config={"configurable": {"thread_id": "12345"}},
     )
     ```
-  </Tab>
+  
+**StoreBackend:**
 
-  <Tab title="StoreBackend">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from urllib.request import urlopen
     from deepagents import create_deep_agent
     from deepagents.backends import StoreBackend
@@ -229,10 +233,10 @@ Pass the skills directory when creating your deep agent:
         config={"configurable": {"thread_id": "12345"}},
     )
     ```
-  </Tab>
+  
+**FilesystemBackend:**
 
-  <Tab title="FilesystemBackend">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from deepagents import create_deep_agent
     from langgraph.checkpoint.memory import MemorySaver
     from deepagents.backends.filesystem import FilesystemBackend
@@ -263,11 +267,9 @@ Pass the skills directory when creating your deep agent:
         config={"configurable": {"thread_id": "12345"}},
     )
     ```
-  </Tab>
-</Tabs>
+  
 
-<ParamField body="skills" type="list[str]" optional>
-  List of skill source paths.
+- **`param`** (`list[str]`): List of skill source paths.
 
   Paths must be specified using forward slashes and are relative to the backend's root.
 
@@ -276,28 +278,34 @@ Pass the skills directory when creating your deep agent:
   * With `FilesystemBackend`, skills are loaded from disk relative to the backend's `root_dir`.
 
   Later sources override earlier ones for skills with the same name (last one wins).
-</ParamField>
 
-<Note>
-  The SDK only loads the sources you pass in `skills`. It does not automatically scan CLI directories such as `~/.deepagents/...` or `~/.agents/...`.
 
-  For CLI storage conventions, see [App data](/oss/python/deepagents/data-locations).
+> ℹ️ **Note**
+>
+> The SDK only loads the sources you pass in `skills`. It does not automatically scan CLI directories such as `~/.deepagents/...` or `~/.agents/...`.
+> 
+>   For CLI storage conventions, see [App data](/oss/python/deepagents/data-locations).
+> 
+>   
+<details>
+<summary>Emulating CLI source order in SDK</summary>
 
-  <Accordion title="Emulating CLI source order in SDK">
-    If you want CLI-style layering in SDK code, pass all desired sources explicitly in lowest-to-highest precedence order:
+>     If you want CLI-style layering in SDK code, pass all desired sources explicitly in lowest-to-highest precedence order:
+> 
+>     ```text  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+>     [
+>     "<user-home>/.deepagents/{agent}/skills/",
+>     "<user-home>/.agents/skills/",
+>     "<project-root>/.deepagents/skills/",
+>     "<project-root>/.agents/skills/",
+>     ]
+>     ```
+> 
+>     Then pass that ordered list as `skills` when creating your agent.
+>
 
-    ```text  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-    [
-    "<user-home>/.deepagents/{agent}/skills/",
-    "<user-home>/.agents/skills/",
-    "<project-root>/.deepagents/skills/",
-    "<project-root>/.agents/skills/",
-    ]
-    ```
+</details>
 
-    Then pass that ordered list as `skills` when creating your agent.
-  </Accordion>
-</Note>
 
 ## Source precedence
 
@@ -349,9 +357,11 @@ When skills are configured, a "Skills System" section is injected into the agent
 2. **Read**—If a skill applies, the agent reads the full `SKILL.md` file using the path shown in its skills list.
 3. **Execute**—The agent follows the skill's instructions and accesses any supporting files (scripts, templates, reference docs) as needed.
 
-<Tip>
-  Write clear, specific descriptions in your `SKILL.md` frontmatter. The agent decides whether to use a skill based on the description alone—detailed descriptions lead to better skill matching.
-</Tip>
+
+> 💡 **Tip**
+>
+> Write clear, specific descriptions in your `SKILL.md` frontmatter. The agent decides whether to use a skill based on the description alone—detailed descriptions lead to better skill matching.
+
 
 ## Skills vs. memory
 
@@ -375,12 +385,15 @@ These are a few general guidelines for using tools and skills:
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/skills.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/skills.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

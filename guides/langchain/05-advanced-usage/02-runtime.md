@@ -16,9 +16,11 @@ LangGraph exposes a [`Runtime`](https://reference.langchain.com/python/langgraph
 4. **Execution info**: identity and retry information for the current execution (thread ID, run ID, attempt number)
 5. **Server info**: server-specific metadata when running on LangGraph Server (assistant ID, graph ID, authenticated user)
 
-<Tip>
-  Runtime context provides **dependency injection** for your tools and middleware. Instead of hardcoding values or using global state, you can inject runtime dependencies (like database connections, user IDs, or configuration) when invoking your agent. This makes your tools more testable, reusable, and flexible.
-</Tip>
+
+> 💡 **Tip**
+>
+> Runtime context provides **dependency injection** for your tools and middleware. Instead of hardcoding values or using global state, you can inject runtime dependencies (like database connections, user IDs, or configuration) when invoking your agent. This makes your tools more testable, reusable, and flexible.
+
 
 You can access the runtime information within [tools](#inside-tools) and [middleware](#inside-middleware).
 
@@ -107,9 +109,11 @@ def context_aware_tool(runtime: ToolRuntime) -> str:
 
 `server_info` is `None` when not running on LangGraph Server (e.g., during local development).
 
-<Note>
-  Requires `deepagents>=0.5.0` (or `langgraph>=1.1.5`) for `runtime.execution_info` and `runtime.server_info`.
-</Note>
+
+> ℹ️ **Note**
+>
+> Requires `deepagents>=0.5.0` (or `langgraph>=1.1.5`) for `runtime.execution_info` and `runtime.server_info`.
+
 
 ### Inside middleware
 
@@ -182,18 +186,23 @@ def auth_gate(state: AgentState, runtime: Runtime) -> dict | None:
     return None
 ```
 
-<Note>
-  Requires `deepagents>=0.5.0` (or `langgraph>=1.1.5`).
-</Note>
+
+> ℹ️ **Note**
+>
+> Requires `deepagents>=0.5.0` (or `langgraph>=1.1.5`).
+
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/runtime.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/runtime.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

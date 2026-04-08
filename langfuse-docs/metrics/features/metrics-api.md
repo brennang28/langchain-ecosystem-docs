@@ -15,13 +15,11 @@ This endpoint allows you to specify dimensions, metrics, filters, and time granu
 
 ## Metrics API v2 [#v2]
 
-<Callout type="warning">
 
-**Cloud-only:** The v2 Metrics API is only available on Langfuse Cloud. We are working on a robust migration path for self-hosted deployments.
+> ⚠️ **Note:** **Cloud-only:** The v2 Metrics API is only available on Langfuse Cloud. We are working on a robust migration path for self-hosted deployments.
+> 
+> **Data availability note:** When using current SDK versions, data may take approximately 5 minutes to appear on v2 endpoints. We will be releasing updated SDK versions soon that will make data available immediately.
 
-**Data availability note:** When using current SDK versions, data may take approximately 5 minutes to appear on v2 endpoints. We will be releasing updated SDK versions soon that will make data available immediately.
-
-</Callout>
 
 ```
 GET /api/public/v2/metrics
@@ -67,11 +65,9 @@ curl \
   https://cloud.langfuse.com/api/public/v2/metrics
 ```
 
-<Callout type="info">
 
-**API Reference:** See the full [v2 Metrics API Reference](https://api.reference.langfuse.com/#tag/metricsv2/GET/api/public/v2/metrics) for all available parameters, response schemas, and interactive examples.
+> ℹ️ **Note:** **API Reference:** See the full [v2 Metrics API Reference](https://api.reference.langfuse.com/#tag/metricsv2/GET/api/public/v2/metrics) for all available parameters, response schemas, and interactive examples.
 
-</Callout>
 
 ## Metrics API v1 [#v1]
 
@@ -160,8 +156,6 @@ Supported granularities include: `hour`, `day`, `week`, `month`, and `auto`.
 
 Here's an example of querying the number of traces grouped by name:
 
-<LangTabs items={["API", "Python SDK"]}>
-  <Tab label="API">
 
 ```bash
 curl \
@@ -178,8 +172,7 @@ curl \
 https://cloud.langfuse.com/api/public/metrics
 ```
 
-  </Tab>
-  <Tab label="Python SDK">
+  
 
 ```python
 query = """
@@ -196,9 +189,7 @@ query = """
 langfuse.api.legacy.metrics_v1.metrics(query = query)
 ```
 
-  </Tab>
-</LangTabs>
-
+  
 Response:
 
 ```json
@@ -326,12 +317,10 @@ Categorical scores have an additional dimension:
 
 ## Daily Metrics API (Legacy) [#daily-metrics]
 
-<Callout type="warning">
 
-This API is a legacy API. For new use cases, please use the [Metrics API](/docs/analytics/metrics-api) instead.
-It has higher rate-limits and offers more flexibility.
+> ⚠️ **Note:** This API is a legacy API. For new use cases, please use the [Metrics API](/docs/analytics/metrics-api) instead.
+> It has higher rate-limits and offers more flexibility.
 
-</Callout>
 
 ```
 GET /api/public/metrics/daily

@@ -14,9 +14,8 @@ Comments enable teams to add contextual notes and discussions directly to traces
 - Coordinate on prompt improvements
 - Leave feedback during development and review cycles
 
-<Frame>
-  ![Comments with @mentions and reactions](/images/changelog/2025-10-29-comment-mentions.png)
-</Frame>
+
+![Comments with @mentions and reactions](/images/changelog/2025-10-29-comment-mentions.png)
 
 ## Supported Object Types
 
@@ -28,10 +27,6 @@ Comments can be added to the following Langfuse objects:
 - **Prompts** - Collaborate on prompt versions and improvements
 
 ## Adding Comments
-
-<LangTabs items={["Langfuse UI", "API"]}>
-
-<Tab>
 
 Each supported object page displays a comment button in the interface. The button shows:
 
@@ -47,14 +42,10 @@ Clicking the comment button opens a side drawer containing:
 4. **@Mentions** - Tag team members in comments using @mentions
 5. **Reactions** - Add emoji reactions to comments
 
-<Callout type="info">
-  Comment authors can only delete their own comments. Project admins cannot
-  delete other users' comments through the UI.
-</Callout>
 
-</Tab>
+> ℹ️ **Note:** Comment authors can only delete their own comments. Project admins cannot
+>   delete other users' comments through the UI.
 
-<Tab>
 
 The Comments API allows programmatic access to create and retrieve comments. All endpoints follow the standard Langfuse API patterns.
 
@@ -66,9 +57,6 @@ POST /api/public/comments
 
 **[API Reference](https://api.reference.langfuse.com/#tag/comments/post/api/public/comments)**
 
-</Tab>
-
-</LangTabs>
 
 ## @Mentions
 
@@ -97,11 +85,11 @@ Team members can control when they receive email notifications for mentions:
 - Choose to enable or disable mention notifications per project
 - Preferences apply to all future mentions in that project
 
-<Callout type="info">
-  Only project members can be mentioned in comments. The autocomplete menu
-  automatically filters to show only users who have access to the current
-  project.
-</Callout>
+
+> ℹ️ **Note:** Only project members can be mentioned in comments. The autocomplete menu
+>   automatically filters to show only users who have access to the current
+>   project.
+
 
 ## Reactions
 

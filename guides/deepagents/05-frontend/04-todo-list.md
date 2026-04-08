@@ -687,7 +687,7 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
         backgroundColor: isSelected ? isDark ? "#1A2740" : "#E5F4FF" : "transparent",
         color: isSelected ? isDark ? "#C8DDF0" : "#030710" : "#6B8299"
       });
-      btn.innerHTML = `<span>${SDK_LOGOS[value]}</span>${label}`;
+      btn.innerHTML = `<span>${SDK_LOGOS[value]}${label}`;
       btn.addEventListener("mouseenter", () => {
         if (!isSelected) {
           btn.style.backgroundColor = isDark ? "#1A2740" : "#F2FAFF";
@@ -743,22 +743,18 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
   const tabInactiveClass = `${tabBase} lc-tab-inactive`;
   const tabTraceActiveClass = `${tabBase} lc-tab-trace`;
   const tabTraceLoadingClass = `${tabBase} lc-tab-trace-loading`;
-  const toolbar = showCodeTab && <div className="lc-toolbar flex items-stretch justify-between px-3 py-2 border-b lc-border lc-bg-wash">
-      <div className="inline-flex items-stretch gap-0.5 rounded-lg border lc-border lc-bg-surface" style={{
-    padding: 3
-  }}>
+  const toolbar = showCodeTab && 
+      
         <button type="button" aria-label="Preview" onClick={() => switchView("preview")} className={activeView === "preview" ? tabActiveClass : tabInactiveClass}>
           <span dangerouslySetInnerHTML={{
     __html: VIEW_EYE_SVG
   }} />
-          <span className="lc-tab-label">Preview</span>
-        </button>
+          Preview</button>
         <button type="button" aria-label="Code" onClick={() => switchView("code")} className={activeView === "code" ? tabActiveClass : tabInactiveClass}>
           <span dangerouslySetInnerHTML={{
     __html: VIEW_CODE_SVG
   }} />
-          <span className="lc-tab-label">Code</span>
-        </button>
+          Code</button>
         {(traceUrl || traceLoading) && !useLocalPreview && <a href={traceUrl ?? "#"} target="_blank" rel="noopener noreferrer" aria-label="Trace" onClick={e => {
     if (!traceUrl) e.preventDefault(); else cachedRef.current?.host.trackEvent("trace_tab_clicked", {
       pattern
@@ -767,16 +763,9 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
             <span dangerouslySetInnerHTML={{
     __html: traceUrl ? TRACE_ICON_SVG : TRACE_SPINNER_SVG
   }} />
-            <span className="lc-tab-label">Trace</span>
-            {traceUrl && <span className="ml-0.5" dangerouslySetInnerHTML={{
-    __html: EXTERNAL_LINK_SVG
-  }} />}
+            Trace{traceUrl && }
           </a>}
-      </div>
-
-      {activeView === "code" && <div className="lc-lang-switcher inline-flex items-stretch gap-0.5 rounded-lg border lc-border lc-bg-surface" style={{
-    padding: 3
-  }}>
+      {activeView === "code" && 
           <button type="button" aria-label="TypeScript" onClick={() => setAgentLang("js")} className={agentLang === "js" ? tabActiveClass : tabInactiveClass} title="TypeScript / JavaScript">
             <span dangerouslySetInnerHTML={{
     __html: LANG_TS_SVG
@@ -787,10 +776,10 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
     __html: LANG_PYTHON_SVG
   }} />
           </button>
-        </div>}
+        }
 
-      <div className="inline-flex items-center gap-1.5">
-        <button type="button" aria-label={expanded ? "Collapse" : "Expand"} onClick={() => setExpanded(v => !v)} className="lc-expand-btn" title={expanded ? "Collapse" : "Expand"}>
+      
+        <button type="button" aria-label={expanded ? "Collapse" : "Expand"} onClick={() => setExpanded(v => !v)} title={expanded ? "Collapse" : "Expand"}>
           <span dangerouslySetInnerHTML={{
     __html: expanded ? CLOSE_SVG : EXPAND_SVG
   }} />
@@ -815,14 +804,14 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
       sdk,
       lang: agentLang
     });
-  }} className="lc-expand-btn">
+  }}>
           <span dangerouslySetInnerHTML={{
     __html: DOWNLOAD_SVG
   }} />
         </button>
 
         {}
-        <button ref={sdkButtonRef} type="button" onClick={() => setSdkDropdownOpen(o => !o)} className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border lc-sdk-btn font-medium cursor-pointer transition-colors">
+        <button ref={sdkButtonRef} type="button" onClick={() => setSdkDropdownOpen(o => !o)}>
           <span dangerouslySetInnerHTML={{
     __html: SDK_LOGOS[sdk]
   }} />
@@ -831,36 +820,34 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
     __html: CHEVRON_DOWN_SVG
   }} />
         </button>
-      </div>
-    </div>;
-  const slot = <div ref={slotRef} className="relative w-full" style={expanded ? {
+      ;
+  const slot = <div ref={slotRef} style={expanded ? {
     flex: 1,
     minHeight: 0
   } : {
     height: heightStyle
   }}>
-      {!ready && !error && <div className="absolute inset-0 flex items-center justify-center z-10 lc-bg-wash">
-          <div className="size-6 border-2 lc-spinner rounded-full animate-spin" />
-        </div>}
+      {!ready && !error && 
+          
+        }
 
-      {error && <div className="absolute top-3 inset-x-3 z-10 px-4 py-3 rounded-2xl border lc-error text-sm">
+      {error && 
           <strong>Preview Error</strong>
-          <p className="mt-1 opacity-80" style={{
+          <p style={{
     fontSize: 13
   }}>
             {error}
           </p>
-          <button type="button" onClick={handleReset} className="mt-2 px-3 py-1 text-xs rounded-lg border lc-error-btn cursor-pointer">
+          <button type="button" onClick={handleReset}>
             Retry
           </button>
-        </div>}
-    </div>;
+        }
+    ;
   return <div data-lc-pe ref={placeholderRef} className={`${effectiveTheme === "dark" ? "dark" : ""} ${className ?? ""}`}>
-      <div ref={cardRef} className="rounded-2xl border lc-border overflow-hidden lc-bg-surface">
+      <div ref={cardRef}>
         {toolbar}
         {slot}
-      </div>
-    </div>;
+      ;
 };
 
 Not every agent interaction is a chat. Sometimes the agent is executing a
@@ -870,8 +857,6 @@ directly from the agent's state, rendering each item with its current status as
 the agent works through its plan. It's a progress dashboard built on the same
 `useStream` hook you use for chat. It shows that agent state can power any UI,
 not just message bubbles.
-
-<PatternEmbed pattern="deep-agent-todo-list" />
 
 ## How it works
 
@@ -898,8 +883,6 @@ read the `todos` from `stream.values`.
 Define a TypeScript interface matching your agent's state schema and pass it as a type parameter to `useStream` for type-safe access to state values, including custom state keys like `todos`. In the examples below, replace `typeof myAgent` with your interface name:
 
 ```ts  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-import type { BaseMessage } from "@langchain/core/messages";
-
 interface TodoItem {
   title: string;
   status: "pending" | "in_progress" | "completed";
@@ -912,8 +895,8 @@ interface AgentState {
 }
 ```
 
-<CodeGroup>
-  ```tsx React theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```tsx React theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   import { useStream } from "@langchain/react";
 
   const AGENT_URL = "http://localhost:2024";
@@ -927,13 +910,9 @@ interface AgentState {
     const todos = stream.values?.todos ?? [];
 
     return (
-      <div>
-        <TodoList todos={todos} />
-        {stream.messages.map((msg) => (
-          <Message key={msg.id} message={msg} />
-        ))}
-      </div>
-    );
+      {stream.messages.map((msg) => (
+          ))}
+      );
   }
   ```
 
@@ -953,15 +932,7 @@ interface AgentState {
   </script>
 
   <template>
-    <div>
-      <TodoList :todos="todos" />
-      <Message
-        v-for="msg in stream.messages.value"
-        :key="msg.id"
-        :message="msg"
-      />
-    </div>
-  </template>
+    </template>
   ```
 
   ```svelte Svelte theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
@@ -978,12 +949,8 @@ interface AgentState {
     $: todos = $values?.todos ?? [];
   </script>
 
-  <div>
-    <TodoList {todos} />
-    {#each $messages as msg (msg.id)}
-      <Message message={msg} />
-    {/each}
-  </div>
+  {#each $messages as msg (msg.id)}
+      {/each}
   ```
 
   ```ts Angular theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
@@ -995,13 +962,11 @@ interface AgentState {
   @Component({
     selector: "app-todo-agent",
     template: `
-      <div>
-        <app-todo-list [todos]="todos()" />
+      <app-todo-list [todos]="todos()" />
         @for (msg of stream.messages(); track msg.id) {
           <app-message [message]="msg" />
         }
-      </div>
-    `,
+      `,
   })
   export class TodoAgentComponent {
     stream = useStream<typeof myAgent>({
@@ -1012,7 +977,6 @@ interface AgentState {
     todos = computed(() => this.stream.values()?.todos ?? []);
   }
   ```
-</CodeGroup>
 
 ## The Todo interface
 
@@ -1046,23 +1010,16 @@ function TodoList({ todos }: { todos: Todo[] }) {
     : 0;
 
   return (
-    <div className="rounded-lg border bg-white p-4 shadow-sm">
-      <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-lg font-semibold">Agent Progress</h2>
-        <span className="text-sm text-gray-500">
+    
+      
+        <h2>Agent Progress</h2>
+        
           {completed}/{todos.length} tasks
-        </span>
-      </div>
-
-      <ProgressBar percentage={percentage} />
-
-      <ul className="mt-4 space-y-2">
+        <ul>
         {todos.map((todo, i) => (
-          <TodoItem key={i} todo={todo} />
-        ))}
+          ))}
       </ul>
-    </div>
-  );
+    );
 }
 ```
 
@@ -1073,19 +1030,9 @@ A visual progress bar gives users an at-a-glance summary of overall completion:
 ```tsx  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 function ProgressBar({ percentage }: { percentage: number }) {
   return (
-    <div className="space-y-1">
-      <div className="flex items-center justify-between text-xs text-gray-500">
-        <span>Progress</span>
-        <span>{percentage}%</span>
-      </div>
-      <div className="h-2 overflow-hidden rounded-full bg-gray-200">
-        <div
-          className="h-full rounded-full bg-green-500 transition-all duration-500"
-          style={{ width: `${percentage}%` }}
-        />
-      </div>
-    </div>
-  );
+    
+      
+        <span>Progress<span>{percentage}%);
 }
 ```
 
@@ -1125,9 +1072,7 @@ function TodoItem({ todo }: { todo: Todo }) {
     >
       <span className={`mt-0.5 text-lg leading-none ${style.iconClass}`}>
         {style.icon}
-      </span>
-      <span className={`text-sm ${style.textClass}`}>{todo.content}</span>
-    </li>
+      <span className={`text-sm ${style.textClass}`}>{todo.content}</li>
   );
 }
 ```
@@ -1169,20 +1114,16 @@ function TodoAgentLayout() {
   const todos = stream.values?.todos ?? [];
 
   return (
-    <div className="flex h-screen flex-col">
+    
       {todos.length > 0 && (
-        <div className="border-b bg-gray-50 p-4">
-          <TodoList todos={todos} />
-        </div>
-      )}
+        
+          )}
 
-      <main className="flex-1 overflow-y-auto p-6">
-        <div className="mx-auto max-w-2xl space-y-4">
+      <main>
+        
           {stream.messages.map((msg) => (
-            <Message key={msg.id} message={msg} />
-          ))}
-        </div>
-      </main>
+            ))}
+        </main>
 
       <ChatInput
         onSubmit={(text) =>
@@ -1190,15 +1131,16 @@ function TodoAgentLayout() {
         }
         isLoading={stream.isLoading}
       />
-    </div>
-  );
+    );
 }
 ```
 
-<Tip>
-  Show the todo list only when `todos.length > 0`. Before the agent creates its
-  plan, there's nothing to display. Showing an empty component wastes space.
-</Tip>
+
+> 💡 **Tip**
+>
+> Show the todo list only when `todos.length > 0`. Before the agent creates its
+>   plan, there's nothing to display. Showing an empty component wastes space.
+
 
 ## Custom state beyond todos
 
@@ -1221,11 +1163,13 @@ const sources = stream.values?.sources ?? [];
 const confidence = stream.values?.confidence_score;
 ```
 
-<Info>
-  Custom state keys are defined in your LangGraph graph's state schema. The
-  `useStream` hook automatically includes them in `stream.values` without any additional
-  client-side configuration.
-</Info>
+
+> ℹ️ **Info**
+>
+> Custom state keys are defined in your LangGraph graph's state schema. The
+>   `useStream` hook automatically includes them in `stream.values` without any additional
+>   client-side configuration.
+
 
 ## Animating transitions
 
@@ -1249,7 +1193,6 @@ function TodoItem({ todo }: { todo: Todo }) {
         `}
       >
         {getStatusIcon(todo.status)}
-      </span>
       <span
         className={`
           text-sm transition-all duration-300
@@ -1257,8 +1200,7 @@ function TodoItem({ todo }: { todo: Todo }) {
         `}
       >
         {todo.content}
-      </span>
-    </li>
+      </li>
   );
 }
 ```
@@ -1294,20 +1236,15 @@ function TodoList({ todos, isLoading }: { todos: Todo[]; isLoading: boolean }) {
 
   if (todos.length === 0 && isLoading) {
     return (
-      <div className="rounded-lg border bg-white p-4 shadow-sm">
-        <div className="flex items-center gap-2 text-sm text-gray-500">
-          <span className="animate-spin">⟳</span>
-          Agent is creating a plan...
-        </div>
-      </div>
-    );
+      
+        
+          ⟳Agent is creating a plan...
+        );
   }
 
   return (
-    <div className="rounded-lg border bg-white p-4 shadow-sm">
-      {/* ... full todo list rendering */}
-    </div>
-  );
+    
+      );
 }
 ```
 
@@ -1332,12 +1269,15 @@ function TodoList({ todos, isLoading }: { todos: Todo[]; isLoading: boolean }) {
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/frontend/todo-list.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/frontend/todo-list.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

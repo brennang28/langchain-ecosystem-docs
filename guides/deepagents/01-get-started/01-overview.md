@@ -22,7 +22,7 @@ The [`deepagents` repository](https://github.com/langchain-ai/deepagents) contai
 [LangChain](/oss/python/langchain/) is the framework that provides the core building blocks for your agents.
 To learn more about the differences between LangChain, LangGraph, and Deep Agents, see [Frameworks, runtimes, and harnesses](/oss/python/concepts/products).
 
-## <Icon icon="wand" /> Create a deep agent
+## Create a deep agent
 
 ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 # pip install -qU deepagents
@@ -45,9 +45,11 @@ agent.invoke(
 
 See the [Quickstart](/oss/python/deepagents/quickstart/) and [Customization guide](/oss/python/deepagents/customization/) to get started building your own agents and applications with Deep Agents.
 
-<Tip>
-  Use [LangSmith](/langsmith/home) to trace requests, debug agent behavior, and evaluate outputs. Set `LANGSMITH_TRACING=true` and your API key to get started.
-</Tip>
+
+> 💡 **Tip**
+>
+> Use [LangSmith](/langsmith/home) to trace requests, debug agent behavior, and evaluate outputs. Set `LANGSMITH_TRACING=true` and your API key to get started.
+
 
 ## When to use the Deep Agents
 
@@ -74,90 +76,56 @@ Use the **Deep Agents CLI** when you want a coding agent on the command line, bu
 
 ## Core capabilities
 
-<Card title="Planning and task decomposition" icon="timeline">
-  Deep Agents include a built-in [`write_todos`](/oss/python/langchain/middleware/built-in#to-do-list) tool that enables agents to break down complex tasks into discrete steps, track progress, and adapt plans as new information emerges.
-</Card>
+Deep Agents include a built-in [`write_todos`](/oss/python/langchain/middleware/built-in#to-do-list) tool that enables agents to break down complex tasks into discrete steps, track progress, and adapt plans as new information emerges.
 
-<Card title="Context management" icon="scissors">
-  File system tools ([`ls`](/oss/python/deepagents/harness#virtual-filesystem-access), [`read_file`](/oss/python/deepagents/harness#virtual-filesystem-access), [`write_file`](/oss/python/deepagents/harness#virtual-filesystem-access), [`edit_file`](/oss/python/deepagents/harness#virtual-filesystem-access)) allow agents to offload large context to in-memory or filesystem storage, preventing context window overflow and enabling work with variable-length tool results. Auto-summarization compacts older conversation messages when the context window grows long, keeping the agent effective across extended sessions.
-</Card>
+File system tools ([`ls`](/oss/python/deepagents/harness#virtual-filesystem-access), [`read_file`](/oss/python/deepagents/harness#virtual-filesystem-access), [`write_file`](/oss/python/deepagents/harness#virtual-filesystem-access), [`edit_file`](/oss/python/deepagents/harness#virtual-filesystem-access)) allow agents to offload large context to in-memory or filesystem storage, preventing context window overflow and enabling work with variable-length tool results. Auto-summarization compacts older conversation messages when the context window grows long, keeping the agent effective across extended sessions.
 
-<Card title="Shell execution" icon="terminal">
-  When using a [sandbox backend](/oss/python/deepagents/sandboxes), agents get an `execute` tool to run shell commands for tests, builds, git operations, and system tasks. Sandbox backends provide isolation so agents can execute code without compromising your host system.
-</Card>
+When using a [sandbox backend](/oss/python/deepagents/sandboxes), agents get an `execute` tool to run shell commands for tests, builds, git operations, and system tasks. Sandbox backends provide isolation so agents can execute code without compromising your host system.
 
-<Card title="Pluggable filesystem backends" icon="plug">
-  The virtual filesystem is powered by [pluggable backends](/oss/python/deepagents/backends) that you can swap to fit your use case. Choose from in-memory state, local disk, LangGraph store for cross-thread persistence, [sandboxes](/oss/python/deepagents/sandboxes) for isolated code execution (Modal, Daytona, Deno), or combine multiple backends with composite routing. You can also implement your own custom backend.
-</Card>
+The virtual filesystem is powered by [pluggable backends](/oss/python/deepagents/backends) that you can swap to fit your use case. Choose from in-memory state, local disk, LangGraph store for cross-thread persistence, [sandboxes](/oss/python/deepagents/sandboxes) for isolated code execution (Modal, Daytona, Deno), or combine multiple backends with composite routing. You can also implement your own custom backend.
 
-<Card title="Subagent spawning" icon="users-group">
-  A built-in `task` tool enables agents to spawn specialized subagents for context isolation. This keeps the main agent's context clean while still going deep on specific subtasks.
-</Card>
+A built-in `task` tool enables agents to spawn specialized subagents for context isolation. This keeps the main agent's context clean while still going deep on specific subtasks.
 
-<Card title="Long-term memory" icon="database">
-  Extend agents with persistent memory across threads using LangGraph's [Memory Store](/oss/python/langgraph/persistence#memory-store). Agents can save and retrieve information from previous conversations.
-</Card>
+Extend agents with persistent memory across threads using LangGraph's [Memory Store](/oss/python/langgraph/persistence#memory-store). Agents can save and retrieve information from previous conversations.
 
-<Card title="Human-in-the-loop" icon="user-check">
-  Configure [human approval](/oss/python/deepagents/human-in-the-loop) for sensitive tool operations using LangGraph's interrupt capabilities. Control which tools require confirmation before execution.
-</Card>
+Configure [human approval](/oss/python/deepagents/human-in-the-loop) for sensitive tool operations using LangGraph's interrupt capabilities. Control which tools require confirmation before execution.
 
-<Card title="Skills" icon="puzzle">
-  Extend agents with reusable [skills](/oss/python/deepagents/skills) that provide specialized workflows, domain knowledge, and custom instructions.
-</Card>
+Extend agents with reusable [skills](/oss/python/deepagents/skills) that provide specialized workflows, domain knowledge, and custom instructions.
 
-<Card title="Smart defaults" icon="wand">
-  Ships with opinionated system prompts that teach the model how to use its tools effectively — plan before acting, verify work, and manage context. Customize or replace the defaults as needed.
-</Card>
+Ships with opinionated system prompts that teach the model how to use its tools effectively — plan before acting, verify work, and manage context. Customize or replace the defaults as needed.
 
 ## Get started
 
-<CardGroup cols={2}>
-  <Card title="SDK Quickstart" icon="rocket" href="/oss/python/deepagents/quickstart">
-    Build your first deep agent
-  </Card>
-
-  <Card title="Customization" icon="adjustments" href="/oss/python/deepagents/customization">
-    Learn about customization options for the SDK
-  </Card>
-
-  <Card title="Models" icon="cpu" href="/oss/python/deepagents/models">
-    Configure models and providers
-  </Card>
-
-  <Card title="Backends" icon="plug" href="/oss/python/deepagents/backends">
-    Choose and configure pluggable filesystem backends
-  </Card>
-
-  <Card title="Sandboxes" icon="cube" href="/oss/python/deepagents/sandboxes">
-    Execute code in isolated environments
-  </Card>
-
-  <Card title="Human-in-the-loop" icon="user-check" href="/oss/python/deepagents/human-in-the-loop">
-    Configure approval for sensitive operations
-  </Card>
-
-  <Card title="CLI" icon="terminal" href="/oss/python/deepagents/cli/overview">
-    Use the Deep Agents CLI
-  </Card>
-
-  <Card title="ACP" icon="plug-connected" href="/oss/python/deepagents/acp">
-    Use deep agents in code editors via ACP
-  </Card>
-
-  <Card title="Reference" icon="external-link" href="https://reference.langchain.com/python/deepagents/">
-    See the `deepagents` API reference
-  </Card>
-</CardGroup>
+Build your first deep agent
+  
+Learn about customization options for the SDK
+  
+Configure models and providers
+  
+Choose and configure pluggable filesystem backends
+  
+Execute code in isolated environments
+  
+Configure approval for sensitive operations
+  
+Use the Deep Agents CLI
+  
+Use deep agents in code editors via ACP
+  
+See the `deepagents` API reference
+  
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/overview.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/overview.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

@@ -10,10 +10,10 @@ Deep Agents build on LangGraph's streaming infrastructure with first-class suppo
 
 What's possible with deep agent streaming:
 
-* <Icon icon="diagram-subtask" size={16} /> [**Stream subagent progress**](#subagent-progress)—track each subagent's execution as it runs in parallel.
-* <Icon icon="square-binary" size={16} /> [**Stream LLM tokens**](#llm-tokens)—stream tokens from the main agent and each subagent.
-* <Icon icon="screwdriver-wrench" size={16} /> [**Stream tool calls**](#tool-calls)—see tool calls and results from within subagent execution.
-* <Icon icon="table" size={16} /> [**Stream custom updates**](#custom-updates)—emit user-defined signals from inside subagent nodes.
+* [**Stream subagent progress**](#subagent-progress)—track each subagent's execution as it runs in parallel.
+* [**Stream LLM tokens**](#llm-tokens)—stream tokens from the main agent and each subagent.
+* [**Stream tool calls**](#tool-calls)—see tool calls and results from within subagent execution.
+* [**Stream custom updates**](#custom-updates)—emit user-defined signals from inside subagent nodes.
 
 ## Enable subgraph streaming
 
@@ -419,16 +419,18 @@ for sub_id, sub in active_subagents.items():
 
 ## v2 streaming format
 
-<Note>
-  Requires LangGraph >= 1.1.
-</Note>
+
+> ℹ️ **Note**
+>
+> Requires LangGraph >= 1.1.
+
 
 All examples on this page use the v2 streaming format (`version="v2"`), which is the recommended approach. Every chunk is a `StreamPart` dict with `type`, `ns`, and `data` keys — the same shape regardless of stream mode, number of modes, or subgraph settings.
 
 The v2 format eliminates nested tuple unpacking, making it straightforward to handle subgraph streaming in Deep Agents. Compare the two formats:
 
-<CodeGroup>
-  ```python v2 (recommended) theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```python v2 (recommended) theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   # Unified format — no nested tuple unpacking
   for chunk in agent.stream(
       {"messages": [{"role": "user", "content": "Research quantum computing"}]},
@@ -453,7 +455,6 @@ The v2 format eliminates nested tuple unpacking, making it straightforward to ha
       print(namespace)  # () for main agent, ("tools:<id>",) for subagent
       print(data)       # payload
   ```
-</CodeGroup>
 
 See the [LangGraph streaming docs](/oss/python/langgraph/streaming#stream-output-format-v2) for more details on the v2 format, including type narrowing and Pydantic/dataclass coercion.
 
@@ -465,12 +466,15 @@ See the [LangGraph streaming docs](/oss/python/langgraph/streaming#stream-output
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/streaming.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/streaming.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

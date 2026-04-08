@@ -7,16 +7,6 @@ description: Langfuse is an open-source LLM engineering platform (GitHub) that h
 
 Langfuse is an open-source LLM engineering platform ([GitHub](https://github.com/langfuse/langfuse)) that helps teams collaboratively debug, analyze, and iterate on their LLM applications. All platform features are natively integrated to accelerate the development workflow. Langfuse is open, self-hostable, and extensible ([_why langfuse?_](/why)).
 
-import { FeatureOverview } from "@/components/FeatureOverview";
-import {
-  TextQuote,
-  GitPullRequestArrow,
-  ThumbsUp,
-  FlaskConical,
-} from "lucide-react";
-
-<FeatureOverview />
-
 ## Observability [#observability]
 
 [Observability](/docs/observability/overview) is essential for understanding and debugging LLM applications. Unlike traditional software, LLM applications involve complex, non-deterministic interactions that can be challenging to monitor and debug. Langfuse provides comprehensive tracing capabilities that help you understand exactly what's happening in your application.
@@ -29,87 +19,21 @@ import {
 
 Want to see an example? Play with the [interactive demo](/docs/demo).
 
-<Callout type="info" emoji="🎥">
 
-Want to learn more? [**Watch end-to-end walkthrough**](/watch-demo) of Langfuse Observability and how to integrate it with your application.
+> ℹ️ **Note:** Want to learn more? [**Watch end-to-end walkthrough**](/watch-demo) of Langfuse Observability and how to integrate it with your application.
 
-</Callout>
-
-
-<div className="h-6" />
-
-<Tabs items={["Trace Details", "Sessions", "Timeline", "Users", "Agent Graphs", "Dashboard"]}>
-<Tab>
 
 Traces allow you to track every LLM call and other relevant logic in your app.
 
-<Video
-  src="https://static.langfuse.com/docs-videos/trace-new-ui.mp4"
-  aspectRatio={16 / 9}
-  gifStyle
-/>
-
-</Tab>
-<Tab>
-
 Sessions allow you to track multi-step conversations or agentic workflows.
-
-<Video
-  src="https://static.langfuse.com/docs-videos/sessions-new-ui.mp4"
-  aspectRatio={16 / 9}
-  gifStyle
-/>
-
-</Tab>
-<Tab>
 
 Debug latency issues by inspecting the timeline view.
 
-<Video
-  src="https://static.langfuse.com/docs-videos/timeline-new-ui.mp4"
-  aspectRatio={16 / 9}
-  gifStyle
-/>
-
-</Tab>
-
-<Tab>
-
 Add your own `userId` to monitor costs and usage for each user. Optionally, create a deep link to this view in your systems.
-
-<Video
-  src="https://static.langfuse.com/docs-videos/users-new-ui.mp4"
-  aspectRatio={16 / 9}
-  gifStyle
-/>
-
-</Tab>
-<Tab>
 
 LLM agents can be visualized as a graph to illustrate the flow of complex agentic workflows.
 
-<Video
-  src="https://static.langfuse.com/docs-videos/langgraph-new-ui.mp4"
-  aspectRatio={16 / 9}
-  gifStyle
-/>
-
-</Tab>
-<Tab>
-
 See quality, cost, and latency metrics in the dashboard to monitor your LLM application.
-
-<Video
-  src="https://static.langfuse.com/docs-videos/dashboard.mp4%20MOVED%20TO%20R2.mp4"
-  aspectRatio={16 / 9}
-  gifStyle
-/>
-
-</Tab>
-
-</Tabs>
-
-
 
 ## Prompt Management [#prompts]
 
@@ -120,97 +44,23 @@ See quality, cost, and latency metrics in the dashboard to monitor your LLM appl
 - Test prompts interactively in the [LLM Playground](/docs/prompt-management/features/playground)
 - Run [Experiments](/docs/evaluation/features/prompt-experiments) against datasets to test new prompt versions directly within Langfuse
 
-<Callout type="info" emoji="🎥">
 
-Want to learn more? [**Watch end-to-end walkthrough**](/watch-demo?tab=prompt) of Langfuse Prompt Management and how to integrate it with your application.
+> ℹ️ **Note:** Want to learn more? [**Watch end-to-end walkthrough**](/watch-demo?tab=prompt) of Langfuse Prompt Management and how to integrate it with your application.
 
-</Callout>
-
-
-<div className="h-6" />
-
-<Tabs items={["Create", "Version Control", "Deploy", "Metrics", "Test in Playground", "Link with Traces", "Track Changes"]}>
-
-<Tab>
 
 Create a new prompt via UI, SDKs, or API.
 
-<Video
-  src="https://static.langfuse.com/docs-videos/create-update-prompts.mp4%20MOVED%20TO%20R2.mp4"
-  aspectRatio={16 / 9}
-  gifStyle
-/>
-
-</Tab>
-
-<Tab>
-
 Collaboratively version and edit prompts via UI, API, or SDKs.
-
-<Video
-  src="https://static.langfuse.com/docs-videos/create-prompt-version.mp4%20MOVED%20TO%20R2.mp4"
-  aspectRatio={16 / 9}
-  gifStyle
-/>
-
-</Tab>
-<Tab>
 
 Deploy prompts to production or any environment via labels - without any code changes.
 
-<Video
-  src="https://static.langfuse.com/docs-videos/deploy-prompt.mp4"
-  aspectRatio={16 / 9}
-  gifStyle
-/>
-
-</Tab>
-<Tab>
-
 Compare latency, cost, and evaluation metrics across different versions of your prompts.
-
-<Video
-  src="https://static.langfuse.com/docs-videos/prompt-metrics.mp4"
-  aspectRatio={16 / 9}
-  gifStyle
-/>
-
-</Tab>
-<Tab>
 
 Instantly test your prompts in the playground.
 
-<Video
-  src="https://static.langfuse.com/docs-videos/prompt-to-playground.mp4"
-  aspectRatio={16 / 9}
-  gifStyle
-/>
-
-</Tab>
-<Tab>
-
 Link prompts with traces to understand how they perform in the context of your LLM application.
 
-<Video
-  src="https://static.langfuse.com/docs-videos/linked-generations.mp4"
-  aspectRatio={16 / 9}
-  gifStyle
-/>
-</Tab>
-<Tab>
-
 Track changes to your prompts to understand how they evolve over time.
-
-<Video
-  src="https://static.langfuse.com/docs-videos/track-changes.mp4"
-  aspectRatio={16 / 9}
-  gifStyle
-/>
-
-</Tab>
-</Tabs>
-
-
 
 ## Evaluation [#evaluation]
 
@@ -221,73 +71,19 @@ Track changes to your prompts to understand how they evolve over time.
 - Create and manage [Datasets](/docs/evaluation/features/datasets) for systematic testing in development that ensure your application performs reliably across different scenarios
 - Run [Experiments](/docs/evaluation/core-concepts#experiments) to systematically test your LLM application
 
-<Callout type="info" emoji="🎥">
 
-Want to learn more? [**Watch end-to-end walkthrough**](/watch-demo?tab=evaluation) of Langfuse Evaluation and how to use it to improve your LLM application.
+> ℹ️ **Note:** Want to learn more? [**Watch end-to-end walkthrough**](/watch-demo?tab=evaluation) of Langfuse Evaluation and how to use it to improve your LLM application.
 
-</Callout>
-
-
-<div className="h-6" />
-
-<Tabs items={["Analytics", "User Feedback", "LLM-as-a-Judge", "Experiments", "Annotation Queue", "Custom Evals"]}>
-<Tab>
 
 Plot evaluation results in the Langfuse Dashboard.
 
-<Video
-  src="https://static.langfuse.com/docs-videos/scores-dashboard.mp4"
-  aspectRatio={16 / 9}
-  gifStyle
-/>
-
-</Tab>
-<Tab>
-
 Collect feedback from your users. Can be captured in the frontend via our Browser SDK, server-side via the SDKs or API. Video includes example application.
-
-<Video
-  src="https://static.langfuse.com/docs-videos/scores-user-feedback.mp4"
-  aspectRatio={16 / 9}
-  gifStyle
-/>
-
-</Tab>
-<Tab>
 
 Run fully managed LLM-as-a-judge evaluations on production or development traces. Can be applied to any step within your application for step-wise evaluations.
 
-<Video
-  src="https://static.langfuse.com/docs-videos/scores-llm-as-a-judge.mp4%20MOVED%20TO%20R2.mp4"
-  aspectRatio={16 / 9}
-  gifStyle
-/>
-
-</Tab>
-<Tab>
-
 Evaluate prompts and models on datasets directly in the user interface. No custom code is needed.
 
-<Video
-  src="https://static.langfuse.com/docs-videos/prompt-experiments.mp4"
-  aspectRatio={16 / 9}
-  gifStyle
-/>
-
-</Tab>
-
-<Tab>
-
 Baseline your evaluation workflow with human annotations via Annotation Queues.
-
-<Video
-  src="https://static.langfuse.com/docs-videos/scores-annotation-queue.mp4"
-  aspectRatio={16 / 9}
-  gifStyle
-/>
-
-</Tab>
-<Tab>
 
 Add custom evaluation results, supports numeric, boolean and categorical values.
 
@@ -297,17 +93,13 @@ POST /api/public/scores
 
 Add scores via Python or JS SDK.
 
-```python filename="Example (Python)"
+```python
 langfuse.score(
   trace_id="123",
   name="my_custom_evaluator",
   value=0.5,
 )
 ```
-
-</Tab>
-</Tabs>
-
 
 
 ## Where to start?
@@ -316,47 +108,33 @@ Setting up the full process of online tracing, prompt management, production eva
 
 _Simplified lifecycle from PoC to production:_
 
-<Frame
-  transparent
-  fullWidth
-  className="mt-2 pt-4 rounded ring-primary/20 ring-1 dark:hidden"
->
-  ![Langfuse Features along the development
+
+![Langfuse Features along the development
   lifecycle](/images/docs/features-light.png)
-</Frame>
-<Frame
-  transparent
-  fullWidth
-  className="mt-2 pt-4 rounded ring-primary/20 ring-1 hidden dark:block"
->
-  ![Langfuse Features along the development
+
+![Langfuse Features along the development
   lifecycle](/images/docs/features-dark.png)
-</Frame>
 
 ## Quickstarts
 
 Get up and running with Langfuse in minutes. Choose the path that best fits your current needs:
 
-<Cards num={1}>
-  <Card
-    icon={<TextQuote size="24" />}
+
+}
     title="Integrate LLM Application/Agent Tracing"
     href="/docs/observability/get-started"
     arrow
   />
-  <Card
-    icon={<GitPullRequestArrow size="24" />}
+  }
     title="Integrate Prompt Management"
     href="/docs/prompt-management/get-started"
     arrow
   />
-  <Card
-    icon={<ThumbsUp size="24" />}
+  }
     title="Setup Evaluations"
     href="/docs/evaluation/overview"
     arrow
   />
-</Cards>
 
 ## Why Langfuse?
 
@@ -379,6 +157,3 @@ We actively develop Langfuse in [open source](/open-source) together with our co
 
 Langfuse evolves quickly, check out the [changelog](/changelog) for the latest updates. Subscribe to the **mailing list** to get notified about new major features:
 
-import { ProductUpdateSignup } from "@/components/productUpdateSignup";
-
-<ProductUpdateSignup source="langfuse.com/docs" className="mt-4" />

@@ -58,27 +58,31 @@ agent = create_agent(
 )
 ```
 
-<Accordion title="Configuration options">
-  <Tip>
-    The `fraction` conditions for `trigger` and `keep` (shown below) rely on a chat model's [profile data](/oss/python/langchain/models#model-profiles) if using `langchain>=1.1`. If data are not available, use another condition or specify manually:
 
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-    from langchain.chat_models import init_chat_model
+<details>
+<summary>Configuration options</summary>
 
-    custom_profile = {
-        "max_input_tokens": 100_000,
-        # ...
-    }
-    model = init_chat_model("gpt-4.1", profile=custom_profile)
-    ```
-  </Tip>
+> 💡 **Tip**
+>
+> The `fraction` conditions for `trigger` and `keep` (shown below) rely on a chat model's [profile data](/oss/python/langchain/models#model-profiles) if using `langchain>=1.1`. If data are not available, use another condition or specify manually:
+> 
+>     ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+>     from langchain.chat_models import init_chat_model
+> 
+>     custom_profile = {
+>         "max_input_tokens": 100_000,
+>         # ...
+>     }
+>     model = init_chat_model("gpt-4.1", profile=custom_profile)
+>     ```
 
-  <ParamField body="model" type="string | BaseChatModel" required>
-    Model for generating summaries. Can be a model identifier string (e.g., `'openai:gpt-4.1-mini'`) or a `BaseChatModel` instance. See [`init_chat_model`](https://reference.langchain.com/python/langchain/chat_models/base/init_chat_model) for more information.
-  </ParamField>
 
-  <ParamField body="trigger" type="ContextSize | list[ContextSize] | None">
-    Condition(s) for triggering summarization. Can be:
+  
+- **`param`** (`string | BaseChatModel`): Model for generating summaries. Can be a model identifier string (e.g., `'openai:gpt-4.1-mini'`) or a `BaseChatModel` instance. See [`init_chat_model`](https://reference.langchain.com/python/langchain/chat_models/base/init_chat_model) for more information.
+
+
+  
+- **`param`** (`ContextSize | list[ContextSize] | None`): Condition(s) for triggering summarization. Can be:
 
     * A single [`ContextSize`](https://reference.langchain.com/python/langchain/agents/middleware/summarization/ContextSize) tuple (specified condition must be met)
     * A list of [`ContextSize`](https://reference.langchain.com/python/langchain/agents/middleware/summarization/ContextSize) tuples (any condition must be met - OR logic)
@@ -92,45 +96,49 @@ agent = create_agent(
     At least one condition must be specified. If not provided, summarization will not trigger automatically.
 
     See the API reference for [`ContextSize`](https://reference.langchain.com/python/langchain/agents/middleware/summarization/ContextSize) for more information.
-  </ParamField>
 
-  <ParamField body="keep" type="ContextSize" default="('messages', 20)">
-    How much context to preserve after summarization. Specify exactly one of:
+
+  
+- **`param`** (`ContextSize`): How much context to preserve after summarization. Specify exactly one of:
 
     * `fraction` (float): Fraction of model's context size to keep (0-1)
     * `tokens` (int): Absolute token count to keep
     * `messages` (int): Number of recent messages to keep
 
     See the API reference for [`ContextSize`](https://reference.langchain.com/python/langchain/agents/middleware/summarization/ContextSize) for more information.
-  </ParamField>
 
-  <ParamField body="token_counter" type="function">
-    Custom token counting function. Defaults to character-based counting.
-  </ParamField>
 
-  <ParamField body="summary_prompt" type="string">
-    Custom prompt template for summarization. Uses built-in template if not specified. The template should include `{messages}` placeholder where conversation history will be inserted.
-  </ParamField>
+  
+- **`param`** (`function`): Custom token counting function. Defaults to character-based counting.
 
-  <ParamField body="trim_tokens_to_summarize" type="number" default="4000">
-    Maximum number of tokens to include when generating the summary. Messages will be trimmed to fit this limit before summarization.
-  </ParamField>
 
-  <ParamField body="summary_prefix" type="string" deprecated>
-    **Deprecated:** Use `summary_prompt` to provide the full prompt instead.
-  </ParamField>
+  
+- **`param`** (`string`): Custom prompt template for summarization. Uses built-in template if not specified. The template should include `{messages}` placeholder where conversation history will be inserted.
 
-  <ParamField body="max_tokens_before_summary" type="number" deprecated>
-    **Deprecated:** Use `trigger: ("tokens", value)` instead. Token threshold for triggering summarization.
-  </ParamField>
 
-  <ParamField body="messages_to_keep" type="number" deprecated>
-    **Deprecated:** Use `keep: ("messages", value)` instead. Recent messages to preserve.
-  </ParamField>
-</Accordion>
+  
+- **`param`** (`number`): Maximum number of tokens to include when generating the summary. Messages will be trimmed to fit this limit before summarization.
 
-<Accordion title="Full example">
-  The summarization middleware monitors message token counts and automatically summarizes older messages when thresholds are reached.
+
+  
+- **`param`** (`string`): **Deprecated:** Use `summary_prompt` to provide the full prompt instead.
+
+
+  
+- **`param`** (`number`): **Deprecated:** Use `trigger: ("tokens", value)` instead. Token threshold for triggering summarization.
+
+
+  
+- **`param`** (`number`): **Deprecated:** Use `keep: ("messages", value)` instead. Recent messages to preserve.
+
+
+</details>
+
+
+<details>
+<summary>Full example</summary>
+
+The summarization middleware monitors message token counts and automatically summarizes older messages when thresholds are reached.
 
   **Trigger conditions** control when summarization runs:
 
@@ -191,7 +199,9 @@ agent = create_agent(
       ],
   )
   ```
-</Accordion>
+
+</details>
+
 
 ### Human-in-the-loop
 
@@ -203,9 +213,11 @@ Pause agent execution for human approval, editing, or rejection of tool calls be
 
 **API reference:** [`HumanInTheLoopMiddleware`](https://reference.langchain.com/python/langchain/agents/middleware/human_in_the_loop/HumanInTheLoopMiddleware)
 
-<Warning>
-  Human-in-the-loop middleware requires a [checkpointer](/oss/python/langgraph/persistence#checkpoints) to maintain state across interruptions.
-</Warning>
+
+> ⚠️ **Warning**
+>
+> Human-in-the-loop middleware requires a [checkpointer](/oss/python/langgraph/persistence#checkpoints) to maintain state across interruptions.
+
 
 ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 from langchain.agents import create_agent
@@ -238,13 +250,16 @@ agent = create_agent(
 )
 ```
 
-<Tip>
-  For complete examples, configuration options, and integration patterns, see the [Human-in-the-loop documentation](/oss/python/langchain/human-in-the-loop).
-</Tip>
 
-<Callout icon="player-play" iconType="solid">
-  Watch this [video guide](https://www.youtube.com/watch?v=SpfT6-YAVPk) demonstrating Human-in-the-loop middleware behavior.
-</Callout>
+> 💡 **Tip**
+>
+> For complete examples, configuration options, and integration patterns, see the [Human-in-the-loop documentation](/oss/python/langchain/human-in-the-loop).
+
+
+> ℹ️ **Note:**
+>
+> Watch this [video guide](https://www.youtube.com/watch?v=SpfT6-YAVPk) demonstrating Human-in-the-loop middleware behavior.
+
 
 ### Model call limit
 
@@ -275,23 +290,29 @@ agent = create_agent(
 )
 ```
 
-<Callout icon="player-play" iconType="solid">
-  Watch this [video guide](https://www.youtube.com/watch?v=nJEER0uaNkE) demonstrating Model Call Limit middleware behavior.
-</Callout>
 
-<Accordion title="Configuration options">
-  <ParamField body="thread_limit" type="number">
-    Maximum model calls across all runs in a thread. Defaults to no limit.
-  </ParamField>
+> ℹ️ **Note:**
+>
+> Watch this [video guide](https://www.youtube.com/watch?v=nJEER0uaNkE) demonstrating Model Call Limit middleware behavior.
 
-  <ParamField body="run_limit" type="number">
-    Maximum model calls per single invocation. Defaults to no limit.
-  </ParamField>
 
-  <ParamField body="exit_behavior" type="string" default="end">
-    Behavior when limit is reached. Options: `'end'` (graceful termination) or `'error'` (raise exception)
-  </ParamField>
-</Accordion>
+<details>
+<summary>Configuration options</summary>
+
+
+- **`param`** (`number`): Maximum model calls across all runs in a thread. Defaults to no limit.
+
+
+  
+- **`param`** (`number`): Maximum model calls per single invocation. Defaults to no limit.
+
+
+  
+- **`param`** (`string`): Behavior when limit is reached. Options: `'end'` (graceful termination) or `'error'` (raise exception)
+
+
+</details>
+
 
 ### Tool call limit
 
@@ -324,36 +345,44 @@ agent = create_agent(
 )
 ```
 
-<Callout icon="player-play" iconType="solid">
-  Watch this [video guide](https://www.youtube.com/watch?v=6gYlaJJ8t0w) demonstrating Tool Call Limit middleware behavior.
-</Callout>
 
-<Accordion title="Configuration options">
-  <ParamField body="tool_name" type="string">
-    Name of specific tool to limit. If not provided, limits apply to **all tools globally**.
-  </ParamField>
+> ℹ️ **Note:**
+>
+> Watch this [video guide](https://www.youtube.com/watch?v=6gYlaJJ8t0w) demonstrating Tool Call Limit middleware behavior.
 
-  <ParamField body="thread_limit" type="number">
-    Maximum tool calls across all runs in a thread (conversation). Persists across multiple invocations with the same thread ID. Requires a checkpointer to maintain state. `None` means no thread limit.
-  </ParamField>
 
-  <ParamField body="run_limit" type="number">
-    Maximum tool calls per single invocation (one user message → response cycle). Resets with each new user message. `None` means no run limit.
+<details>
+<summary>Configuration options</summary>
+
+
+- **`param`** (`string`): Name of specific tool to limit. If not provided, limits apply to **all tools globally**.
+
+
+  
+- **`param`** (`number`): Maximum tool calls across all runs in a thread (conversation). Persists across multiple invocations with the same thread ID. Requires a checkpointer to maintain state. `None` means no thread limit.
+
+
+  
+- **`param`** (`number`): Maximum tool calls per single invocation (one user message → response cycle). Resets with each new user message. `None` means no run limit.
 
     **Note:** At least one of `thread_limit` or `run_limit` must be specified.
-  </ParamField>
 
-  <ParamField body="exit_behavior" type="string" default="continue">
-    Behavior when limit is reached:
+
+  
+- **`param`** (`string`): Behavior when limit is reached:
 
     * `'continue'` (default) - Block exceeded tool calls with error messages, let other tools and the model continue. The model decides when to end based on the error messages.
     * `'error'` - Raise a `ToolCallLimitExceededError` exception, stopping execution immediately
     * `'end'` - Stop execution immediately with a `ToolMessage` and AI message for the exceeded tool call. Only works when limiting a single tool; raises `NotImplementedError` if other tools have pending calls.
-  </ParamField>
-</Accordion>
 
-<Accordion title="Full example">
-  Specify limits with:
+
+</details>
+
+
+<details>
+<summary>Full example</summary>
+
+Specify limits with:
 
   * **Thread limit** - Max calls across all runs in a conversation (requires checkpointer)
   * **Run limit** - Max calls per single invocation (resets each turn)
@@ -380,7 +409,9 @@ agent = create_agent(
       middleware=[global_limiter, search_limiter, database_limiter, strict_limiter],
   )
   ```
-</Accordion>
+
+</details>
+
 
 ### Model fallback
 
@@ -408,19 +439,25 @@ agent = create_agent(
 )
 ```
 
-<Callout icon="player-play" iconType="solid">
-  Watch this [video guide](https://www.youtube.com/watch?v=8rCRO0DUeIM) demonstrating Model Fallback middleware behavior.
-</Callout>
 
-<Accordion title="Configuration options">
-  <ParamField body="first_model" type="string | BaseChatModel" required>
-    First fallback model to try when the primary model fails. Can be a model identifier string (e.g., `'openai:gpt-4.1-mini'`) or a `BaseChatModel` instance.
-  </ParamField>
+> ℹ️ **Note:**
+>
+> Watch this [video guide](https://www.youtube.com/watch?v=8rCRO0DUeIM) demonstrating Model Fallback middleware behavior.
 
-  <ParamField body="*additional_models" type="string | BaseChatModel">
-    Additional fallback models to try in order if previous models fail
-  </ParamField>
-</Accordion>
+
+<details>
+<summary>Configuration options</summary>
+
+
+- **`param`** (`string | BaseChatModel`): First fallback model to try when the primary model fails. Can be a model identifier string (e.g., `'openai:gpt-4.1-mini'`) or a `BaseChatModel` instance.
+
+
+  
+- **`param`** (`string | BaseChatModel`): Additional fallback models to try in order if previous models fail
+
+
+</details>
+
 
 ### PII detection
 
@@ -536,45 +573,51 @@ def detector(content: str) -> list[dict[str, str | int]]:
     ]
 ```
 
-<Tip>
-  For custom detectors:
 
-  * Use regex strings for simple patterns
-  * Use RegExp objects when you need flags (e.g., case-insensitive matching)
-  * Use custom functions when you need validation logic beyond pattern matching
-  * Custom functions give you full control over detection logic and can implement complex validation rules
-</Tip>
+> 💡 **Tip**
+>
+> For custom detectors:
+> 
+>   * Use regex strings for simple patterns
+>   * Use RegExp objects when you need flags (e.g., case-insensitive matching)
+>   * Use custom functions when you need validation logic beyond pattern matching
+>   * Custom functions give you full control over detection logic and can implement complex validation rules
 
-<Accordion title="Configuration options">
-  <ParamField body="pii_type" type="string" required>
-    Type of PII to detect. Can be a built-in type (`email`, `credit_card`, `ip`, `mac_address`, `url`) or a custom type name.
-  </ParamField>
 
-  <ParamField body="strategy" type="string" default="redact">
-    How to handle detected PII. Options:
+<details>
+<summary>Configuration options</summary>
+
+
+- **`param`** (`string`): Type of PII to detect. Can be a built-in type (`email`, `credit_card`, `ip`, `mac_address`, `url`) or a custom type name.
+
+
+  
+- **`param`** (`string`): How to handle detected PII. Options:
 
     * `'block'` - Raise exception when detected
     * `'redact'` - Replace with `[REDACTED_{PII_TYPE}]`
     * `'mask'` - Partially mask (e.g., `****-****-****-1234`)
     * `'hash'` - Replace with deterministic hash
-  </ParamField>
 
-  <ParamField body="detector" type="function | regex">
-    Custom detector function or regex pattern. If not provided, uses built-in detector for the PII type.
-  </ParamField>
 
-  <ParamField body="apply_to_input" type="boolean" default="True">
-    Check user messages before model call
-  </ParamField>
+  
+- **`param`** (`function | regex`): Custom detector function or regex pattern. If not provided, uses built-in detector for the PII type.
 
-  <ParamField body="apply_to_output" type="boolean" default="False">
-    Check AI messages after model call
-  </ParamField>
 
-  <ParamField body="apply_to_tool_results" type="boolean" default="False">
-    Check tool result messages after execution
-  </ParamField>
-</Accordion>
+  
+- **`param`** (`boolean`): Check user messages before model call
+
+
+  
+- **`param`** (`boolean`): Check AI messages after model call
+
+
+  
+- **`param`** (`boolean`): Check tool result messages after execution
+
+
+</details>
+
 
 ### To-do list
 
@@ -583,9 +626,11 @@ Equip agents with task planning and tracking capabilities for complex multi-step
 * Complex multi-step tasks requiring coordination across multiple tools.
 * Long-running operations where progress visibility is important.
 
-<Note>
-  This middleware automatically provides agents with a `write_todos` tool and system prompts to guide effective task planning.
-</Note>
+
+> ℹ️ **Note**
+>
+> This middleware automatically provides agents with a `write_todos` tool and system prompts to guide effective task planning.
+
 
 **API reference:** [`TodoListMiddleware`](https://reference.langchain.com/python/langchain/agents/middleware/todo/TodoListMiddleware)
 
@@ -600,19 +645,25 @@ agent = create_agent(
 )
 ```
 
-<Callout icon="player-play" iconType="solid">
-  Watch this [video guide](https://www.youtube.com/watch?v=yTWocbVKQxw) demonstrating To-do List middleware behavior.
-</Callout>
 
-<Accordion title="Configuration options">
-  <ParamField body="system_prompt" type="string">
-    Custom system prompt for guiding todo usage. Uses built-in prompt if not specified.
-  </ParamField>
+> ℹ️ **Note:**
+>
+> Watch this [video guide](https://www.youtube.com/watch?v=yTWocbVKQxw) demonstrating To-do List middleware behavior.
 
-  <ParamField body="tool_description" type="string">
-    Custom description for the `write_todos` tool. Uses built-in description if not specified.
-  </ParamField>
-</Accordion>
+
+<details>
+<summary>Configuration options</summary>
+
+
+- **`param`** (`string`): Custom system prompt for guiding todo usage. Uses built-in prompt if not specified.
+
+
+  
+- **`param`** (`string`): Custom description for the `write_todos` tool. Uses built-in description if not specified.
+
+
+</details>
+
 
 ### LLM tool selector
 
@@ -643,25 +694,30 @@ agent = create_agent(
 )
 ```
 
-<Accordion title="Configuration options">
-  <ParamField body="model" type="string | BaseChatModel">
-    Model for tool selection. Can be a model identifier string (e.g., `'openai:gpt-4.1-mini'`) or a `BaseChatModel` instance. See [`init_chat_model`](https://reference.langchain.com/python/langchain/chat_models/base/init_chat_model) for more information.
+
+<details>
+<summary>Configuration options</summary>
+
+
+- **`param`** (`string | BaseChatModel`): Model for tool selection. Can be a model identifier string (e.g., `'openai:gpt-4.1-mini'`) or a `BaseChatModel` instance. See [`init_chat_model`](https://reference.langchain.com/python/langchain/chat_models/base/init_chat_model) for more information.
 
     Defaults to the agent's main model.
-  </ParamField>
 
-  <ParamField body="system_prompt" type="string">
-    Instructions for the selection model. Uses built-in prompt if not specified.
-  </ParamField>
 
-  <ParamField body="max_tools" type="number">
-    Maximum number of tools to select. If the model selects more, only the first max\_tools will be used. No limit if not specified.
-  </ParamField>
+  
+- **`param`** (`string`): Instructions for the selection model. Uses built-in prompt if not specified.
 
-  <ParamField body="always_include" type="list[string]">
-    Tool names to always include regardless of selection. These do not count against the max\_tools limit.
-  </ParamField>
-</Accordion>
+
+  
+- **`param`** (`number`): Maximum number of tools to select. If the model selects more, only the first max\_tools will be used. No limit if not specified.
+
+
+  
+- **`param`** (`list[string]`): Tool names to always include regardless of selection. These do not count against the max\_tools limit.
+
+
+</details>
+
 
 ### Tool retry
 
@@ -690,46 +746,53 @@ agent = create_agent(
 )
 ```
 
-<Accordion title="Configuration options">
-  <ParamField body="max_retries" type="number" default="2">
-    Maximum number of retry attempts after the initial call (3 total attempts with default)
-  </ParamField>
 
-  <ParamField body="tools" type="list[BaseTool | str]">
-    Optional list of tools or tool names to apply retry logic to. If `None`, applies to all tools.
-  </ParamField>
+<details>
+<summary>Configuration options</summary>
 
-  <ParamField body="retry_on" type="tuple[type[Exception], ...] | callable" default="(Exception,)">
-    Either a tuple of exception types to retry on, or a callable that takes an exception and returns `True` if it should be retried.
-  </ParamField>
 
-  <ParamField body="on_failure" type="string | callable" default="return_message">
-    Behavior when all retries are exhausted. Options:
+- **`param`** (`number`): Maximum number of retry attempts after the initial call (3 total attempts with default)
+
+
+  
+- **`param`** (`list[BaseTool | str]`): Optional list of tools or tool names to apply retry logic to. If `None`, applies to all tools.
+
+
+  
+- **`param`** (`tuple[type[Exception], ...] | callable`): Either a tuple of exception types to retry on, or a callable that takes an exception and returns `True` if it should be retried.
+
+
+  
+- **`param`** (`string | callable`): Behavior when all retries are exhausted. Options:
 
     * `'return_message'` - Return a `ToolMessage` with error details (allows LLM to handle failure)
     * `'raise'` - Re-raise the exception (stops agent execution)
     * Custom callable - Function that takes the exception and returns a string for the `ToolMessage` content
-  </ParamField>
 
-  <ParamField body="backoff_factor" type="number" default="2.0">
-    Multiplier for exponential backoff. Each retry waits `initial_delay * (backoff_factor ** retry_number)` seconds. Set to `0.0` for constant delay.
-  </ParamField>
 
-  <ParamField body="initial_delay" type="number" default="1.0">
-    Initial delay in seconds before first retry
-  </ParamField>
+  
+- **`param`** (`number`): Multiplier for exponential backoff. Each retry waits `initial_delay * (backoff_factor ** retry_number)` seconds. Set to `0.0` for constant delay.
 
-  <ParamField body="max_delay" type="number" default="60.0">
-    Maximum delay in seconds between retries (caps exponential backoff growth)
-  </ParamField>
 
-  <ParamField body="jitter" type="boolean" default="true">
-    Whether to add random jitter (`±25%`) to delay to avoid thundering herd
-  </ParamField>
-</Accordion>
+  
+- **`param`** (`number`): Initial delay in seconds before first retry
 
-<Accordion title="Full example">
-  The middleware automatically retries failed tool calls with exponential backoff.
+
+  
+- **`param`** (`number`): Maximum delay in seconds between retries (caps exponential backoff growth)
+
+
+  
+- **`param`** (`boolean`): Whether to add random jitter (`±25%`) to delay to avoid thundering herd
+
+
+</details>
+
+
+<details>
+<summary>Full example</summary>
+
+The middleware automatically retries failed tool calls with exponential backoff.
 
   **Key configuration:**
 
@@ -767,7 +830,9 @@ agent = create_agent(
       ],
   )
   ```
-</Accordion>
+
+</details>
+
 
 ### Model retry
 
@@ -796,42 +861,49 @@ agent = create_agent(
 )
 ```
 
-<Accordion title="Configuration options">
-  <ParamField body="max_retries" type="number" default="2">
-    Maximum number of retry attempts after the initial call (3 total attempts with default)
-  </ParamField>
 
-  <ParamField body="retry_on" type="tuple[type[Exception], ...] | callable" default="(Exception,)">
-    Either a tuple of exception types to retry on, or a callable that takes an exception and returns `True` if it should be retried.
-  </ParamField>
+<details>
+<summary>Configuration options</summary>
 
-  <ParamField body="on_failure" type="string | callable" default="continue">
-    Behavior when all retries are exhausted. Options:
+
+- **`param`** (`number`): Maximum number of retry attempts after the initial call (3 total attempts with default)
+
+
+  
+- **`param`** (`tuple[type[Exception], ...] | callable`): Either a tuple of exception types to retry on, or a callable that takes an exception and returns `True` if it should be retried.
+
+
+  
+- **`param`** (`string | callable`): Behavior when all retries are exhausted. Options:
 
     * `'continue'` (default) - Return an `AIMessage` with error details, allowing the agent to potentially handle the failure gracefully
     * `'error'` - Re-raise the exception (stops agent execution)
     * Custom callable - Function that takes the exception and returns a string for the `AIMessage` content
-  </ParamField>
 
-  <ParamField body="backoff_factor" type="number" default="2.0">
-    Multiplier for exponential backoff. Each retry waits `initial_delay * (backoff_factor ** retry_number)` seconds. Set to `0.0` for constant delay.
-  </ParamField>
 
-  <ParamField body="initial_delay" type="number" default="1.0">
-    Initial delay in seconds before first retry
-  </ParamField>
+  
+- **`param`** (`number`): Multiplier for exponential backoff. Each retry waits `initial_delay * (backoff_factor ** retry_number)` seconds. Set to `0.0` for constant delay.
 
-  <ParamField body="max_delay" type="number" default="60.0">
-    Maximum delay in seconds between retries (caps exponential backoff growth)
-  </ParamField>
 
-  <ParamField body="jitter" type="boolean" default="true">
-    Whether to add random jitter (`±25%`) to delay to avoid thundering herd
-  </ParamField>
-</Accordion>
+  
+- **`param`** (`number`): Initial delay in seconds before first retry
 
-<Accordion title="Full example">
-  The middleware automatically retries failed model calls with exponential backoff.
+
+  
+- **`param`** (`number`): Maximum delay in seconds between retries (caps exponential backoff growth)
+
+
+  
+- **`param`** (`boolean`): Whether to add random jitter (`±25%`) to delay to avoid thundering herd
+
+
+</details>
+
+
+<details>
+<summary>Full example</summary>
+
+The middleware automatically retries failed model calls with exponential backoff.
 
   ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   from langchain.agents import create_agent
@@ -904,7 +976,9 @@ agent = create_agent(
       on_failure="error",  # Re-raise exception instead of returning message
   )
   ```
-</Accordion>
+
+</details>
+
 
 ### LLM tool emulator
 
@@ -929,18 +1003,25 @@ agent = create_agent(
 )
 ```
 
-<Accordion title="Configuration options">
-  <ParamField body="tools" type="list[str | BaseTool]">
-    List of tool names (str) or BaseTool instances to emulate. If `None` (default), ALL tools will be emulated. If empty list `[]`, no tools will be emulated. If array with tool names/instances, only those tools will be emulated.
-  </ParamField>
 
-  <ParamField body="model" type="string | BaseChatModel">
-    Model to use for generating emulated tool responses. Can be a model identifier string (e.g., `'anthropic:claude-sonnet-4-6'`) or a `BaseChatModel` instance. Defaults to the agent's model if not specified. See [`init_chat_model`](https://reference.langchain.com/python/langchain/chat_models/base/init_chat_model) for more information.
-  </ParamField>
-</Accordion>
+<details>
+<summary>Configuration options</summary>
 
-<Accordion title="Full example">
-  The middleware uses an LLM to generate plausible responses for tool calls instead of executing the actual tools.
+
+- **`param`** (`list[str | BaseTool]`): List of tool names (str) or BaseTool instances to emulate. If `None` (default), ALL tools will be emulated. If empty list `[]`, no tools will be emulated. If array with tool names/instances, only those tools will be emulated.
+
+
+  
+- **`param`** (`string | BaseChatModel`): Model to use for generating emulated tool responses. Can be a model identifier string (e.g., `'anthropic:claude-sonnet-4-6'`) or a `BaseChatModel` instance. Defaults to the agent's model if not specified. See [`init_chat_model`](https://reference.langchain.com/python/langchain/chat_models/base/init_chat_model) for more information.
+
+
+</details>
+
+
+<details>
+<summary>Full example</summary>
+
+The middleware uses an LLM to generate plausible responses for tool calls instead of executing the actual tools.
 
   ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   from langchain.agents import create_agent
@@ -980,7 +1061,9 @@ agent = create_agent(
       middleware=[LLMToolEmulator(model="claude-sonnet-4-6")],
   )
   ```
-</Accordion>
+
+</details>
+
 
 ### Context editing
 
@@ -1012,44 +1095,51 @@ agent = create_agent(
 )
 ```
 
-<Accordion title="Configuration options">
-  <ParamField body="edits" type="list[ContextEdit]" default="[ClearToolUsesEdit()]">
-    List of [`ContextEdit`](https://reference.langchain.com/python/langchain/agents/middleware/context_editing/ContextEdit) strategies to apply
-  </ParamField>
 
-  <ParamField body="token_count_method" type="string" default="approximate">
-    Token counting method. Options: `'approximate'` or `'model'`
-  </ParamField>
+<details>
+<summary>Configuration options</summary>
+
+
+- **`param`** (`list[ContextEdit]`): List of [`ContextEdit`](https://reference.langchain.com/python/langchain/agents/middleware/context_editing/ContextEdit) strategies to apply
+
+
+  
+- **`param`** (`string`): Token counting method. Options: `'approximate'` or `'model'`
+
 
   **[`ClearToolUsesEdit`](https://reference.langchain.com/python/langchain/agents/middleware/context_editing/ClearToolUsesEdit) options:**
 
-  <ParamField body="trigger" type="number" default="100000">
-    Token count that triggers the edit. When the conversation exceeds this token count, older tool outputs will be cleared.
-  </ParamField>
+  
+- **`param`** (`number`): Token count that triggers the edit. When the conversation exceeds this token count, older tool outputs will be cleared.
 
-  <ParamField body="clear_at_least" type="number" default="0">
-    Minimum number of tokens to reclaim when the edit runs. If set to 0, clears as much as needed.
-  </ParamField>
 
-  <ParamField body="keep" type="number" default="3">
-    Number of most recent tool results that must be preserved. These will never be cleared.
-  </ParamField>
+  
+- **`param`** (`number`): Minimum number of tokens to reclaim when the edit runs. If set to 0, clears as much as needed.
 
-  <ParamField body="clear_tool_inputs" type="boolean" default="False">
-    Whether to clear the originating tool call parameters on the AI message. When `True`, tool call arguments are replaced with empty objects.
-  </ParamField>
 
-  <ParamField body="exclude_tools" type="list[string]" default="()">
-    List of tool names to exclude from clearing. These tools will never have their outputs cleared.
-  </ParamField>
+  
+- **`param`** (`number`): Number of most recent tool results that must be preserved. These will never be cleared.
 
-  <ParamField body="placeholder" type="string" default="[cleared]">
-    Placeholder text inserted for cleared tool outputs. This replaces the original tool message content.
-  </ParamField>
-</Accordion>
 
-<Accordion title="Full example">
-  The middleware applies context editing strategies when token limits are reached. The most common strategy is `ClearToolUsesEdit`, which clears older tool results while preserving recent ones.
+  
+- **`param`** (`boolean`): Whether to clear the originating tool call parameters on the AI message. When `True`, tool call arguments are replaced with empty objects.
+
+
+  
+- **`param`** (`list[string]`): List of tool names to exclude from clearing. These tools will never have their outputs cleared.
+
+
+  
+- **`param`** (`string`): Placeholder text inserted for cleared tool outputs. This replaces the original tool message content.
+
+
+</details>
+
+
+<details>
+<summary>Full example</summary>
+
+The middleware applies context editing strategies when token limits are reached. The most common strategy is `ClearToolUsesEdit`, which clears older tool results while preserving recent ones.
 
   **How it works:**
 
@@ -1081,7 +1171,9 @@ agent = create_agent(
       ],
   )
   ```
-</Accordion>
+
+</details>
+
 
 ### Shell tool
 
@@ -1092,13 +1184,16 @@ Expose a persistent shell session to agents for command execution. Shell tool mi
 * Testing and validation workflows
 * File system operations and script execution
 
-<Warning>
-  **Security consideration**: Use appropriate execution policies (`HostExecutionPolicy`, `DockerExecutionPolicy`, or `CodexSandboxExecutionPolicy`) to match your deployment's security requirements.
-</Warning>
 
-<Note>
-  **Limitation**: Persistent shell sessions do not currently work with interrupts (human-in-the-loop). We anticipate adding support for this in the future.
-</Note>
+> ⚠️ **Warning**
+>
+> **Security consideration**: Use appropriate execution policies (`HostExecutionPolicy`, `DockerExecutionPolicy`, or `CodexSandboxExecutionPolicy`) to match your deployment's security requirements.
+
+
+> ℹ️ **Note**
+>
+> **Limitation**: Persistent shell sessions do not currently work with interrupts (human-in-the-loop). We anticipate adding support for this in the future.
+
 
 **API reference:** [`ShellToolMiddleware`](https://reference.langchain.com/python/langchain/agents/middleware/shell_tool/ShellToolMiddleware)
 
@@ -1121,50 +1216,58 @@ agent = create_agent(
 )
 ```
 
-<Accordion title="Configuration options">
-  <ParamField body="workspace_root" type="str | Path | None">
-    Base directory for the shell session. If omitted, a temporary directory is created when the agent starts and removed when it ends.
-  </ParamField>
 
-  <ParamField body="startup_commands" type="tuple[str, ...] | list[str] | str | None">
-    Optional commands executed sequentially after the session starts
-  </ParamField>
+<details>
+<summary>Configuration options</summary>
 
-  <ParamField body="shutdown_commands" type="tuple[str, ...] | list[str] | str | None">
-    Optional commands executed before the session shuts down
-  </ParamField>
 
-  <ParamField body="execution_policy" type="BaseExecutionPolicy | None">
-    Execution policy controlling timeouts, output limits, and resource configuration. Options:
+- **`param`** (`str | Path | None`): Base directory for the shell session. If omitted, a temporary directory is created when the agent starts and removed when it ends.
+
+
+  
+- **`param`** (`tuple[str, ...] | list[str] | str | None`): Optional commands executed sequentially after the session starts
+
+
+  
+- **`param`** (`tuple[str, ...] | list[str] | str | None`): Optional commands executed before the session shuts down
+
+
+  
+- **`param`** (`BaseExecutionPolicy | None`): Execution policy controlling timeouts, output limits, and resource configuration. Options:
 
     * `HostExecutionPolicy` - Full host access (default); best for trusted environments where the agent already runs inside a container or VM
     * `DockerExecutionPolicy` - Launches a separate Docker container for each agent run, providing harder isolation
     * `CodexSandboxExecutionPolicy` - Reuses the Codex CLI sandbox for additional syscall/filesystem restrictions
-  </ParamField>
 
-  <ParamField body="redaction_rules" type="tuple[RedactionRule, ...] | list[RedactionRule] | None">
-    Optional redaction rules to sanitize command output before returning it to the model.
 
-    <Warning>
-      Redaction rules are applied post execution and do not prevent exfiltration of secrets or sensitive data when using `HostExecutionPolicy`.
-    </Warning>
-  </ParamField>
+  
+- **`param`** (`tuple[RedactionRule, ...] | list[RedactionRule] | None`): Optional redaction rules to sanitize command output before returning it to the model.
 
-  <ParamField body="tool_description" type="str | None">
-    Optional override for the registered shell tool description
-  </ParamField>
+    
+> ⚠️ **Warning**
+>
+> Redaction rules are applied post execution and do not prevent exfiltration of secrets or sensitive data when using `HostExecutionPolicy`.
 
-  <ParamField body="shell_command" type="Sequence[str] | str | None">
-    Optional shell executable (string) or argument sequence used to launch the persistent session. Defaults to `/bin/bash`.
-  </ParamField>
 
-  <ParamField body="env" type="Mapping[str, Any] | None">
-    Optional environment variables to supply to the shell session. Values are coerced to strings before command execution.
-  </ParamField>
-</Accordion>
+  
+- **`param`** (`str | None`): Optional override for the registered shell tool description
 
-<Accordion title="Full example">
-  The middleware provides a single persistent shell session that agents can use to execute commands sequentially.
+
+  
+- **`param`** (`Sequence[str] | str | None`): Optional shell executable (string) or argument sequence used to launch the persistent session. Defaults to `/bin/bash`.
+
+
+  
+- **`param`** (`Mapping[str, Any] | None`): Optional environment variables to supply to the shell session. Values are coerced to strings before command execution.
+
+
+</details>
+
+
+<details>
+<summary>Full example</summary>
+
+The middleware provides a single persistent shell session that agents can use to execute commands sequentially.
 
   **Execution policies:**
 
@@ -1224,7 +1327,9 @@ agent = create_agent(
       ],
   )
   ```
-</Accordion>
+
+</details>
+
 
 ### File search
 
@@ -1253,22 +1358,29 @@ agent = create_agent(
 )
 ```
 
-<Accordion title="Configuration options">
-  <ParamField body="root_path" type="str" required>
-    Root directory to search. All file operations are relative to this path.
-  </ParamField>
 
-  <ParamField body="use_ripgrep" type="bool" default="True">
-    Whether to use ripgrep for search. Falls back to Python regex if ripgrep is unavailable.
-  </ParamField>
+<details>
+<summary>Configuration options</summary>
 
-  <ParamField body="max_file_size_mb" type="int" default="10">
-    Maximum file size to search in MB. Files larger than this are skipped.
-  </ParamField>
-</Accordion>
 
-<Accordion title="Full example">
-  The middleware adds two search tools to agents:
+- **`param`** (`str`): Root directory to search. All file operations are relative to this path.
+
+
+  
+- **`param`** (`bool`): Whether to use ripgrep for search. Falls back to Python regex if ripgrep is unavailable.
+
+
+  
+- **`param`** (`int`): Maximum file size to search in MB. Files larger than this are skipped.
+
+
+</details>
+
+
+<details>
+<summary>Full example</summary>
+
+The middleware adds two search tools to agents:
 
   **Glob tool** - Fast file pattern matching:
 
@@ -1308,7 +1420,9 @@ agent = create_agent(
   # 1. glob_search(pattern="**/*.py") to find Python files
   # 2. grep_search(pattern="async def", include="*.py") to find async functions
   ```
-</Accordion>
+
+</details>
+
 
 ### Filesystem middleware
 
@@ -1455,28 +1569,25 @@ In addition to any user-defined subagents, the main agent has access to a `gener
 
 These middleware are optimized for specific LLM providers. See each provider's documentation for full details and examples.
 
-<Columns cols={2}>
-  <Card title="Anthropic" href="/oss/python/integrations/middleware/anthropic" icon="https://mintcdn.com/langchain-5e9cc07a/y4fKEo7ANyWBQMjp/images/providers/anthropic-icon.svg?fit=max&auto=format&n=y4fKEo7ANyWBQMjp&q=85&s=9212db764598a2d3f02f471b5436ae9e" arrow width="65" height="65" data-path="images/providers/anthropic-icon.svg">
-    Prompt caching, bash tool, text editor, memory, and file search middleware for Claude models.
-  </Card>
 
-  <Card title="AWS" href="/oss/python/integrations/middleware/aws" icon="brand-aws" arrow>
-    Prompt caching middleware for Amazon Bedrock models.
-  </Card>
-
-  <Card title="OpenAI" href="/oss/python/integrations/middleware/openai" icon="brand-openai" arrow>
-    Content moderation middleware for OpenAI models.
-  </Card>
-</Columns>
+Prompt caching, bash tool, text editor, memory, and file search middleware for Claude models.
+  
+Prompt caching middleware for Amazon Bedrock models.
+  
+Content moderation middleware for OpenAI models.
+  
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/middleware/built-in.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/middleware/built-in.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

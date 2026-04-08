@@ -21,9 +21,8 @@ LLM applications often have a constant loop of testing and monitoring.
 
 **Online evaluation** scores live traces to catch issues in real traffic. When you find edge cases your dataset didn't cover, you add them back to your dataset so future experiments will catch them.
 
-<Frame fullWidth>
-  ![The Continuous Evaluation/Iteration Loop](/images/docs/evaluation/continuous-evaluation-loop.png)
-</Frame>
+
+![The Continuous Evaluation/Iteration Loop](/images/docs/evaluation/continuous-evaluation-loop.png)
 
 > **Here's an example workflow** for building a customer support chatbot
 > 1. You update your prompt to make responses less formal.
@@ -79,9 +78,8 @@ When you run an experiment on a given **dataset**, each of the **dataset items**
 
 Often, you want to score these experiment results. You can use various [evaluation methods](#evaluation-methods) that take in the dataset item and the output produced by the task function, and produce a score based on criteria you define. Based on these scores, you can then get a complete picture of how your application performs across all test cases.
 
-<Frame fullWidth>
-  ![Experiments flow](/images/docs/evaluation/experiments-flow.jpg)
-</Frame>
+
+![Experiments flow](/images/docs/evaluation/experiments-flow.jpg)
 
 You can compare experiment runs to see if a new prompt version improves scores, or identify specific inputs where your application struggles. Based on these experiment results, you can decide whether the change is ready to be deployed to production. 
 
@@ -94,41 +92,24 @@ You can **run experiments programmatically using the Langfuse SDK**. This gives 
 
 Another way is to **run experiments directly from the Langfuse interface** by selecting a dataset and prompt version. This is useful for quick iterations on prompts without writing code. [Learn more about running experiments via UI](/docs/evaluation/experiments/experiments-via-ui).
 
-<div className="my-6">
-  <div className="grid grid-cols-3 gap-2">
-    {/* Header row */}
-    <div></div>
-    <div className="text-center font-medium p-3 bg-gray-50 dark:bg-gray-800 rounded border dark:border-gray-700">
-      **Langfuse Execution**
-    </div>
-    <div className="text-center font-medium p-3 bg-gray-50 dark:bg-gray-800 rounded border dark:border-gray-700">
-      **Local/CI Execution**
-    </div>
 
-    {/* Langfuse Data row */}
-    <div className="font-medium p-3 bg-gray-50 dark:bg-gray-800 rounded border dark:border-gray-700 text-center">
-      **Langfuse Dataset**
-    </div>
-    <div className="p-3 border dark:border-gray-700 rounded text-center bg-green-50 dark:bg-green-900/30">
-      [Experiments via UI](/docs/evaluation/experiments/experiments-via-ui)
-    </div>
-    <div className="p-3 border dark:border-gray-700 rounded text-center bg-blue-50 dark:bg-blue-900/30">
-      [Experiments via SDK](/docs/evaluation/experiments/experiments-via-sdk)
-    </div>
+**Langfuse Execution**
+    
+**Local/CI Execution**
+    
+**Langfuse Dataset**
+    
+[Experiments via UI](/docs/evaluation/experiments/experiments-via-ui)
+    
+[Experiments via SDK](/docs/evaluation/experiments/experiments-via-sdk)
+    
+**Local Dataset**
+    
+Not supported
+    
+[Experiments via SDK](/docs/evaluation/experiments/experiments-via-sdk)
+    
 
-    {/* Local Data row */}
-    <div className="font-medium p-3 bg-gray-50 dark:bg-gray-800 rounded border dark:border-gray-700 text-center">
-      **Local Dataset**
-    </div>
-    <div className="p-3 border dark:border-gray-700 rounded text-center bg-red-50 dark:bg-red-900/30">
-      Not supported
-    </div>
-    <div className="p-3 border dark:border-gray-700 rounded text-center bg-blue-50 dark:bg-blue-900/30">
-      [Experiments via SDK](/docs/evaluation/experiments/experiments-via-sdk)
-    </div>
-
-  </div>
-</div>
 
 *While it's optional, we recommend managing the underlying [Datasets](/docs/evaluation/experiments/datasets) in Langfuse as it allows for [1] In-UI comparison tables of different experiments on the same data and [2] Iteratively improve dataset based on production/staging traces.*
 
@@ -142,7 +123,5 @@ Langfuse currently supports LLM-as-a-Judge and human annotation checks for onlin
 ### Monitoring with dashboards
 
 Langfuse offers dashboards to monitor your application performance in real-time. You can also monitor scores in dashboards. You can find more details on how to use dashboards [here](/docs/metrics/features/custom-dashboards).
-
-
 
 

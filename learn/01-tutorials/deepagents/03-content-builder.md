@@ -42,17 +42,14 @@ Python 3.11 or later.
 
 ## Setup
 
-<Steps>
-  <Step title="Create project directory">
-    ```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     mkdir content-builder-agent
     cd content-builder-agent
     ```
-  </Step>
+  
 
-  <Step title="Install dependencies">
-    <CodeGroup>
-      ```bash pip wrap theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```bash pip wrap theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       pip install deepagents google-genai pillow pyyaml rich tavily-python langchain
       ```
 
@@ -61,28 +58,23 @@ Python 3.11 or later.
       uv add deepagents google-genai pillow pyyaml rich tavily-python langchain
       uv sync
       ```
-    </CodeGroup>
+    
+Pin `deepagents` to a supported range in your own project (for example `>=0.3.5,<0.4.0`) to match the upstream example.
+  
 
-    Pin `deepagents` to a supported range in your own project (for example `>=0.3.5,<0.4.0`) to match the upstream example.
-  </Step>
-
-  <Step title="Set API keys">
-    ```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```bash  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     export ANTHROPIC_API_KEY="your_anthropic_api_key"
     export GOOGLE_API_KEY="your_google_api_key"
     export TAVILY_API_KEY="your_tavily_api_key"           # Optional
     export LANGSMITH_API_KEY="your_langsmith_api_key"     # Optional
     ```
-  </Step>
-</Steps>
-
+  
 ## Add configuration files
 
 The example keeps behavior in three kinds of files: memory, skills, and subagent definitions.
 
-<Steps>
-  <Step title="Add AGENTS.md">
-    Create `AGENTS.md` in the project root.
+
+Create `AGENTS.md` in the project root.
     When you later create the agent and specify this file as part of the [memory](/oss/python/deepagents/long-term-memory) parameter, it gets loaded this into the system prompt so brand voice and research expectations apply to every run.
 
     ```markdown expandable wrap theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
@@ -131,10 +123,9 @@ The example keeps behavior in three kinds of files: memory, skills, and subagent
     ```
 
     To make this agent comply with your own tone, pillars, and formatting rules, update the text in `AGENTS.md`.
-  </Step>
+  
 
-  <Step title="Add subagents.yaml">
-    Create a file called `subagents.yaml`.
+Create a file called `subagents.yaml`.
     Then add the following txt which describes a `researcher` subagent with a Tavily-backed `web_search` tool, a Haiku model id, and instructions to save findings to paths you specify when delegating from the main agent:
 
     ```yaml expandable wrap theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
@@ -170,10 +161,9 @@ The example keeps behavior in three kinds of files: memory, skills, and subagent
     ```
 
     The file gets passed as an argument later when creating the deep agent.
-  </Step>
+  
 
-  <Step title="Add skills">
-    Create a `skills/` directory. Each skill is a folder containing a `SKILL.md` file with YAML frontmatter (`name`, `description`) and instructions for the skill.
+Create a `skills/` directory. Each skill is a folder containing a `SKILL.md` file with YAML frontmatter (`name`, `description`) and instructions for the skill.
 
     Create `skills/blog-post/SKILL.md` and copy the following text into it which contains information on crating long-form posts, optimizing content for SEO, and generating cover images.
 
@@ -507,16 +497,13 @@ The example keeps behavior in three kinds of files: memory, skills, and subagent
     They instruct the agent to call the `researcher` subagent first, write markdown under `blogs/`, `linkedin/`, or `tweets/`, and call `generate_cover` or `generate_social_image` for images.
 
     When you later create the agent and specify the skills folder(s), then the frontmatter of the `SKILLS.md` files from those skill folders get loaded this into the system prompt so the agent can use the skill when a task task matches a skill description.
-  </Step>
-</Steps>
-
+  
 ## Build the script
 
 Create `content_writer.py` in the project root. The following sections belong in one file, in order.
 
-<Steps>
-  <Step title="Add tools">
-    The researcher subagent uses Tavily search.
+
+The researcher subagent uses Tavily search.
     Blog and social workflows use Gemini image generation.
     When creating the agent later, the `load_subagents` function reads `subagents.yaml` and resolves tool names to these decorated functions.
 
@@ -649,10 +636,9 @@ Create `content_writer.py` in the project root. The following sections belong in
 
         return subagents
     ```
-  </Step>
+  
 
-  <Step title="Create the agent">
-    When creating the deep agent with [create\_deep\_agent](https://reference.langchain.com/python/deepagents/graph/create_deep_agent), pass memory paths, the skills directory, image tools, subagents from YAML, and a [FilesystemBackend](/oss/python/deepagents/backends) rooted at the example directory so paths like `./AGENTS.md` and `./skills/` resolve correctly.
+When creating the deep agent with [create\_deep\_agent](https://reference.langchain.com/python/deepagents/graph/create_deep_agent), pass memory paths, the skills directory, image tools, subagents from YAML, and a [FilesystemBackend](/oss/python/deepagents/backends) rooted at the example directory so paths like `./AGENTS.md` and `./skills/` resolve correctly.
 
     ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     from deepagents import create_deep_agent
@@ -669,10 +655,9 @@ Create `content_writer.py` in the project root. The following sections belong in
             backend=FilesystemBackend(root_dir=EXAMPLE_DIR),
         )
     ```
-  </Step>
+  
 
-  <Step title="Add an entry point">
-    Invoke the agent with a user message to verify the agent is working:
+Invoke the agent with a user message to verify the agent is working:
 
     ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     import sys
@@ -696,26 +681,25 @@ Create `content_writer.py` in the project root. The following sections belong in
             if hasattr(msg, "content") and msg.content:
                 print(msg.content)
     ```
-  </Step>
-</Steps>
-
+  
 ## Run the agent
 
-<Warning>
-  The filesystem backend can read, write, and delete files under `root_dir`. Run only in a dedicated directory and review generated content before publishing.
-</Warning>
+
+> ⚠️ **Warning**
+>
+> The filesystem backend can read, write, and delete files under `root_dir`. Run only in a dedicated directory and review generated content before publishing.
+
 
 From the project directory you can invoke the agent without passing an argument or by passing the prompt as an argument:
 
-<CodeGroup>
-  ```bash Default wrap theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```bash Default wrap theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   python content_writer.py
   ```
 
   ```bash With prompt wrap theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   python content_writer.py Write a blog post about prompt engineering
   ```
-</CodeGroup>
 
 With `LANGSMITH_API_KEY` set, you can inspect runs in [LangSmith](/langsmith/home).
 
@@ -747,12 +731,15 @@ Browse the complete [content-builder-agent example](https://github.com/langchain
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/content-builder.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/deepagents/content-builder.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

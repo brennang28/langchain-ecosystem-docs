@@ -687,7 +687,7 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
         backgroundColor: isSelected ? isDark ? "#1A2740" : "#E5F4FF" : "transparent",
         color: isSelected ? isDark ? "#C8DDF0" : "#030710" : "#6B8299"
       });
-      btn.innerHTML = `<span>${SDK_LOGOS[value]}</span>${label}`;
+      btn.innerHTML = `<span>${SDK_LOGOS[value]}${label}`;
       btn.addEventListener("mouseenter", () => {
         if (!isSelected) {
           btn.style.backgroundColor = isDark ? "#1A2740" : "#F2FAFF";
@@ -743,22 +743,18 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
   const tabInactiveClass = `${tabBase} lc-tab-inactive`;
   const tabTraceActiveClass = `${tabBase} lc-tab-trace`;
   const tabTraceLoadingClass = `${tabBase} lc-tab-trace-loading`;
-  const toolbar = showCodeTab && <div className="lc-toolbar flex items-stretch justify-between px-3 py-2 border-b lc-border lc-bg-wash">
-      <div className="inline-flex items-stretch gap-0.5 rounded-lg border lc-border lc-bg-surface" style={{
-    padding: 3
-  }}>
+  const toolbar = showCodeTab && 
+      
         <button type="button" aria-label="Preview" onClick={() => switchView("preview")} className={activeView === "preview" ? tabActiveClass : tabInactiveClass}>
           <span dangerouslySetInnerHTML={{
     __html: VIEW_EYE_SVG
   }} />
-          <span className="lc-tab-label">Preview</span>
-        </button>
+          Preview</button>
         <button type="button" aria-label="Code" onClick={() => switchView("code")} className={activeView === "code" ? tabActiveClass : tabInactiveClass}>
           <span dangerouslySetInnerHTML={{
     __html: VIEW_CODE_SVG
   }} />
-          <span className="lc-tab-label">Code</span>
-        </button>
+          Code</button>
         {(traceUrl || traceLoading) && !useLocalPreview && <a href={traceUrl ?? "#"} target="_blank" rel="noopener noreferrer" aria-label="Trace" onClick={e => {
     if (!traceUrl) e.preventDefault(); else cachedRef.current?.host.trackEvent("trace_tab_clicked", {
       pattern
@@ -767,16 +763,9 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
             <span dangerouslySetInnerHTML={{
     __html: traceUrl ? TRACE_ICON_SVG : TRACE_SPINNER_SVG
   }} />
-            <span className="lc-tab-label">Trace</span>
-            {traceUrl && <span className="ml-0.5" dangerouslySetInnerHTML={{
-    __html: EXTERNAL_LINK_SVG
-  }} />}
+            Trace{traceUrl && }
           </a>}
-      </div>
-
-      {activeView === "code" && <div className="lc-lang-switcher inline-flex items-stretch gap-0.5 rounded-lg border lc-border lc-bg-surface" style={{
-    padding: 3
-  }}>
+      {activeView === "code" && 
           <button type="button" aria-label="TypeScript" onClick={() => setAgentLang("js")} className={agentLang === "js" ? tabActiveClass : tabInactiveClass} title="TypeScript / JavaScript">
             <span dangerouslySetInnerHTML={{
     __html: LANG_TS_SVG
@@ -787,10 +776,10 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
     __html: LANG_PYTHON_SVG
   }} />
           </button>
-        </div>}
+        }
 
-      <div className="inline-flex items-center gap-1.5">
-        <button type="button" aria-label={expanded ? "Collapse" : "Expand"} onClick={() => setExpanded(v => !v)} className="lc-expand-btn" title={expanded ? "Collapse" : "Expand"}>
+      
+        <button type="button" aria-label={expanded ? "Collapse" : "Expand"} onClick={() => setExpanded(v => !v)} title={expanded ? "Collapse" : "Expand"}>
           <span dangerouslySetInnerHTML={{
     __html: expanded ? CLOSE_SVG : EXPAND_SVG
   }} />
@@ -815,14 +804,14 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
       sdk,
       lang: agentLang
     });
-  }} className="lc-expand-btn">
+  }}>
           <span dangerouslySetInnerHTML={{
     __html: DOWNLOAD_SVG
   }} />
         </button>
 
         {}
-        <button ref={sdkButtonRef} type="button" onClick={() => setSdkDropdownOpen(o => !o)} className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border lc-sdk-btn font-medium cursor-pointer transition-colors">
+        <button ref={sdkButtonRef} type="button" onClick={() => setSdkDropdownOpen(o => !o)}>
           <span dangerouslySetInnerHTML={{
     __html: SDK_LOGOS[sdk]
   }} />
@@ -831,41 +820,37 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
     __html: CHEVRON_DOWN_SVG
   }} />
         </button>
-      </div>
-    </div>;
-  const slot = <div ref={slotRef} className="relative w-full" style={expanded ? {
+      ;
+  const slot = <div ref={slotRef} style={expanded ? {
     flex: 1,
     minHeight: 0
   } : {
     height: heightStyle
   }}>
-      {!ready && !error && <div className="absolute inset-0 flex items-center justify-center z-10 lc-bg-wash">
-          <div className="size-6 border-2 lc-spinner rounded-full animate-spin" />
-        </div>}
+      {!ready && !error && 
+          
+        }
 
-      {error && <div className="absolute top-3 inset-x-3 z-10 px-4 py-3 rounded-2xl border lc-error text-sm">
+      {error && 
           <strong>Preview Error</strong>
-          <p className="mt-1 opacity-80" style={{
+          <p style={{
     fontSize: 13
   }}>
             {error}
           </p>
-          <button type="button" onClick={handleReset} className="mt-2 px-3 py-1 text-xs rounded-lg border lc-error-btn cursor-pointer">
+          <button type="button" onClick={handleReset}>
             Retry
           </button>
-        </div>}
-    </div>;
+        }
+    ;
   return <div data-lc-pe ref={placeholderRef} className={`${effectiveTheme === "dark" ? "dark" : ""} ${className ?? ""}`}>
-      <div ref={cardRef} className="rounded-2xl border lc-border overflow-hidden lc-bg-surface">
+      <div ref={cardRef}>
         {toolbar}
         {slot}
-      </div>
-    </div>;
+      ;
 };
 
 Structured output lets the agent return typed, machine-readable data instead of plain text. Instead of rendering a single string, you get a structured object you can map to any UI: cards, tables, charts, step-by-step breakdowns, or domain-specific renderers.
-
-<PatternEmbed pattern="structured-output-latex" />
 
 ## What is structured output?
 
@@ -930,8 +915,6 @@ Your schema can be anything. The pattern works the same way regardless of shape.
 The structured output lives in the `tool_calls` array of the last `AIMessage`. Extract it by finding the AI message and accessing the first tool call's arguments:
 
 ```ts  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-import { AIMessage } from "@langchain/core/messages";
-
 function extractStructuredOutput<T>(messages: any[]): T | null {
   const aiMessages = messages.filter(AIMessage.isInstance);
   if (aiMessages.length === 0) return null;
@@ -944,24 +927,24 @@ function extractStructuredOutput<T>(messages: any[]): T | null {
 }
 ```
 
-<Note>
-  The structured output tool call may not have `args` populated until the agent finishes streaming. During streaming, `args` may be partially populated or undefined. Always check for completeness before rendering.
-</Note>
+
+> ℹ️ **Note**
+>
+> The structured output tool call may not have `args` populated until the agent finishes streaming. During streaming, `args` may be partially populated or undefined. Always check for completeness before rendering.
+
 
 ## Set up `useStream`
 
 Define a TypeScript interface matching your agent's state schema and pass it as a type parameter to `useStream` for type-safe access to state values. In the examples below, replace `typeof myAgent` with your interface name:
 
 ```ts  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-import type { BaseMessage } from "@langchain/core/messages";
-
 interface AgentState {
   messages: BaseMessage[];
 }
 ```
 
-<CodeGroup>
-  ```tsx React theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```tsx React theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   import { useStream } from "@langchain/react";
   import { AIMessage } from "@langchain/core/messages";
 
@@ -974,16 +957,14 @@ interface AgentState {
     const recipe = extractStructuredOutput<Recipe>(stream.messages);
 
     return (
-      <div>
-        {!recipe && !stream.isLoading && (
+      {!recipe && !stream.isLoading && (
           <PromptInput onSubmit={(text) =>
             stream.submit({ messages: [{ type: "human", content: text }] })
           } />
         )}
-        {stream.isLoading && <LoadingIndicator />}
-        {recipe && <RecipeCard recipe={recipe} />}
-      </div>
-    );
+        {stream.isLoading && }
+        {recipe && }
+      );
   }
   ```
 
@@ -1008,12 +989,7 @@ interface AgentState {
   </script>
 
   <template>
-    <div>
-      <PromptInput v-if="!recipe && !stream.isLoading" @submit="handleSubmit" />
-      <LoadingIndicator v-if="stream.isLoading" />
-      <RecipeCard v-if="recipe" :recipe="recipe" />
-    </div>
-  </template>
+    </template>
   ```
 
   ```svelte Svelte theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
@@ -1033,17 +1009,13 @@ interface AgentState {
     }
   </script>
 
-  <div>
-    {#if !recipe && !$isLoading}
+  {#if !recipe && !$isLoading}
       <PromptInput on:submit={(e) => handleSubmit(e.detail)} />
     {/if}
     {#if $isLoading}
-      <LoadingIndicator />
-    {/if}
+      {/if}
     {#if recipe}
-      <RecipeCard {recipe} />
-    {/if}
-  </div>
+      {/if}
   ```
 
   ```ts Angular theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
@@ -1081,7 +1053,6 @@ interface AgentState {
     }
   }
   ```
-</CodeGroup>
 
 ## Render the structured data
 
@@ -1092,18 +1063,12 @@ data into a purpose-built interface.
 ```tsx  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 function RecipeCard({ recipe }: { recipe: Recipe }) {
   return (
-    <div className="recipe-card">
-      <div className="recipe-header">
+    
+      
         <h3>{recipe.title}</h3>
-        <p className="recipe-description">{recipe.description}</p>
-        <div className="recipe-meta">
-          <span>{recipe.servings} servings</span>
-          <span>{recipe.totalTime}</span>
-        </div>
-      </div>
-
-      <div className="recipe-ingredients">
-        <h4>Ingredients</h4>
+        <p>{recipe.description}</p>
+        
+          <span>{recipe.servings} servings<span>{recipe.totalTime}<h4>Ingredients</h4>
         <ul>
           {recipe.ingredients.map((ing, i) => (
             <li key={i}>
@@ -1111,22 +1076,14 @@ function RecipeCard({ recipe }: { recipe: Recipe }) {
             </li>
           ))}
         </ul>
-      </div>
-
-      <div className="recipe-steps">
-        <h4>Instructions</h4>
+      <h4>Instructions</h4>
         {recipe.steps.map((step, i) => (
-          <div key={i} className="step">
-            <div className="step-number">Step {i + 1}</div>
-            <p className="step-instruction">{step.instruction}</p>
+          <div key={i}>
+            Step {i + 1}<p>{step.instruction}</p>
             {step.duration && (
-              <span className="step-duration">{step.duration}</span>
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+              {step.duration})}
+          ))}
+      );
 }
 ```
 
@@ -1189,12 +1146,12 @@ function ProgressiveRecipeCard({ messages }: { messages: any[] }) {
   if (!partial) return null;
 
   return (
-    <div className="recipe-card">
+    
       {partial.title && <h3>{partial.title}</h3>}
       {partial.description && <p>{partial.description}</p>}
 
       {partial.ingredients && partial.ingredients.length > 0 && (
-        <div className="recipe-ingredients">
+        
           <h4>Ingredients</h4>
           <ul>
             {partial.ingredients.map((ing, i) => (
@@ -1203,30 +1160,27 @@ function ProgressiveRecipeCard({ messages }: { messages: any[] }) {
               </li>
             ))}
           </ul>
-        </div>
-      )}
+        )}
 
       {partial.steps && partial.steps.length > 0 && (
-        <div className="recipe-steps">
+        
           <h4>Instructions</h4>
           {partial.steps.map((step, i) => (
-            <div key={i} className="step">
-              <div className="step-number">Step {i + 1}</div>
-              <p>{step.instruction}</p>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
+            <div key={i}>
+              Step {i + 1}<p>{step.instruction}</p>
+            ))}
+        )}
+    );
 }
 ```
 
-<Tip>
-  Progressive rendering works well when the schema has a natural top-to-bottom
-  order: title, then description, then details. The agent typically generates
-  fields in schema order, so the UI fills in naturally.
-</Tip>
+
+> 💡 **Tip**
+>
+> Progressive rendering works well when the schema has a natural top-to-bottom
+>   order: title, then description, then details. The agent typically generates
+>   fields in schema order, so the UI fills in naturally.
+
 
 ## Reset and re-submit
 
@@ -1253,12 +1207,15 @@ This clears the current conversation and lets the user begin a fresh interaction
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/frontend/structured-output.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/frontend/structured-output.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

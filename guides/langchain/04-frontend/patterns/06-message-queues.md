@@ -687,7 +687,7 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
         backgroundColor: isSelected ? isDark ? "#1A2740" : "#E5F4FF" : "transparent",
         color: isSelected ? isDark ? "#C8DDF0" : "#030710" : "#6B8299"
       });
-      btn.innerHTML = `<span>${SDK_LOGOS[value]}</span>${label}`;
+      btn.innerHTML = `<span>${SDK_LOGOS[value]}${label}`;
       btn.addEventListener("mouseenter", () => {
         if (!isSelected) {
           btn.style.backgroundColor = isDark ? "#1A2740" : "#F2FAFF";
@@ -743,22 +743,18 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
   const tabInactiveClass = `${tabBase} lc-tab-inactive`;
   const tabTraceActiveClass = `${tabBase} lc-tab-trace`;
   const tabTraceLoadingClass = `${tabBase} lc-tab-trace-loading`;
-  const toolbar = showCodeTab && <div className="lc-toolbar flex items-stretch justify-between px-3 py-2 border-b lc-border lc-bg-wash">
-      <div className="inline-flex items-stretch gap-0.5 rounded-lg border lc-border lc-bg-surface" style={{
-    padding: 3
-  }}>
+  const toolbar = showCodeTab && 
+      
         <button type="button" aria-label="Preview" onClick={() => switchView("preview")} className={activeView === "preview" ? tabActiveClass : tabInactiveClass}>
           <span dangerouslySetInnerHTML={{
     __html: VIEW_EYE_SVG
   }} />
-          <span className="lc-tab-label">Preview</span>
-        </button>
+          Preview</button>
         <button type="button" aria-label="Code" onClick={() => switchView("code")} className={activeView === "code" ? tabActiveClass : tabInactiveClass}>
           <span dangerouslySetInnerHTML={{
     __html: VIEW_CODE_SVG
   }} />
-          <span className="lc-tab-label">Code</span>
-        </button>
+          Code</button>
         {(traceUrl || traceLoading) && !useLocalPreview && <a href={traceUrl ?? "#"} target="_blank" rel="noopener noreferrer" aria-label="Trace" onClick={e => {
     if (!traceUrl) e.preventDefault(); else cachedRef.current?.host.trackEvent("trace_tab_clicked", {
       pattern
@@ -767,16 +763,9 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
             <span dangerouslySetInnerHTML={{
     __html: traceUrl ? TRACE_ICON_SVG : TRACE_SPINNER_SVG
   }} />
-            <span className="lc-tab-label">Trace</span>
-            {traceUrl && <span className="ml-0.5" dangerouslySetInnerHTML={{
-    __html: EXTERNAL_LINK_SVG
-  }} />}
+            Trace{traceUrl && }
           </a>}
-      </div>
-
-      {activeView === "code" && <div className="lc-lang-switcher inline-flex items-stretch gap-0.5 rounded-lg border lc-border lc-bg-surface" style={{
-    padding: 3
-  }}>
+      {activeView === "code" && 
           <button type="button" aria-label="TypeScript" onClick={() => setAgentLang("js")} className={agentLang === "js" ? tabActiveClass : tabInactiveClass} title="TypeScript / JavaScript">
             <span dangerouslySetInnerHTML={{
     __html: LANG_TS_SVG
@@ -787,10 +776,10 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
     __html: LANG_PYTHON_SVG
   }} />
           </button>
-        </div>}
+        }
 
-      <div className="inline-flex items-center gap-1.5">
-        <button type="button" aria-label={expanded ? "Collapse" : "Expand"} onClick={() => setExpanded(v => !v)} className="lc-expand-btn" title={expanded ? "Collapse" : "Expand"}>
+      
+        <button type="button" aria-label={expanded ? "Collapse" : "Expand"} onClick={() => setExpanded(v => !v)} title={expanded ? "Collapse" : "Expand"}>
           <span dangerouslySetInnerHTML={{
     __html: expanded ? CLOSE_SVG : EXPAND_SVG
   }} />
@@ -815,14 +804,14 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
       sdk,
       lang: agentLang
     });
-  }} className="lc-expand-btn">
+  }}>
           <span dangerouslySetInnerHTML={{
     __html: DOWNLOAD_SVG
   }} />
         </button>
 
         {}
-        <button ref={sdkButtonRef} type="button" onClick={() => setSdkDropdownOpen(o => !o)} className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border lc-sdk-btn font-medium cursor-pointer transition-colors">
+        <button ref={sdkButtonRef} type="button" onClick={() => setSdkDropdownOpen(o => !o)}>
           <span dangerouslySetInnerHTML={{
     __html: SDK_LOGOS[sdk]
   }} />
@@ -831,45 +820,43 @@ export const PatternEmbed = ({pattern, theme, height, minHeight = 400, maxHeight
     __html: CHEVRON_DOWN_SVG
   }} />
         </button>
-      </div>
-    </div>;
-  const slot = <div ref={slotRef} className="relative w-full" style={expanded ? {
+      ;
+  const slot = <div ref={slotRef} style={expanded ? {
     flex: 1,
     minHeight: 0
   } : {
     height: heightStyle
   }}>
-      {!ready && !error && <div className="absolute inset-0 flex items-center justify-center z-10 lc-bg-wash">
-          <div className="size-6 border-2 lc-spinner rounded-full animate-spin" />
-        </div>}
+      {!ready && !error && 
+          
+        }
 
-      {error && <div className="absolute top-3 inset-x-3 z-10 px-4 py-3 rounded-2xl border lc-error text-sm">
+      {error && 
           <strong>Preview Error</strong>
-          <p className="mt-1 opacity-80" style={{
+          <p style={{
     fontSize: 13
   }}>
             {error}
           </p>
-          <button type="button" onClick={handleReset} className="mt-2 px-3 py-1 text-xs rounded-lg border lc-error-btn cursor-pointer">
+          <button type="button" onClick={handleReset}>
             Retry
           </button>
-        </div>}
-    </div>;
+        }
+    ;
   return <div data-lc-pe ref={placeholderRef} className={`${effectiveTheme === "dark" ? "dark" : ""} ${className ?? ""}`}>
-      <div ref={cardRef} className="rounded-2xl border lc-border overflow-hidden lc-bg-surface">
+      <div ref={cardRef}>
         {toolbar}
         {slot}
-      </div>
-    </div>;
+      ;
 };
 
 Message queuing lets users send multiple messages in rapid succession without waiting for the agent to finish processing the current one. Each message is enqueued server-side and processed sequentially, giving you full visibility and control over the pending queue.
 
-<PatternEmbed pattern="message-queues" />
 
-<Note>
-  This feature requires the [LangGraph Agent Server](/langsmith/local-server). Run your agent locally with `langgraph dev` or [deploy it to LangSmith](/langsmith/deployment) to use this pattern.
-</Note>
+> ℹ️ **Note**
+>
+> This feature requires the [LangGraph Agent Server](/langsmith/local-server). Run your agent locally with `langgraph dev` or [deploy it to LangSmith](/langsmith/deployment) to use this pattern.
+
 
 ## Why message queues?
 
@@ -909,15 +896,13 @@ Each `QueueEntry` object contains:
 Define a TypeScript interface matching your agent's state schema and pass it as a type parameter to `useStream` for type-safe access to state values. In the examples below, replace `typeof myAgent` with your interface name:
 
 ```ts  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
-import type { BaseMessage } from "@langchain/core/messages";
-
 interface AgentState {
   messages: BaseMessage[];
 }
 ```
 
-<CodeGroup>
-  ```tsx React theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```tsx React theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   import { useStream } from "@langchain/react";
 
   function Chat() {
@@ -937,12 +922,8 @@ interface AgentState {
     const entries = stream.queue.entries;
 
     return (
-      <div>
-        <MessageList messages={stream.messages} />
-        {pendingCount > 0 && <QueueList entries={entries} queue={stream.queue} />}
-        <ChatInput onSubmit={handleSubmit} />
-      </div>
-    );
+      {pendingCount > 0 && }
+        );
   }
   ```
 
@@ -967,12 +948,8 @@ interface AgentState {
   </script>
 
   <template>
-    <div>
-      <MessageList :messages="stream.messages" />
-      <QueueList v-if="stream.queue.size > 0" :entries="stream.queue.entries" :queue="stream.queue" />
-      <ChatInput @submit="handleSubmit" />
-    </div>
-  </template>
+    <QueueList v-if="stream.queue.size > 0" :entries="stream.queue.entries" :queue="stream.queue" />
+      </template>
   ```
 
   ```svelte Svelte theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
@@ -991,13 +968,9 @@ interface AgentState {
     }
   </script>
 
-  <div>
-    <MessageList messages={$messages} />
-    {#if $queue.size > 0}
-      <QueueList entries={$queue.entries} queue={$queue} />
-    {/if}
+  {#if $queue.size > 0}
+      {/if}
     <ChatInput on:submit={(e) => handleSubmit(e.detail)} />
-  </div>
   ```
 
   ```ts Angular theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
@@ -1027,7 +1000,6 @@ interface AgentState {
     }
   }
   ```
-</CodeGroup>
 
 ## Displaying the queue
 
@@ -1036,22 +1008,16 @@ Build a `QueueList` component that shows each pending message with a cancel butt
 ```tsx  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 function QueueList({ entries, queue }) {
   return (
-    <div className="queue-panel">
-      <div className="queue-header">
-        <span>Queued messages ({entries.length})</span>
-        <button onClick={() => queue.clear()}>Clear all</button>
-      </div>
-      <ul className="queue-entries">
+    
+      
+        <span>Queued messages ({entries.length})<button onClick={() => queue.clear()}>Clear all</button>
+      <ul>
         {entries.map((entry) => {
           const text = entry.values?.messages?.[0]?.content ?? "Unknown";
           return (
-            <li key={entry.id} className="queue-entry">
-              <span className="queue-text">{text}</span>
-              <span className="queue-time">
-                {new Date(entry.createdAt).toLocaleTimeString()}
-              </span>
+            <li key={entry.id}>
+              {text}{new Date(entry.createdAt).toLocaleTimeString()}
               <button
-                className="queue-cancel"
                 onClick={() => queue.cancel(entry.id)}
               >
                 Cancel
@@ -1060,14 +1026,15 @@ function QueueList({ entries, queue }) {
           );
         })}
       </ul>
-    </div>
-  );
+    );
 }
 ```
 
-<Tip>
-  Display the first few characters of each queued message as a preview so users can quickly identify which items to cancel without reading full messages.
-</Tip>
+
+> 💡 **Tip**
+>
+> Display the first few characters of each queued message as a preview so users can quickly identify which items to cancel without reading full messages.
+
 
 ## Cancelling queued messages
 
@@ -1089,11 +1056,13 @@ Remove all pending messages at once. Useful when the user changes context or wan
 await queue.clear();
 ```
 
-<Note>
-  Cancelling a queue entry only affects messages that have **not yet started
-  processing**. If the agent is already working on a message, cancelling it from
-  the queue has no effect. Use `stream.stop()` to interrupt the current run.
-</Note>
+
+> ℹ️ **Note**
+>
+> Cancelling a queue entry only affects messages that have **not yet started
+>   processing**. If the agent is already working on a message, cancelling it from
+>   the queue has no effect. Use `stream.stop()` to interrupt the current run.
+
 
 ## Chaining follow-up submissions with `onCreated`
 
@@ -1121,8 +1090,8 @@ immediately, and the follow-up is queued behind it.
 
 When a user wants to begin a fresh conversation, use `switchThread(null)` to create a new thread. This clears the current message history and queue.
 
-<CodeGroup>
-  ```tsx React theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+```tsx React theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   function NewThreadButton() {
     const stream = useStream<typeof myAgent>({ /* ... */ });
 
@@ -1158,7 +1127,6 @@ When a user wants to begin a fresh conversation, use `switchThread(null)` to cre
   // In template:
   // <button (click)="stream.switchThread(null)">New conversation</button>
   ```
-</CodeGroup>
 
 ## Complete example
 
@@ -1182,31 +1150,25 @@ function QueueChat() {
   };
 
   return (
-    <div className="chat-container">
+    
       <header>
         <h2>Queue Chat</h2>
         <button onClick={() => stream.switchThread(null)}>New thread</button>
       </header>
 
-      <div className="messages">
+      
         {stream.messages.map((msg, i) => (
-          <MessageBubble key={i} message={msg} />
-        ))}
-        {stream.isLoading && <TypingIndicator />}
-      </div>
-
+          ))}
+        {stream.isLoading && }
       {stream.queue.size > 0 && (
-        <div className="queue-panel">
+        
           <strong>Queued ({stream.queue.size})</strong>
           <button onClick={() => stream.queue.clear()}>Clear all</button>
           {stream.queue.entries.map((entry) => (
-            <div key={entry.id} className="queue-item">
-              <span>{entry.values?.messages?.[0]?.content}</span>
-              <button onClick={() => stream.queue.cancel(entry.id)}>×</button>
-            </div>
-          ))}
-        </div>
-      )}
+            <div key={entry.id}>
+              <span>{entry.values?.messages?.[0]?.content}<button onClick={() => stream.queue.cancel(entry.id)}>×</button>
+            ))}
+        )}
 
       <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
         <input
@@ -1216,8 +1178,7 @@ function QueueChat() {
         />
         <button type="submit">Send</button>
       </form>
-    </div>
-  );
+    );
 }
 ```
 
@@ -1235,12 +1196,15 @@ function QueueChat() {
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/frontend/message-queues.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langchain/frontend/message-queues.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

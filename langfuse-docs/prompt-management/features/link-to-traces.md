@@ -10,19 +10,8 @@ Linking prompts to [traces](/docs/observability) enables tracking of metrics and
 
 After linking prompts and traces, navigating to a generation span in Langfuse will highlight the prompt that was used to generate the response. To access the metrics, navigate to your prompt and click on the `Metrics` tab.
 
-<Video
-  src="https://static.langfuse.com/docs-videos/prompt-linking.mp4"
-  aspectRatio={16 / 9}
-  gifStyle
-  className="mt-4"
-/>
-
 ## How to Link Prompts to Traces
 
-
-
-<LangTabs items={["Python SDK", "JS/TS SDK", "OpenAI SDK (Python)", "OpenAI SDK (JS/TS)", "Langchain (Python)", "Langchain (JS/TS)", "Vercel AI SDK"]}>
-<Tab>
 
 There are three ways to create traces with the Langfuse Python SDK. For more information, see the [SDK documentation](/docs/observability/sdk/python/instrumentation).
 
@@ -88,18 +77,12 @@ generation.update(output="LLM response")
 generation.end()  # Important: manually end the generation
 ```
 
-</Tab>
-
-<Tab>
 
 There are three ways to create traces with the Langfuse JS/TS SDK. For more information, see the [SDK documentation](/docs/observability/sdk/typescript/instrumentation).
 
 **Observe wrapper**
 
 ```ts
-import { LangfuseClient } from "@langfuse/client";
-import { observe, startObservation } from "@langfuse/tracing";
-
 const langfuse = new LangfuseClient();
 
 const callLLM = async (input: string) => {
@@ -116,9 +99,6 @@ export const observedCallLLM = observe(callLLM);
 **Context manager**
 
 ```ts
-import { LangfuseClient } from "@langfuse/client";
-import { updateActiveObservation } from "@langfuse/tracing";
-
 const langfuse = new LangfuseClient();
 
 startActiveObservation(
@@ -134,9 +114,6 @@ startActiveObservation(
 **Manual observations**
 
 ```ts
-import { LangfuseClient } from "@langfuse/client";
-import { startObservation } from "@langfuse/tracing";
-
 const prompt = new LangfuseClient().prompt.get("my-prompt");
 
 startObservation(
@@ -148,9 +125,6 @@ startObservation(
 );
 ```
 
-</Tab>
-
-<Tab>
 
 ```python /langfuse_prompt=prompt/
 from langfuse.openai import openai
@@ -169,15 +143,10 @@ openai.chat.completions.create(
 )
 ```
 
-</Tab>
 
-<Tab>
 Please make sure you have [OpenTelemetry already set up](/docs/observability/sdk/overview#initialize-tracing) for tracing.
 
 ```ts /langfusePrompt,/
-import { observeOpenAI } from "@langfuse/openai";
-import OpenAI from "openai";
-
 const langfusePrompt = await langfuse.prompt.get("prompt-name"); // Fetch a previously created prompt
 
 const res = await observeOpenAI(new OpenAI(), {
@@ -189,9 +158,6 @@ const res = await observeOpenAI(new OpenAI(), {
 });
 ```
 
-</Tab>
-
-<Tab>
 
 ```python
 from langfuse import get_client
@@ -250,30 +216,19 @@ chat_chain = langchain_chat_prompt | chat_llm
 chat_chain.invoke({"movie": "Dune 2", "criticlevel": "expert"}, config={"callbacks": [langfuse_handler]})
 ```
 
-<Callout type="info">
-  If you use the `with_config` method on the PromptTemplate to create a new
-  Langchain Runnable with updated config, please make sure to pass the
-  `langfuse_prompt` in the `metadata` key as well.
-</Callout>
 
-<Callout type="info">
-  Set the `langfuse_prompt` metadata key only on PromptTemplates and not
-  additionally on the LLM calls or elsewhere in your chains.
-</Callout>
+> ℹ️ **Note:** If you use the `with_config` method on the PromptTemplate to create a new
+>   Langchain Runnable with updated config, please make sure to pass the
+>   `langfuse_prompt` in the `metadata` key as well.
 
-</Tab>
 
-<Tab>
+> ℹ️ **Note:** Set the `langfuse_prompt` metadata key only on PromptTemplates and not
+>   additionally on the LLM calls or elsewhere in your chains.
+
 
 Please make sure you have [OpenTelemetry already set up](/docs/observability/sdk/overview#initialize-tracing) for tracing.
 
 ```ts
-import { LangfuseClient } from "@langfuse/client";
-import { CallbackHandler } from "@langfuse/langchain";
-
-import { PromptTemplate } from "@langchain/core/prompts";
-import { ChatOpenAI, OpenAI } from "@langchain/openai";
-
 const langfuseHandler = new CallbackHandler({
   secretKey: "sk-lf-...",
   publicKey: "pk-lf-...",
@@ -325,16 +280,10 @@ const chatChain = langchainChatPrompt.pipe(chatModel);
 await chatChain.invoke({ movie: "Dune 2", criticlevel: "expert" }, { callbacks: [langfuseHandler] });
 ```
 
-</Tab>
-
-<Tab>
 
 Link Langfuse prompts to Vercel AI SDK generations by setting the `langfusePrompt` property in the `metadata` field:
 
 ```typescript /langfusePrompt: fetchedPrompt.toJSON()/
-import { generateText } from "ai";
-import { LangfuseClient } from "@langfuse/client";
-
 const langfuse = new LangfuseClient();
 
 const fetchedPrompt = await langfuse.prompt.get("my-prompt");
@@ -351,21 +300,13 @@ const result = await generateText({
 });
 ```
 
-</Tab>
 
-</LangTabs>
+> ℹ️ **Note:** If a [fallback
+>   prompt](/docs/prompt-management/features/guaranteed-availability#fallback) is
+>   used, no link will be created.
 
-
-
-<Callout type="info">
-  If a [fallback
-  prompt](/docs/prompt-management/features/guaranteed-availability#fallback) is
-  used, no link will be created.
-</Callout>
 
 ## Metrics Reference
-
-{/* TODO: add screenshot of metrics page which shows various scores and cost metrics for versions of a prompt from langfuse-docs project */}
 
 Once prompts are linked to traces, Langfuse automatically aggregates the following metrics per prompt version. You can compare them across prompt versions in the Metrics tab in the Langfuse UI:
 

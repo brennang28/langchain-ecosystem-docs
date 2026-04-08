@@ -13,16 +13,12 @@ The Langfuse n8n node enables seamless integration of [Langfuse's Prompt Managem
 
 **Langfuse Node in example n8n workflow:**
 
-<Frame fullWidth>
-  ![n8n node for
+
+![n8n node for
   langfuse](/images/docs/prompt-management-node-in-n8n-workflow.png)
-</Frame>
 
-<Callout type="info">
+> ℹ️ **Note:** Interested in tracing of n8n workflows? Check out the [n8n/langfuse integration page](/integrations/no-code/n8n).
 
-Interested in tracing of n8n workflows? Check out the [n8n/langfuse integration page](/integrations/no-code/n8n).
-
-</Callout>
 
 ## Installation
 
@@ -32,8 +28,5 @@ n8n Cloud: Use the node directly in your workflows by searching for `Langfuse`.
 
 ## GitHub Readme
 
-<div className="p-6 mt-6 border bg-card rounded-md">
-  <FetchReadme url="https://raw.githubusercontent.com/langfuse/n8n-nodes-langfuse/refs/heads/master/README.md" />
-</div>
 
 Source: [langfuse/n8n-nodes-langfuse](https://github.com/langfuse/n8n-nodes-langfuse)

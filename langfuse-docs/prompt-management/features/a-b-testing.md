@@ -8,29 +8,23 @@ description: Use Open Source Prompt Management in Langfuse to systematically tes
 
 [Langfuse Prompt Management](/docs/prompts/get-started) enables A/B testing by allowing you to label different versions of a prompt (e.g., `prod-a` and `prod-b`). Your application can randomly alternate between these versions, while Langfuse tracks performance metrics like response latency, cost, token usage, and evaluation metrics for each version.
 
-<Callout type="info">
 
-**When to use A/B testing?**
+> ℹ️ **Note:** **When to use A/B testing?**
+> 
+> A/B testing helps you see how different prompt versions work in real situations, adding to what you learn from testing on datasets. This works best when:
+> 
+> - Your app has good ways to measure success, deals with many different kinds of user inputs, and can handle some ups and downs in performance. This usually works for consumer apps where mistakes aren't a big deal.
+> - You've already tested thoroughly on your test data and want to try your changes with a small group of users before rolling out to everyone (also called canary deployment).
 
-A/B testing helps you see how different prompt versions work in real situations, adding to what you learn from testing on datasets. This works best when:
-
-- Your app has good ways to measure success, deals with many different kinds of user inputs, and can handle some ups and downs in performance. This usually works for consumer apps where mistakes aren't a big deal.
-- You've already tested thoroughly on your test data and want to try your changes with a small group of users before rolling out to everyone (also called canary deployment).
-
-</Callout>
 
 ## Implementation
 
-<Steps>
 
 ### Label your Prompt Versions
 
 Label your prompt versions (e.g., `prod-a` and `prod-b`) to identify different variants for testing.
 
 ### Fetch Prompts and Run A/B Test
-
-<LangTabs items={["Python SDK", "JS/TS SDK"]}>
-<Tab>
 
 ```python
 from langfuse import get_client
@@ -58,15 +52,8 @@ response = openai.chat.completions.create(
 result_text = response.choices[0].message.content
 ```
 
-</Tab>
-<Tab>
 
 ```js
-import { LangfuseClient } from "@langfuse/client";
-import { observeOpenAI } from "@langfuse/openai";
-
-import OpenAI from "openai";
-
 // Requires environment variables for initialization
 const langfuse = new LangfuseClient();
 
@@ -99,24 +86,13 @@ const completion = await openai.chat.completions.create({
 const resultText = completion.choices[0].message.content;
 ```
 
-</Tab>
-</LangTabs>
 
-<Callout type="info">
+> ℹ️ **Note:** Refer to [prompt management documentation](/docs/prompts/get-started) for additional examples on how to fetch and use prompts.
 
-Refer to [prompt management documentation](/docs/prompts/get-started) for additional examples on how to fetch and use prompts.
-
-</Callout>
 
 ### Analyze Results
 
 Compare metrics for each prompt version in the Langfuse UI:
-
-<Video
-  src="https://static.langfuse.com/docs-videos/prompt-metrics.mp4"
-  aspectRatio={1696 / 1080}
-  gifStyle
-/>
 
 **Key metrics available for comparison:**
 
@@ -125,7 +101,6 @@ Compare metrics for each prompt version in the Langfuse UI:
 - Quality evaluation scores
 - Custom metrics you define
 
-</Steps>
 
 ## Related Resources
 

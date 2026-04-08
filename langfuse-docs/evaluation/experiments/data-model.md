@@ -35,7 +35,6 @@ Datasets are a collection of inputs and, optionally, expected outputs that can b
 
 `Dataset`s are a collection of `DatasetItem`s. 
 
-<div className="border rounded p-2 my-4">
 
 ```mermaid
 classDiagram
@@ -60,7 +59,6 @@ direction LR
     Dataset "1" --> "n" DatasetItem
 ```
 
-</div>
 
 #### Dataset object
 
@@ -91,7 +89,6 @@ direction LR
 Dataset runs are used to run a dataset through your LLM application and optionally apply evaluation methods to the results. This is often referred to as Experiment run.
 
 <br />
-<div className="border rounded p-2">
 
 ```mermaid
 classDiagram
@@ -115,7 +112,6 @@ direction LR
     }
 ```
 
-</div>
 
 #### DatasetRun object
 
@@ -137,16 +133,15 @@ direction LR
 | `traceId`        | string | Yes      | ID of the trace to link to this run                                                                                                                                                                      |
 | `observationId`  | string | No       | ID of the observation to link to this run                                                                                                                                                                |
 
-<Callout type="info">
-Most of the time, we recommend that DatasetRunItems reference TraceIDs directly. The reference to ObservationID exists for backwards compatibility with older SDK versions. 
-</Callout>
+
+> ℹ️ **Note:** Most of the time, we recommend that DatasetRunItems reference TraceIDs directly. The reference to ObservationID exists for backwards compatibility with older SDK versions.
+
 
 ### Scores
 
 Scores are the data object to store evaluation results. They are used to assign evaluation scores to traces, observations, sessions, or dataset runs. Scores can be added manually via annotations, programmatically via the SDK/API, or automatically via LLM-as-a-Judge evaluators.
 
 <br />
-<div className="border rounded p-2">
 
 ```mermaid
 classDiagram
@@ -168,7 +163,6 @@ direction LR
     Score --> DatasetRun: datasetRunId
 ```
 
-</div>
 
 Scores have the following properties:
 - Each Score references **exactly one** of `Trace`, `Observation`, `Session`, or `DatasetRun`
@@ -207,14 +201,12 @@ Score configs are used to ensure that your scores follow a specific schema. Usin
 
 You can define a `ScoreConfig` in the Langfuse UI or via our API. Configs are immutable but can be archived (and restored anytime).
 
-<div className="border rounded p-2 my-4">
 
 ```mermaid
 classDiagram
   Score --> ScoreConfig: configId
 ```
 
-</div>
 
 A score config includes:
 - **Score name**
@@ -243,7 +235,6 @@ An experiment can combine a few Langfuse objects:
 
 <br />
 
-<div className="border rounded p-2">
 
 ```mermaid
 classDiagram
@@ -311,7 +302,6 @@ direction LR
     Trace "1" --> "n" Score
 ```
 
-</div>
 
 See the [Concepts page](/docs/evaluation/core-concepts) for more information on how these objects work together conceptually.
 See the [observability core concepts page](/docs/observability/data-model) for more details on traces and observations. 
@@ -344,17 +334,15 @@ See SDK references for function signatures and parameters:
 - [Python SDK: `RunEvaluatorFunction`](https://python.reference.langfuse.com/langfuse/experiment#RunEvaluatorFunction)
 - [JS/TS SDK: `RunEvaluator`](https://js.reference.langfuse.com/types/_langfuse_client.RunEvaluator.html)
 
-<Callout type="info">
-For detailed usage examples of tasks and evaluators, see [Experiments via SDK](/docs/evaluation/experiments/experiments-via-sdk).
-</Callout>
+
+> ℹ️ **Note:** For detailed usage examples of tasks and evaluators, see [Experiments via SDK](/docs/evaluation/experiments/experiments-via-sdk).
+
 
 ## Local Datasets
 
 Currently, if an [Experiment via SDK](/docs/evaluation/experiments/experiments-via-sdk) is used to run experiments on local datasets, only traces are created in Langfuse - no dataset runs are generated. Each task execution creates an individual trace for observability and debugging.
 
-<Callout type="info">
 
-We have improvements on our roadmap to support similar functionality such as run overviews, comparison views, and more for experiments on local datasets as for Langfuse datasets.
+> ℹ️ **Note:** We have improvements on our roadmap to support similar functionality such as run overviews, comparison views, and more for experiments on local datasets as for Langfuse datasets.
 
-</Callout>
 

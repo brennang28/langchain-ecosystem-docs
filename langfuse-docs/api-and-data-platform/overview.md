@@ -15,82 +15,44 @@ Example use cases:
 - Fine-tuning based on raw exports of traces
 - Correlation of LLM Evals with observed user behavior in Data Warehouse
 
-<Frame fullWidth>
-  <img
+
+<img
     src="/images/docs/open-data-platform-light.png"
     alt="Open Data Platform"
   />
-</Frame>
 
 ## Features
 
-import {
-  Globe,
-  Code,
-  LayoutDashboard,
-  Activity,
-  Download,
-  Cloud,
-  Blocks,
-} from "lucide-react";
 
-<Cards num={3}>
-  <Card
-    title="MCP Server"
-    href="/docs/api-and-data-platform/features/mcp-server"
-    icon={<Blocks />}
+}
     arrow
   />
-  <Card
-    title="Public API"
-    href="/docs/api-and-data-platform/features/public-api"
-    icon={<Globe />}
+  }
     arrow
   />
-  <Card
-    title="Query via SDKs"
-    href="/docs/api-and-data-platform/features/query-via-sdk"
-    icon={<Code />}
+  }
     arrow
   />
-  <Card
-    title="Export from UI"
-    href="/docs/api-and-data-platform/features/export-from-ui"
-    icon={<Download />}
+  }
     arrow
   />
-  <Card
-    title="Export to Blob Storage"
-    href="/docs/api-and-data-platform/features/export-to-blob-storage"
-    icon={<Cloud />}
+  }
     arrow
   />
-  <Card
-    title="Export to PostHog"
-    href="/integrations/analytics/posthog"
-    icon={
-      <div className="w-6 h-6 dark:bg-white rounded-sm p-1 flex items-center justify-center">
-        <img
+  <img
           src="/images/integrations/posthog_icon.svg"
           alt="PostHog icon"
-          className="w-full h-full object-contain"
-        />
-      </div>
-    }
+          />
+      
+}
     arrow
   />
-  <Card
-    title="Export to Mixpanel"
-    href="/integrations/analytics/mixpanel"
-    icon={
-      <div className="w-6 h-6 dark:bg-white rounded-sm p-1 flex items-center justify-center">
-        <img
+  <img
           src="/images/integrations/mixpanel_icon.svg"
           alt="Mixpanel icon"
-          className="w-full h-full object-contain"
-        />
-      </div>
-    }
+          />
+      
+}
     arrow
   />
-</Cards>
+

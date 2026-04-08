@@ -41,18 +41,23 @@ with PostgresSaver.from_conn_string(DB_URI) as checkpointer:  # [!code highlight
     graph = builder.compile(checkpointer=checkpointer)  # [!code highlight]
 ```
 
-<Accordion title="Example: using Postgres checkpointer">
-  ```
+
+<details>
+<summary>Example: using Postgres checkpointer</summary>
+
+```
   pip install -U "psycopg[binary,pool]" langgraph langgraph-checkpoint-postgres
   ```
 
-  <Tip>
-    You need to call `checkpointer.setup()` the first time you're using Postgres checkpointer
-  </Tip>
+  
+> 💡 **Tip**
+>
+> You need to call `checkpointer.setup()` the first time you're using Postgres checkpointer
 
-  <Tabs>
-    <Tab title="Sync">
-      ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+  **Sync:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       from langchain.chat_models import init_chat_model
       from langgraph.graph import StateGraph, MessagesState, START
       from langgraph.checkpoint.postgres import PostgresSaver  # [!code highlight]
@@ -93,10 +98,10 @@ with PostgresSaver.from_conn_string(DB_URI) as checkpointer:  # [!code highlight
           ):
               chunk["messages"][-1].pretty_print()
       ```
-    </Tab>
+    
+**Async:**
 
-    <Tab title="Async">
-      ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       from langchain.chat_models import init_chat_model
       from langgraph.graph import StateGraph, MessagesState, START
       from langgraph.checkpoint.postgres.aio import AsyncPostgresSaver  # [!code highlight]
@@ -137,23 +142,27 @@ with PostgresSaver.from_conn_string(DB_URI) as checkpointer:  # [!code highlight
           ):
               chunk["messages"][-1].pretty_print()
       ```
-    </Tab>
-  </Tabs>
-</Accordion>
 
-<Accordion title="Example: using MongoDB checkpointer">
-  ```
+</details>
+
+
+<details>
+<summary>Example: using MongoDB checkpointer</summary>
+
+```
   pip install -U pymongo langgraph langgraph-checkpoint-mongodb
   ```
 
-  <Note>
-    **Setup**
-    To use the [MongoDB checkpointer](https://pypi.org/project/langgraph-checkpoint-mongodb/), you will need a MongoDB cluster. Follow [this guide](https://www.mongodb.com/docs/guides/atlas/cluster/) to create a cluster if you don't already have one.
-  </Note>
+  
+> ℹ️ **Note**
+>
+> **Setup**
+>     To use the [MongoDB checkpointer](https://pypi.org/project/langgraph-checkpoint-mongodb/), you will need a MongoDB cluster. Follow [this guide](https://www.mongodb.com/docs/guides/atlas/cluster/) to create a cluster if you don't already have one.
 
-  <Tabs>
-    <Tab title="Sync">
-      ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+  **Sync:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       from langchain.chat_models import init_chat_model
       from langgraph.graph import StateGraph, MessagesState, START
       from langgraph.checkpoint.mongodb import MongoDBSaver  # [!code highlight]
@@ -193,10 +202,10 @@ with PostgresSaver.from_conn_string(DB_URI) as checkpointer:  # [!code highlight
           ):
               chunk["messages"][-1].pretty_print()
       ```
-    </Tab>
+    
+**Async:**
 
-    <Tab title="Async">
-      ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       from langchain.chat_models import init_chat_model
       from langgraph.graph import StateGraph, MessagesState, START
       from langgraph.checkpoint.mongodb.aio import AsyncMongoDBSaver  # [!code highlight]
@@ -236,22 +245,26 @@ with PostgresSaver.from_conn_string(DB_URI) as checkpointer:  # [!code highlight
           ):
               chunk["messages"][-1].pretty_print()
       ```
-    </Tab>
-  </Tabs>
-</Accordion>
 
-<Accordion title="Example: using Redis checkpointer">
-  ```
+</details>
+
+
+<details>
+<summary>Example: using Redis checkpointer</summary>
+
+```
   pip install -U langgraph langgraph-checkpoint-redis
   ```
 
-  <Tip>
-    You need to call `checkpointer.setup()` the first time you're using Redis checkpointer.
-  </Tip>
+  
+> 💡 **Tip**
+>
+> You need to call `checkpointer.setup()` the first time you're using Redis checkpointer.
 
-  <Tabs>
-    <Tab title="Sync">
-      ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+  **Sync:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       from langchain.chat_models import init_chat_model
       from langgraph.graph import StateGraph, MessagesState, START
       from langgraph.checkpoint.redis import RedisSaver  # [!code highlight]
@@ -292,10 +305,10 @@ with PostgresSaver.from_conn_string(DB_URI) as checkpointer:  # [!code highlight
           ):
               chunk["messages"][-1].pretty_print()
       ```
-    </Tab>
+    
+**Async:**
 
-    <Tab title="Async">
-      ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       from langchain.chat_models import init_chat_model
       from langgraph.graph import StateGraph, MessagesState, START
       from langgraph.checkpoint.redis.aio import AsyncRedisSaver  # [!code highlight]
@@ -336,9 +349,9 @@ with PostgresSaver.from_conn_string(DB_URI) as checkpointer:  # [!code highlight
           ):
               chunk["messages"][-1].pretty_print()
       ```
-    </Tab>
-  </Tabs>
-</Accordion>
+
+</details>
+
 
 ### Use in subgraphs
 
@@ -450,18 +463,23 @@ with PostgresStore.from_conn_string(DB_URI) as store:  # [!code highlight]
     graph = builder.compile(store=store)  # [!code highlight]
 ```
 
-<Accordion title="Example: using Postgres store">
-  ```
+
+<details>
+<summary>Example: using Postgres store</summary>
+
+```
   pip install -U "psycopg[binary,pool]" langgraph langgraph-checkpoint-postgres
   ```
 
-  <Tip>
-    You need to call `store.setup()` the first time you're using Postgres store
-  </Tip>
+  
+> 💡 **Tip**
+>
+> You need to call `store.setup()` the first time you're using Postgres store
 
-  <Tabs>
-    <Tab title="Async">
-      ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+  **Async:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       from dataclasses import dataclass
       from langchain.chat_models import init_chat_model
       from langgraph.graph import StateGraph, MessagesState, START
@@ -533,10 +551,10 @@ with PostgresStore.from_conn_string(DB_URI) as store:  # [!code highlight]
           ):
               chunk["messages"][-1].pretty_print()
       ```
-    </Tab>
+    
+**Sync:**
 
-    <Tab title="Sync">
-      ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       from dataclasses import dataclass
       from langchain.chat_models import init_chat_model
       from langgraph.graph import StateGraph, MessagesState, START
@@ -608,22 +626,26 @@ with PostgresStore.from_conn_string(DB_URI) as store:  # [!code highlight]
           ):
               chunk["messages"][-1].pretty_print()
       ```
-    </Tab>
-  </Tabs>
-</Accordion>
 
-<Accordion title="Example: using Redis store">
-  ```
+</details>
+
+
+<details>
+<summary>Example: using Redis store</summary>
+
+```
   pip install -U langgraph langgraph-checkpoint-redis
   ```
 
-  <Tip>
-    You need to call `store.setup()` the first time you're using [Redis store](https://pypi.org/project/langgraph-checkpoint-redis/).
-  </Tip>
+  
+> 💡 **Tip**
+>
+> You need to call `store.setup()` the first time you're using [Redis store](https://pypi.org/project/langgraph-checkpoint-redis/).
 
-  <Tabs>
-    <Tab title="Async">
-      ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+  **Async:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       from dataclasses import dataclass
       from langchain.chat_models import init_chat_model
       from langgraph.graph import StateGraph, MessagesState, START
@@ -695,10 +717,10 @@ with PostgresStore.from_conn_string(DB_URI) as store:  # [!code highlight]
           ):
               chunk["messages"][-1].pretty_print()
       ```
-    </Tab>
+    
+**Sync:**
 
-    <Tab title="Sync">
-      ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
       from dataclasses import dataclass
       from langchain.chat_models import init_chat_model
       from langgraph.graph import StateGraph, MessagesState, START
@@ -770,9 +792,9 @@ with PostgresStore.from_conn_string(DB_URI) as store:  # [!code highlight]
           ):
               chunk["messages"][-1].pretty_print()
       ```
-    </Tab>
-  </Tabs>
-</Accordion>
+
+</details>
+
 
 ### Use semantic search
 
@@ -799,8 +821,11 @@ items = store.search(
 )
 ```
 
-<Accordion title="Long-term memory with semantic search">
-  ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+<details>
+<summary>Long-term memory with semantic search</summary>
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
 
   from langchain.embeddings import init_embeddings
   from langchain.chat_models import init_chat_model
@@ -849,7 +874,9 @@ items = store.search(
   ):
       print(message.content, end="")
   ```
-</Accordion>
+
+</details>
+
 
 ## Manage short-term memory
 
@@ -892,8 +919,11 @@ builder.add_node(call_model)
 ...
 ```
 
-<Accordion title="Full example: trim messages">
-  ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+<details>
+<summary>Full example: trim messages</summary>
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   from langchain_core.messages.utils import (
       trim_messages,  # [!code highlight]
       count_tokens_approximately  # [!code highlight]
@@ -936,7 +966,9 @@ builder.add_node(call_model)
 
   Your name is Bob, as you mentioned when you first introduced yourself.
   ```
-</Accordion>
+
+</details>
+
 
 ### Delete messages
 
@@ -965,15 +997,19 @@ def delete_messages(state):
     return {"messages": [RemoveMessage(id=REMOVE_ALL_MESSAGES)]}  # [!code highlight]
 ```
 
-<Warning>
-  When deleting messages, **make sure** that the resulting message history is valid. Check the limitations of the LLM provider you're using. For example:
 
-  * Some providers expect message history to start with a `user` message
-  * Most providers require `assistant` messages with tool calls to be followed by corresponding `tool` result messages.
-</Warning>
+> ⚠️ **Warning**
+>
+> When deleting messages, **make sure** that the resulting message history is valid. Check the limitations of the LLM provider you're using. For example:
+> 
+>   * Some providers expect message history to start with a `user` message
+>   * Most providers require `assistant` messages with tool calls to be followed by corresponding `tool` result messages.
 
-<Accordion title="Full example: delete messages">
-  ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+<details>
+<summary>Full example: delete messages</summary>
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   from langchain.messages import RemoveMessage  # [!code highlight]
 
   def delete_messages(state):
@@ -1015,7 +1051,9 @@ def delete_messages(state):
   [('human', "hi! I'm bob"), ('ai', 'Hi Bob! How are you doing today? Is there anything I can help you with?'), ('human', "what's my name?"), ('ai', 'Your name is Bob.')]
   [('human', "what's my name?"), ('ai', 'Your name is Bob.')]
   ```
-</Accordion>
+
+</details>
+
 
 ### Summarize messages
 
@@ -1060,8 +1098,11 @@ def summarize_conversation(state: State):
     return {"summary": response.content, "messages": delete_messages}
 ```
 
-<Accordion title="Full example: summarize messages">
-  ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+
+<details>
+<summary>Full example: summarize messages</summary>
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
   from typing import Any, TypedDict
 
   from langchain.chat_models import init_chat_model
@@ -1129,7 +1170,9 @@ def summarize_conversation(state: State):
 
   Summary: In this conversation, I was introduced to Bob, who then asked me to write a poem about cats. I composed a poem titled "The Mystery of Cats" that captured cats' graceful movements, independent nature, and their special relationship with humans. Bob then requested a similar poem about dogs, so I wrote "The Joy of Dogs," which highlighted dogs' loyalty, enthusiasm, and loving companionship. Both poems were written in a similar style but emphasized the distinct characteristics that make each pet special.
   ```
-</Accordion>
+
+</details>
+
 
 ### Manage checkpoints
 
@@ -1139,9 +1182,9 @@ You can view and delete the information stored by the checkpointer.
 
 #### View thread state
 
-<Tabs>
-  <Tab title="Graph/Functional API">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**Graph/Functional API:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     config = {
         "configurable": {
             "thread_id": "1",  # [!code highlight]
@@ -1171,10 +1214,10 @@ You can view and delete the information stored by the checkpointer.
         interrupts=()
     )
     ```
-  </Tab>
+  
+**Checkpointer API:**
 
-  <Tab title="Checkpointer API">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     config = {
         "configurable": {
             "thread_id": "1",  # [!code highlight]
@@ -1208,16 +1251,14 @@ You can view and delete the information stored by the checkpointer.
         pending_writes=[]
     )
     ```
-  </Tab>
-</Tabs>
-
+  
 <a id="checkpoints" />
 
 #### View the history of the thread
 
-<Tabs>
-  <Tab title="Graph/Functional API">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+**Graph/Functional API:**
+
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     config = {
         "configurable": {
             "thread_id": "1"  # [!code highlight]
@@ -1290,10 +1331,10 @@ You can view and delete the information stored by the checkpointer.
         )
     ]
     ```
-  </Tab>
+  
+**Checkpointer API:**
 
-  <Tab title="Checkpointer API">
-    ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
+```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
     config = {
         "configurable": {
             "thread_id": "1"  # [!code highlight]
@@ -1390,9 +1431,7 @@ You can view and delete the information stored by the checkpointer.
         )
     ]
     ```
-  </Tab>
-</Tabs>
-
+  
 #### Delete all checkpoints for a thread
 
 ```python  theme={"theme":{"light":"catppuccin-latte","dark":"catppuccin-mocha"}}
@@ -1410,12 +1449,15 @@ We recommend running migrations as a dedicated deployment step, or you can ensur
 
 ***
 
-<div className="source-links">
-  <Callout icon="edit">
-    [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/add-memory.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
-  </Callout>
 
-  <Callout icon="terminal-2">
-    [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
-  </Callout>
-</div>
+  
+> ℹ️ **Note:**
+>
+> [Edit this page on GitHub](https://github.com/langchain-ai/docs/edit/main/src/oss/langgraph/add-memory.mdx) or [file an issue](https://github.com/langchain-ai/docs/issues/new/choose).
+
+
+  
+> ℹ️ **Note:**
+>
+> [Connect these docs](/use-these-docs) to Claude, VSCode, and more via MCP for real-time answers.
+

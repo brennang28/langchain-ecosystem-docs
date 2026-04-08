@@ -11,27 +11,19 @@ Message Placeholders allow you to insert a list of chat messages (`[{role: "..."
 You can define multiple placeholders in a prompt and resolve them with different values at runtime.
 Message Placeholders are also supported in the [Playground](/docs/playground) and [Prompt Experiments](/docs/datasets/prompt-experiments).
 
-<Callout type="info">
-  To use placeholders in your application, you need at least `langfuse >= 3.1.0`
-  (python) or `langfuse >= 3.38.0` (js).
-</Callout>
 
-<Steps>
+> ℹ️ **Note:** To use placeholders in your application, you need at least `langfuse >= 3.1.0`
+>   (python) or `langfuse >= 3.38.0` (js).
+
 
 ## Create prompt with placeholders
 
-<LangTabs items={["UI","Python SDK", "JS/TS SDK"]}>
-<Tab>
 
-<Frame fullWidth>
-  ![Prompt placeholder in prompt editor](/images/docs/prompt-placeholder.png)
-</Frame>
+![Prompt placeholder in prompt editor](/images/docs/prompt-placeholder.png)
 
 1. Create a placeholder in any prompt by using the `Add message placeholder` button.
 2. Select a `name` for the placeholder that will be used to reference it in your application.
 
-</Tab>
-<Tab>
 
 ```python
 from langfuse import get_client
@@ -50,13 +42,8 @@ langfuse.create_prompt(
 )
 ```
 
-</Tab>
-
-<Tab>
 
 ```typescript
-import { LangfuseClient } from "@langfuse/client";
-
 const langfuse = new LangfuseClient();
 
 await langfuse.prompt.create({
@@ -71,16 +58,11 @@ await langfuse.prompt.create({
 });
 ```
 
-</Tab>
-</LangTabs>
 
 ## Resolve placeholders at runtime
 
 In the SDKs, use the `.compile(variables, placeholders)` method on a `ChatPromptClient` to set the values to be filled in for the placeholders.
 The filled in messages should be of the `ChatMessage` format with a `role` and `content` property, but custom formats are also accepted as `compile` does not validate the format of the messages.
-
-<LangTabs items={["Python SDK", "JS/TS SDK", "LangChain (Python)", "LangChain (JS/TS)"]}>
-<Tab>
 
 ```python
 from langfuse import get_client
@@ -104,13 +86,8 @@ compiled_prompt = prompt.compile(criticlevel="expert", chat_history=[
 # ]
 ```
 
-</Tab>
-
-<Tab>
 
 ```typescript
-import { LangfuseClient } from "@langfuse/client";
-
 const langfuse = new LangfuseClient();
 
 const prompt = await langfuse.prompt.get("movie-critic-chat", {
@@ -141,9 +118,6 @@ const compiledPrompt = prompt.compile(
 // ]
 ```
 
-</Tab>
-
-<Tab>
 
 ```python
 from langfuse import get_client
@@ -163,14 +137,8 @@ langchain_prompt = ChatPromptTemplate.from_template(langfuse_prompt.get_langchai
 # ]
 ```
 
-</Tab>
-
-<Tab>
 
 ```typescript
-import { LangfuseClient } from "@langfuse/client";
-import { ChatPromptTemplate } from "@langchain/core/prompts";
-
 const langfuse = new LangfuseClient();
 
 // Get current `production` version
@@ -190,10 +158,6 @@ const langchainPrompt = ChatPromptTemplate.fromTemplate(
 // ]
 ```
 
-</Tab>
-</LangTabs>
-
-</Steps>
 
 Not exactly what you need? Consider these similar features:
 - [Variables](/docs/prompt-management/features/variables) for inserting dynamic text into prompts

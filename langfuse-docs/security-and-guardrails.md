@@ -8,28 +8,18 @@ sidebarTitle: Security & Guardrails
 
 There are a host of potential safety risks involved with LLM-based applications. These include prompt injection, leakage of personally identifiable information (PII), or harmful prompts. Langfuse can be used to monitor and protect against these security risks, and investigate incidents when they occur.
 
-<Video
-  src="https://static.langfuse.com/docs-videos/security-langfuse.mp4"
-  title="LLM Security Monitoring with Langfuse"
-  aspectRatio={16 / 9}
-  className="mt-6"
-  posterStartTime={112}
-/>
-
 ## What is LLM Security?
 
 LLM Security involves implementing protective measures to safeguard LLMs and their infrastructure from unauthorized access, misuse, and adversarial attacks, ensuring the integrity and confidentiality of both the model and data. This is crucial in AI/ML systems to maintain ethical usage, prevent security risks like prompt injections, and ensure reliable operation under safe conditions.
 
 ## How does LLM Security work?
 
-<Callout type="info">
 
-LLM Security can be addressed with a combination of
+> ℹ️ **Note:** LLM Security can be addressed with a combination of
+> 
+> - LLM Security libraries for run-time security measures
+> - Langfuse for the ex-post evaluation of the effectiveness of these measures
 
-- LLM Security libraries for run-time security measures
-- Langfuse for the ex-post evaluation of the effectiveness of these measures
-
-</Callout>
 
 ### 1. Run-time security measures
 
@@ -69,7 +59,6 @@ The example below shows a simple application that summarizes a given court trans
 
 To read more about other security risks, including prompt injection, banned topics, or malicious URLs, please check out the docs of the various libraries or read our [security cookbook](/docs/security/example-python) which includes more examples.
 
-<Steps>
 
 ### Install packages
 
@@ -159,29 +148,12 @@ summarize_transcript(prompt)
 
 In this trace ([public link](https://cloud.langfuse.com/project/cloramnkj0002jz088vzn1ja4/traces/43213866-3038-4706-ae3a-d39e9df459a2)), we can see how the name of the plaintiff is anonymized before being sent to the model, and then un-redacted in the response. We can now evaluate run evaluations in Langfuse to control for the effectiveness of these measures.
 
-<Video
-  src="https://static.langfuse.com/docs-videos/security-pii-redaction.mp4"
-  title="LLM Security Monitoring with Langfuse"
-  aspectRatio={16 / 10.775}
-  className="mt-6"
-  gifStyle
-/>
-
-</Steps>
-
 ## More Examples
 
 Find more examples of LLM security monitoring in our cookbook.
 
-import { FileCode, BookOpen } from "lucide-react";
-
-<Cards num={2}>
-  <Card
-    title="Cookbook: Observing LLM Security"
-    href="/guides/cookbook/example_llm_security_monitoring"
-    icon={<FileCode />}
+}
   />
-</Cards>
 
 ## FAQ
 
@@ -215,6 +187,3 @@ Use Langfuse to monitor your LLM security posture: (1) Trace every request throu
 
 ## GitHub Discussions
 
-import { GhDiscussionsPreview } from "@/components/gh-discussions/GhDiscussionsPreview";
-
-<GhDiscussionsPreview labels={["feat-llm-security"]} />

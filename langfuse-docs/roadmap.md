@@ -8,19 +8,15 @@ description: Sneak peak into upcoming new features and changes in Langfuse. This
 Langfuse is [open source](/open-source) and we want to be fully transparent what we're working on and what's next. This roadmap is a living document and we'll update it as we make progress.
 
 
-<Callout type="info">
-  **Your feedback is highly appreciated**. Feel like something is missing? Add
-  new [ideas on GitHub](/ideas) or vote on existing ones. Both are a great way
-  to contribute to Langfuse and help us understand what is important to you.
-</Callout>
+> ℹ️ **Note:** **Your feedback is highly appreciated**. Feel like something is missing? Add
+>   new [ideas on GitHub](/ideas) or vote on existing ones. Both are a great way
+>   to contribute to Langfuse and help us understand what is important to you.
+
 
 ## 🚀 Released
 
-import { changelogSource } from "@/lib/source";
-import { Link } from "@/components/ui/link";
-
 export const ChangelogList = () => (
-  <ul className="list-disc list pl-6">
+  <ul >
     {changelogSource
       .getPages()
       .sort(
@@ -31,15 +27,11 @@ export const ChangelogList = () => (
       .slice(0, 10)
       .map((page) => (
         <li
-          className="my-2"
           id={page.url.replace("/changelog/", "")}
           key={page.url.replace("/changelog/", "")}
         >
-          <Link href={page.url} variant="underline">
-            <span>{page.data.title}</span>
-          </Link>
-          <span className="text-primary/60 ml-2 hidden sm:inline">
-            {page.data.date
+          
+            <span>{page.data.title}{page.data.date
               ? `(${new Date(String(page.data.date)).toLocaleDateString(
                   "en-US",
                   {
@@ -50,27 +42,16 @@ export const ChangelogList = () => (
                   }
                 )})`
               : null}
-          </span>
-        </li>
+          </li>
       ))}
   </ul>
 );
 
 10 most recent [changelog](/changelog) items:
 
-<ChangelogList />
-
-import { ProductUpdateSignup } from "@/components/productUpdateSignup";
-
-<Callout type="info">
-
-Subscribe to our mailing list to get occasional email updates about new features.
-
-<ProductUpdateSignup source="self-host guide" className="my-3 max-w-sm" />
-
-</Callout>
-
-## Active Development
+> ℹ️ **Note:** Subscribe to our mailing list to get occasional email updates about new features.
+> 
+> ## Active Development
 
 ### Agent Observability
 
@@ -108,14 +89,7 @@ The best way to support Langfuse is to share your feedback, report bugs, and upv
 
 ### Feature requests
 
-import { GhDiscussionsPreview } from "@/components/gh-discussions/GhDiscussionsPreview";
-
-<GhDiscussionsPreview filterCategory="Ideas" itemsPerPage={10} />
-
 ### Bug reports
 
-import { Bug } from "lucide-react";
+} />
 
-<Cards num={2}>
-  <Card href="/issues" title="Bugs (GitHub Issues)" arrow icon={<Bug />} />
-</Cards>

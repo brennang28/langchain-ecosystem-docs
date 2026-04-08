@@ -10,12 +10,8 @@ Evals give you a repeatable check of your LLM application's behavior. You **repl
 
 They also help you **catch regressions before you ship a change**. You tweak a prompt to handle an edge case, run your eval, and immediately see if it affected the behavior of your application in unintended ways.
 
-<Callout type="info" emoji="🎥">
 
-[**Watch this walkthrough**](/watch-demo?tab=evaluation) of Langfuse Evaluation and how to use it to improve your LLM application.
-
-</Callout>
-
+> ℹ️ **Note:** [**Watch this walkthrough**](/watch-demo?tab=evaluation) of Langfuse Evaluation and how to use it to improve your LLM application.
 
 
 ## Getting Started
@@ -32,6 +28,3 @@ Looking for something specific? Take a look under _Evaluation Methods_ and _Expe
 
 ## GitHub Discussions
 
-import { GhDiscussionsPreview } from "@/components/gh-discussions/GhDiscussionsPreview";
-
-<GhDiscussionsPreview labels={["feat-scores"]} />
